@@ -1,0 +1,149 @@
+.button {
+}
+
+.disabled {
+    padding: 4px 15px;
+    border-radius: 4px;
+    background: #91a1b4;
+    color: #003980;
+    cursor: auto;
+}
+
+.secondary {
+    padding: 4px 15px;
+    border-radius: 4px;
+    border-color: #0206f7;
+    color:#0206f7;
+    background: white;
+    /*cursor: auto;*/
+    /*outline: none;*/
+}
+
+.default {
+    padding: 4px 15px;
+    border-radius: 4px;
+    border-color:#0206f7 ;
+    background: #0206f7;
+    color: white;
+}
+
+.red {
+    padding: 4px 15px;
+    border-radius: 4px;
+    background: #a20303;
+    border-color:#a20303 ;
+    color: white;
+
+}
+
+.default:hover {
+    background: #0289f7;
+    color: white;
+}
+
+.red:hover {
+    background: #ff4040;
+    color: white;
+}
+
+.secondary:hover {
+    background: #3bd3fa;
+    color: #0206f7;
+}
+
+
+.default:active {
+    /*background: #0206f7;*/
+    /*color: #99ff99;*/
+    /*outline: none;*/
+    border-radius: 4px;
+    border-color:#0206f7 ;
+    background: #0206f7;
+    color: white;
+}
+
+.secondary:active {
+    border-radius: 4px;
+    border-color: #0206f7;
+    color:#0206f7;
+    background: white;
+}
+
+.red:active {
+    border-radius: 4px;
+    background: #a20303;
+    border-color:#a20303 ;
+    color: white;
+}
+
+.button:disabled {
+}
+
+/*@keyframes blink {*/
+/*    0% {*/
+/*        left: -130%;*/
+/*    }*/
+/*    100% {*/
+/*        left: 130%;*/
+/*    }*/
+/*}*/
+
+/*.button {*/
+/*    position: relative;*/
+/*    margin: 10px;*/
+/*    overflow: hidden;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.button::after {*/
+/*    display: block;*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    left: -130%;*/
+/*    top: 0;*/
+/*    height: 100%;*/
+/*    width: 20%;*/
+/*    transform: skew(25deg);*/
+/*    background-color: white;*/
+/*    opacity: 0.7;*/
+/*    z-index: 14;*/
+/*}*/
+
+/*.button:hover::after {*/
+/*    animation: blink 1.75s ease;*/
+/*}*/
+
+/*.button:hover::before {*/
+/*    display: block;*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    left: -100vw;*/
+/*    top: 0;*/
+/*    height: 100vh;*/
+/*    width: 300vw;*/
+/*    background-color: white;*/
+/*    opacity: 0.2;*/
+/*    z-index: 7;*/
+
+/*}*/
+
+/*.button:focus {*/
+/*    outline: #99ff99 solid 1px;*/
+/*}*/
+
+/*.button:active {*/
+/*    background: white;*/
+/*}*/
+
+/*.button:disabled {*/
+/*    color: #003980;*/
+/*    cursor: auto;*/
+/*}*/
+
+/*.button:disabled::after {*/
+/*    z-index: -1;*/
+/*}*/
+
+/*.button:disabled::before {*/
+/*    z-index: -1;*/
+/*}*/

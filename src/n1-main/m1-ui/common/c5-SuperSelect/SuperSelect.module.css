@@ -1,0 +1,26 @@
+.select {
+    width: 200px;
+    padding: 5px;
+    cursor: pointer;
+    /*appearance: none;*/
+    font-size: 16px;
+    line-height: 1;
+    /*border: 0;*/
+    border-radius: 5px;
+    height: 34px;
+    /*background: url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #0289f7;*/
+    /*-webkit-appearance: none;*/
+    /*background-position-x: 74px;*/
+}
+
+.select:focus {
+    border: #0206f7 solid 2px;
+    /*outline: #e1ee05;*/
+}
+
+
+.option:hover {
+    color: #05f109;
+    background: #f80319;
+    border: #0206f7 solid 2px;
+}
