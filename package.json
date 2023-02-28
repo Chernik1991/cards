@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://Chernik1991.github.io/cards",
   "dependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/prompt-cli": "^17.4.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.10",
