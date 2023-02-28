@@ -1,10 +1,5 @@
-
-import React from 'react';
+import React from 'react'
 
 export const Login = () => {
-    return (
-        <div>
-            Login123vccvcaadadasas
-        </div>
-    );
-};
+  return <div>Login123vccvcaadadasas</div>
+}
