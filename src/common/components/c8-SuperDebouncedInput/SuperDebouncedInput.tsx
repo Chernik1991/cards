@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, ReactNode, useState } from 'react'
 
-import SuperInputText from '../../../../../../cards/src/n1-main/m1-ui/common/c1-SuperInputText/SuperInputText'
+import SuperInputText from '../c1-SuperInputText/SuperInputText'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<

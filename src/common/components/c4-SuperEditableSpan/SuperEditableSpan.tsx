@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState } from 'react'
 
-import SuperInputText from '../../../../../../cards/src/n1-main/m1-ui/common/c1-SuperInputText/SuperInputText'
+import SuperInputText from '../c1-SuperInputText/SuperInputText'
 
 import editIcon from './editIcon.svg'
 import s from './SuperEditableSpan.module.css'

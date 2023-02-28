@@ -1,8 +1,8 @@
 import React from 'react'
 
-import sortDown from '../c10-SuperSort/icons8-sort-down.png'
-import sortUp from '../c10-SuperSort/icons8-sort-up.png'
-import sort from '../c10-SuperSort/icons8-sort.png'
+import sortDown from './icons8-sort-down.png'
+import sortUp from './icons8-sort-up.png'
+import sort from './icons8-sort.png'
 
 // добавить в проект иконки и импортировать
 const downIcon = sortDown

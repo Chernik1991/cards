@@ -2,10 +2,10 @@ import React from 'react'
 
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-import { Test } from '../../../n2-features/f0-test/test'
-import { Login } from '../../../n2-features/f1-auth/a1-login/login'
-import { Register } from '../../../n2-features/f1-auth/a2-register/register'
-import { Profile } from '../profile/profile'
+import { Login } from '../../../features/auth/a1-login/login'
+import { Register } from '../../../features/auth/a2-register/register'
+import { Profile } from '../../../features/profile/profile'
+import { Test } from '../../../features/test/test'
 
 import Error404 from './pages/Error404'
 
