@@ -1,16 +1,13 @@
 import React from 'react'
 
-// eslint-disable-next-line import/order
-import ReactDOM from 'react-dom/client'
-
+import * as ReactDOMClient from 'react-dom/client'
 import './index.css'
 import { Provider } from 'react-redux'
 
 import App from './app/App'
 import { store } from './app/store'
 
-// eslint-disable-next-line import/no-named-as-default-member
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = ReactDOMClient.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
