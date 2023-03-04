@@ -18,8 +18,8 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://chernik1991.github.io/cards/">
+        Cards
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -94,10 +94,10 @@ export const Login = () => {
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
-            <Grid container>
+            <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>{'Already have an account?'}</Grid>
             </Grid>
-            <Grid container>
+            <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>
                 <Link href="#" variant="body2">
                   {'Sign Up'}
