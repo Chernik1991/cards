@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
 // import { packsAPI } from '../../api/packs-api'
-import { setAppErrorAC, SetAppErrorActionType } from '../../app/app-reducer'
+import { setAppErrorAC, SetAppErrorActionType } from 'app/app-reducer'
 // import { AppThunk } from '../../app/store'
 
 export const errorUtils = (
