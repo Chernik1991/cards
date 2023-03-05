@@ -28,8 +28,8 @@
   content: '';
 
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
 
   width: 18px;
   height: 18px;
@@ -40,8 +40,8 @@
 }
 
 .radio:checked::before {
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
 
   width: 18px;
   height: 18px;

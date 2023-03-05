@@ -5,10 +5,7 @@ import { Dispatch } from 'redux'
 import { setAppErrorAC, SetAppErrorActionType } from 'app/app-reducer'
 // import { AppThunk } from '../../app/store'
 
-export const errorUtils = (
-  e: Error | AxiosError<{ error: string }>,
-  dispatch: Dispatch<SetAppErrorActionType>
-) => {
+export const errorUtils = (e: Error | AxiosError<{ error: string }>, dispatch: Dispatch<SetAppErrorActionType>) => {
   const err = e as Error | AxiosError<{ error: string }>
 
   if (axios.isAxiosError(err)) {

@@ -24,7 +24,8 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 
-import { AppRootStateType, useAppDispatch } from 'app/store'
+import { useAppDispatch } from 'app/store'
+import { loginTC } from 'features/auth/a1-login/auth-reducer'
 
 const Copyright = (props: any) => {
   return (
@@ -48,7 +49,7 @@ type FormikErrorType = {
 }
 export const Login = () => {
   const dispatch = useAppDispatch()
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  // const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const formik: any = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -72,10 +73,10 @@ export const Login = () => {
       rememberMe: false,
     },
     onSubmit: values => {
-      // dispatch(loginTC(values))
+      dispatch(loginTC(values))
       //
-      alert(JSON.stringify(values, null, 2)), //убрать потом
-        formik.resetForm()
+      // alert(JSON.stringify(values, null, 2)), //убрать потом
+      formik.resetForm()
     },
   })
 
@@ -102,9 +103,7 @@ export const Login = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar
-            sx={{ m: 1, bgcolor: 'secondary.main', width: 80, height: 80, textAlign: 'center' }}
-          >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 80, height: 80, textAlign: 'center' }}>
             Friday cards
           </Avatar>
           <Typography component="h1" variant="h5" fontWeight={'bold'}>
@@ -171,11 +170,7 @@ export const Login = () => {
             </FormControl>
             <FormControlLabel
               control={
-                <Checkbox
-                  {...formik.getFieldProps('rememberMe')}
-                  checked={formik.values.rememberMe}
-                  color="primary"
-                />
+                <Checkbox {...formik.getFieldProps('rememberMe')} checked={formik.values.rememberMe} color="primary" />
               }
               label="Remember me"
             />
