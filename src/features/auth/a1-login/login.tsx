@@ -1,7 +1,15 @@
 import * as React from 'react'
 
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-// import Avatar from '@mui/material/Avatar'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import {
+  Avatar,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -13,8 +21,12 @@ import Link from '@mui/material/Link'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { useFormik } from 'formik'
+import { useSelector } from 'react-redux'
 
-function Copyright(props: any) {
+import { AppRootStateType, useAppDispatch } from 'app/store'
+
+const Copyright = (props: any) => {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -29,15 +41,53 @@ function Copyright(props: any) {
 
 const theme = createTheme()
 
+type FormikErrorType = {
+  email?: string
+  password?: string
+  rememberMe?: boolean
+}
 export const Login = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const formik: any = useFormik({
+    validate: (values: FormikErrorType) => {
+      const errors: FormikErrorType = {}
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+      if (!values.email) {
+        errors.email = 'Required'
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+      }
+      if (!values.password) {
+        errors.password = 'Required'
+      } else if (values.password.length < 3) {
+        errors.password = 'Must be mo 3 characters or less'
+      }
+
+      return errors
+    },
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+    onSubmit: values => {
+      // dispatch(loginTC(values))
+      //
+      alert(JSON.stringify(values, null, 2)), //убрать потом
+        formik.resetForm()
+    },
+  })
+
+  // if (isLoggedIn) {
+  //   return <Redirect to={'/'} />
+  // }
+  const [Password, setPassword] = React.useState(false)
+
+  const handleClickShowPassword = () => setPassword(show => !show)
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
   }
 
   return (
@@ -52,35 +102,81 @@ export const Login = () => {
             alignItems: 'center',
           }}
         >
-          {/*<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>*/}
-          {/*  <LockOutlinedIcon />*/}
-          {/*</Avatar>*/}
+          <Avatar
+            sx={{ m: 1, bgcolor: 'secondary.main', width: 80, height: 80, textAlign: 'center' }}
+          >
+            Friday cards
+          </Avatar>
           <Typography component="h1" variant="h5" fontWeight={'bold'}>
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            sx={{
+              m: 1,
+              width: '50ch',
+            }}
+          >
             <TextField
               margin="normal"
-              required
-              fullWidth
+              required //посмотреть убрать
+              fullWidth //посмотреть убрать
               id="email"
               label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
+              autoComplete="email" //посмотреть убрать
+              autoFocus //посмотреть убрать
+              {...formik.getFieldProps('email')}
+              helperText={
+                formik.touched.email && formik.errors.email ? (
+                  <div style={{ color: 'red' }}>{formik.errors.email}</div>
+                ) : (
+                  ' '
+                )
+              }
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+            <FormControl sx={{ width: '50ch' }} variant={'outlined'}>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <OutlinedInput
+                id="password"
+                variant="filled"
+                required
+                fullWidth
+                margin="normal"
+                autoComplete="current-password"
+                type={Password ? 'text' : 'password'}
+                aria-describedby="component-error-text"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {Password ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label={'password'}
+                {...formik.getFieldProps('password')}
+              />
+              <FormHelperText id="component-error-text">
+                {formik.touched.password && formik.errors.password ? (
+                  <div style={{ color: 'red' }}>{formik.errors.password}</div>
+                ) : (
+                  ' '
+                )}
+              </FormHelperText>
+            </FormControl>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  {...formik.getFieldProps('rememberMe')}
+                  checked={formik.values.rememberMe}
+                  color="primary"
+                />
+              }
               label="Remember me"
             />
             <Grid container>
@@ -105,8 +201,8 @@ export const Login = () => {
               </Grid>
             </Grid>
           </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   )
