@@ -1,6 +1,6 @@
 import { authAPI, LoginParamsType } from 'api/cards-api'
-// import { setAppErrorAC, setAppStatusAC } from 'app/app-reducer'
-import { AppThunk } from 'app/store'
+import { AppThunkType } from 'app/store'
+import { errorUtils } from 'common/utils/error-utils'
 
 const initialState: InitialStateType = {
   isLoggedIn: false,
@@ -19,27 +19,23 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 export const setIsLoggedInAC = (value: boolean) => ({ type: 'login/SET-IS-LOGGED-IN', value } as const)
 //thunks
 export const loginTC =
-  (data: LoginParamsType): AppThunk =>
-  async (dispatch: any) => {
+  (data: LoginParamsType): AppThunkType =>
+  async dispatch => {
     // dispatch(setAppStatusAC('loading'))
     try {
       const res = await authAPI.login(data)
 
       console.log(res)
       // if (res.data.resultCode===0){
-      //   dispatch(setIsLoggedInAC(true))
+      dispatch(setIsLoggedInAC(true))
       //   dispatch(setAppStatusAC('succeeded'))
       //   } else {
       //     handleServerAppError(res.data,dispatch)
       //   }
-    } catch (e) {
-      //   if(axios.isAxiosError<{message:string}>(e)){
-      //     const error=e.response?.data? e.response?.data.message:e.message
-      //     dispatch(setAppErrorAC(error))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
+      //   handleServerNetworkError({message:'1'},dispatch)
     }
-    //   handleServerNetworkError({message:'1'},dispatch)
-    //
-    // }
   }
 
 //types

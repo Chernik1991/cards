@@ -22,9 +22,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
-import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
-import { useAppDispatch } from 'app/store'
+import { useAppDispatch, useAppSelector } from 'app/store'
 import { loginTC } from 'features/auth/a1-login/auth-reducer'
 
 const Copyright = (props: any) => {
@@ -49,7 +49,7 @@ type FormikErrorType = {
 }
 export const Login = () => {
   const dispatch = useAppDispatch()
-  // const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik: any = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -80,9 +80,16 @@ export const Login = () => {
     },
   })
 
-  // if (isLoggedIn) {
-  //   return <Redirect to={'/'} />
+  // const navigate = useNavigate()
+  //
+  // const redik = true
+  //
+  // if (redik) {
+  //   return navigate('/')
   // }
+  if (isLoggedIn) {
+    return <Navigate to={'/'} />
+  }
   const [Password, setPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setPassword(show => !show)
