@@ -2,14 +2,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
 import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
 
+import { registerReducer } from '../features/auth/a2-register/register-reducer'
+
 import { appReducer } from 'app/app-reducer'
-import { authReducer } from 'features/auth/a1-login/auth-reducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
 const rootReducer = combineReducers({
   app: appReducer,
-  auth: authReducer,
+  reg: registerReducer,
 })
 
 // непосредственно создаём store
