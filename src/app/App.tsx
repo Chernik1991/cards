@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import './App.css'
 import { CircularProgress } from '@mui/material'
-import { BrowserRouter } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { Pages } from 'common/components/Routing/pages'
@@ -25,13 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        {/*<HashRouter>*/}
-        {/*<Layout>*/}
-        <Pages />
-        {/*</Layout>*/}
-        {/*</HashRouter>*/}
-      </BrowserRouter>
+      <Pages />
     </div>
   )
 }
