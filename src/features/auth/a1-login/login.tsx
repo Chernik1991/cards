@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { memo, useState } from 'react'
+import { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -35,7 +35,7 @@ type FormikErrorType = {
   password?: string
   rememberMe?: boolean
 }
-export const Login = memo(() => {
+export const Login = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -66,16 +66,16 @@ export const Login = memo(() => {
     },
   })
 
-  if (isLoggedIn) {
-    return <Navigate to={'/'} />
-  }
-  console.log(isLoggedIn, 'isLoggedIn')
   const [Password, setPassword] = useState(false)
 
   const handleClickShowPassword = () => setPassword(show => !show)
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to={'/'} />
   }
 
   return (
@@ -187,4 +187,4 @@ export const Login = memo(() => {
       </Container>
     </ThemeProvider>
   )
-})
+}
