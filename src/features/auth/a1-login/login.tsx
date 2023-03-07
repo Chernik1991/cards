@@ -27,19 +27,6 @@ import { Navigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { loginTC } from 'features/auth/a1-login/auth-reducer'
 
-const Copyright = (props: any) => {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://chernik1991.github.io/cards/">
-        Cards
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
 const theme = createTheme()
 
 type FormikErrorType = {
@@ -203,7 +190,7 @@ export const Login = () => {
               </Grid>
             </Grid>
           </Box>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
+          {/*<Copyright sx={{ mt: 8, mb: 4 }} />*/}
         </Box>
       </Container>
     </ThemeProvider>

@@ -3,6 +3,7 @@ import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
 import { PATH } from 'common/components/Routing/pages'
+import { Footer } from 'features/footer/footer'
 // import { Header } from '../header/Header'
 // import { Sidebar } from '../sidebar/Sidebar'
 
@@ -32,7 +33,7 @@ export const Layout = () => {
         <NavLink to={'*'}>Error404</NavLink>
       </header>
       <Outlet />
-      <footer>footer Layout</footer>
+      <Footer />
       {/*<Sidebar open={open} handleClose={handleClose} />*/}
       {/*<Header handleOpen={handleOpen} />*/}
       {/*<div>*/}
