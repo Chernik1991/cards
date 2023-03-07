@@ -3,8 +3,8 @@ import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { Login } from '../../../features/auth/a1-login/login'
-import { Register } from '../../../features/auth/a2-register/register'
-import { Profile } from '../../../features/profile/profile'
+import { Register } from '../../../features/auth/a2-register/Register'
+import { Profile } from '../../../features/profile/Profile'
 import { Test } from '../../../features/test/test'
 
 import Error404 from './pages/Error404'

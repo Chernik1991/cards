@@ -27,20 +27,17 @@ export const registerTC = (data: RegisterParamsType) => async (dispatch: Dispatc
     dispatch(setAppStatusAC('loading'))
 
     if (res.data.addedUser._id) {
-      console.log('good')
-      console.log(res.data.addedUser._id)
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setIsRegisterAC(true))
     } else {
       dispatch(setAppStatusAC('failed'))
-      console.log('Error1')
     }
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 
-    dispatch(setAppStatusAC('failed'))
     errorUtils(err, dispatch)
-    console.log('Error2')
+
+    dispatch(setAppStatusAC('failed'))
   }
 }
 

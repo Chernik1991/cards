@@ -1,7 +1,17 @@
 import React from 'react'
 
 import { VisibilityOff, Visibility } from '@mui/icons-material'
-import { Button, FormControl, FormGroup, FormLabel, Grid, IconButton, InputAdornment, InputLabel } from '@mui/material'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+} from '@mui/material'
 import Input from '@mui/material/Input'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
@@ -12,6 +22,7 @@ import { PATH } from '../../../common/components/Routing/pages'
 import { ErrorSnackbar } from '../../../common/utils/ErrorSnackbar'
 
 import { registerTC } from './register-reducer'
+import s from './RegisterStyle.module.css'
 
 type FormikErrorType = {
   email?: string
@@ -65,13 +76,23 @@ export const Register = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'}>
-      <Grid item justifyContent={'center'}>
-        <FormControl>
-          <FormLabel>Sign up</FormLabel>
+    <div>
+      <Grid className={s.RegContainer} container justifyContent={'center'}>
+        <Grid className={s.RegFormBox} item justifyContent={'center'}>
+          <FormLabel
+            sx={{
+              textAlign: 'center',
+              fontSize: '26px',
+              color: '#000000',
+              fontWeight: '600',
+              fontFamily: 'SemiBold',
+            }}
+          >
+            <div>Sign up</div>
+          </FormLabel>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup>
-              <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+              <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
                 <InputLabel htmlFor="standard-adornment-password">Email</InputLabel>
                 <Input id="standard-adornment-Email" type="text" {...formik.getFieldProps('email')} />
               </FormControl>
@@ -80,7 +101,7 @@ export const Register = () => {
                 <div style={{ color: 'red' }}>{formik.errors.email}</div>
               ) : null}
 
-              <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+              <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                 <Input
                   id="standard-adornment-password"
@@ -104,7 +125,7 @@ export const Register = () => {
                 <div style={{ color: 'red' }}>{formik.errors.password}</div>
               ) : null}
 
-              <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+              <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
                 <InputLabel htmlFor="standard-adornment-password">Confirm password</InputLabel>
                 <Input
                   id="standard-adornment-password"
@@ -128,14 +149,53 @@ export const Register = () => {
                 <div style={{ color: 'red' }}>{formik.errors.password}</div>
               ) : null}
 
-              <Button type={'submit'} variant={'contained'} color={'primary'}>
+              <Button
+                type={'submit'}
+                variant={'contained'}
+                sx={{
+                  borderRadius: '20px',
+                  fontSize: '16px',
+                  lineHeight: '20px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontStyle: 'Medium',
+                  textTransform: 'none',
+                  marginTop: '50px',
+                }}
+              >
                 Sign up
               </Button>
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '14px',
+                  fontStyle: 'SemiBold',
+                  fontWeight: '600',
+                  marginTop: '30px',
+                  lineHeight: '24px',
+                  opacity: '50%',
+                }}
+              >
+                <div>Already have an account?</div>
+              </Box>
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  fontSize: '16px',
+                  fontStyle: 'SemiBold',
+                  fontWeight: '600',
+                  marginTop: '10px',
+                  lineHeight: '24px',
+                  color: '#366EFF',
+                }}
+              >
+                <a href={'/login'}>Sign In</a>
+              </Box>
             </FormGroup>
           </form>
-        </FormControl>
-        <ErrorSnackbar />
+        </Grid>
       </Grid>
-    </Grid>
+
+      <ErrorSnackbar />
+    </div>
   )
 }

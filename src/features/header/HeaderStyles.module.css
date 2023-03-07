@@ -1,0 +1,19 @@
+.headerTop {
+
+}
+
+.headerBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 60px;
+    padding: 0 150px 0 150px;
+
+    box-shadow: 0 15px 13px -10px rgba(34, 60, 80, 0.2);
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}

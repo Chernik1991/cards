@@ -1,0 +1,10 @@
+.RegFormBox {
+    padding: 25px;
+
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+}
+
+.RegContainer {
+    margin-top: 70px;
+}

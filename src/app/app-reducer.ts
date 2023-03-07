@@ -1,5 +1,5 @@
 const initialState: InitialStateType = {
-  status: 'idle',
+  status: 'loading', //Изменить на idle
   error: null,
 }
 
