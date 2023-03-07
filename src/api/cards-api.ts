@@ -6,12 +6,9 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-  // logOut(){
-  //   return instance.delete<ResponseType>('auth/login');
-  // },
-  // login(data:LoginParamsType){
-  //   return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId: number }>>>('auth/login', data);
-  // },
+  logOut() {
+    return instance.delete<{}, AxiosResponse<ResponseLogOut>>('auth/me')
+  },
   login(data: LoginParamsType) {
     return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('auth/login', data)
   },
@@ -38,4 +35,8 @@ export type ResponseType = {
   token: string
   tokenDeathTime: number
   avatar: string
+}
+export type ResponseLogOut = {
+  info: string
+  error: string
 }

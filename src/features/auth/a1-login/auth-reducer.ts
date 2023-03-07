@@ -60,6 +60,26 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     dispatch(setAppIsInitializedAC(true))
   }
 }
+export const logoutTC = (): AppThunkType => async dispatch => {
+  dispatch(setAppStatusAC('loading'))
+  try {
+    const res = await authAPI.logOut()
+
+    console.log(res, 'logoutTC')
+
+    if (res.data.info.length > 0) {
+      dispatch(setIsLoggedInAC(false))
+      dispatch(setAppStatusAC('succeeded'))
+      // dispatch(clearTodoDataAC())
+    } else {
+      // handleServerAppError(res.data, dispatch)
+    }
+  } catch (e: any) {
+    errorUtils(e, dispatch)
+  }
+  // handleServerNetworkError({message:'1'},dispatch)
+}
+
 //types
 type ActionsType = ReturnType<typeof setIsLoggedInAC>
 type InitialStateType = { isLoggedIn: boolean }

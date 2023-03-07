@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { NavLink, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
-import { PATH } from 'common/components/Routing/pages'
 import { Footer } from 'features/footer/footer'
+import Header from 'features/header/header'
 // import { Header } from '../header/Header'
 // import { Sidebar } from '../sidebar/Sidebar'
 
@@ -22,16 +22,7 @@ export const Layout = () => {
   // }, [open]) // отключает прокрутку при открытом меню
   return (
     <>
-      <header>
-        <div>header Layout</div>
-        <NavLink to={PATH.LOGIN}>Login</NavLink>
-        <NavLink to={PATH.REGISTER}>Register</NavLink>
-        <NavLink to={PATH.PROFILE}>Profile</NavLink>
-        <NavLink to={PATH.RESET_YOUR_PASSWORD}>Register</NavLink>
-        <NavLink to={PATH.ENTER_YOUR_NEW_PASSWORD}>Register</NavLink>
-        <NavLink to={PATH.TEST}>Test</NavLink>
-        <NavLink to={'*'}>Error404</NavLink>
-      </header>
+      <Header />
       <Outlet />
       <Footer />
       {/*<Sidebar open={open} handleClose={handleClose} />*/}
