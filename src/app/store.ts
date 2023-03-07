@@ -4,12 +4,14 @@ import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { appReducer } from 'app/app-reducer'
 import { authReducer } from 'features/auth/a1-login/auth-reducer'
+import { profileReducer } from 'features/profile/profile-reducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
+  profile: profileReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

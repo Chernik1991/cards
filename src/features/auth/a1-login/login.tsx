@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { memo, useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
@@ -34,10 +35,10 @@ type FormikErrorType = {
   password?: string
   rememberMe?: boolean
 }
-export const Login = () => {
+export const Login = memo(() => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const formik: any = useFormik({
+  const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
 
@@ -61,23 +62,15 @@ export const Login = () => {
     },
     onSubmit: values => {
       dispatch(loginTC(values))
-      //
-      // alert(JSON.stringify(values, null, 2)), //убрать потом
       formik.resetForm()
     },
   })
 
-  // const navigate = useNavigate()
-  //
-  // const redik = true
-  //
-  // if (redik) {
-  //   return navigate('/')
-  // }
   if (isLoggedIn) {
     return <Navigate to={'/'} />
   }
-  const [Password, setPassword] = React.useState(false)
+  console.log(isLoggedIn, 'isLoggedIn')
+  const [Password, setPassword] = useState(false)
 
   const handleClickShowPassword = () => setPassword(show => !show)
 
@@ -132,10 +125,10 @@ export const Login = () => {
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
-                variant="filled"
+                // variant="filled"
                 required
                 fullWidth
-                margin="normal"
+                // margin="normal"
                 autoComplete="current-password"
                 type={Password ? 'text' : 'password'}
                 aria-describedby="component-error-text"
@@ -190,9 +183,8 @@ export const Login = () => {
               </Grid>
             </Grid>
           </Box>
-          {/*<Copyright sx={{ mt: 8, mb: 4 }} />*/}
         </Box>
       </Container>
     </ThemeProvider>
   )
-}
+})
