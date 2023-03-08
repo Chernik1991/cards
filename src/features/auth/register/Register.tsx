@@ -79,7 +79,6 @@ export const Register = () => {
     },
   })
 
-  console.log(isRegister)
   if (isRegister) {
     return <Navigate to="/login" replace />
   }

@@ -2,6 +2,8 @@ import React from 'react'
 
 import { Routes, Route } from 'react-router-dom'
 
+import { Profile } from '../../../features/profile/profile'
+
 import Error404 from './pages/Error404'
 
 import { Layout } from 'common/components/Routing/layout/Layout'
@@ -10,7 +12,6 @@ import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPasswor
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/login'
 import { Register } from 'features/auth/register/Register'
-import { Profile } from 'features/profile/Profile'
 import { Test } from 'features/test/test'
 
 export const PATH = {
@@ -28,7 +29,7 @@ export const Pages = () => {
     <div>
       <Routes>
         <Route path={'/'} element={<Layout />}>
-          {/*<Route index element={<Profile />} />*/}
+          <Route index element={<Profile />} />
           <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.LOGIN} element={<Login />} />
           <Route path={PATH.REGISTER} element={<Register />} />

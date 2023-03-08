@@ -3,10 +3,11 @@ import React from 'react'
 import { LinearProgress } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
+import { Header } from '../../../../features/header/header'
+
 import { RequestStatusType } from 'app/app-reducer'
 import { useAppSelector } from 'app/store'
 import { Footer } from 'features/footer/footer'
-import { Header } from 'features/header/Header'
 
 // import { Header } from '../header/Header'
 // import { Sidebar } from '../sidebar/Sidebar'

@@ -70,6 +70,7 @@ export const logoutTC = (): AppThunkType => async dispatch => {
     if (res.data.info.length > 0) {
       dispatch(setIsLoggedInAC(false))
       dispatch(setAppStatusAC('succeeded'))
+
       // dispatch(clearTodoDataAC())
     } else {
       // handleServerAppError(res.data, dispatch)
