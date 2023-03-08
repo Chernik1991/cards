@@ -24,7 +24,9 @@ export const Header = () => {
             textTransform: 'none',
           }}
         >
-          <a href={'/login'}>Sign In</a>
+          <a className={s.headerA} href={'/login'}>
+            Sign In
+          </a>
         </Button>
       </div>
     </div>

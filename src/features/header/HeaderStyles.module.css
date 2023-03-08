@@ -13,7 +13,7 @@
     box-shadow: 0 15px 13px -10px rgba(34, 60, 80, 0.2);
 }
 
-a {
+.headerA {
     color: white;
     text-decoration: none;
 }

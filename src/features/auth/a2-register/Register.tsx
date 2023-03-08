@@ -27,6 +27,7 @@ import s from './RegisterStyle.module.css'
 type FormikErrorType = {
   email?: string
   password?: string
+  confirmPassword?: string
 }
 
 export const Register = () => {
@@ -46,6 +47,7 @@ export const Register = () => {
     initialValues: {
       email: '',
       password: '',
+      confirmPassword: '',
     },
     validate: values => {
       const errors: FormikErrorType = {}
@@ -60,6 +62,15 @@ export const Register = () => {
         errors.password = 'Required'
       } else if (values.password.length > 15) {
         errors.password = 'Must be 15 characters or less'
+      }
+      if (!values.confirmPassword) {
+        errors.confirmPassword = 'Required'
+      } else if (values.confirmPassword.length > 15) {
+        errors.confirmPassword = 'Must be 15 characters or less'
+      }
+      if (values.password !== values.confirmPassword) {
+        errors.confirmPassword = 'Passwords must be equal'
+        errors.password = 'Passwords must be equal'
       }
 
       return errors
@@ -121,7 +132,7 @@ export const Register = () => {
                 />
               </FormControl>
 
-              {formik.touched.password && formik.errors.password ? (
+              {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
                 <div style={{ color: 'red' }}>{formik.errors.password}</div>
               ) : null}
 
@@ -130,7 +141,7 @@ export const Register = () => {
                 <Input
                   id="standard-adornment-password"
                   type={showPassword ? 'text' : 'password'}
-                  {...formik.getFieldProps('password')}
+                  {...formik.getFieldProps('confirmPassword')}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -145,8 +156,8 @@ export const Register = () => {
                 />
               </FormControl>
 
-              {formik.touched.password && formik.errors.password ? (
-                <div style={{ color: 'red' }}>{formik.errors.password}</div>
+              {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
               ) : null}
 
               <Button
