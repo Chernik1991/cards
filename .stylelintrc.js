@@ -1,3 +1,4 @@
 module.exports = {
-  extends: 'stylelint-config-clean-order',
-}
+    extends: 'stylelint-config-clean-order',
+  }
+  

@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { Routes, Route } from 'react-router-dom'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Register } from 'features/auth/register/register'
+import { Routes, Route, Routes, Route, Navigate } from 'react-router-dom'
 
 import { Login } from '../../../features/auth/a1-login/login'
 import { Register } from '../../../features/auth/a2-register/Register'
 import { Profile } from '../../../features/profile/Profile'
-import { Test } from '../../../features/test/test'
+import { Test, Test } from '../../../features/test/test'
 
 import Error404 from './pages/Error404'
 
@@ -15,9 +15,7 @@ import { CheckEmail } from 'features/auth/forgotPassword/checkEmail/checkEmail'
 import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPassword/createNewPassword'
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/login'
-import { Register } from 'features/auth/register/register'
 import { Profile } from 'features/profile/profile'
-import { Test } from 'features/test/test'
 
 export const PATH = {
   LOGIN: 'login',
