@@ -3,8 +3,13 @@ const initialState: InitialStateType = {
   error: null,
   isInitialized: false,
 }
+const initialState: InitialStateType = {
+  status: 'loading', //Изменить на idle
+  error: null,
+}
 
 //reducer
+export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'APP/SET-STATUS':
@@ -18,11 +23,19 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
   }
 }
 
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type InitialStateType = {
+  // происходит ли сейчас взаимодействие с сервером
+  status: RequestStatusType
+  // если ошибка какая-то глобальная произойдёт - мы запишем текст ошибки сюда
+  error: string | null
+}
 //AC
 export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-ERROR', error } as const)
 export const setAppStatusAC = (status: RequestStatusType) => ({ type: 'APP/SET-STATUS', status } as const)
 export const setAppIsInitializedAC = (isInitialized: boolean) =>
   ({ type: 'APP/SET-IS-INITIALIZED', isInitialized } as const)
+export const setAppStatusAC = (status: RequestStatusType) => ({ type: 'APP/SET-STATUS', status } as const)
 
 //types
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

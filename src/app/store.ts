@@ -2,6 +2,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
+import { registerReducer } from '../features/auth/a2-register/register-reducer'
+
 import { appReducer } from 'app/app-reducer'
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { profileReducer } from 'features/profile/profile-reducer'
@@ -12,6 +14,7 @@ const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   profile: profileReducer,
+  reg: registerReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

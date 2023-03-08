@@ -11,6 +11,9 @@ export const authAPI = {
   },
   login(data: LoginParamsType) {
     return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('auth/login', data)
+export const cardsAPI = {
+  registerUser(data: RegisterParamsType) {
+    return instance.post<RegisterParamsType, AxiosResponse<any>>('/auth/register', data)
   },
   me() {
     return instance.post<{}, AxiosResponse<ResponseType>>('auth/me', {})
@@ -39,4 +42,10 @@ export type ResponseType = {
 export type ResponseLogOut = {
   info: string
   error: string
+}
+}
+
+export type RegisterParamsType = {
+  email: string
+  password: string
 }
