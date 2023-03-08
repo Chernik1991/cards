@@ -11,12 +11,17 @@ export const authAPI = {
   },
   login(data: LoginParamsType) {
     return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('auth/login', data)
+  },
+  me() {
+    return instance.post<{}, AxiosResponse<ResponseType>>('auth/me', {})
+  },
+}
 export const cardsAPI = {
   registerUser(data: RegisterParamsType) {
     return instance.post<RegisterParamsType, AxiosResponse<any>>('/auth/register', data)
   },
-  me() {
-    return instance.post<{}, AxiosResponse<ResponseType>>('auth/me', {})
+  updateUserData(data: ProfileType) {
+    return instance.put<ProfileType, AxiosResponse<any>>('/auth/me', data)
   },
 }
 export type LoginParamsType = {
@@ -43,6 +48,9 @@ export type ResponseLogOut = {
   info: string
   error: string
 }
+export type ProfileType = {
+  name: string
+  avatar?: string
 }
 
 export type RegisterParamsType = {

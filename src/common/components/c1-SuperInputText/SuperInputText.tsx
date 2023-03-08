@@ -2,6 +2,8 @@ import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEve
 
 import s from './SuperInputText.module.css'
 
+import { useAppDispatch } from 'app/store'
+
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
@@ -34,8 +36,8 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = ({
     onChange?.(e) // если есть пропс onChange, то передать ему е (поскольку onChange не обязателен)
 
     onChangeText?.(e.currentTarget.value)
-    dispatch(setNewCurrnetNameAC(e.currentTarget.value as string))
-    dispatch(setTempNameAC(e.currentTarget.value as string))
+    // dispatch(setNewCurrnetNameAC(e.currentTarget.value as string))
+    // dispatch(setTempNameAC(e.currentTarget.value as string))
   }
 
   const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {

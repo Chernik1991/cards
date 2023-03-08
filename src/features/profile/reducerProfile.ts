@@ -1,11 +1,11 @@
 import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { cardsAPI, ProfileType } from '../../api/profile-api'
-import { setAppStatusAC } from '../../app/app-reducer'
-import { errorUtils } from '../../common/utils/error-utils'
+import { authAPI, cardsAPI, ProfileType, ResponseType } from 'api/cards-api'
+import { setAppStatusAC } from 'app/app-reducer'
+import { errorUtils } from 'common/utils/error-utils'
 
-const initialState: InitialStateType = {
+const initialState: any = {
   _id: '',
   email: 'iofefje@gmail.com',
   name: 'Alen Del',
@@ -17,22 +17,20 @@ const initialState: InitialStateType = {
   isAdmin: false,
   rememberMe: false,
 
-  error: '',
+  // error: '',
 
-  editedMode: false,
-  currentName: '',
-  tempName: '',
+  // editedMode: false,
+  // currentName: '',
+  // tempName: '',
 }
 
-export const profileReducer = (
-  state: InitialStateType = initialState,
-  action: ActionsType
-): InitialStateType => {
+export const profileReducer = (state: any = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'addUserdata': {
       const userData = { ...action.payload.data }
 
-      return { ...userData }
+      // return { ...userData }
+      return state
     }
     case 'userLogOut': {
       return { ...state, _id: action.payload.userID }
@@ -54,22 +52,16 @@ export const profileReducer = (
   }
 }
 
-export const setUserDataAC = (data: InitialStateType) =>
-  ({ type: 'addUserdata', payload: { data } } as const)
-export const userLogOutAC = (userID: string) =>
-  ({ type: 'userLogOut', payload: { userID } } as const)
-export const setNewNameAC = (name1: string) =>
-  ({ type: 'changeUserName', payload: { name1 } } as const)
-export const setNewCurrnetNameAC = (name2: string) =>
-  ({ type: 'changeCurrentName', payload: { name2 } } as const)
-export const setTempNameAC = (name3: string) =>
-  ({ type: 'changeTempName', payload: { name3 } } as const)
-export const editedModeAC = (editedMode: boolean) =>
-  ({ type: 'editMode', payload: { editedMode } } as const)
+export const setUserDataAC = (data: ResponseType) => ({ type: 'addUserdata', payload: { data } } as const)
+export const userLogOutAC = (userID: string) => ({ type: 'userLogOut', payload: { userID } } as const)
+export const setNewNameAC = (name1: string) => ({ type: 'changeUserName', payload: { name1 } } as const)
+export const setNewCurrnetNameAC = (name2: string) => ({ type: 'changeCurrentName', payload: { name2 } } as const)
+export const setTempNameAC = (name3: string) => ({ type: 'changeTempName', payload: { name3 } } as const)
+export const editedModeAC = (editedMode: boolean) => ({ type: 'editMode', payload: { editedMode } } as const)
 
 export const addUserDataTC = () => async (dispatch: Dispatch) => {
   try {
-    const res = await cardsAPI.authMe()
+    const res = await authAPI.me()
 
     dispatch(setAppStatusAC('loading'))
 
@@ -91,7 +83,7 @@ export const addUserDataTC = () => async (dispatch: Dispatch) => {
   }
 }
 
-export const updateUserDataTC = (data: ProfileType) => async (dispatch: Dispatch) => {
+export const updateUserDataTC = (data: ResponseType) => async (dispatch: Dispatch) => {
   try {
     const res = await cardsAPI.updateUserData(data)
 
@@ -117,7 +109,7 @@ export const updateUserDataTC = (data: ProfileType) => async (dispatch: Dispatch
 
 export const userLogOutTC = () => async (dispatch: Dispatch) => {
   try {
-    const res = await cardsAPI.userLogOut()
+    const res = await authAPI.logOut()
 
     dispatch(setAppStatusAC('loading'))
 

@@ -1,12 +1,6 @@
 import React from 'react'
 
-import { Register } from 'features/auth/register/register'
-import { Routes, Route, Routes, Route, Navigate } from 'react-router-dom'
-
-import { Login } from '../../../features/auth/a1-login/login'
-import { Register } from '../../../features/auth/a2-register/Register'
-import { Profile } from '../../../features/profile/Profile'
-import { Test, Test } from '../../../features/test/test'
+import { Routes, Route } from 'react-router-dom'
 
 import Error404 from './pages/Error404'
 
@@ -15,7 +9,9 @@ import { CheckEmail } from 'features/auth/forgotPassword/checkEmail/checkEmail'
 import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPassword/createNewPassword'
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/login'
-import { Profile } from 'features/profile/profile'
+import { Register } from 'features/auth/register/Register'
+import { Profile } from 'features/profile/Profile'
+import { Test } from 'features/test/test'
 
 export const PATH = {
   LOGIN: 'login',
@@ -32,7 +28,8 @@ export const Pages = () => {
     <div>
       <Routes>
         <Route path={'/'} element={<Layout />}>
-          <Route index element={<Profile />} />
+          {/*<Route index element={<Profile />} />*/}
+          <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.LOGIN} element={<Login />} />
           <Route path={PATH.REGISTER} element={<Register />} />
           <Route path={PATH.PROFILE} element={<Profile />} />

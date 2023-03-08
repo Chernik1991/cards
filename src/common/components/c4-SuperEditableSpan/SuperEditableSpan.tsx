@@ -1,16 +1,12 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState } from 'react'
 
-import { useAppDispatch } from '../../../app/store'
-import {
-  editedModeAC,
-  setNewCurrnetNameAC,
-  setNewNameAC,
-  setTempNameAC,
-} from '../../../features/profile/reducerProfile'
 import SuperInputText from '../c1-SuperInputText/SuperInputText'
 
 import editIcon from './editIcon.svg'
 import s from './SuperEditableSpan.module.css'
+
+import { useAppDispatch } from 'app/store'
+import { editedModeAC, setNewCurrnetNameAC } from 'features/profile/reducerProfile'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -41,14 +37,7 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = ({
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-  const {
-    children,
-    onDoubleClick,
-    className,
-    defaultText,
-    defaultInputClassName,
-    ...restSpanProps
-  } = spanProps || {}
+  const { children, onDoubleClick, className, defaultText, defaultInputClassName, ...restSpanProps } = spanProps || {}
 
   const onEnterCallback = () => {
     // dispatch(setTempNameAC(restProps.value as string))

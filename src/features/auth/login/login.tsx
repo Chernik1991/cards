@@ -36,7 +36,6 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 export const Login = () => {
-  return <div>Hello Login</div>
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -76,7 +75,7 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
-    return <Navigate to={'/'} />
+    return <Navigate to={'/profile'} />
   }
 
   return (
