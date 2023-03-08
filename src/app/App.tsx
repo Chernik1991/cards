@@ -5,7 +5,7 @@ import { CircularProgress } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { Pages } from 'common/components/Routing/pages'
-import { initializeAppTC } from 'features/auth/a1-login/auth-reducer'
+import { initializeAppTC } from 'features/auth/login/auth-reducer'
 
 function App() {
   const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)

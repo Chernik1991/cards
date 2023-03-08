@@ -9,7 +9,7 @@ export const Profile = memo(() => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
   if (!isLoggedIn) {
-    return <Navigate to={'/Login'} />
+    return <Navigate to={'/ForgotPassword'} />
   }
 
   return <div>ID={data._id}</div>

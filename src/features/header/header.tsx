@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 import { RequestStatusType } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
-import { logoutTC } from 'features/auth/a1-login/auth-reducer'
+import { logoutTC } from 'features/auth/login/auth-reducer'
 
 const Header = () => {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
@@ -45,8 +45,9 @@ const Header = () => {
       <NavLink to={PATH.LOGIN}>Login</NavLink>
       <NavLink to={PATH.REGISTER}>Register</NavLink>
       <NavLink to={PATH.PROFILE}>Profile</NavLink>
-      <NavLink to={PATH.RESET_YOUR_PASSWORD}>Register</NavLink>
-      <NavLink to={PATH.ENTER_YOUR_NEW_PASSWORD}>Register</NavLink>
+      <NavLink to={PATH.FORGOT_YOUR_PASSWORD}>Forgot Password</NavLink>
+      <NavLink to={PATH.CHECK_EMAIL}>Check Email</NavLink>
+      <NavLink to={PATH.CREATE_NEW_PASSWORD}>Create New Password</NavLink>
       <NavLink to={PATH.TEST}>Test</NavLink>
       <NavLink to={'*'}>Error404</NavLink>
     </>

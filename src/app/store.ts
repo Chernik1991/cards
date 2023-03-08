@@ -3,7 +3,7 @@ import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { appReducer } from 'app/app-reducer'
-import { authReducer } from 'features/auth/a1-login/auth-reducer'
+import { authReducer } from 'features/auth/login/auth-reducer'
 import { profileReducer } from 'features/profile/profile-reducer'
 
 // объединяя reducer-ы с помощью combineReducers,
