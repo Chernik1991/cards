@@ -37,7 +37,7 @@ export const Profile = () => {
   const logOutHandler = () => {
     dispatch(logoutTC())
 
-    return <Navigate to={'/' + PATH.LOGIN} replace />
+    return <Navigate to={'/' + PATH.LOGIN} />
   }
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
