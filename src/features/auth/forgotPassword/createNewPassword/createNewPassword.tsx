@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
+import { useParams } from 'react-router-dom'
 
 import { useAppDispatch } from '../../../../app/store'
 
@@ -23,6 +24,8 @@ type FormikErrorType = {
   resetPasswordToken?: string
 }
 export const CreateNewPassword = () => {
+  const { token } = useParams<{ token: string }>()
+
   const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -39,7 +42,7 @@ export const CreateNewPassword = () => {
     },
     initialValues: {
       password: '',
-      resetPasswordToken: '',
+      resetPasswordToken: `${token?.concat()}`,
     },
     onSubmit: values => {
       dispatch(setNewPasswordTC(values))

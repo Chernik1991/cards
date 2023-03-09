@@ -20,7 +20,7 @@ export const PATH = {
   PROFILE: 'profile',
   FORGOT_YOUR_PASSWORD: 'forgot-your-password',
   CHECK_EMAIL: 'check-email',
-  CREATE_NEW_PASSWORD: 'create-new-password',
+  CREATE_NEW_PASSWORD: `create-new-password/:token`,
   TEST: 'test',
 }
 
