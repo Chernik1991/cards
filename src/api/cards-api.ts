@@ -6,14 +6,26 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-  logOut() {
-    return instance.delete<{}, AxiosResponse<ResponseLogOut>>('auth/me')
-  },
   login(data: LoginParamsType) {
-    return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('auth/login', data)
+    return instance.post<LoginParamsType, AxiosResponse<ResponseLoginType>>('auth/login', data)
+  },
+  register(data: RegisterParamsType) {
+    return instance.post<RegisterParamsType, AxiosResponse<ResponseRegisterType>>('/auth/register', data)
   },
   me() {
-    return instance.post<{}, AxiosResponse<ResponseType>>('auth/me', {})
+    return instance.post<{}, AxiosResponse<ResponseLoginType>>('auth/me', {})
+  },
+  updateUser(data: ProfileParamsType) {
+    return instance.put<ProfileType, AxiosResponse<ResponseUpdatedUserType>>('/auth/me', data)
+  },
+  logOut() {
+    return instance.delete<{}, AxiosResponse<ResponseInfoType>>('auth/me')
+  },
+  forgot(data: ForgotParamsType) {
+    return instance.post<ForgotParamsType, AxiosResponse<ResponseInfoType>>('/auth/forgot', data)
+  },
+  setNewPassword(data: SetNewPasswordParamsType) {
+    return instance.post<SetNewPasswordParamsType, AxiosResponse<ResponseInfoType>>('/auth/set-new-password', data)
   },
 }
 export const cardsAPI = {
@@ -29,7 +41,24 @@ export type LoginParamsType = {
   password: string
   rememberMe?: boolean
 }
-export type ResponseType = {
+export type RegisterParamsType = {
+  email: string
+  password: string
+}
+export type ProfileParamsType = {
+  name: string
+  avatar?: string
+}
+export type ForgotParamsType = {
+  email: string
+  from: string
+  message: string
+}
+export type SetNewPasswordParamsType = {
+  password: string
+  resetPasswordToken: string
+}
+export type ResponseLoginType = {
   _id: string
   email: string
   rememberMe: boolean
@@ -43,17 +72,21 @@ export type ResponseType = {
   token: string
   tokenDeathTime: number
   avatar: string
+  error?: string
 }
-export type ResponseLogOut = {
+export type ResponseRegisterType = {
+  addedUser: any
+  error?: string
+}
+export type ResponseUpdatedUserType = {
+  updatedUser: any
+  error?: string
+}
+export type ResponseInfoType = {
   info: string
   error: string
 }
 export type ProfileType = {
   name: string
   avatar?: string
-}
-
-export type RegisterParamsType = {
-  email: string
-  password: string
-}
+} // убрать потом

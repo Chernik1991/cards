@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { redirect } from 'react-router-dom'
 
-import { ResponseType } from 'api/cards-api'
+import { ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
 
 const theme = createTheme()
@@ -18,12 +18,12 @@ const theme = createTheme()
 export const CheckEmail = () => {
   // const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const data = useAppSelector<ResponseType>(state => state.profile.data)
+  const data = useAppSelector<ResponseLoginType>(state => state.profile.data)
 
   const buttonToLogin = () => {
     alert(123)
 
-    return redirect('http://localhost:3000/cards#/')
+    return redirect('/')
   }
 
   return (

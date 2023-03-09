@@ -1,30 +1,32 @@
 import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { authAPI, cardsAPI, ProfileType, ResponseType } from 'api/cards-api'
+import { authAPI, cardsAPI, ResponseLoginType } from 'api/cards-api'
 import { setAppStatusAC } from 'app/app-reducer'
+import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 
-const initialState: any = {
+const initialState: InitialStateType = {
+  __v: 0,
+  error: '',
+  token: '',
+  tokenDeathTime: 0,
+  verified: false,
   _id: '',
   email: 'iofefje@gmail.com',
   name: 'Alen Del',
   avatar: '',
   publicCardPacksCount: 0,
-
   created: 'Date',
   updated: 'Date',
   isAdmin: false,
   rememberMe: false,
-
-  // error: '',
-
   // editedMode: false,
   // currentName: '',
   // tempName: '',
 }
 
-export const profileReducer = (state: any = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'addUserdata': {
       const userData = { ...action.payload.data }
@@ -41,25 +43,25 @@ export const profileReducer = (state: any = initialState, action: ActionsType): 
 
       return { ...state, name: newName }
     }
-    case 'changeCurrentName':
-      return { ...state, currentName: action.payload.name2 }
-    case 'changeTempName':
-      return { ...state, tempName: action.payload.name3 }
-    case 'editMode':
-      return { ...state, editedMode: action.payload.editedMode }
+    // case 'changeCurrentName':
+    //   return { ...state, currentName: action.payload.name2 }
+    // case 'changeTempName':
+    //   return { ...state, tempName: action.payload.name3 }
+    // case 'editMode':
+    //   return { ...state, editedMode: action.payload.editedMode }
     default:
       return state
   }
 }
 
-export const setUserDataAC = (data: ResponseType) => ({ type: 'addUserdata', payload: { data } } as const)
+export const setUserDataAC = (data: ResponseLoginType) => ({ type: 'addUserdata', payload: { data } } as const)
 export const userLogOutAC = (userID: string) => ({ type: 'userLogOut', payload: { userID } } as const)
 export const setNewNameAC = (name1: string) => ({ type: 'changeUserName', payload: { name1 } } as const)
 export const setNewCurrnetNameAC = (name2: string) => ({ type: 'changeCurrentName', payload: { name2 } } as const)
 export const setTempNameAC = (name3: string) => ({ type: 'changeTempName', payload: { name3 } } as const)
 export const editedModeAC = (editedMode: boolean) => ({ type: 'editMode', payload: { editedMode } } as const)
 
-export const addUserDataTC = () => async (dispatch: Dispatch) => {
+export const addUserDataTC = (): AppThunkType => async dispatch => {
   try {
     const res = await authAPI.me()
 
@@ -74,16 +76,12 @@ export const addUserDataTC = () => async (dispatch: Dispatch) => {
       dispatch(setAppStatusAC('failed'))
       console.log('Error1')
     }
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-
-    dispatch(setAppStatusAC('failed'))
-    errorUtils(err, dispatch)
-    console.log('Error2')
+  } catch (e: any) {
+    errorUtils(e, dispatch)
   }
 }
 
-export const updateUserDataTC = (data: ResponseType) => async (dispatch: Dispatch) => {
+export const updateUserDataTC = (data: ResponseLoginType) => async (dispatch: Dispatch) => {
   try {
     const res = await cardsAPI.updateUserData(data)
 
@@ -137,21 +135,8 @@ type ActionsType =
   | ReturnType<typeof setTempNameAC>
   | ReturnType<typeof setUserDataAC>
   | ReturnType<typeof userLogOutAC>
-export type InitialStateType = {
-  _id: string
-  email: string
-  name: string
-  avatar?: string
-  publicCardPacksCount: number
+type InitialStateType = ResponseLoginType
 
-  created: string
-  updated: string
-  isAdmin: boolean
-  rememberMe: boolean
-
-  error?: string
-
-  editedMode: boolean
-  currentName?: string
-  tempName?: string
-}
+// editedMode: boolean
+// currentName?: string
+// tempName?: string

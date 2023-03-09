@@ -10,6 +10,7 @@ import s from './HeaderStyles.module.css'
 import { RequestStatusType } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
+import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 import { logoutTC } from 'features/auth/login/auth-reducer'
 
 export const Header = () => {
@@ -58,6 +59,7 @@ export const Header = () => {
   // };
   return (
     <div>
+      <ErrorSnackbar />
       <div>header Layout</div>
       <NavLink to={PATH.LOGIN}>Login</NavLink>
       <NavLink to={PATH.REGISTER}>Register</NavLink>
