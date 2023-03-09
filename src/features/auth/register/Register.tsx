@@ -31,7 +31,7 @@ type FormikErrorType = {
 
 export const Register = () => {
   const dispatch = useAppDispatch()
-
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const isRegister = useAppSelector<boolean>(state => state.reg.isRegister)
 
   const [showPassword, setShowPassword] = useState(false)
@@ -82,7 +82,10 @@ export const Register = () => {
 
   console.log(isRegister)
   if (isRegister) {
-    return <Navigate to="/login" replace />
+    return <Navigate to={'/' + PATH.LOGIN} />
+  }
+  if (isLoggedIn) {
+    return <Navigate to={'/' + PATH.PROFILE} />
   }
 
   return (
