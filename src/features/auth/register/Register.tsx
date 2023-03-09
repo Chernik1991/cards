@@ -20,6 +20,7 @@ import { registerTC } from './register-reducer'
 import s from './RegisterStyle.module.css'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 
 type FormikErrorType = {
@@ -197,7 +198,7 @@ export const Register = () => {
                   color: '#366EFF',
                 }}
               >
-                <a href={'/login'}>Sign In</a>
+                <a href={PATH.HASH + PATH.LOGIN}>Sign In</a>
               </Box>
             </FormGroup>
           </form>

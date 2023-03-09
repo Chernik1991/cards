@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { redirect } from 'react-router-dom'
 
 import { ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
@@ -22,8 +21,8 @@ export const CheckEmail = () => {
 
   const buttonToLogin = () => {
     alert(123)
-
-    return redirect('/')
+    //
+    // return redirect('/')
   }
 
   return (

@@ -14,6 +14,7 @@ import { Profile } from 'features/profile/profile'
 import { Test } from 'features/test/test'
 
 export const PATH = {
+  HASH: '#/',
   LOGIN: 'login',
   REGISTER: 'register',
   PROFILE: 'profile',
@@ -29,7 +30,6 @@ export const Pages = () => {
       <Routes>
         <Route path={'/'} element={<Layout />}>
           <Route index element={<Profile />} />
-          <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.LOGIN} element={<Login />} />
           <Route path={PATH.REGISTER} element={<Register />} />
           <Route path={PATH.PROFILE} element={<Profile />} />

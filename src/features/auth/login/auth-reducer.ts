@@ -37,6 +37,7 @@ export const loginTC =
       }
     } catch (e: any) {
       errorUtils(e, dispatch)
+      dispatch(setAppStatusAC('failed'))
       //   handleServerNetworkError({message:'1'},dispatch)
     }
   }
@@ -45,7 +46,6 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
   try {
     const res = await authAPI.me()
 
-    console.log(res, 'initializeAppTC')
     if (res.request.status === 200) {
       dispatch(setIsLoggedInAC(true))
       dispatch(setProfileData(res.data))
@@ -55,6 +55,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     }
   } catch (e: any) {
     errorUtils(e, dispatch)
+    dispatch(setAppStatusAC('failed'))
     //   handleServerNetworkError({message:'1'},dispatch)
   } finally {
     dispatch(setAppIsInitializedAC(true))
@@ -76,6 +77,7 @@ export const logoutTC = (): AppThunkType => async dispatch => {
     }
   } catch (e: any) {
     errorUtils(e, dispatch)
+    dispatch(setAppStatusAC('failed'))
   }
   // handleServerNetworkError({message:'1'},dispatch)
 }

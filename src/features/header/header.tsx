@@ -64,40 +64,51 @@ export const Header = () => {
       <NavLink to={PATH.LOGIN}>Login</NavLink>
       <NavLink to={PATH.REGISTER}>Register</NavLink>
       <NavLink to={PATH.PROFILE}>Profile</NavLink>
-      {/*<NavLink to={PATH.RESET_YOUR_PASSWORD}>Register</NavLink>*/}
-      {/*<NavLink to={PATH.ENTER_YOUR_NEW_PASSWORD}>Register</NavLink>*/}
+      <NavLink to={PATH.FORGOT_YOUR_PASSWORD}>ForgotPassword</NavLink>
+      <NavLink to={PATH.CHECK_EMAIL}> CheckEmail</NavLink>
+      <NavLink to={PATH.CREATE_NEW_PASSWORD}>CreateNewPassword</NavLink>
       <NavLink to={PATH.TEST}>Test</NavLink>
       <NavLink to={'*'}>Error404</NavLink>
       <div className={s.headerBlock}>
         <img alt={'IMG'} src={itINC} />
-
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: '20px',
-            minWidth: '115px',
-            fontSize: '16px',
-            lineHeight: '20px',
-            fontFamily: 'Montserrat, sans-serif',
-            fontStyle: 'Medium',
-            textTransform: 'none',
-          }}
-        >
-          <a className={s.headerA} href={'/login'}>
-            Sign In
-          </a>
-        </Button>
         <Typography variant="h6">
           {!isLoggedIn && (
-            <Button color="inherit" onClick={logOutHandler}>
-              Sign In
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: '20px',
+                minWidth: '115px',
+                fontSize: '16px',
+                lineHeight: '20px',
+                fontFamily: 'Montserrat, sans-serif',
+                fontStyle: 'Medium',
+                textTransform: 'none',
+              }}
+            >
+              <a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>
+                Sign In
+              </a>
             </Button>
           )}
         </Typography>
         <Typography variant="h6">
           {isLoggedIn && (
-            <Button color="inherit" onClick={logOutHandler}>
-              Log out
+            <Button
+              onClick={logOutHandler}
+              variant="contained"
+              sx={{
+                borderRadius: '20px',
+                minWidth: '115px',
+                fontSize: '16px',
+                lineHeight: '20px',
+                fontFamily: 'Montserrat, sans-serif',
+                fontStyle: 'Medium',
+                textTransform: 'none',
+              }}
+            >
+              <a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>
+                Log out
+              </a>
             </Button>
           )}
         </Typography>
