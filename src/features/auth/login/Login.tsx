@@ -26,6 +26,7 @@ import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { PATH } from 'common/components/Routing/pages'
 import { loginTC } from 'features/auth/login/auth-reducer'
 
 const theme = createTheme()
@@ -75,7 +76,7 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
-    return <Navigate to={'/profile'} />
+    return <Navigate to={'/' + PATH.PROFILE} />
   }
 
   return (
@@ -164,7 +165,7 @@ export const Login = () => {
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Link href="#/forgot-your-password" variant="body2">
+                <Link href={PATH.HASH + PATH.FORGOT_YOUR_PASSWORD} variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
@@ -177,7 +178,7 @@ export const Login = () => {
             </Grid>
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>
-                <Link href="#/register" variant="body2">
+                <Link href={PATH.HASH + PATH.REGISTER} variant="body2">
                   {'Sign Up'}
                 </Link>
               </Grid>

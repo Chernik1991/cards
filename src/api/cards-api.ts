@@ -1,83 +1,115 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
-  withCredentials: true,
+    baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    withCredentials: true,
 })
 
 export const authAPI = {
-  logOut() {
-    return instance.delete<{}, AxiosResponse<ResponseLogOut>>('auth/me')
-  },
-  login(data: LoginParamsType) {
-    return instance.post<LoginParamsType, AxiosResponse<ProfileStateType>>('auth/login', data)
-  },
-  me() {
-    return instance.post<{}, AxiosResponse<ProfileStateType>>('auth/me', {})
-  },
+    login(data: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseLoginType>>('auth/login', data)
+    },
+    register(data: RegisterParamsType) {
+        return instance.post<RegisterParamsType, AxiosResponse<ResponseRegisterType>>('/auth/register', data)
+    },
+    me() {
+        return instance.post<{}, AxiosResponse<ResponseLoginType>>('auth/me', {})
+    },
+    updateUser(data: ProfileParamsType) {
+        return instance.put<ProfileType, AxiosResponse<ResponseUpdatedUserType>>('/auth/me', data)
+    },
+    logOut() {
+        return instance.delete<{}, AxiosResponse<ResponseInfoType>>('auth/me')
+    },
+    forgot(data: ForgotParamsType) {
+        return instance.post<ForgotParamsType, AxiosResponse<ResponseInfoType>>('/auth/forgot', data)
+    },
+    setNewPassword(data: SetNewPasswordParamsType) {
+        return instance.post<SetNewPasswordParamsType, AxiosResponse<ResponseInfoType>>('/auth/set-new-password', data)
+    },
 }
-export const cardsAPI = {
-  registerUser(data: RegisterParamsType) {
-    return instance.post<RegisterParamsType, AxiosResponse<any>>('/auth/register', data)
-  },
-  updateUserData(data: ProfileType) {
-    return instance.put<UpdatedProfileStateType, AxiosResponse<any>>('/auth/me', data)
-  },
-}
+
 export type LoginParamsType = {
-  email: string
-  password: string
-  rememberMe?: boolean
+    email: string
+    password: string
+    rememberMe?: boolean
 }
-export type ResponseType = {
-  _id: string
-  email: string
-  rememberMe: boolean
-  isAdmin: boolean
-  name: string
-  verified: boolean
-  publicCardPacksCount: number
-  created: string
-  updated: string
-  __v: number
-  token: string
-  tokenDeathTime: number
-  avatar: string
+export type RegisterParamsType = {
+    email: string
+    password: string
 }
-export type ResponseLogOut = {
-  info: string
-  error: string
+export type ProfileParamsType = {
+    name: string
+    avatar?: string
+}
+export type ForgotParamsType = {
+    email: string
+    from: string
+    message: string
+}
+export type SetNewPasswordParamsType = {
+    password: string
+    resetPasswordToken: string
+}
+export type ResponseLoginType = {
+    _id: string
+    email: string
+    rememberMe: boolean
+    isAdmin: boolean
+    name: string
+    verified: boolean
+    publicCardPacksCount: number
+    created: string
+    updated: string
+    __v: number
+    token: string
+    tokenDeathTime: number
+    avatar: string
+    error?: string
+
+    editedMode?: boolean
+    currentName?: string
+    tempName?: string
+}
+export type ResponseRegisterType = {
+    addedUser: any
+    error?: string
+}
+export type ResponseUpdatedUserType = {
+    updatedUser: any
+    error?: string
+}
+export type ResponseInfoType = {
+    info: string
+    error: string
 }
 export type ProfileType = {
-  name: string
-  avatar?: string
-}
+    name: string
+    avatar?: string
+} // убрать потом
 
-export type RegisterParamsType = {
-  email: string
-  password: string
-}
-
+/*
 export type ProfileStateType = {
-  _id: string
-  email: string
-  name: string
-  avatar?: string
-  publicCardPacksCount: number
+    _id: string
+    email: string
+    name: string
+    avatar?: string
+    publicCardPacksCount: number
 
-  created: string
-  updated: string
-  isAdmin: boolean
-  rememberMe: boolean
+    created: string
+    updated: string
+    isAdmin: boolean
+    rememberMe: boolean
 
-  error?: string
+    error?: string
 
-  editedMode: boolean
-  currentName?: string
-  tempName?: string
+    editedMode: boolean
+    currentName?: string
+    tempName?: string
 }
 
 export type UpdatedProfileStateType = {
-  updatedUser: ProfileStateType
-  error?: string
+    updatedUser: ProfileStateType
+    error?: string
 }
+*/

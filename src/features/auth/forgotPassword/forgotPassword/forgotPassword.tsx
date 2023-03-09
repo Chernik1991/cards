@@ -12,6 +12,8 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 
+import { PATH } from 'common/components/Routing/pages'
+
 const theme = createTheme()
 
 type FormikErrorType = {
@@ -115,7 +117,7 @@ export const ForgotPassword = () => {
             </Grid>
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>
-                <Link href="cards#/login" variant="body2">
+                <Link href={PATH.HASH + PATH.LOGIN} variant="body2">
                   {'Try logging in'}
                 </Link>
               </Grid>

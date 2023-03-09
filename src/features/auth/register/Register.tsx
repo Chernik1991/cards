@@ -20,6 +20,7 @@ import { registerTC } from './register-reducer'
 import s from './RegisterStyle.module.css'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
+import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 
 type FormikErrorType = {
@@ -31,7 +32,7 @@ type FormikErrorType = {
 export const Register = () => {
   debugger
   const dispatch = useAppDispatch()
-
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const isRegister = useAppSelector<boolean>(state => state.reg.isRegister)
 
   const [showPassword, setShowPassword] = useState(false)
@@ -82,7 +83,10 @@ export const Register = () => {
 
   console.log(isRegister)
   if (isRegister) {
-    return <Navigate to="/login" replace />
+    return <Navigate to={'/' + PATH.LOGIN} />
+  }
+  if (isLoggedIn) {
+    return <Navigate to={'/' + PATH.PROFILE} />
   }
 
   return (
@@ -198,7 +202,7 @@ export const Register = () => {
                   color: '#366EFF',
                 }}
               >
-                <a href={'/login'}>Sign In</a>
+                <a href={PATH.HASH + PATH.LOGIN}>Sign In</a>
               </Box>
             </FormGroup>
           </form>
