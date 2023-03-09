@@ -2,15 +2,7 @@ import * as React from 'react'
 import { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Avatar,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@mui/material'
+import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
@@ -20,15 +12,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 
+import { useAppDispatch } from '../../../../app/store'
+
+import { setNewPasswordTC } from './newPassword-reducer'
+
 const theme = createTheme()
 
 type FormikErrorType = {
-  email?: string
   password?: string
-  rememberMe?: boolean
+  resetPasswordToken?: string
 }
 export const CreateNewPassword = () => {
-  // const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
@@ -44,11 +39,10 @@ export const CreateNewPassword = () => {
     },
     initialValues: {
       password: '',
+      resetPasswordToken: '',
     },
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      // dispatch(loginTC(values))
-      // formik.resetForm()
+      dispatch(setNewPasswordTC(values))
     },
   })
 
@@ -76,9 +70,6 @@ export const CreateNewPassword = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 80, height: 80, textAlign: 'center' }}>
-            Friday cards
-          </Avatar>
           <Typography component="h1" variant="h5" fontWeight={'bold'}>
             Create new password
           </Typography>

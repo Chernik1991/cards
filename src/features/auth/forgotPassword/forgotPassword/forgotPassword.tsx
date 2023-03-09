@@ -12,18 +12,21 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 
+import { useAppDispatch } from '../../../../app/store'
+
+import { setForgotTC } from './forgotPassword-reducer'
+
 import { PATH } from 'common/components/Routing/pages'
 
 const theme = createTheme()
 
 type FormikErrorType = {
   email?: string
-  password?: string
-  rememberMe?: boolean
+  from?: string
+  message?: string
 }
 export const ForgotPassword = () => {
-  // const dispatch = useAppDispatch()
-  // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -38,11 +41,15 @@ export const ForgotPassword = () => {
     },
     initialValues: {
       email: '',
+      from: 'test-front-admin <ai73a@yandex.by>',
+      message: `<div style="background-color: lime; padding: 15px">
+password recovery link: 
+<a href='http://localhost:3001/#/set-new-password/$token$'>
+link</a>
+</div>`,
     },
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      // dispatch(loginTC(values))
-      // formik.resetForm()
+      dispatch(setForgotTC(values))
     },
   })
 
