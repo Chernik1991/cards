@@ -17,3 +17,23 @@
     color: white;
     text-decoration: none;
 }
+
+.userDataContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userPhoto {
+    display: flex;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.userName{
+    position: relative;
+    left: -15px;
+    border: none;
+    font-size: 1.2rem;
+    border-bottom: 1px dashed gray;
+}

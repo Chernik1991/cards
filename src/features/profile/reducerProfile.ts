@@ -1,11 +1,12 @@
 import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { authAPI, cardsAPI, ProfileType, ResponseType } from 'api/cards-api'
-import { setAppStatusAC } from 'app/app-reducer'
-import { errorUtils } from 'common/utils/error-utils'
+import { setAppStatusAC } from '../../app/app-reducer'
+import { errorUtils } from '../../common/utils/error-utils'
 
-const initialState: any = {
+import { cardsAPI, ProfileStateType } from 'api/cards-api'
+
+const initialState: ProfileStateType = {
   _id: '',
   email: 'iofefje@gmail.com',
   name: 'Alen Del',
@@ -17,23 +18,18 @@ const initialState: any = {
   isAdmin: false,
   rememberMe: false,
 
-  // error: '',
+  error: '',
 
-  // editedMode: false,
-  // currentName: '',
-  // tempName: '',
+  editedMode: false,
+  currentName: '',
 }
 
-export const profileReducer = (state: any = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state: ProfileStateType = initialState, action: ActionsType): ProfileStateType => {
   switch (action.type) {
     case 'addUserdata': {
       const userData = { ...action.payload.data }
 
-      // return { ...userData }
-      return state
-    }
-    case 'userLogOut': {
-      return { ...state, _id: action.payload.userID }
+      return { ...userData }
     }
     case 'changeUserName': {
       // const oldState = { ...state }
@@ -43,8 +39,6 @@ export const profileReducer = (state: any = initialState, action: ActionsType): 
     }
     case 'changeCurrentName':
       return { ...state, currentName: action.payload.name2 }
-    case 'changeTempName':
-      return { ...state, tempName: action.payload.name3 }
     case 'editMode':
       return { ...state, editedMode: action.payload.editedMode }
     default:
@@ -52,71 +46,22 @@ export const profileReducer = (state: any = initialState, action: ActionsType): 
   }
 }
 
-export const setUserDataAC = (data: ResponseType) => ({ type: 'addUserdata', payload: { data } } as const)
-export const userLogOutAC = (userID: string) => ({ type: 'userLogOut', payload: { userID } } as const)
+export const setUserDataAC = (data: ProfileStateType) => ({ type: 'addUserdata', payload: { data } } as const)
 export const setNewNameAC = (name1: string) => ({ type: 'changeUserName', payload: { name1 } } as const)
 export const setNewCurrnetNameAC = (name2: string) => ({ type: 'changeCurrentName', payload: { name2 } } as const)
-export const setTempNameAC = (name3: string) => ({ type: 'changeTempName', payload: { name3 } } as const)
 export const editedModeAC = (editedMode: boolean) => ({ type: 'editMode', payload: { editedMode } } as const)
 
-export const addUserDataTC = () => async (dispatch: Dispatch) => {
+export const updateUserDataTC = (name: string, avatar?: string) => async (dispatch: Dispatch) => {
   try {
-    const res = await authAPI.me()
+    const res = await cardsAPI.updateUserData({ name, avatar })
 
     dispatch(setAppStatusAC('loading'))
 
-    if (res.data._id) {
+    if (res.data.updatedUser._id) {
       console.log('good')
-      console.log(res.data._id)
+      console.log(res.data.updatedUser)
       dispatch(setAppStatusAC('succeeded'))
-      dispatch(setUserDataAC(res.data))
-    } else {
-      dispatch(setAppStatusAC('failed'))
-      console.log('Error1')
-    }
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-
-    dispatch(setAppStatusAC('failed'))
-    errorUtils(err, dispatch)
-    console.log('Error2')
-  }
-}
-
-export const updateUserDataTC = (data: ResponseType) => async (dispatch: Dispatch) => {
-  try {
-    const res = await cardsAPI.updateUserData(data)
-
-    dispatch(setAppStatusAC('loading'))
-
-    if (res.data._id) {
-      console.log('good')
-      console.log(res.data._id)
-      dispatch(setAppStatusAC('succeeded'))
-      dispatch(setNewNameAC(data.name))
-    } else {
-      dispatch(setAppStatusAC('failed'))
-      console.log('Error1')
-    }
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-
-    dispatch(setAppStatusAC('failed'))
-    errorUtils(err, dispatch)
-    console.log('Error2')
-  }
-}
-
-export const userLogOutTC = () => async (dispatch: Dispatch) => {
-  try {
-    const res = await authAPI.logOut()
-
-    dispatch(setAppStatusAC('loading'))
-
-    if (res.data.info) {
-      console.log(res.data.info)
-      dispatch(setAppStatusAC('succeeded'))
-      dispatch(userLogOutAC(''))
+      dispatch(setNewNameAC(name))
     } else {
       dispatch(setAppStatusAC('failed'))
       console.log('Error1')
@@ -134,24 +79,4 @@ type ActionsType =
   | ReturnType<typeof setNewNameAC>
   | ReturnType<typeof editedModeAC>
   | ReturnType<typeof setNewCurrnetNameAC>
-  | ReturnType<typeof setTempNameAC>
   | ReturnType<typeof setUserDataAC>
-  | ReturnType<typeof userLogOutAC>
-export type InitialStateType = {
-  _id: string
-  email: string
-  name: string
-  avatar?: string
-  publicCardPacksCount: number
-
-  created: string
-  updated: string
-  isAdmin: boolean
-  rememberMe: boolean
-
-  error?: string
-
-  editedMode: boolean
-  currentName?: string
-  tempName?: string
-}

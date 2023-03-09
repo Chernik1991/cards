@@ -1,5 +1,7 @@
 import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode } from 'react'
 
+import { setNewCurrnetNameAC, setNewNameAC, updateUserDataTC } from '../../../features/profile/reducerProfile'
+
 import s from './SuperInputText.module.css'
 
 import { useAppDispatch } from 'app/store'
@@ -34,10 +36,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = ({
     console.log(e.currentTarget.value)
 
     onChange?.(e) // если есть пропс onChange, то передать ему е (поскольку onChange не обязателен)
-
-    onChangeText?.(e.currentTarget.value)
-    // dispatch(setNewCurrnetNameAC(e.currentTarget.value as string))
-    // dispatch(setTempNameAC(e.currentTarget.value as string))
+    dispatch(setNewCurrnetNameAC(e.currentTarget.value))
   }
 
   const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -46,13 +45,24 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = ({
     onEnter && // если есть пропс onEnter
       e.key === 'Enter' && // и если нажата кнопка Enter
       onEnter() // то вызвать его
+    if (e.key === 'Enter') {
+      if (e.currentTarget.value.trim()) {
+        console.log(1)
+
+        dispatch(updateUserDataTC(e.currentTarget.value.trim()))
+      } else {
+        ;('')
+      }
+    } else {
+      ;('')
+    }
   }
 
   const finalSpanClassName = s.error + (spanClassName ? ' ' + spanClassName : '')
   const finalInputClassName =
-    s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + s.className : '') // задача на смешивание классов
+    // s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + s.className : '') // задача на смешивание классов
 
-  s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + className : '') // задача на смешивание классов
+    s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + className : '') // задача на смешивание классов
 
   return (
     <div className={s.inputWrapper}>

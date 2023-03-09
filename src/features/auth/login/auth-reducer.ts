@@ -2,7 +2,7 @@ import { authAPI, LoginParamsType } from 'api/cards-api'
 import { setAppIsInitializedAC, setAppStatusAC } from 'app/app-reducer'
 import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
-import { setProfileData } from 'features/profile/profile-reducer'
+import { setUserDataAC } from 'features/profile/reducerProfile'
 
 const initialState: InitialStateType = {
   isLoggedIn: false,
@@ -31,6 +31,7 @@ export const loginTC =
       if (res.data.name.length > 0) {
         console.log(res.data.name.length)
         dispatch(setIsLoggedInAC(true))
+        dispatch(setUserDataAC(res.data))
         dispatch(setAppStatusAC('succeeded'))
       } else {
         // handleServerAppError(res.data, dispatch)
@@ -48,7 +49,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     console.log(res, 'initializeAppTC')
     if (res.request.status === 200) {
       dispatch(setIsLoggedInAC(true))
-      dispatch(setProfileData(res.data))
+      dispatch(setUserDataAC(res.data))
       dispatch(setAppStatusAC('succeeded'))
     } else {
       // handleServerAppError(res.data, dispatch)

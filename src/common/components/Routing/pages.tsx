@@ -27,17 +27,18 @@ export const Pages = () => {
   return (
     <div>
       <Routes>
+        {/* <Route path="/" element={<Login />} /> */}
         <Route path={'/'} element={<Layout />}>
-          {/*<Route index element={<Profile />} />*/}
+          <Route index element={<Profile />} />
           <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.LOGIN} element={<Login />} />
-          <Route path={PATH.REGISTER} element={<Register />} />
+          <Route path="/register" element={<Register />} />
           <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.FORGOT_YOUR_PASSWORD} element={<ForgotPassword />} />
           <Route path={PATH.CHECK_EMAIL} element={<CheckEmail />} />
           <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
           <Route path={PATH.TEST} element={<Test />} />
-          <Route path={'*'} element={<Error404 />} />
+          {/* <Route path={'*'} element={<Error404 />} /> */}
         </Route>
       </Routes>
     </div>

@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 import { RequestStatusType } from 'app/app-reducer'
 import { useAppSelector } from 'app/store'
 import { Footer } from 'features/footer/footer'
-import { Header } from 'features/header/Header'
+import { Header1 } from 'features/header/Header1'
 
 // import { Header } from '../header/Header'
 // import { Sidebar } from '../sidebar/Sidebar'
@@ -28,7 +28,7 @@ export const Layout = () => {
   // }, [open]) // отключает прокрутку при открытом меню
   return (
     <>
-      <Header />
+      <Header1 />
       {status === 'loading' && <LinearProgress color={'primary'} />}
       <Outlet />
       <Footer />

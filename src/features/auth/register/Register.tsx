@@ -29,6 +29,7 @@ type FormikErrorType = {
 }
 
 export const Register = () => {
+  debugger
   const dispatch = useAppDispatch()
 
   const isRegister = useAppSelector<boolean>(state => state.reg.isRegister)

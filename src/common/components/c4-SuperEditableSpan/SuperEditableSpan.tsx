@@ -6,7 +6,7 @@ import editIcon from './editIcon.svg'
 import s from './SuperEditableSpan.module.css'
 
 import { useAppDispatch } from 'app/store'
-import { editedModeAC, setNewCurrnetNameAC } from 'features/profile/reducerProfile'
+import { editedModeAC, setNewCurrnetNameAC, setNewNameAC, updateUserDataTC } from 'features/profile/reducerProfile'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -20,10 +20,10 @@ type SuperEditableSpanType = Omit<DefaultInputPropsType, 'type'> & {
   onChangeText?: (value: string) => void
   onEnter?: () => void
   error?: string
+  defaultInputClassName?: string
 
   spanProps?: DefaultSpanPropsType & {
     defaultText?: string
-    defaultInputClassName?: string
   } // пропсы для спана
 }
 
@@ -32,33 +32,39 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = ({
   onBlur,
   onEnter,
   spanProps,
+  defaultInputClassName,
 
   ...restProps // все остальные пропсы попадут в объект restProps
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const dispatch = useAppDispatch()
-  const { children, onDoubleClick, className, defaultText, defaultInputClassName, ...restSpanProps } = spanProps || {}
+  const { children, onDoubleClick, className, defaultText, ...restSpanProps } = spanProps || {}
 
   const onEnterCallback = () => {
-    // dispatch(setTempNameAC(restProps.value as string))
-    // dispatch(setNewCurrnetNameAC(defaultText as string))
     setEditMode(false)
-    // onEnter && dispatch(setNewNameAC(defaultText as string))
     dispatch(editedModeAC(false))
-    // dispatch(setNewCurrnetNameAC(defaultText as string))
     // выключить editMode при нажатии Enter // делают студенты
 
     onEnter?.()
   }
   const onBlurCallback = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.relatedTarget?.id !== 'userEditNickName') {
+    if (e.relatedTarget?.id === 'userEditNickName') {
+      const newName = e.currentTarget.value as string
+
+      if (newName.trim()) {
+        dispatch(setNewNameAC(newName))
+        dispatch(updateUserDataTC(newName))
+        dispatch(editedModeAC(false))
+      }
+
       setEditMode(false)
-      dispatch(editedModeAC(false))
+      dispatch(setNewCurrnetNameAC(e.currentTarget.name))
+
+      return dispatch(editedModeAC(false))
     }
-    console.log(defaultText)
-    // dispatch(setTempNameAC(defaultText as string))
+    dispatch(setNewCurrnetNameAC(defaultText as string))
     dispatch(editedModeAC(false))
-    // onEnter && dispatch(setNewCurrnetNameAC(defaultText as string))
+
     setEditMode(false)
 
     // выключить editMode при нажатии за пределами инпута // делают студенты
@@ -66,17 +72,16 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = ({
     onBlur?.(e)
   }
   const onDoubleClickCallBack = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log(defaultText as string)
+    dispatch(setNewCurrnetNameAC(defaultText as string))
     setEditMode(true)
     dispatch(editedModeAC(true))
-    dispatch(setNewCurrnetNameAC(defaultText as string))
     // включить editMode при двойном клике // делают студенты
 
     onDoubleClick?.(e)
   }
 
   const spanClassName = s.span + (className ? ' ' + className : '')
-  const spanInputClassName = s.input + (defaultInputClassName ? ' ' + defaultInputClassName : '')
+  const inputClassName = s.input + (defaultInputClassName ? ' ' + defaultInputClassName : '')
 
   return (
     <>
@@ -85,7 +90,7 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = ({
           autoFocus={true}
           onBlur={onBlurCallback}
           onEnter={onEnterCallback}
-          className={spanInputClassName}
+          className={inputClassName}
           {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
         />
       ) : (

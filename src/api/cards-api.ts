@@ -10,10 +10,10 @@ export const authAPI = {
     return instance.delete<{}, AxiosResponse<ResponseLogOut>>('auth/me')
   },
   login(data: LoginParamsType) {
-    return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('auth/login', data)
+    return instance.post<LoginParamsType, AxiosResponse<ProfileStateType>>('auth/login', data)
   },
   me() {
-    return instance.post<{}, AxiosResponse<ResponseType>>('auth/me', {})
+    return instance.post<{}, AxiosResponse<ProfileStateType>>('auth/me', {})
   },
 }
 export const cardsAPI = {
@@ -21,7 +21,7 @@ export const cardsAPI = {
     return instance.post<RegisterParamsType, AxiosResponse<any>>('/auth/register', data)
   },
   updateUserData(data: ProfileType) {
-    return instance.put<ProfileType, AxiosResponse<any>>('/auth/me', data)
+    return instance.put<UpdatedProfileStateType, AxiosResponse<any>>('/auth/me', data)
   },
 }
 export type LoginParamsType = {
@@ -56,4 +56,28 @@ export type ProfileType = {
 export type RegisterParamsType = {
   email: string
   password: string
+}
+
+export type ProfileStateType = {
+  _id: string
+  email: string
+  name: string
+  avatar?: string
+  publicCardPacksCount: number
+
+  created: string
+  updated: string
+  isAdmin: boolean
+  rememberMe: boolean
+
+  error?: string
+
+  editedMode: boolean
+  currentName?: string
+  tempName?: string
+}
+
+export type UpdatedProfileStateType = {
+  updatedUser: ProfileStateType
+  error?: string
 }

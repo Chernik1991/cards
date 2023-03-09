@@ -5,7 +5,7 @@ import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { appReducer } from 'app/app-reducer'
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
-import { profileReducer } from 'features/profile/profile-reducer'
+import { profileReducer } from 'features/profile/reducerProfile'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
