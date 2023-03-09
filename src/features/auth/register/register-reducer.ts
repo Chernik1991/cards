@@ -1,49 +1,49 @@
-import {AxiosError} from 'axios'
+import { AxiosError } from 'axios'
 
-import {authAPI, RegisterParamsType} from 'api/cards-api'
-import {setAppStatusAC} from 'app/app-reducer'
-import {AppThunkType} from 'app/store'
-import {errorUtils} from 'common/utils/error-utils'
+import { authAPI, RegisterParamsType } from 'api/cards-api'
+import { setAppStatusAC } from 'app/app-reducer'
+import { AppThunkType } from 'app/store'
+import { errorUtils } from 'common/utils/error-utils'
 
 const initialState: InitialStateType = {
-    isRegister: false,
+  isRegister: false,
 }
 
 export const registerReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
-        case 'register/SIGN-UP':
-            return {...state, isRegister: action.value}
-        default:
-            return state
-    }
+  switch (action.type) {
+    case 'register/SIGN-UP':
+      return { ...state, isRegister: action.value }
+    default:
+      return state
+  }
 }
 
-export const setIsRegisterAC = (value: boolean) => ({type: 'register/SIGN-UP', value} as const)
+export const setIsRegisterAC = (value: boolean) => ({ type: 'register/SIGN-UP', value } as const)
 
 export const registerTC =
-    (data: RegisterParamsType): AppThunkType =>
-        async dispatch => {
-            try {
-                const res = await authAPI.register(data)
+  (data: RegisterParamsType): AppThunkType =>
+  async dispatch => {
+    try {
+      const res = await authAPI.register(data)
 
-                dispatch(setAppStatusAC('loading'))
+      dispatch(setAppStatusAC('loading'))
 
-                if (res.data.addedUser._id) {
-                    dispatch(setAppStatusAC('succeeded'))
-                    dispatch(setIsRegisterAC(true))
-                } else {
-                    dispatch(setAppStatusAC('failed'))
-                }
-            } catch (e) {
-                const err = e as Error | AxiosError<{ error: string }>
+      if (res.data.addedUser._id) {
+        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setIsRegisterAC(true))
+      } else {
+        dispatch(setAppStatusAC('failed'))
+      }
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
 
-                errorUtils(err, dispatch)
+      errorUtils(err, dispatch)
 
-                dispatch(setAppStatusAC('failed'))
-            }
-        }
+      dispatch(setAppStatusAC('failed'))
+    }
+  }
 
 type ActionsType = ReturnType<typeof setIsRegisterAC>
 type InitialStateType = {
-    isRegister: boolean
+  isRegister: boolean
 }
