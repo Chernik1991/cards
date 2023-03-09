@@ -7,14 +7,14 @@ import itINC from '../../assets/img/icons/itINC.svg'
 
 import s from './HeaderStyles.module.css'
 
-import { RequestStatusType } from 'app/app-reducer'
+// import { RequestStatusType } from 'app/app-reducer'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 import { logoutTC } from 'features/auth/login/auth-reducer'
 
 export const Header = () => {
-  const status = useAppSelector<RequestStatusType>(state => state.app.status)
+  // const status = useAppSelector<RequestStatusType>(state => state.app.status)
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
   const logOutHandler = () => {
