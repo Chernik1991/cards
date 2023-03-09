@@ -11,9 +11,10 @@ import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../../app/store'
+import { useAppDispatch, useAppSelector } from '../../../../app/store'
+import { PATH } from '../../../../common/components/Routing/pages'
 
 import { setNewPasswordTC } from './newPassword-reducer'
 
@@ -25,7 +26,7 @@ type FormikErrorType = {
 }
 export const CreateNewPassword = () => {
   const { token } = useParams<{ token: string }>()
-
+  const isSetNewPassword = useAppSelector<boolean>(state => state.reg.isRegister)
   const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -56,10 +57,10 @@ export const CreateNewPassword = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
-  //
-  // if (isLoggedIn) {
-  //   return <Navigate to={'/'} />
-  // }
+
+  if (isSetNewPassword) {
+    return <Navigate to={'/' + PATH.LOGIN} />
+  }
 
   return (
     <ThemeProvider theme={theme}>

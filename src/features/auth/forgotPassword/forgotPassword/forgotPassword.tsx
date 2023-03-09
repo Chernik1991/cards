@@ -41,7 +41,7 @@ export const ForgotPassword = () => {
     },
     initialValues: {
       email: '',
-      from: 'test-front-admin <ai73a@yandex.by>',
+      from: 'test-front-admin <!--<ai73a@yandex.by>-->',
       message: `<div style="background-color: lime; padding: 15px">
 password recovery link: 
 <a href='https://chernik1991.github.io/cards/#/create-new-password/$token$'>
