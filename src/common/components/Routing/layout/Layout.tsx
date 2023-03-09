@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 import { RequestStatusType } from 'app/app-reducer'
 import { useAppSelector } from 'app/store'
 import { Footer } from 'features/footer/footer'
-import { Header } from 'features/header/header'
+import { Header } from 'features/header/Header'
 
 // import { Header } from '../header/Header'
 // import { Sidebar } from '../sidebar/Sidebar'

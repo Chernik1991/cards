@@ -8,9 +8,9 @@ import { Layout } from 'common/components/Routing/layout/Layout'
 import { CheckEmail } from 'features/auth/forgotPassword/checkEmail/checkEmail'
 import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPassword/createNewPassword'
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
-import { Login } from 'features/auth/login/login'
+import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
-import { Profile } from 'features/profile/profile'
+import { Profile } from 'features/profile/Profile'
 import { Test } from 'features/test/test'
 
 export const PATH = {
