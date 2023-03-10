@@ -42,7 +42,7 @@ export const CheckEmail = () => {
           </Typography>
           <img alt={'IMG'} src={checkEmail} />
           <Box sx={{ m: 1, width: '50ch', marginTop: 9 }}>
-            <Grid container flexDirection={'column'} alignItems={'center'}>
+            <Grid container flexDirection={'column'} alignItems={'center'} marginBottom={'49px'}>
               <Grid item>{`We’ve sent an Email with instructions to ${data.email}`}</Grid>
             </Grid>
             <Button onClick={buttonToLogin} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
