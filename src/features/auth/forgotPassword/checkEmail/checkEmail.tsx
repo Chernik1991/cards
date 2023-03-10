@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-import { Avatar } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
@@ -11,6 +10,7 @@ import Typography from '@mui/material/Typography'
 
 import { ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
+import checkEmail from 'assets/img/icons/checkEmail.svg'
 
 const theme = createTheme()
 
@@ -37,24 +37,11 @@ export const CheckEmail = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 80, height: 80, textAlign: 'center' }}>
-            Friday cards
-          </Avatar>
-          <Typography component="h1" variant="h5" fontWeight={'bold'}>
+          <Typography component="h1" variant="h5" fontWeight={'bold'} padding={'29px'}>
             Check Email
           </Typography>
-          <Avatar
-            sx={{
-              m: 1,
-              bgcolor: 'secondary.main',
-              width: 150,
-              height: 150,
-              textAlign: 'center',
-            }}
-          >
-            MAIL
-          </Avatar>
-          <Box sx={{ m: 1, width: '50ch' }}>
+          <img alt={'IMG'} src={checkEmail} />
+          <Box sx={{ m: 1, width: '50ch', marginTop: 9 }}>
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>{`We’ve sent an Email with instructions to ${data.email}`}</Grid>
             </Grid>

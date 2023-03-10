@@ -3,13 +3,12 @@ import React from 'react'
 import { Button } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import itINC from '../../assets/img/icons/itINC.svg'
-import defaultPic from '../../assets/img/profile/Alex.jpg'
-
 import s from './HeaderStyles.module.css'
 
 import { ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
+import itINC from 'assets/img/icons/itINC.svg'
+import defaultPic from 'assets/img/profile/Alex.jpg'
 import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 
