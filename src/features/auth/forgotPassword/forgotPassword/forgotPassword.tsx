@@ -11,13 +11,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
+import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/store'
 
 import { setForgotTC } from './forgotPassword-reducer'
 
 import { PATH } from 'common/components/Routing/pages'
-import { Navigate } from 'react-router-dom'
 
 const theme = createTheme()
 
@@ -56,7 +56,7 @@ link</a>
   })
 
   if (forgotPassword) {
-    return <Navigate to={'/' + PATH.LOGIN} />
+    return <Navigate to={'/' + PATH.CHECK_EMAIL} />
   }
 
   return (

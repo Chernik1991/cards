@@ -13,10 +13,10 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
-import { PATH } from '../../../../common/components/Routing/pages'
-
 import { setNewPasswordTC } from './newPassword-reducer'
+
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { PATH } from 'common/components/Routing/pages'
 
 const theme = createTheme()
 

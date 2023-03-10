@@ -8,16 +8,18 @@ import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
-import { ResponseLoginType } from 'api/cards-api'
+import { ForgotParamsType, ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
 import checkEmail from 'assets/img/icons/checkEmail.svg'
+import { PATH } from 'common/components/Routing/pages'
+import s from 'features/header/HeaderStyles.module.css'
 
 const theme = createTheme()
 
 export const CheckEmail = () => {
   // const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const data = useAppSelector<ResponseLoginType>(state => state.profile)
+  const email = useAppSelector<string>(state => state.forgot.email)
 
   const buttonToLogin = () => {
     alert(123)
@@ -43,10 +45,12 @@ export const CheckEmail = () => {
           <img alt={'IMG'} src={checkEmail} />
           <Box sx={{ m: 1, width: '50ch', marginTop: 8 }}>
             <Grid container flexDirection={'column'} alignItems={'center'} marginBottom={'49px'}>
-              <Grid item>{`We’ve sent an Email with instructions to ${data.email}`}</Grid>
+              <Grid item>{`We’ve sent an Email with instructions to ${email}`}</Grid>
             </Grid>
-            <Button onClick={buttonToLogin} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Back to login
+            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              <a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>
+                Back to login
+              </a>
             </Button>
           </Box>
         </Box>
