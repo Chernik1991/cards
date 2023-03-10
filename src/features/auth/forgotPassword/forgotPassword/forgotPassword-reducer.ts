@@ -18,7 +18,7 @@ export const forgotReducer = (state: InitialStateType = initialState, action: Ac
   }
 }
 
-export const setForgotAC = (value: boolean) => ({ type: 'forgotPass', payload: {value} } as const)
+export const setForgotAC = (value: boolean) => ({ type: 'forgotPass', payload: { value } } as const)
 
 export const setForgotTC =
   (data: ForgotParamsType): AppThunkType =>
@@ -28,7 +28,8 @@ export const setForgotTC =
 
       dispatch(setAppStatusAC('loading'))
 
-      if (res.data.info === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
+      // if (res.data.info === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
+      if (res.data.info === 'success —ฅ/ᐠ.̫ .ᐟฅ—') {
         dispatch(setAppStatusAC('succeeded'))
         dispatch(setForgotAC(true))
       } else {

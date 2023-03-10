@@ -4,10 +4,10 @@ import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { appReducer } from 'app/app-reducer'
 import { setNewPasswordReducer } from 'features/auth/forgotPassword/createNewPassword/newPassword-reducer'
+import { forgotReducer } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
 import { profileReducer } from 'features/profile/reducerProfile'
-import { forgotReducer } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
