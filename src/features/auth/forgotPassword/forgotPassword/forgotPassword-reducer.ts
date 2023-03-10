@@ -20,6 +20,7 @@ export const forgotReducer = (state: InitialStateType = initialState, action: Ac
       return state
   }
 }
+const answer = 'sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—'
 
 export const setForgotAC = (value: boolean) => ({ type: 'forgotPass', payload: { value } } as const)
 export const setForgotEmailAC = (email: string) => ({ type: 'setForgotEmail', payload: { email } } as const)
@@ -27,14 +28,16 @@ export const setForgotEmailAC = (email: string) => ({ type: 'setForgotEmail', pa
 export const setForgotTC =
   (data: ForgotParamsType): AppThunkType =>
   async dispatch => {
+    debugger
     try {
       const res = await authAPI.forgot(data)
 
+      console.log(res.data)
       dispatch(setAppStatusAC('loading'))
       dispatch(setForgotEmailAC(data.email))
-
       // if (res.data.info === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
-      if (res.data.info === 'sent —ฅ/ᐠ.̫ .ᐟฅ—') {
+      if (res.data.info === answer) {
+        // console.log(res.data.data.info, 'res.data.info')
         dispatch(setAppStatusAC('succeeded'))
         dispatch(setForgotAC(true))
       } else {

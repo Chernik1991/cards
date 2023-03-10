@@ -13,10 +13,9 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
-
 import { setForgotTC } from './forgotPassword-reducer'
 
+import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 
 const theme = createTheme()
@@ -46,7 +45,7 @@ export const ForgotPassword = () => {
       from: 'cards <!--<chernik1991.github.io/cards/>-->',
       message: `<div style="background-color: brown; padding: 15px">
 password recovery link: 
-<a href='https://chernik1991.github.io/cards/#/create-new-password/$token$'>
+<a href="https://chernik1991.github.io/cards/#/create-new-password/$token$">
 link</a>
 </div>`,
     },
