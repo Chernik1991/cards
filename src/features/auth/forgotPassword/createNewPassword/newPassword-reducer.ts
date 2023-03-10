@@ -20,6 +20,7 @@ export const setNewPasswordReducer = (
       return state
   }
 }
+const answer = 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—'
 
 export const setIsSetNewPasswordAC = (value: boolean) => ({ type: 'Set-New-Password', value } as const)
 
@@ -27,11 +28,13 @@ export const setNewPasswordTC =
   (data: SetNewPasswordParamsType): AppThunkType =>
   async dispatch => {
     try {
+      debugger
       const res = await authAPI.setNewPassword(data)
 
       dispatch(setAppStatusAC('loading'))
 
-      if (res.data.info === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
+      if (res.data.info === answer) {
+        console.log(res.data, 'res.data')
         dispatch(setAppStatusAC('succeeded'))
         dispatch(setIsSetNewPasswordAC(true))
       } else {

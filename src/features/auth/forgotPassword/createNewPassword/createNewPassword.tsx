@@ -26,7 +26,7 @@ type FormikErrorType = {
 }
 export const CreateNewPassword = () => {
   const { token } = useParams<{ token: string }>()
-  const isSetNewPassword = useAppSelector<boolean>(state => state.reg.isRegister)
+  const isSetNewPassword = useAppSelector<boolean>(state => state.pass.isSetNewPassword)
   const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -58,7 +58,10 @@ export const CreateNewPassword = () => {
     event.preventDefault()
   }
 
+  console.log(isSetNewPassword, '1')
   if (isSetNewPassword) {
+    console.log(isSetNewPassword, '2')
+
     return <Navigate to={'/' + PATH.LOGIN} />
   }
 

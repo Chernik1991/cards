@@ -23,8 +23,11 @@ export const setIsRegisterAC = (value: boolean) => ({ type: 'register/SIGN-UP', 
 export const registerTC =
   (data: RegisterParamsType): AppThunkType =>
   async dispatch => {
+    debugger
     try {
       const res = await authAPI.register(data)
+
+      console.log(res, 'res')
 
       dispatch(setAppStatusAC('loading'))
 
