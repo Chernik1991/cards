@@ -7,6 +7,7 @@ import { setNewPasswordReducer } from 'features/auth/forgotPassword/createNewPas
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
 import { profileReducer } from 'features/profile/reducerProfile'
+import { forgotReducer } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   reg: registerReducer,
   pass: setNewPasswordReducer,
+  forgot: forgotReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

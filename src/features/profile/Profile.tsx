@@ -137,7 +137,6 @@ export const Profile = () => {
             </NavLink>
           </Box>
         </Box>
-        {/* <Box sx={{ gridArea: 'rigth', bgcolor: 'primary.main' }}>Sidebar</Box> */}
       </Box>
     </div>
   )

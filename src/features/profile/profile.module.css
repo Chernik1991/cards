@@ -11,8 +11,6 @@ a:visited {
   background-color: #f9f9fa;
   display: inline-flex;
   width: 100%;
-  /* height: ; */
-  /* height: calc(100vh - 80px); */
   align-items: center;
   justify-content: center;
 }
@@ -50,7 +48,6 @@ a:visited {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  /* border: 1px solid red; */
   padding: 20px 0px;
 }
 
@@ -76,7 +73,6 @@ a:visited {
   max-height: 100px;
   display: flex;
   content: '';
-  /* background-image: url('../../assets/img/profile/Alex.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -125,33 +121,27 @@ a:visited {
 .pfofileInput {
   display: flex;
   border: 1px solid red;
-  /* min-width: 300px; */
   padding-bottom: 10px;
   background: none;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  /* width: 100%; */
   height: auto;
   border: none;
-  /* border-bottom: 1px solid #d3d3d3; */
 }
 
 .pfofileInput:focus {
   position: relative;
-  /* top: -10px; */
   left: 7.5%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-width: 400px; */
   width: 85%;
   padding-bottom: 10px;
   background: none;
   font-size: 1.2rem;
   height: auto;
   border: none;
-  /* border: 1px solid red; */
   border-bottom: 1px solid #d3d3d3;
 }
 
@@ -180,7 +170,6 @@ a:visited {
   display: flex;
   top: -25px;
   height: 40px;
-  /* border: 1px solid red; */
   flex-direction: column;
   align-items: center;
   justify-content: center;

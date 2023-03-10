@@ -5,6 +5,21 @@ import { setAppStatusAC } from 'app/app-reducer'
 import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 
+const initialState: InitialStateType = {
+  forgotPassword: false,
+}
+
+export const forgotReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+  switch (action.type) {
+    case 'forgotPass':
+      return { ...state, forgotPassword: action.payload.value }
+    default:
+      return state
+  }
+}
+
+export const setForgotAC = (value: boolean) => ({ type: 'forgotPass', payload: {value} } as const)
+
 export const setForgotTC =
   (data: ForgotParamsType): AppThunkType =>
   async dispatch => {
@@ -15,6 +30,7 @@ export const setForgotTC =
 
       if (res.data.info === 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—') {
         dispatch(setAppStatusAC('succeeded'))
+        dispatch(setForgotAC(true))
       } else {
         dispatch(setAppStatusAC('failed'))
       }
@@ -26,3 +42,8 @@ export const setForgotTC =
       dispatch(setAppStatusAC('failed'))
     }
   }
+
+type ActionsType = ReturnType<typeof setForgotAC>
+type InitialStateType = {
+  forgotPassword: boolean
+}

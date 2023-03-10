@@ -12,11 +12,12 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 
-import { useAppDispatch } from '../../../../app/store'
+import { useAppDispatch, useAppSelector } from '../../../../app/store'
 
 import { setForgotTC } from './forgotPassword-reducer'
 
 import { PATH } from 'common/components/Routing/pages'
+import { Navigate } from 'react-router-dom'
 
 const theme = createTheme()
 
@@ -27,6 +28,7 @@ type FormikErrorType = {
 }
 export const ForgotPassword = () => {
   const dispatch = useAppDispatch()
+  const forgotPassword = useAppSelector<boolean>(state => state.forgot.forgotPassword)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -41,8 +43,8 @@ export const ForgotPassword = () => {
     },
     initialValues: {
       email: '',
-      from: 'test-front-admin <!--<ai73a@yandex.by>-->',
-      message: `<div style="background-color: lime; padding: 15px">
+      from: 'cards <!--<chernik1991.github.io/cards/>-->',
+      message: `<div style="background-color: brown; padding: 15px">
 password recovery link: 
 <a href='https://chernik1991.github.io/cards/#/create-new-password/$token$'>
 link</a>
@@ -53,20 +55,10 @@ link</a>
     },
   })
 
-  // const [Password, setPassword] = useState(false)
-  //
-  // const handleClickShowPassword = () => setPassword(show => !show)
-  //
-  // const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault()
-  // }
-  //
-  // if (isLoggedIn) {
-  //   return <Navigate to={'/'} />
-  // }
+  if (forgotPassword) {
+    return <Navigate to={'/' + PATH.LOGIN} />
+  }
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
