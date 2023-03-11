@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -7,10 +8,12 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { GetCardsTC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
+import s from 'features/profile/profile.module.css'
 
 // function createData(question: string, answer: string, lastUpdated: number, grade: number, protein: number) {
 //   return { question, answer, lastUpdated, grade }
@@ -37,6 +40,23 @@ export const Card = () => {
     <>
       <button onClick={getcardHendler}>get card</button>
       <div>{rows[0]._id}</div>
+      <Box
+        sx={{
+          gridArea: 'left',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          paddingTop: 4,
+        }}
+      >
+        <NavLink className={s.backContainer} to="#">
+          <svg className={s.backArrow} viewBox="0 0 512 512">
+            <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
+          </svg>
+          <span> Back to Packs List</span>
+        </NavLink>
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

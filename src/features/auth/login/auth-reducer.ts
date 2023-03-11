@@ -10,7 +10,7 @@ const initialState: InitialStateType = {
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case 'login/SET-IS-LOGGED-IN':
+    case 'LOGIN/SET-IS-LOGGED-IN':
       return { ...state, isLoggedIn: action.value }
     default:
       return state
@@ -18,7 +18,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 }
 
 //action
-export const setIsLoggedInAC = (value: boolean) => ({ type: 'login/SET-IS-LOGGED-IN', value } as const)
+export const setIsLoggedInAC = (value: boolean) => ({ type: 'LOGIN/SET-IS-LOGGED-IN', value } as const)
 //thunks
 export const loginTC =
   (data: LoginParamsType): AppThunkType =>
@@ -27,7 +27,7 @@ export const loginTC =
     try {
       const res = await authAPI.login(data)
 
-      if (res.data.name.length > 0) {
+      if (res.status === 200) {
         dispatch(setIsLoggedInAC(true))
         dispatch(setUserDataAC(res.data))
         dispatch(setAppStatusAC('succeeded'))
@@ -51,8 +51,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     } else {
       dispatch(setAppStatusAC('failed'))
     }
-  } catch (e: any) {
-    errorUtils(e, dispatch)
+  } catch (e) {
     dispatch(setAppStatusAC('failed'))
   } finally {
     dispatch(setAppIsInitializedAC(true))
@@ -63,7 +62,7 @@ export const logoutTC = (): AppThunkType => async dispatch => {
   try {
     const res = await authAPI.logOut()
 
-    if (res.data.info.length > 0) {
+    if (res.status === 200) {
       dispatch(setIsLoggedInAC(false))
       dispatch(setAppStatusAC('succeeded'))
     } else {

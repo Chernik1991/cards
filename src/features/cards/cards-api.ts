@@ -10,38 +10,21 @@ const instance = axios.create({
 
 export const cardsAPI = {
   readCards(data: ReadCardsParamsType) {
-    return instance.get<ReadCardsParamsType, AxiosResponse<ResponseReadCards>>('/cards/card', { params: { ...data } })
+    return instance.get<ReadCardsParamsType, AxiosResponse<ResponseReadCardsType>>('/cards/card', {
+      params: { ...data },
+    })
   },
   createCards(data: CreateCardParamsType) {
-    return instance.post<CreateCardParamsType, AxiosResponse<any>>('/cards/card', data)
+    return instance.post<CreateCardParamsType, AxiosResponse<ResponseCreateCardType>>('/cards/card', data)
   },
-  delCards(data: DelCardsParamsType) {
-    return instance.post<DelCardsParamsType, AxiosResponse<any>>('/cards/card', { params: { ...data } })
+  delCards(data: DeleteCardsParamsType) {
+    return instance.delete<DeleteCardsParamsType, AxiosResponse<ResponseDeleteCardsType>>('/cards/card', {
+      params: { ...data },
+    })
   },
   updateCards(data: UpdateCardParamsType) {
-    return instance.post<UpdateCardParamsType, AxiosResponse<any>>('/cards/card', data)
+    return instance.put<UpdateCardParamsType, AxiosResponse<ResponseUpdateCardType>>('/cards/card', data)
   },
-  // login(data: LoginParamsType) {
-  //   return instance.post<LoginParamsType, AxiosResponse<ResponseLoginType>>('auth/login', data)
-  // },
-  // register(data: RegisterParamsType) {
-  //   return instance.post<RegisterParamsType, AxiosResponse<ResponseRegisterType>>('/auth/register', data)
-  // },
-  // me() {
-  //   return instance.post<{}, AxiosResponse<ResponseLoginType>>('auth/me', {})
-  // },
-  // updateUser(data: ProfileParamsType) {
-  //   return instance.put<ProfileType, AxiosResponse<ResponseUpdatedUserType>>('/auth/me', data)
-  // },
-  // logOut() {
-  //   return instance.delete<{}, AxiosResponse<ResponseInfoType>>('auth/me')
-  // },
-  // forgot(data: ForgotParamsType) {
-  //   return instance.post<ForgotParamsType, AxiosResponse<ResponseInfoType>>('/auth/forgot', data)
-  // },
-  // setNewPassword(data: SetNewPasswordParamsType) {
-  //   return instance.post<SetNewPasswordParamsType, AxiosResponse<ResponseInfoType>>('/auth/set-new-password', data)
-  // },
 }
 
 export type ReadCardsParamsType = {
@@ -67,7 +50,7 @@ export type CreateCardParamsType = {
     answerVideo?: string
   }
 }
-export type DelCardsParamsType = {
+export type DeleteCardsParamsType = {
   id: string
 }
 export type UpdateCardParamsType = {
@@ -93,9 +76,10 @@ export type CardsType = {
   __v: number
 }
 
-export type ResponseReadCards = {
+export type ResponseReadCardsType = {
   cards: CardsType[]
   packUserId: string
+
   packName: string
   packPrivate: boolean
   packCreated: string
@@ -108,39 +92,18 @@ export type ResponseReadCards = {
   token: string
   tokenDeathTime: number
 }
-export type ResponseLoginType = {
-  _id: string
-  email: string
-  rememberMe: boolean
-  isAdmin: boolean
-  name: string
-  verified: boolean
-  publicCardPacksCount: number
-  created: string
-  updated: string
-  __v: number
+export type ResponseCreateCardType = {
+  newCard: CardsType
   token: string
   tokenDeathTime: number
-  avatar: string
-  error?: string
-
-  editedMode?: boolean
-  currentName?: string
-  tempName?: string
 }
-export type ResponseRegisterType = {
-  addedUser: any
-  error?: string
+export type ResponseDeleteCardsType = {
+  deletedCard: CardsType
+  token: string
+  tokenDeathTime: number
 }
-export type ResponseUpdatedUserType = {
-  updatedUser: any
-  error?: string
-}
-export type ResponseInfoType = {
-  info: string
-  error: string
-}
-export type ProfileType = {
-  name: string
-  avatar?: string
+export type ResponseUpdateCardType = {
+  updatedCard: CardsType
+  token: string
+  tokenDeathTime: number
 }

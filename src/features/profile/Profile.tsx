@@ -16,15 +16,13 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { ResponseLoginType } from 'features/auth/auth-api'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
-import { GetCardsTC } from 'features/cards/card/card-reducer'
+import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
 
 export const Profile = () => {
   const dispatch = useAppDispatch()
   const userProfileData = useAppSelector<ResponseLoginType>(state => state.profile)
+
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
-
-  console.log(userProfileData)
-
   if (!userProfileData._id) {
     useEffect(() => {
       initializeAppTC()
@@ -44,13 +42,32 @@ export const Profile = () => {
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
   const getcardHendler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: '640c5917893e3319116c7fc6' }))
+    dispatch(GetCardsTC({ cardsPack_id: '640c5917893e3319116c7fc5' }))
+  }
+  const postcardHendler = () => {
+    dispatch(
+      CreateCardsTC({
+        card: {
+          answer: '',
+          question: '',
+          cardsPack_id: '640c5917893e3319116c7fc5',
+        },
+      })
+    )
+  }
+  const delcardHendler = () => {
+    dispatch(DeleteCardsTC({ id: '640cd015893e3319116cae74' }))
+  }
+  const updatecardHendler = () => {
+    dispatch(UpdateCardsTC({ card: { _id: '640cda35893e3319116cafdd', question: '111111111' } }))
   }
 
   return (
     <>
       <button onClick={getcardHendler}>get card</button>
-      <button onClick={getcardHendler}>get card</button>
+      <button onClick={postcardHendler}>new card</button>
+      <button onClick={delcardHendler}>del card</button>
+      <button onClick={updatecardHendler}>update card</button>
       <div className={s.profileContainer}>
         <Box
           sx={{
