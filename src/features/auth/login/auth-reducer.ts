@@ -27,19 +27,16 @@ export const loginTC =
     try {
       const res = await authAPI.login(data)
 
-      console.log(res.data, 'loginTC')
       if (res.data.name.length > 0) {
-        console.log(res.data.name.length)
         dispatch(setIsLoggedInAC(true))
         dispatch(setUserDataAC(res.data))
         dispatch(setAppStatusAC('succeeded'))
       } else {
-        // handleServerAppError(res.data, dispatch)
+        dispatch(setAppStatusAC('failed'))
       }
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
-      //   handleServerNetworkError({message:'1'},dispatch)
     }
   }
 export const initializeAppTC = (): AppThunkType => async dispatch => {
@@ -52,12 +49,11 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
       dispatch(setUserDataAC(res.data))
       dispatch(setAppStatusAC('succeeded'))
     } else {
-      // handleServerAppError(res.data, dispatch)
+      dispatch(setAppStatusAC('failed'))
     }
   } catch (e: any) {
-    // errorUtils(e, dispatch)
+    errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
-    //   handleServerNetworkError({message:'1'},dispatch)
   } finally {
     dispatch(setAppIsInitializedAC(true))
   }
@@ -67,20 +63,16 @@ export const logoutTC = (): AppThunkType => async dispatch => {
   try {
     const res = await authAPI.logOut()
 
-    console.log(res, 'logoutTC')
-
     if (res.data.info.length > 0) {
       dispatch(setIsLoggedInAC(false))
       dispatch(setAppStatusAC('succeeded'))
-      // dispatch(clearTodoDataAC())
     } else {
-      // handleServerAppError(res.data, dispatch)
+      dispatch(setAppStatusAC('failed'))
     }
   } catch (e: any) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
   }
-  // handleServerNetworkError({message:'1'},dispatch)
 }
 
 //types
