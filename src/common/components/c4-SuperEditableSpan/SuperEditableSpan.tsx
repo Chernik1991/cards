@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState } from 'react'
+import React, { DetailedHTMLProps, HTMLAttributes, InputHTMLAttributes, useState } from 'react'
 
 import SuperInputText from '../c1-SuperInputText/SuperInputText'
 
@@ -53,6 +53,7 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = ({
 
       if (newName.trim()) {
         dispatch(setNewNameAC(newName))
+        // noinspection JSIgnoredPromiseFromCall
         dispatch(updateUserDataTC(newName))
         dispatch(editedModeAC(false))
       }

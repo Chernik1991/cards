@@ -33,7 +33,7 @@ type ActionsType = SetAppStatusActionType | SetAppErrorActionType | SetAppIsInit
 export type InitialStateType = {
   // происходит ли сейчас взаимодействие с сервером
   status: RequestStatusType
-  // если ошибка какая-то глобальная произойдёт - мы запишем текст ошибки сюда
+  // если ошибка какая-то глобальная произойдёт — мы запишем текст ошибки сюда
   error: string | null
   isInitialized: boolean
 }

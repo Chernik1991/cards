@@ -1,10 +1,11 @@
-import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode } from 'react'
+// noinspection BadExpressionStatementJS
 
-import { setNewCurrnetNameAC, setNewNameAC, updateUserDataTC } from '../../../features/profile/reducerProfile'
+import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, ReactNode } from 'react'
 
 import s from './SuperInputText.module.css'
 
 import { useAppDispatch } from 'app/store'
+import { setNewCurrnetNameAC, updateUserDataTC } from 'features/profile/reducerProfile'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -49,6 +50,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = ({
       if (e.currentTarget.value.trim()) {
         console.log(1)
 
+        // noinspection JSIgnoredPromiseFromCall
         dispatch(updateUserDataTC(e.currentTarget.value.trim()))
       } else {
         ;('')
@@ -60,7 +62,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = ({
 
   const finalSpanClassName = s.error + (spanClassName ? ' ' + spanClassName : '')
   const finalInputClassName =
-    // s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + s.className : '') // задача на смешивание классов
+    // s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + s.className : '') // задача на смешивание классов.
 
     s.input + (error ? ' ' + s.errorInput : ' ' + s.superInput) + (className ? ' ' + className : '') // задача на смешивание классов
 

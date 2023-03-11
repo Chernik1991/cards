@@ -1,39 +1,42 @@
 .headerTop {
-
 }
 
 .headerBlock {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    height: 60px;
-    padding: 0 150px 0 150px;
+  height: 60px;
+  padding: 0 150px 0 150px;
 
-    box-shadow: 0 15px 13px -10px rgba(34, 60, 80, 0.2);
+  box-shadow: 0 15px 13px -10px rgba(34, 60, 80, 0.2);
 }
 
 .headerA {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 .userDataContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .userPhoto {
-    display: flex;
-    width: 50px;
-    border-radius: 50%;
+  display: flex;
+
+  width: 50px;
+
+  border-radius: 50%;
 }
 
-.userName{
-    position: relative;
-    left: -15px;
-    border: none;
-    font-size: 1.2rem;
-    border-bottom: 1px dashed gray;
+.userName {
+  position: relative;
+  left: -15px;
+
+  font-size: 1.2rem;
+
+  border: none;
+  border-bottom: 1px dashed gray;
 }

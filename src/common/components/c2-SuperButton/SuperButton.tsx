@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 
 import s from './SuperButton.module.css'
 
-// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
+// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан.
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
@@ -26,7 +26,7 @@ const SuperButton: React.FC<SuperButtonPropsType> = ({
   //     + (spanClassName ? ' ' + spanClassName : '')
   // const finalInputClassName = s.input
   //     + (error ? ' ' + s.errorInput : ' ' + s.superInput)
-  //     + (className ? ' ' + s.className : '') // задача на смешивание классов
+  //     + (className ? ' ' + s.className : '') // задача на смешивание классов.
 
   return (
     <button

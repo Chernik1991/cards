@@ -44,6 +44,7 @@ const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = '
     onChange(pureChange(sort, down, up))
   }
 
+  // eslint-disable-next-line no-nested-ternary
   const icon = sort === down ? downIcon : sort === up ? upIcon : noneIcon
 
   return (

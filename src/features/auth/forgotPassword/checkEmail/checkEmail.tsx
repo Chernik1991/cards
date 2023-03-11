@@ -12,7 +12,6 @@ import { useAppSelector } from 'app/store'
 import checkEmail from 'assets/img/icons/checkEmail.svg'
 import s from 'common/components/header/HeaderStyles.module.css'
 import { PATH } from 'common/components/Routing/pages'
-import { ForgotParamsType, ResponseLoginType } from 'features/auth/auth-api'
 
 const theme = createTheme()
 
