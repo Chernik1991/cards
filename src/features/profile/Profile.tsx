@@ -11,9 +11,9 @@ import SuperEditableSpan from '../../common/components/c4-SuperEditableSpan/Supe
 import s from './profile.module.css'
 // import { editedModeAC, setNewNameAC, setNewCurrnetNameAC } from './reducerProfile'
 
-import { ResponseLoginType } from 'api/cards-api'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
+import { ResponseLoginType } from 'features/auth/auth-api'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 
 export const Profile = () => {

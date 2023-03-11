@@ -5,7 +5,7 @@ import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import { Copyright } from 'features/footer/copyright'
+import { Copyright } from 'common/components/footer/copyright'
 
 const theme = createTheme()
 

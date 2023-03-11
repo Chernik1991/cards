@@ -8,11 +8,11 @@ import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
-import { ForgotParamsType, ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
 import checkEmail from 'assets/img/icons/checkEmail.svg'
+import s from 'common/components/header/HeaderStyles.module.css'
 import { PATH } from 'common/components/Routing/pages'
-import s from 'features/header/HeaderStyles.module.css'
+import { ForgotParamsType, ResponseLoginType } from 'features/auth/auth-api'
 
 const theme = createTheme()
 

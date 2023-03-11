@@ -3,14 +3,13 @@ import React from 'react'
 import { Button } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import s from './HeaderStyles.module.css'
-
-import { ResponseLoginType } from 'api/cards-api'
 import { useAppSelector } from 'app/store'
 import itINC from 'assets/img/icons/itINC.svg'
 import defaultPic from 'assets/img/profile/Alex.jpg'
+import s from 'common/components/header/HeaderStyles.module.css'
 import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
+import { ResponseLoginType } from 'features/auth/auth-api'
 
 export const Header = () => {
   const auth = useAppSelector<boolean>(state => state.auth.isLoggedIn)

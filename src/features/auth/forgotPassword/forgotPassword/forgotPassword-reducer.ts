@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios'
 
-import { authAPI, ForgotParamsType } from 'api/cards-api'
 import { setAppStatusAC } from 'app/app-reducer'
 import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
+import { authAPI, ForgotParamsType } from 'features/auth/auth-api'
 
 const initialState: InitialStateType = {
   forgotPassword: false,

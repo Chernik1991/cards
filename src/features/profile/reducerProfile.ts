@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { authAPI, ResponseLoginType } from 'api/cards-api'
 import { setAppStatusAC } from 'app/app-reducer'
 import { errorUtils } from 'common/utils/error-utils'
+import { authAPI, ResponseLoginType } from 'features/auth/auth-api'
 
 const initialState: ResponseLoginType = {
   __v: 0,

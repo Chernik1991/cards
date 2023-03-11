@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { Pages } from 'common/components/Routing/pages'
 import { initializeAppTC } from 'features/auth/login/auth-reducer'
 
-function App() {
+export const App = () => {
   const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
   const dispatch = useAppDispatch()
 
@@ -28,5 +28,3 @@ function App() {
     </div>
   )
 }
-
-export default App

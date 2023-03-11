@@ -1,7 +1,7 @@
-import { authAPI, LoginParamsType } from 'api/cards-api'
 import { setAppIsInitializedAC, setAppStatusAC } from 'app/app-reducer'
 import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
+import { authAPI, LoginParamsType } from 'features/auth/auth-api'
 import { setUserDataAC } from 'features/profile/reducerProfile'
 
 const initialState: InitialStateType = {
