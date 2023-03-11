@@ -77,16 +77,16 @@ export const Register = () => {
     },
     onSubmit: values => {
       dispatch(registerTC(values))
-      formik.resetForm()
+      // formik.resetForm()
     },
   })
 
   console.log(isRegister)
   if (isRegister) {
-    return <Navigate to={'/' + PATH.LOGIN} />
+    return <Navigate to={PATH.LOGIN} />
   }
   if (isLoggedIn) {
-    return <Navigate to={'/' + PATH.PROFILE} />
+    return <Navigate to={PATH.PROFILE} />
   }
 
   return (

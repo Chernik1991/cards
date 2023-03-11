@@ -55,7 +55,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
       // handleServerAppError(res.data, dispatch)
     }
   } catch (e: any) {
-    errorUtils(e, dispatch)
+    // errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
     //   handleServerNetworkError({message:'1'},dispatch)
   } finally {

@@ -14,14 +14,14 @@ import { Profile } from 'features/profile/Profile'
 import { Test } from 'features/test/test'
 
 export const PATH = {
-  HASH: '#/',
-  LOGIN: 'login',
-  REGISTER: 'register',
-  PROFILE: 'profile',
-  FORGOT_YOUR_PASSWORD: 'forgot-your-password',
-  CHECK_EMAIL: 'check-email',
-  CREATE_NEW_PASSWORD: `create-new-password/:token`,
-  TEST: 'test',
+  HASH: '#',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  PROFILE: '/profile',
+  FORGOT_YOUR_PASSWORD: '/forgot-your-password',
+  CHECK_EMAIL: '/check-email',
+  CREATE_NEW_PASSWORD: `/create-new-password/:token`,
+  TEST: '/test',
 }
 
 export const Pages = () => {

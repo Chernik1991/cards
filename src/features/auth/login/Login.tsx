@@ -63,7 +63,7 @@ export const Login = () => {
     },
     onSubmit: values => {
       dispatch(loginTC(values))
-      formik.resetForm()
+      // formik.resetForm()
     },
   })
 
@@ -76,7 +76,7 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
-    return <Navigate to={'/' + PATH.PROFILE} />
+    return <Navigate to={PATH.PROFILE} />
   }
 
   return (

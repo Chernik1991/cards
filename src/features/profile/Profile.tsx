@@ -31,13 +31,13 @@ export const Profile = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
   if (!isLoggedIn) {
-    return <Navigate to={'/' + PATH.LOGIN} replace />
+    return <Navigate to={PATH.LOGIN} replace />
   }
 
   const logOutHandler = () => {
     dispatch(logoutTC())
 
-    return <Navigate to={'/' + PATH.LOGIN} />
+    return <Navigate to={PATH.LOGIN} />
   }
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
