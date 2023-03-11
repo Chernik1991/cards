@@ -1,5 +1,3 @@
-import { AxiosError } from 'axios'
-
 import { setAppStatusAC } from 'app/app-reducer'
 import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
@@ -37,10 +35,10 @@ export const registerTC =
       } else {
         dispatch(setAppStatusAC('failed'))
       }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
+    } catch (e: any) {
+      // const err = e as Error | AxiosError<{ error: string }>
 
-      errorUtils(err, dispatch)
+      errorUtils(e, dispatch)
 
       dispatch(setAppStatusAC('failed'))
     }
