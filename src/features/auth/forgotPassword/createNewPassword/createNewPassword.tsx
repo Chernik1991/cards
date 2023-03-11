@@ -62,7 +62,7 @@ export const CreateNewPassword = () => {
   if (isSetNewPassword) {
     console.log(isSetNewPassword, '2')
 
-    return <Navigate to={'/' + PATH.LOGIN} />
+    return <Navigate to={PATH.LOGIN} />
   }
 
   return (
