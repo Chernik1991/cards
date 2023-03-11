@@ -9,7 +9,7 @@ import defaultPic from 'assets/img/profile/Alex.jpg'
 import s from 'common/components/header/HeaderStyles.module.css'
 import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
-import { ResponseLoginType } from 'features/auth/auth-api'
+import { ResponseLoginType } from 'features/auth/auth-api' //
 
 export const Header = () => {
   const auth = useAppSelector<boolean>(state => state.auth.isLoggedIn)
