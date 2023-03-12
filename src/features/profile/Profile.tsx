@@ -8,13 +8,14 @@ import userPic1 from '../../assets/img/profile/Alex.jpg'
 import SuperButton from '../../common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from '../../common/components/c4-SuperEditableSpan/SuperEditableSpan'
 
-import s from './profile.module.css'
+import s from './Profile.module.css'
 // import { editedModeAC, setNewNameAC, setNewCurrnetNameAC } from './reducerProfile'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { ResponseLoginType } from 'features/auth/auth-api'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
+import { getPacksTC } from 'features/packs/packsReducer'
 
 export const Profile = () => {
   const dispatch = useAppDispatch()
@@ -38,6 +39,10 @@ export const Profile = () => {
     dispatch(logoutTC())
 
     return <Navigate to={PATH.LOGIN} />
+  }
+
+  const packsListHandler = () => {
+    dispatch(getPacksTC())
   }
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
@@ -66,7 +71,7 @@ export const Profile = () => {
             paddingTop: 4,
           }}
         >
-          <NavLink className={s.backContainer} to="#">
+          <NavLink className={s.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
             <svg className={s.backArrow} viewBox="0 0 512 512">
               <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
             </svg>

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 
-const instance = axios.create({
+export const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
   baseURL:
     process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
@@ -89,29 +89,3 @@ export type ProfileType = {
   name: string
   avatar?: string
 } // убрать потом
-
-/*
-export type ProfileStateType = {
-    _id: string
-    email: string
-    name: string
-    avatar?: string
-    publicCardPacksCount: number
-
-    created: string
-    updated: string
-    isAdmin: boolean
-    rememberMe: boolean
-
-    error?: string
-
-    editedMode: boolean
-    currentName?: string
-    tempName?: string
-}
-
-export type UpdatedProfileStateType = {
-    updatedUser: ProfileStateType
-    error?: string
-}
-*/

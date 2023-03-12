@@ -10,6 +10,7 @@ import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPasswor
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
+import { Packs } from 'features/packs/Packs'
 import { Profile } from 'features/profile/Profile'
 import { Test } from 'features/test/test'
 
@@ -21,6 +22,7 @@ export const PATH = {
   FORGOT_YOUR_PASSWORD: '/forgot-your-password',
   CHECK_EMAIL: '/check-email',
   CREATE_NEW_PASSWORD: `/create-new-password/:token`,
+  PACKS: `/packs`,
   TEST: '/test',
 }
 
@@ -36,6 +38,7 @@ export const Pages = () => {
           <Route path={PATH.FORGOT_YOUR_PASSWORD} element={<ForgotPassword />} />
           <Route path={PATH.CHECK_EMAIL} element={<CheckEmail />} />
           <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
+          <Route path={PATH.PACKS} element={<Packs />} />
           <Route path={PATH.TEST} element={<Test />} />
           <Route path={'*'} element={<Error404 />} />
         </Route>
