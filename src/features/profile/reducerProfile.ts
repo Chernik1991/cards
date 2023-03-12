@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
 import { setAppStatusAC } from 'app/app-reducer'
@@ -35,7 +34,6 @@ export const profileReducer = (state: ResponseLoginType = initialState, action: 
       return { ...userData }
     }
     case 'changeUserName': {
-      // const oldState = { ...state }
       const newName = action.payload.name1
 
       return { ...state, name: newName }
@@ -61,20 +59,14 @@ export const updateUserDataTC = (name: string, avatar?: string) => async (dispat
     dispatch(setAppStatusAC('loading'))
 
     if (res.data.updatedUser._id) {
-      console.log('good')
-      console.log(res.data.updatedUser)
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setNewNameAC(name))
     } else {
       dispatch(setAppStatusAC('failed'))
-      console.log('Error1')
     }
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-
+  } catch (e: any) {
     dispatch(setAppStatusAC('failed'))
-    errorUtils(err, dispatch)
-    console.log('Error2')
+    errorUtils(e, dispatch)
   }
 }
 

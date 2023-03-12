@@ -7,6 +7,7 @@ import { setNewPasswordReducer } from 'features/auth/forgotPassword/createNewPas
 import { forgotReducer } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
+import { cardsReducer } from 'features/cards/card/card-reducer'
 import { packsReducer } from 'features/packs/packsReducer'
 import { profileReducer } from 'features/profile/reducerProfile'
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   pass: setNewPasswordReducer,
   forgot: forgotReducer,
   packs: packsReducer,
+  cards: cardsReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

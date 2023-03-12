@@ -38,7 +38,7 @@ type FormikErrorType = {
 }
 export const Login = () => {
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -63,7 +63,6 @@ export const Login = () => {
     },
     onSubmit: values => {
       dispatch(loginTC(values))
-      // formik.resetForm()
     },
   })
 
@@ -107,12 +106,12 @@ export const Login = () => {
           >
             <TextField
               margin="normal"
-              required //посмотреть убрать
-              fullWidth //посмотреть убрать
+              required
+              fullWidth
               id="email"
               label="Email Address"
-              autoComplete="email" //посмотреть убрать
-              autoFocus //посмотреть убрать
+              autoComplete="email"
+              autoFocus
               {...formik.getFieldProps('email')}
               helperText={
                 formik.touched.email && formik.errors.email ? (
@@ -126,10 +125,8 @@ export const Login = () => {
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
-                // variant="filled"
                 required
                 fullWidth
-                // margin="normal"
                 autoComplete="current-password"
                 type={Password ? 'text' : 'password'}
                 aria-describedby="component-error-text"
