@@ -219,14 +219,6 @@ a:visited {
   height: 40px;
 }
 
-.inputLabelStyle.activeEditmode {
-  opacity: 1;
-}
-
-.saveButton.activeEditmode {
-  opacity: 1;
-}
-
 @media screen and (max-width: 1440px) {
   .backContainer {
     width: 65%;

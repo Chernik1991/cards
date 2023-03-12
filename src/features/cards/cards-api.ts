@@ -3,19 +3,19 @@ import axios, { AxiosResponse } from 'axios'
 const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
   baseURL:
-    // process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
-    'https://neko-back.herokuapp.com/2.0/',
+    process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
+  // 'https://neko-back.herokuapp.com/2.0/',
   withCredentials: true,
 })
 
 export const cardsAPI = {
-  readCards(data: ReadCardsParamsType) {
-    return instance.get<ReadCardsParamsType, AxiosResponse<ResponseReadCardsType>>('/cards/card', {
+  getCards(data: GetCardsParamsType) {
+    return instance.get<GetCardsParamsType, AxiosResponse<ResponseGetCardsType>>('/cards/card', {
       params: { ...data },
     })
   },
-  createCards(data: CreateCardParamsType) {
-    return instance.post<CreateCardParamsType, AxiosResponse<ResponseCreateCardType>>('/cards/card', data)
+  setCards(data: SetCardParamsType) {
+    return instance.post<SetCardParamsType, AxiosResponse<ResponseSetCardType>>('/cards/card', data)
   },
   delCards(data: DeleteCardsParamsType) {
     return instance.delete<DeleteCardsParamsType, AxiosResponse<ResponseDeleteCardsType>>('/cards/card', {
@@ -27,7 +27,7 @@ export const cardsAPI = {
   },
 }
 
-export type ReadCardsParamsType = {
+export type GetCardsParamsType = {
   cardAnswer?: string
   cardQuestion?: string
   cardsPack_id: string
@@ -37,7 +37,7 @@ export type ReadCardsParamsType = {
   page?: number
   pageCount?: string
 }
-export type CreateCardParamsType = {
+export type SetCardParamsType = {
   card: {
     cardsPack_id: string
     question: string
@@ -76,7 +76,7 @@ export type CardsType = {
   __v: number
 }
 
-export type ResponseReadCardsType = {
+export type ResponseGetCardsType = {
   cards: CardsType[]
   packUserId: string
 
@@ -92,7 +92,7 @@ export type ResponseReadCardsType = {
   token: string
   tokenDeathTime: number
 }
-export type ResponseCreateCardType = {
+export type ResponseSetCardType = {
   newCard: CardsType
   token: string
   tokenDeathTime: number

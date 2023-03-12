@@ -3,10 +3,10 @@ import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 import {
   cardsAPI,
-  CreateCardParamsType,
   DeleteCardsParamsType,
-  ReadCardsParamsType,
-  ResponseReadCardsType,
+  GetCardsParamsType,
+  ResponseGetCardsType,
+  SetCardParamsType,
   UpdateCardParamsType,
 } from 'features/cards/cards-api'
 
@@ -38,18 +38,18 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
 }
 
 //action
-export const setCardsDataAC = (data: ResponseReadCardsType) =>
+export const setCardsDataAC = (data: ResponseGetCardsType) =>
   ({
     type: 'CARDS/SET-CARDS-DATA',
     payload: { data },
   } as const)
 //thunks
 export const GetCardsTC =
-  (data: ReadCardsParamsType): AppThunkType =>
+  (data: GetCardsParamsType): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.readCards(data)
+      const res = await cardsAPI.getCards(data)
 
       console.log(res, 'loginTC')
       console.log(res.data.cards)
@@ -65,11 +65,11 @@ export const GetCardsTC =
     }
   }
 export const CreateCardsTC =
-  (data: CreateCardParamsType): AppThunkType =>
+  (data: SetCardParamsType): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.createCards(data)
+      const res = await cardsAPI.setCards(data)
 
       console.log(res, 'CreateCardsTC')
       if (res.request.status === 201) {
@@ -124,5 +124,5 @@ export const UpdateCardsTC =
 //types
 type ActionsType = ReturnType<typeof setCardsDataAC>
 type InitialStateType = {
-  data: ResponseReadCardsType
+  data: ResponseGetCardsType
 }

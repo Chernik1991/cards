@@ -30,6 +30,7 @@ export const Profile = () => {
     }, [])
   }
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
@@ -47,7 +48,7 @@ export const Profile = () => {
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
   const getcardHendler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: '640c5917893e3319116c7fc5' }))
+    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
   }
   const postcardHendler = () => {
     dispatch(
@@ -55,7 +56,7 @@ export const Profile = () => {
         card: {
           answer: '',
           question: '',
-          cardsPack_id: '640c5917893e3319116c7fc5',
+          cardsPack_id: getIdPack,
         },
       })
     )
