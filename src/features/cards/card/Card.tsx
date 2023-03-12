@@ -13,7 +13,7 @@ import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { GetCardsTC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
-import s from 'features/profile/profile.module.css'
+import s from 'features/profile/Profile.module.css'
 
 // function createData(question: string, answer: string, lastUpdated: number, grade: number, protein: number) {
 //   return { question, answer, lastUpdated, grade }

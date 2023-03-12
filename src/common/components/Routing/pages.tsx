@@ -10,8 +10,8 @@ import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPasswor
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
-import { Packs } from 'features/packs/Packs'
 import { Card } from 'features/cards/card/Card'
+import { Packs } from 'features/packs/Packs'
 import { Profile } from 'features/profile/Profile'
 import { Test } from 'features/test/test'
 

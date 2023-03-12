@@ -10,13 +10,14 @@ import SuperButton from '../../common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from '../../common/components/c4-SuperEditableSpan/SuperEditableSpan'
 
 import s from './Profile.module.css'
+
 // import { editedModeAC, setNewNameAC, setNewCurrnetNameAC } from './reducerProfile'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { ResponseLoginType } from 'features/auth/auth-api'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
-import { getPacksTC } from 'features/packs/packsReducer'
 import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
+import { getPacksTC } from 'features/packs/packsReducer'
 
 export const Profile = () => {
   const dispatch = useAppDispatch()
@@ -41,7 +42,7 @@ export const Profile = () => {
   }
 
   const packsListHandler = () => {
-    dispatch(getPacksTC())
+    dispatch(getPacksTC({ params: {} }))
   }
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
