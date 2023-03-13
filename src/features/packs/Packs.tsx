@@ -1,5 +1,3 @@
-import { Navigate } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -8,7 +6,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { PackType, ResponsePacksType } from './packs-api'
 import s from './Packs.module.css'
@@ -35,7 +33,7 @@ export const Packs = () => {
     return <Navigate to={PATH.LOGIN} replace />
   }
 
-  const mappedPacks = userPacks.cardPacks.map((row: PackType) => {
+  const mappedPacks = userPacks.map((row: PackType) => {
     const correctionOfMonth = new Date(row.updated).getMonth() + 1
     const correctionOfDataTime = new Date(row.updated).getMonth() < 10 ? '0' + correctionOfMonth : correctionOfMonth
 

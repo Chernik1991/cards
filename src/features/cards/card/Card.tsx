@@ -50,8 +50,8 @@ export const Card = () => {
     dispatch(
       CreateCardsTC({
         card: {
-          answer: '',
-          question: '',
+          answer: '123',
+          question: '1235555',
           cardsPack_id: getIdPack,
         },
       })

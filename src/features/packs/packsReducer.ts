@@ -25,6 +25,7 @@ const initialState: ResponsePacksType = {
       user_id: 'string',
       user_name: 'string',
       __v: 'string',
+      _id: 'string',
     },
   ],
   cardPacksTotalCount: 14,
