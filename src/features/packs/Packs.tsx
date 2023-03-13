@@ -1,11 +1,8 @@
-import { useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
-import { Navigate, NavLink } from 'react-router-dom'
-
-import { PackType, ResponsePacksType } from './packs-api'
+import { PackType } from './packs-api'
 import s from './Packs.module.css'
-import { addPackTC, getPacksTC } from './packsReducer'
+import { addPackTC } from './packsReducer'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
@@ -13,16 +10,13 @@ import { PATH } from 'common/components/Routing/pages'
 
 export const Packs = () => {
   const dispatch = useAppDispatch()
-  const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
+
+  const userPacks = useAppSelector<PackType[]>(state => state.packs.cardPacks)
+
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
+  console.log(userPacks, 'userPacks')
 
-  console.log(userPacks)
-
-  // useEffect(() => {
-  //   dispatch(getPacksTC())
-  // }, [])
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-
   const newPackHandler = () => {
     dispatch(addPackTC())
   }
@@ -31,10 +25,10 @@ export const Packs = () => {
     return <Navigate to={PATH.LOGIN} replace />
   }
 
-  const mappedPacks = userPacks.cardPacks.map((el: PackType) => {
+  const mappedPacks = userPacks.map((el: PackType) => {
     return (
       <div
-        key={crypto.randomUUID()}
+        key={el._id}
         style={{ width: '1400px', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}
       >
         <span style={{ width: '100px' }}>{el.name}</span>

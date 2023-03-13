@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { ResponseLoginType } from 'features/auth/auth-api'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
-import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
 import { getPacksTC } from 'features/packs/packsReducer'
 
 export const Profile = () => {
@@ -30,7 +29,7 @@ export const Profile = () => {
     }, [])
   }
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
+  const getIdUser = useAppSelector<string>(state => state.profile._id)
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
@@ -43,37 +42,13 @@ export const Profile = () => {
   }
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: {} }))
+    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
   }
 
   const customStyle = userProfileData.editedMode ? s.activeEditmode : ''
-  const getcardHendler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
-  }
-  const postcardHendler = () => {
-    dispatch(
-      CreateCardsTC({
-        card: {
-          answer: '',
-          question: '',
-          cardsPack_id: getIdPack,
-        },
-      })
-    )
-  }
-  const delcardHendler = () => {
-    dispatch(DeleteCardsTC({ id: '640cd015893e3319116cae74' }))
-  }
-  const updatecardHendler = () => {
-    dispatch(UpdateCardsTC({ card: { _id: '640cda35893e3319116cafdd', question: '111111111' } }))
-  }
 
   return (
     <>
-      <button onClick={getcardHendler}>get card</button>
-      <button onClick={postcardHendler}>new card</button>
-      <button onClick={delcardHendler}>del card</button>
-      <button onClick={updatecardHendler}>update card</button>
       <div className={s.profileContainer}>
         <Box
           sx={{
@@ -144,7 +119,7 @@ export const Profile = () => {
                 </div>
               </div>
               <div className={s.inputContainer}>
-                <span className={`${s.inputLabelStyle + ' ' + customStyle}`}>Nickname</span>
+                <span className={`${s.inputLabelStyle + ' ' + customStyle}`}>{userProfileData.name}</span>
                 <SuperButton className={s.saveButton + ' ' + customStyle} id="userEditNickName">
                   SAVE
                 </SuperButton>

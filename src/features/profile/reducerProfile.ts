@@ -57,8 +57,8 @@ export const updateUserDataTC = (name: string, avatar?: string) => async (dispat
     const res = await authAPI.updateUser({ name, avatar })
 
     dispatch(setAppStatusAC('loading'))
-
-    if (res.data.updatedUser._id) {
+    console.log(res, 'res')
+    if (res.request.status === 200) {
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setNewNameAC(name))
     } else {

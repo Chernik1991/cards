@@ -1,11 +1,6 @@
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 
-export const instance = axios.create({
-  // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
-  baseURL:
-    process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
-  withCredentials: true,
-})
+import { instance } from 'features/auth/auth-api'
 
 export const packsAPI = {
   getPacks(data?: PacksParamsType) {
@@ -23,16 +18,7 @@ export const packsAPI = {
 }
 
 export type ResponsePacksType = {
-  cardPacks: [
-    {
-      _id: string
-      user_id: string
-      name: string
-      cardsCount: number
-      created: string
-      updated: string
-    }
-  ]
+  cardPacks: PackType[]
   cardPacksTotalCount: number
   // количество колод
   maxCardsCount: number
