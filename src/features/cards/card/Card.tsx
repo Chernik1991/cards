@@ -88,8 +88,8 @@ export const Card = () => {
           <span> Back to Packs List</span>
         </NavLink>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableContainer component={Paper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Table sx={{ minWidth: 650, maxWidth: 1750 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Question</TableCell>

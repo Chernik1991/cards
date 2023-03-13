@@ -43,6 +43,15 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
 
       return { ...packsData }
     }
+
+    case 'set-current-page': {
+      return { ...state, page: action.payload.data.page }
+    }
+
+    case 'set-count-page': {
+      return { ...state, pageCount: action.payload.data.pageCount }
+    }
+
     // case 'changeUserName': {
     //   // const oldState = { ...state }
     //   const newName = action.payload.name1
@@ -59,6 +68,11 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
 }
 
 export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'getPacks', payload: { data } } as const)
+
+export const setCurrentPageAC = (data: ResponsePacksType) => ({ type: 'set-current-page', payload: { data } } as const)
+
+export const setCountPageAC = (data: ResponsePacksType) => ({ type: 'set-count-page', payload: { data } } as const)
+
 // export const setNewNameAC = (name1: string) => ({ type: 'changeUserName', payload: { name1 } } as const)
 // export const setNewCurrnetNameAC = (name2: string) => ({ type: 'changeCurrentName', payload: { name2 } } as const)
 // export const editedModeAC = (editedMode: boolean) => ({ type: 'editMode', payload: { editedMode } } as const)
@@ -110,4 +124,8 @@ export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) =
   }
 }
 
-type ActionsType = ReturnType<typeof getUserPacksAC>
+type ActionsType = getUserPacksType | setCurrentPageType | setCountPageType
+
+export type getUserPacksType = ReturnType<typeof getUserPacksAC>
+export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>
+export type setCountPageType = ReturnType<typeof setCountPageAC>

@@ -8,9 +8,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Navigate } from 'react-router-dom'
 
-import { PackType, ResponsePacksType } from './packs-api'
+import { PackType } from './packs-api'
 import s from './Packs.module.css'
-import { addPackTC } from './packsReducer'
+import { addPackTC, setCountPageAC, setCurrentPageAC } from './packsReducer'
+import { SearchPackPanel } from './PacksSearchBar'
+import { PaginationComponent } from './PaginationComponent'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
@@ -59,6 +61,17 @@ export const Packs = () => {
     )
   })
 
+  const page = useAppSelector(state => state.packs.page)
+  const pageCount = useAppSelector(state => state.packs.pageCount)
+  const cardsTotalCount = useAppSelector(state => state.cards.data.cardsTotalCount)
+  const paginationLabel = 'Packs per Page'
+
+  const onChangePageHandler = (page: any, size: any) => {
+    dispatch(setCurrentPageAC(page))
+    dispatch(setCountPageAC(size))
+    console.log(123)
+  }
+
   return (
     <div className={s.packsContainer}>
       <Box
@@ -76,8 +89,9 @@ export const Packs = () => {
           Add new pack
         </SuperButton>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <SearchPackPanel />
+      <TableContainer component={Paper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Table sx={{ minWidth: 650, maxWidth: 1750 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -90,6 +104,13 @@ export const Packs = () => {
           <TableBody>{mappedPacks}</TableBody>
         </Table>
       </TableContainer>
+      <PaginationComponent
+        totalCount={cardsTotalCount}
+        currentPage={page ?? 1}
+        pageSize={pageCount ?? 4}
+        onPageChanged={onChangePageHandler}
+        labelRowsPerPage={paginationLabel}
+      />
     </div>
   )
 }
