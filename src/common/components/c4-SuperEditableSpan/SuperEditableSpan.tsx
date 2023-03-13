@@ -5,6 +5,7 @@ import SuperInputText from '../c1-SuperInputText/SuperInputText'
 import editIcon from './editIcon.svg'
 import s from './SuperEditableSpan.module.css'
 
+import { setAppErrorAC } from 'app/app-reducer'
 import { useAppDispatch } from 'app/store'
 import { editedModeAC, setNewCurrnetNameAC, setNewNameAC, updateUserDataTC } from 'features/profile/reducerProfile'
 
@@ -52,22 +53,32 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = ({
       const newName = e.currentTarget.value as string
 
       if (newName.trim()) {
-        dispatch(setNewNameAC(newName))
-        // noinspection JSIgnoredPromiseFromCall
-        dispatch(updateUserDataTC(newName))
-        dispatch(editedModeAC(false))
+        if (newName.trim().split('').length < 40) {
+          dispatch(setNewNameAC(newName))
+          dispatch(updateUserDataTC(newName))
+          dispatch(editedModeAC(false))
+
+          return setEditMode(false)
+        } else {
+          dispatch(setNewCurrnetNameAC(e.currentTarget.name))
+          dispatch(setAppErrorAC("name can't be more 40 symbols"))
+          dispatch(editedModeAC(false))
+
+          return setEditMode(false)
+        }
       }
 
       setEditMode(false)
       dispatch(setNewCurrnetNameAC(e.currentTarget.name))
+      dispatch(setAppErrorAC("name can't be empty"))
 
       return dispatch(editedModeAC(false))
+    } else {
+      dispatch(setNewCurrnetNameAC(defaultText as string))
+      dispatch(editedModeAC(false))
+
+      setEditMode(false)
     }
-    dispatch(setNewCurrnetNameAC(defaultText as string))
-    dispatch(editedModeAC(false))
-
-    setEditMode(false)
-
     // выключить editMode при нажатии за пределами инпута // делают студенты
 
     onBlur?.(e)

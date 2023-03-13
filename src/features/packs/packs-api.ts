@@ -1,9 +1,12 @@
 import axios, { AxiosResponse } from 'axios'
 
 export const instance = axios.create({
-  // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
   baseURL:
-    process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
+    process.env.REACT_APP_BACK_URL === 'development'
+      ? 'http://localhost:7542/2.0/'
+      : 'https://neko-back.herokuapp.com/2.0/',
+  // baseURL:
+  //   process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
   withCredentials: true,
 })
 
@@ -25,12 +28,21 @@ export const packsAPI = {
 export type ResponsePacksType = {
   cardPacks: [
     {
-      _id: string
-      user_id: string
-      name: string
       cardsCount: number
       created: string
+      deckCover: string
+      grade: number
+      more_id: string
+      name: string
+      path: string
+      private: boolean
+      rating: number
+      shots: number
+      type: string
       updated: string
+      user_id: string
+      user_name: string
+      __v: string
     }
   ]
   cardPacksTotalCount: number
@@ -42,12 +54,21 @@ export type ResponsePacksType = {
 }
 
 export type PackType = {
-  _id: string
-  user_id: string
-  name: string
   cardsCount: number
   created: string
+  deckCover: string
+  grade: number
+  more_id: string
+  name: string
+  path: string
+  private: boolean
+  rating: number
+  shots: number
+  type: string
   updated: string
+  user_id: string
+  user_name: string
+  __v: string
 }
 
 export type PacksParamsType = {
