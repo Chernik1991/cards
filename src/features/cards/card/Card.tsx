@@ -11,8 +11,10 @@ import TableRow from '@mui/material/TableRow'
 import { NavLink } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
-import { GetCardsTC } from 'features/cards/card/card-reducer'
+import { PATH } from 'common/components/Routing/pages'
+import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
+import { getPacksTC } from 'features/packs/packsReducer'
 import s from 'features/profile/Profile.module.css'
 
 // function createData(question: string, answer: string, lastUpdated: number, grade: number, protein: number) {
@@ -32,13 +34,42 @@ import s from 'features/profile/Profile.module.css'
 export const Card = () => {
   const dispatch = useAppDispatch()
   const rows = useAppSelector<Array<CardsType>>(state => state.cards.data.cards)
+  const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
+  const getIdUser = useAppSelector<string>(state => state.profile._id)
+
+  // useLayoutEffect(() => {
+  //   dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
+  // }, [])
+  const packsListHandler = () => {
+    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+  }
   const getcardHendler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: '640c5917893e3319116c7fc5' }))
+    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
+  }
+  const postcardHendler = () => {
+    dispatch(
+      CreateCardsTC({
+        card: {
+          answer: '',
+          question: '',
+          cardsPack_id: getIdPack,
+        },
+      })
+    )
+  }
+  const delcardHendler = () => {
+    dispatch(DeleteCardsTC({ id: '640cd015893e3319116cae74' }))
+  }
+  const updatecardHendler = () => {
+    dispatch(UpdateCardsTC({ card: { _id: '640cda35893e3319116cafdd', question: '111111111' } }))
   }
 
   return (
     <>
       <button onClick={getcardHendler}>get card</button>
+      <button onClick={postcardHendler}>new card</button>
+      <button onClick={delcardHendler}>del card</button>
+      <button onClick={updatecardHendler}>update card</button>
       <div>{rows[0]._id}</div>
       <Box
         sx={{
@@ -50,7 +81,7 @@ export const Card = () => {
           paddingTop: 4,
         }}
       >
-        <NavLink className={s.backContainer} to="#">
+        <NavLink className={s.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
           <svg className={s.backArrow} viewBox="0 0 512 512">
             <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
           </svg>

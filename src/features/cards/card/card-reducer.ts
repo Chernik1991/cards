@@ -12,7 +12,24 @@ import {
 
 const initialState: InitialStateType = {
   data: {
-    cards: [],
+    cards: [
+      {
+        _id: '1',
+        cardsPack_id: '',
+        user_id: '',
+        question: 'No question',
+        answer: 'No answer',
+        grade: 0,
+        shots: 0,
+        comments: '',
+        type: '',
+        rating: 0,
+        more_id: '',
+        created: '',
+        updated: '',
+        __v: 0,
+      },
+    ],
     cardsTotalCount: 0,
     token: '',
     tokenDeathTime: 0,
@@ -51,17 +68,21 @@ export const GetCardsTC =
     try {
       const res = await cardsAPI.getCards(data)
 
-      console.log(res, 'loginTC')
+      console.log(res, 'getCards')
       console.log(res.data.cards)
       if (res.request.status === 200) {
-        dispatch(setCardsDataAC(res.data))
-        dispatch(setAppStatusAC('succeeded'))
+        if (res.data.cards.length > 0) {
+          dispatch(setCardsDataAC(res.data))
+          dispatch(setAppStatusAC('succeeded'))
+        }
       } else {
         dispatch(setAppStatusAC('failed'))
       }
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
+    } finally {
+      dispatch(setAppStatusAC('succeeded'))
     }
   }
 export const CreateCardsTC =

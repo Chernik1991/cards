@@ -4,6 +4,7 @@ import { Dispatch } from 'redux'
 import { packsAPI, PacksParamsType, ResponsePacksType, SetNewPackType } from './packs-api'
 
 import { setAppStatusAC } from 'app/app-reducer'
+import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 
 const initialState: ResponsePacksType = {
@@ -61,27 +62,30 @@ export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'getPacks', 
 // export const setNewCurrnetNameAC = (name2: string) => ({ type: 'changeCurrentName', payload: { name2 } } as const)
 // export const editedModeAC = (editedMode: boolean) => ({ type: 'editMode', payload: { editedMode } } as const)
 
-export const getPacksTC = (data?: PacksParamsType) => async (dispatch: Dispatch) => {
-  try {
-    const res = await packsAPI.getPacks(data)
+export const getPacksTC =
+  (data?: PacksParamsType): AppThunkType =>
+  async dispatch => {
+    try {
+      const res = await packsAPI.getPacks(data)
 
-    dispatch(setAppStatusAC('loading'))
+      dispatch(setAppStatusAC('loading'))
+      console.log(res, getPacksTC)
 
-    if (res.data.page) {
-      dispatch(setAppStatusAC('succeeded'))
-      dispatch(getUserPacksAC(res.data))
-    } else {
+      if (res.data) {
+        dispatch(setAppStatusAC('succeeded'))
+        dispatch(getUserPacksAC(res.data))
+      } else {
+        dispatch(setAppStatusAC('failed'))
+        console.log('Error1')
+      }
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
+
       dispatch(setAppStatusAC('failed'))
-      console.log('Error1')
+      errorUtils(err, dispatch)
+      console.log('Error2')
     }
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-
-    dispatch(setAppStatusAC('failed'))
-    errorUtils(err, dispatch)
-    console.log('Error2')
   }
-}
 
 export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) => {
   try {
