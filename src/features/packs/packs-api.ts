@@ -62,6 +62,7 @@ export type PackType = {
   user_id: string
   user_name: string
   __v: string
+  _id: string
 }
 
 export type PacksParamsType = {
