@@ -10,6 +10,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { NavLink } from 'react-router-dom'
 
+import { PaginationComponent } from '../../packs/PaginationComponent'
+
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
@@ -33,7 +35,7 @@ import s from 'features/profile/Profile.module.css'
 
 export const Card = () => {
   const dispatch = useAppDispatch()
-  const rows = useAppSelector<Array<CardsType>>(state => state.cards.data.cards)
+  const rows = useAppSelector<Array<CardsType>>(state => state.cards.cards)
   const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
   const getIdUser = useAppSelector<string>(state => state.profile._id)
 
@@ -64,12 +66,33 @@ export const Card = () => {
     dispatch(UpdateCardsTC({ card: { _id: '640cda35893e3319116cafdd', question: '111111111' } }))
   }
 
+  const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
+  const currentPage = useAppSelector(state => state.cards.page)
+  const pageCount = useAppSelector(state => state.cards.pageCount)
+  const paginationLabel = 'Cards per Page'
+
+  const onChangePageHandler = () => {
+    /*dispatch(setCardsCurrentPageAC(res.data))
+    dispatch(setCardsPageCountAC(res.data))*/
+  }
+
   return (
-    <>
-      <button onClick={getcardHendler}>get card</button>
-      <button onClick={postcardHendler}>new card</button>
-      <button onClick={delcardHendler}>del card</button>
-      <button onClick={updatecardHendler}>update card</button>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        margin: '40px 50px 0px 50px',
+      }}
+    >
+      <div>
+        <button onClick={getcardHendler}>get card</button>
+        <button onClick={postcardHendler}>new card</button>
+        <button onClick={delcardHendler}>del card</button>
+        <button onClick={updatecardHendler}>update card</button>
+      </div>
+
       <div>{rows[0]._id}</div>
       <Box
         sx={{
@@ -89,7 +112,7 @@ export const Card = () => {
         </NavLink>
       </Box>
       <TableContainer component={Paper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Table sx={{ minWidth: 650, maxWidth: 1750 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Question</TableCell>
@@ -112,7 +135,13 @@ export const Card = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      ;
-    </>
+      <PaginationComponent
+        totalCount={cardsTotalCount}
+        currentPage={currentPage}
+        pageSize={pageCount}
+        onPageChanged={onChangePageHandler}
+        labelRowsPerPage={paginationLabel}
+      />
+    </div>
   )
 }

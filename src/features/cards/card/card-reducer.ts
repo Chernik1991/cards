@@ -10,45 +10,49 @@ import {
   UpdateCardParamsType,
 } from 'features/cards/cards-api'
 
-const initialState: InitialStateType = {
-  data: {
-    cards: [
-      {
-        _id: '1',
-        cardsPack_id: '',
-        user_id: '',
-        question: 'No question',
-        answer: 'No answer',
-        grade: 0,
-        shots: 0,
-        comments: '',
-        type: '',
-        rating: 0,
-        more_id: '',
-        created: '',
-        updated: '',
-        __v: 0,
-      },
-    ],
-    cardsTotalCount: 0,
-    token: '',
-    tokenDeathTime: 0,
-    maxGrade: 0,
-    minGrade: 0,
-    packCreated: '',
-    packName: '',
-    packPrivate: false,
-    packUpdated: '',
-    page: 0,
-    packUserId: '',
-    pageCount: 0,
-  },
+const initialState: ResponseGetCardsType = {
+  cards: [
+    {
+      _id: '1',
+      cardsPack_id: '',
+      user_id: '',
+      question: 'No question',
+      answer: 'No answer',
+      grade: 0,
+      shots: 0,
+      comments: '',
+      type: '',
+      rating: 0,
+      more_id: '',
+      created: '',
+      updated: '',
+      __v: 0,
+    },
+  ],
+  cardsTotalCount: 0,
+  token: '',
+  tokenDeathTime: 0,
+  maxGrade: 0,
+  minGrade: 0,
+  packCreated: '',
+  packName: '',
+  packPrivate: false,
+  packUpdated: '',
+  page: 0,
+  packUserId: '',
+  pageCount: 0,
 }
 
-export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
   switch (action.type) {
     case 'CARDS/SET-CARDS-DATA':
-      return { ...state, data: action.payload.data }
+      return { ...state, ...action.payload.data }
+    case 'CARDS/SET-CURRENT-PAGE': {
+      return { ...state, page: action.payload.data.page }
+    }
+    case 'CARDS/SET-CARDS-PAGE-COUNT': {
+      return { ...state, pageCount: action.payload.data.pageCount }
+    }
     default:
       return state
   }
@@ -58,6 +62,17 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
 export const setCardsDataAC = (data: ResponseGetCardsType) =>
   ({
     type: 'CARDS/SET-CARDS-DATA',
+    payload: { data },
+  } as const)
+
+export const setCardsCurrentPageAC = (data: ResponseGetCardsType) =>
+  ({
+    type: 'CARDS/SET-CURRENT-PAGE',
+    payload: { data },
+  } as const)
+export const setCardsPageCountAC = (data: ResponseGetCardsType) =>
+  ({
+    type: 'CARDS/SET-CARDS-PAGE-COUNT',
     payload: { data },
   } as const)
 //thunks
@@ -143,7 +158,14 @@ export const UpdateCardsTC =
     }
   }
 //types
-type ActionsType = ReturnType<typeof setCardsDataAC>
+export type ActionsType = setCardsData | setCardsCurrentPage | setCardsPageCount
+
+export type setCardsData = ReturnType<typeof setCardsDataAC>
+export type setCardsCurrentPage = ReturnType<typeof setCardsCurrentPageAC>
+export type setCardsPageCount = ReturnType<typeof setCardsPageCountAC>
+
+/*
 type InitialStateType = {
-  data: ResponseGetCardsType
+  car: ResponseGetCardsType
 }
+*/

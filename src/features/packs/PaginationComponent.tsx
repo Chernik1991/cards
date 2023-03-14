@@ -49,7 +49,7 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
       count={totalCount}
       page={currentPage - 1}
       onPageChange={onChangePageHandler}
-      rowsPerPageOptions={[4, 7, 10, 15]}
+      rowsPerPageOptions={[4, 8, 10]}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={onChangeRowsPerPageHandler}
       showFirstButton

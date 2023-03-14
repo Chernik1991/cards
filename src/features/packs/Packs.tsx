@@ -63,13 +63,12 @@ export const Packs = () => {
 
   const page = useAppSelector(state => state.packs.page)
   const pageCount = useAppSelector(state => state.packs.pageCount)
-  const cardsTotalCount = useAppSelector(state => state.cards.data.cardsTotalCount)
+  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
   const paginationLabel = 'Packs per Page'
 
   const onChangePageHandler = (page: any, size: any) => {
     dispatch(setCurrentPageAC(page))
     dispatch(setCountPageAC(size))
-    console.log(123)
   }
 
   return (
@@ -91,7 +90,7 @@ export const Packs = () => {
       </Box>
       <SearchPackPanel />
       <TableContainer component={Paper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Table sx={{ minWidth: 650, maxWidth: 1750 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -105,7 +104,7 @@ export const Packs = () => {
         </Table>
       </TableContainer>
       <PaginationComponent
-        totalCount={cardsTotalCount}
+        totalCount={cardPacksTotalCount}
         currentPage={page ?? 1}
         pageSize={pageCount ?? 4}
         onPageChanged={onChangePageHandler}
