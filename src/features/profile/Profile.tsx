@@ -42,7 +42,7 @@ export const Profile = () => {
   }
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(getPacksTC({ params: { user_id: null } })) /*user_id: getIdUser*/
   }
 
   const customStyle = userProfileData.editedMode ? y.activeEditmode : ''

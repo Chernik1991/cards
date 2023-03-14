@@ -10,16 +10,16 @@ import { errorUtils } from 'common/utils/error-utils'
 const initialState: ResponsePacksType = {
   cardPacks: [
     {
-      cardsCount: 14,
+      cardsCount: 0,
       created: 'string',
       deckCover: 'string',
-      grade: 3,
+      grade: 0,
       more_id: 'string',
       name: 'string',
       path: 'string',
       private: false,
-      rating: 2,
-      shots: 1,
+      rating: 0,
+      shots: 0,
       type: 'string',
       updated: 'string',
       user_id: 'string',
@@ -28,12 +28,12 @@ const initialState: ResponsePacksType = {
       _id: 'efreg',
     },
   ],
-  cardPacksTotalCount: 14,
+  cardPacksTotalCount: 0,
   // количество колод
-  maxCardsCount: 4,
+  maxCardsCount: 0,
   minCardsCount: 0,
-  page: 1, // выбранная страница
-  pageCount: 4,
+  page: 0, // выбранная страница
+  pageCount: 0,
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {

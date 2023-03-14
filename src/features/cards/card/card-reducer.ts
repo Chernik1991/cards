@@ -13,7 +13,7 @@ import {
 const initialState: ResponseGetCardsType = {
   cards: [
     {
-      _id: '1',
+      _id: '',
       cardsPack_id: '',
       user_id: '',
       question: 'No question',

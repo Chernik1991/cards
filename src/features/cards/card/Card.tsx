@@ -43,7 +43,7 @@ export const Card = () => {
   //   dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
   // }, [])
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(getPacksTC({ params: { user_id: null } }))
   }
   const getcardHendler = () => {
     dispatch(GetCardsTC({ cardsPack_id: getIdPack }))

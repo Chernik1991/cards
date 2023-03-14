@@ -25,7 +25,6 @@ export const Header = () => {
 
   return (
     <div>
-      <ErrorSnackbar />
       <NavLink to={PATH.LOGIN}>[Login] </NavLink>
       <NavLink to={PATH.REGISTER}>[Register] </NavLink>
       <NavLink to={PATH.PROFILE}>[Profile] </NavLink>
@@ -58,6 +57,7 @@ export const Header = () => {
           </Button>
         )}
       </div>
+      <ErrorSnackbar />
     </div>
   )
 }

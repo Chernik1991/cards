@@ -9,7 +9,7 @@ import { PacksToggleButton } from './PacksToggleButton'
 
 export const SearchPackPanel = () => {
   return (
-    <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'100px'} alignItems={'end'}>
+    <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
       <Box sx={{ width: '500px' }}>
         <label
           style={{

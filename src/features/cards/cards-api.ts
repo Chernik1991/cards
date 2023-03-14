@@ -33,7 +33,7 @@ export type GetCardsParamsType = {
 }
 export type SetCardParamsType = {
   card: {
-    cardsPack_id: string
+    cardsPack_id: string | null
     question: string
     answer: string
     grade?: number

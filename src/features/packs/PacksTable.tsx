@@ -211,7 +211,7 @@ const EnhancedTable = (props: EnhancedTableType) => {
   // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
-    <Box sx={{ width: '80%', padding: '30px' }}>
+    <Box sx={{ width: '100%', paddingTop: '30px' }}>
       <Paper sx={{ width: '100%', mb: 2, padding: '15px 30px' }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
