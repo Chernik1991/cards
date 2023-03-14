@@ -53,6 +53,7 @@ export const setNewCurrnetNameAC = (name2: string) => ({ type: 'changeCurrentNam
 export const editedModeAC = (editedMode: boolean) => ({ type: 'editMode', payload: { editedMode } } as const)
 
 export const updateUserDataTC = (name: string, avatar?: string) => async (dispatch: Dispatch) => {
+  console.log('updateUserDataTC')
   try {
     const res = await authAPI.updateUser({ name, avatar })
 

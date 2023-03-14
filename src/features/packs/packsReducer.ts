@@ -66,29 +66,30 @@ export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'getPacks', 
 export const getPacksTC =
   (data?: PacksParamsType): AppThunkType =>
   async dispatch => {
+    console.log('getPacksTC')
     try {
       const res = await packsAPI.getPacks(data)
 
       dispatch(setAppStatusAC('loading'))
-      console.log(res, getPacksTC)
+      console.log(res, 'getPacksTC')
 
       if (res.data) {
+        console.log('1232132132132132')
         dispatch(setAppStatusAC('succeeded'))
         dispatch(getUserPacksAC(res.data))
       } else {
         dispatch(setAppStatusAC('failed'))
         console.log('Error1')
       }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
+    } catch (e: any) {
       dispatch(setAppStatusAC('failed'))
-      errorUtils(err, dispatch)
+      errorUtils(e, dispatch)
       console.log('Error2')
     }
   }
 
 export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) => {
+  console.log('addPackTC ')
   try {
     const res = await packsAPI.setPack({ cardsPack: {} })
 

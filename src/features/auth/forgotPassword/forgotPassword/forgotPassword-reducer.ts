@@ -28,7 +28,7 @@ export const setForgotEmailAC = (email: string) => ({ type: 'setForgotEmail', pa
 export const setForgotTC =
   (data: ForgotParamsType): AppThunkType =>
   async dispatch => {
-    debugger
+    console.log('setForgotTC')
     try {
       const res = await authAPI.forgot(data)
 

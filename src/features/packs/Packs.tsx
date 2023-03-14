@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Navigate } from 'react-router-dom'
 
-import { PackType, ResponsePacksType } from './packs-api'
+import { PackType } from './packs-api'
 import s from './Packs.module.css'
 import { addPackTC } from './packsReducer'
 
@@ -17,12 +17,13 @@ import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PATH } from 'common/components/Routing/pages'
 
 export const Packs = () => {
+  console.log('Packs')
   const dispatch = useAppDispatch()
 
   const userPacks = useAppSelector<PackType[]>(state => state.packs.cardPacks)
 
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
-  console.log(userPacks, 'userPacks')
+  // console.log(userPacks, 'userPacks')
 
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const newPackHandler = () => {
@@ -30,6 +31,8 @@ export const Packs = () => {
   }
 
   if (!isLoggedIn) {
+    console.log('Pack navigate to login')
+
     return <Navigate to={PATH.LOGIN} replace />
   }
 

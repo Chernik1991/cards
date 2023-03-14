@@ -37,6 +37,7 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 export const Login = () => {
+  console.log('Login')
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const formik = useFormik({
@@ -75,6 +76,8 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
+    console.log('Login navigate to Profile')
+
     return <Navigate to={PATH.PROFILE} />
   }
 

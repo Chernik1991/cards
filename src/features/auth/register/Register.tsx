@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { VisibilityOff, Visibility } from '@mui/icons-material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -30,7 +30,7 @@ type FormikErrorType = {
 }
 
 export const Register = () => {
-  debugger
+  console.log('Register')
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const isRegister = useAppSelector<boolean>(state => state.reg.isRegister)
@@ -81,11 +81,14 @@ export const Register = () => {
     },
   })
 
-  console.log(isRegister)
   if (isRegister) {
+    console.log('Register navigate to Login')
+
     return <Navigate to={PATH.LOGIN} />
   }
   if (isLoggedIn) {
+    console.log('Register navigate to Profile')
+
     return <Navigate to={PATH.PROFILE} />
   }
 

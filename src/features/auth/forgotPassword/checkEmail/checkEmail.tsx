@@ -16,6 +16,7 @@ import { PATH } from 'common/components/Routing/pages'
 const theme = createTheme()
 
 export const CheckEmail = () => {
+  console.log('CheckEmail')
   // const dispatch = useAppDispatch()
   // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const email = useAppSelector<string>(state => state.forgot.email)

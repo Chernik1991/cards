@@ -8,6 +8,7 @@ import { Pages } from 'common/components/Routing/pages'
 import { initializeAppTC } from 'features/auth/login/auth-reducer'
 
 export const App = () => {
+  console.log(1, 'app')
   const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
   const dispatch = useAppDispatch()
 

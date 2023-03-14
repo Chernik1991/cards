@@ -11,44 +11,47 @@ import {
 } from 'features/cards/cards-api'
 
 const initialState: InitialStateType = {
-  data: {
-    cards: [
-      {
-        _id: '1',
-        cardsPack_id: '',
-        user_id: '',
-        question: 'No question',
-        answer: 'No answer',
-        grade: 0,
-        shots: 0,
-        comments: '',
-        type: '',
-        rating: 0,
-        more_id: '',
-        created: '',
-        updated: '',
-        __v: 0,
-      },
-    ],
-    cardsTotalCount: 0,
-    token: '',
-    tokenDeathTime: 0,
-    maxGrade: 0,
-    minGrade: 0,
-    packCreated: '',
-    packName: '',
-    packPrivate: false,
-    packUpdated: '',
-    page: 0,
-    packUserId: '',
-    pageCount: 0,
-  },
+  cards: [
+    {
+      _id: '',
+      cardsPack_id: '',
+      user_id: '',
+      question: 'No question',
+      answer: 'No answer',
+      grade: 0,
+      shots: 0,
+      comments: '',
+      type: '',
+      rating: 0,
+      more_id: '',
+      created: '',
+      updated: '',
+      __v: 0,
+    },
+  ],
+  cardsTotalCount: 0,
+  token: '',
+  tokenDeathTime: 0,
+  maxGrade: 0,
+  minGrade: 0,
+  packCreated: '',
+  packName: '',
+  packPrivate: false,
+  packUpdated: '',
+  page: 0,
+  packUserId: '',
+  pageCount: 0,
 }
 
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+  console.log('cardsReducer')
   switch (action.type) {
     case 'CARDS/SET-CARDS-DATA':
-      return { ...state, data: action.payload.data }
+      // eslint-disable-next-line no-case-declarations
+      const cardsData = { ...action.payload.data }
+
+      return { ...cardsData }
+
     default:
       return state
   }
@@ -64,6 +67,7 @@ export const setCardsDataAC = (data: ResponseGetCardsType) =>
 export const GetCardsTC =
   (data: GetCardsParamsType): AppThunkType =>
   async dispatch => {
+    console.log('GetCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.getCards(data)
@@ -88,6 +92,7 @@ export const GetCardsTC =
 export const CreateCardsTC =
   (data: SetCardParamsType): AppThunkType =>
   async dispatch => {
+    console.log('CreateCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.setCards(data)
@@ -107,6 +112,7 @@ export const CreateCardsTC =
 export const DeleteCardsTC =
   (data: DeleteCardsParamsType): AppThunkType =>
   async dispatch => {
+    console.log('DeleteCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.delCards(data)
@@ -126,6 +132,7 @@ export const DeleteCardsTC =
 export const UpdateCardsTC =
   (data: UpdateCardParamsType): AppThunkType =>
   async dispatch => {
+    console.log('UpdateCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.updateCards(data)
@@ -144,6 +151,4 @@ export const UpdateCardsTC =
   }
 //types
 type ActionsType = ReturnType<typeof setCardsDataAC>
-type InitialStateType = {
-  data: ResponseGetCardsType
-}
+type InitialStateType = ResponseGetCardsType

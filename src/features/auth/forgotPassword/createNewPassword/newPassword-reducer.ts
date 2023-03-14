@@ -13,6 +13,7 @@ export const setNewPasswordReducer = (
   state: InitialStateType = initialState,
   action: ActionsType
 ): InitialStateType => {
+  console.log('setNewPasswordReducer')
   switch (action.type) {
     case 'Set-New-Password':
       return { ...state, isSetNewPassword: action.value }
@@ -27,8 +28,8 @@ export const setIsSetNewPasswordAC = (value: boolean) => ({ type: 'Set-New-Passw
 export const setNewPasswordTC =
   (data: SetNewPasswordParamsType): AppThunkType =>
   async dispatch => {
+    console.log('setNewPasswordTC')
     try {
-      debugger
       const res = await authAPI.setNewPassword(data)
 
       dispatch(setAppStatusAC('loading'))

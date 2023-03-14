@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { memo, useLayoutEffect } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -13,38 +14,30 @@ import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
+import { InputCard } from 'features/cards/card/InputCard'
 import { CardsType } from 'features/cards/cards-api'
 import { getPacksTC } from 'features/packs/packsReducer'
 import s from 'features/profile/Profile.module.css'
 
-// function createData(question: string, answer: string, lastUpdated: number, grade: number, protein: number) {
-//   return { question, answer, lastUpdated, grade }
-
-// const rows = useAppSelector<any>(state => state.cards.data)
-// const rows = [
-//   //   cards.map((c: any) => c),
-//   //   // // cards.map((c: any) => c.answer),
-//   //   // // cards,
-//   createData('Ice cream sandwich', '159', 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', '237', 9.0, 37, 4.3),
-//   createData('Eclair', '262', 16.0, 24, 6.0),
-//   createData('Cupcake', '305', 3.7, 67, 4.3),
-//   createData('Gingerbread', '356', 16.0, 49, 3.9),
-
-export const Card = () => {
+export const Card = memo(() => {
+  console.log('Card')
   const dispatch = useAppDispatch()
-  const rows = useAppSelector<Array<CardsType>>(state => state.cards.data.cards)
+  const rows = useAppSelector<Array<CardsType>>(state => state.cards.cards)
   const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
   const getIdUser = useAppSelector<string>(state => state.profile._id)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-  // useLayoutEffect(() => {
-  //   dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
-  // }, [])
+  useLayoutEffect(() => {
+    if (!isLoggedIn) {
+      return
+    }
+    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
+  }, [])
   const packsListHandler = () => {
     dispatch(getPacksTC({ params: { user_id: getIdUser } }))
   }
   const getcardHendler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
+    // dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
   }
   const postcardHendler = () => {
     dispatch(
@@ -60,16 +53,19 @@ export const Card = () => {
   const delcardHendler = () => {
     dispatch(DeleteCardsTC({ id: '640cd015893e3319116cae74' }))
   }
-  const updatecardHendler = () => {
-    dispatch(UpdateCardsTC({ card: { _id: '640cda35893e3319116cafdd', question: '111111111' } }))
-  }
+  const updatecardHendler = (id: string, title: string) =>
+    dispatch(UpdateCardsTC({ card: { _id: id, question: title } }))
+  //
+  // if (!isLoggedIn) {
+  //   return <Navigate to={PATH.LOGIN} />
+  // }
 
   return (
     <>
       <button onClick={getcardHendler}>get card</button>
       <button onClick={postcardHendler}>new card</button>
       <button onClick={delcardHendler}>del card</button>
-      <button onClick={updatecardHendler}>update card</button>
+      {/*<button onClick={updatecardHendler}>update card</button>*/}
       <div>{rows[0]._id}</div>
       <Box
         sx={{
@@ -102,7 +98,9 @@ export const Card = () => {
             {rows.map((row: any) => (
               <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.question}
+                  <div>
+                    <InputCard onClick={updatecardHendler} id={row._id} question={row.question} />
+                  </div>
                 </TableCell>
                 <TableCell align="right">{row.answer}</TableCell>
                 <TableCell align="right">{row.updated}</TableCell>
@@ -115,4 +113,4 @@ export const Card = () => {
       ;
     </>
   )
-}
+})

@@ -19,6 +19,7 @@ import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import { getPacksTC } from 'features/packs/packsReducer'
 
 export const Profile = () => {
+  console.log('Profile')
   const dispatch = useAppDispatch()
   const userProfileData = useAppSelector<ResponseLoginType>(state => state.profile)
 

@@ -8,6 +8,7 @@ const initialState: InitialStateType = {
 }
 
 export const registerReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+  console.log('registerReducer')
   switch (action.type) {
     case 'register/SIGN-UP':
       return { ...state, isRegister: action.value }
@@ -21,7 +22,7 @@ export const setIsRegisterAC = (value: boolean) => ({ type: 'register/SIGN-UP', 
 export const registerTC =
   (data: RegisterParamsType): AppThunkType =>
   async dispatch => {
-    debugger
+    console.log('registerTC')
     try {
       const res = await authAPI.register(data)
 
