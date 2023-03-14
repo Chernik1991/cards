@@ -9,7 +9,7 @@ import userPic1 from '../../assets/img/profile/Alex.jpg'
 import SuperButton from '../../common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from '../../common/components/c4-SuperEditableSpan/SuperEditableSpan'
 
-import u from './Profile.module.css'
+import y from './Profile.module.css'
 
 // import { editedModeAC, setNewNameAC, setNewCurrnetNameAC } from './reducerProfile'
 import { useAppDispatch, useAppSelector } from 'app/store'
@@ -45,35 +45,11 @@ export const Profile = () => {
     dispatch(getPacksTC({ params: { user_id: getIdUser } }))
   }
 
-  const customStyle = userProfileData.editedMode ? u.activeEditmode : ''
-  const getcardHendler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
-  }
-  const postcardHendler = () => {
-    dispatch(
-      CreateCardsTC({
-        card: {
-          answer: '',
-          question: '',
-          cardsPack_id: getIdPack,
-        },
-      })
-    )
-  }
-  const delcardHendler = () => {
-    dispatch(DeleteCardsTC({ id: '640cd015893e3319116cae74' }))
-  }
-  const updatecardHendler = () => {
-    dispatch(UpdateCardsTC({ card: { _id: '640cda35893e3319116cafdd', question: '111111111' } }))
-  }
+  const customStyle = userProfileData.editedMode ? y.activeEditmode : ''
 
   return (
     <>
-      <button onClick={getcardHendler}>get card</button>
-      <button onClick={postcardHendler}>new card</button>
-      <button onClick={delcardHendler}>del card</button>
-      <button onClick={updatecardHendler}>update card</button>
-      <div className={u.profileContainer}>
+      <div className={y.profileContainer}>
         <Box
           sx={{
             display: 'grid',
@@ -96,8 +72,8 @@ export const Profile = () => {
               paddingTop: 4,
             }}
           >
-            <NavLink className={u.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
-              <svg className={u.backArrow} viewBox="0 0 512 512">
+            <NavLink className={y.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
+              <svg className={y.backArrow} viewBox="0 0 512 512">
                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
               </svg>
               <span> Back to Packs List</span>
@@ -127,40 +103,40 @@ export const Profile = () => {
                 bgcolor: '#ffffff',
               }}
             >
-              <span className={u.defaultInfo}>Personal Information</span>
-              <div className={u.userPhotoContainer}>
+              <span className={y.defaultInfo}>Personal Information</span>
+              <div className={y.userPhotoContainer}>
                 <img
-                  className={u.userPhoto}
+                  className={y.userPhoto}
                   src={userPic1}
                   alt="" // className={s.userPhoto} style={{ backgroundImage: `url(${userPhoto})` }}
                 />
-                <div className={u.userCameraContainer}>
+                <div className={y.userCameraContainer}>
                   <NavLink to="#">
-                    <svg className={u.userCameraIcon} viewBox="0 0 512 512">
+                    <svg className={y.userCameraIcon} viewBox="0 0 512 512">
                       <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
                     </svg>
                   </NavLink>
                 </div>
               </div>
-              <div className={u.inputContainer}>
-                <span className={`${u.inputLabelStyle + ' ' + customStyle}`}>Nickname</span>
-                <SuperButton className={u.saveButton + ' ' + customStyle} id="userEditNickName">
+              <div className={y.inputContainer}>
+                <span className={`${y.inputLabelStyle + ' ' + customStyle}`}>Nickname</span>
+                <SuperButton className={y.saveButton + ' ' + customStyle} id="userEditNickName">
                   SAVE
                 </SuperButton>
                 <SuperEditableSpan
                   // className={s.spanContainer}
                   value={userProfileData.currentName}
-                  defaultInputClassName={u.pfofileInput}
+                  defaultInputClassName={y.pfofileInput}
                   spanProps={{
-                    className: u.userNickName,
+                    className: y.userNickName,
                     defaultText: userProfileData.name,
                   }}
                   id="userEditNickName"
                 />
               </div>
-              <span className={u.userEmail}>{userProfileData.email}</span>
-              <NavLink className={u.logOut} to="" onClick={logOutHandler}>
-                <svg className={u.logOutIcon} viewBox="0 0 512 512">
+              <span className={y.userEmail}>{userProfileData.email}</span>
+              <NavLink className={y.logOut} to="" onClick={logOutHandler}>
+                <svg className={y.logOutIcon} viewBox="0 0 512 512">
                   <path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z" />
                 </svg>
                 <span>Log out</span>
