@@ -43,6 +43,7 @@ export type ResponsePacksType = {
       user_id: string
       user_name: string
       __v: string
+      _id: string
     }
   ]
   cardPacksTotalCount: number
@@ -69,6 +70,7 @@ export type PackType = {
   user_id: string
   user_name: string
   __v: string
+  _id: string
 }
 
 export type PacksParamsType = {
