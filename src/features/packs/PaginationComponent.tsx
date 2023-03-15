@@ -9,7 +9,7 @@ type PaginationComponentPropsType = {
   totalCount: number
   currentPage: number
   pageSize: number
-  onPageChanged: (page: number, pageSize: number) => void
+  onPageChanged: (page: number, pageCount: number) => void
 }
 
 export const PaginationComponent: FC<PaginationComponentPropsType> = ({
@@ -23,7 +23,7 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   const [page, setPage] = useState(currentPage)
   const throttledPage = useThrottle(page, 1000)
 
-  useEffect(() => {
+  /*  useEffect(() => {
     setRowsPerPage(pageSize)
   }, [pageSize])
 
@@ -33,7 +33,7 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
 
   useEffect(() => {
     onPageChanged(page, rowsPerPage)
-  }, [rowsPerPage, throttledPage])
+  }, [rowsPerPage, throttledPage])*/
 
   const onChangeRowsPerPageHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10))

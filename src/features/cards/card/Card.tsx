@@ -53,9 +53,8 @@ export const Card = () => {
   //   dispatch(UpdateCardsTC({ card: { _id: rows[0]._id, question: 'rows[0]._id' } }))
   //   //пока только первый вопрос и вопрос хардкор, потом исправить
   // }
-  const onChangePageHandler = () => {
-    /*dispatch(setCardsCurrentPageAC(res.data))
-    dispatch(setCardsPageCountAC(res.data))*/
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(GetCardsTC({ page: page, pageCount: pageCount }))
   }
   const handleClick = (event: React.MouseEvent<unknown>, name: string, card_id: string, cardsPack_id: string) => {
     delCardHandler(card_id, cardsPack_id)

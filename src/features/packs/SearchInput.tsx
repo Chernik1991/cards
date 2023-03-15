@@ -2,8 +2,6 @@ import React from 'react'
 
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
-
-import { CustomizedInputBase } from './PacksInput'
 import { RangeSlider } from './PacksSlider'
 import { PacksToggleButton } from './PacksToggleButton'
 
@@ -20,7 +18,6 @@ export const SearchPackPanel = () => {
         >
           Search
         </label>
-        <CustomizedInputBase />
       </Box>
       <Box>
         <Box>

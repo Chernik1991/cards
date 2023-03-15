@@ -47,12 +47,6 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
   switch (action.type) {
     case 'CARDS/SET-CARDS-DATA':
       return { ...action.payload.data }
-    case 'CARDS/SET-CURRENT-PAGE': {
-      return { ...state, page: action.payload.data.page }
-    }
-    case 'CARDS/SET-CARDS-PAGE-COUNT': {
-      return { ...state, pageCount: action.payload.data.pageCount }
-    }
     case 'CLEAR-DATA':
       return { ...state, cards: [] }
     default:
@@ -66,16 +60,7 @@ export const setCardsDataAC = (data: ResponseGetCardsType) =>
     type: 'CARDS/SET-CARDS-DATA',
     payload: { data },
   } as const)
-export const setCardsCurrentPageAC = (data: ResponseGetCardsType) =>
-  ({
-    type: 'CARDS/SET-CURRENT-PAGE',
-    payload: { data },
-  } as const)
-export const setCardsPageCountAC = (data: ResponseGetCardsType) =>
-  ({
-    type: 'CARDS/SET-CARDS-PAGE-COUNT',
-    payload: { data },
-  } as const)
+
 export const clearCardDataAC = () => ({ type: 'CLEAR-DATA' } as const)
 //thunks
 export const GetCardsTC =
@@ -165,9 +150,7 @@ export const UpdateCardsTC =
     }
   }
 //types
-export type ActionsType = setCardsData | setCardsCurrentPage | setCardsPageCount | clearCardData
+export type ActionsType = setCardsData | clearCardData
 
 export type setCardsData = ReturnType<typeof setCardsDataAC>
-export type setCardsCurrentPage = ReturnType<typeof setCardsCurrentPageAC>
-export type setCardsPageCount = ReturnType<typeof setCardsPageCountAC>
 export type clearCardData = ReturnType<typeof clearCardDataAC>

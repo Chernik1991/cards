@@ -55,9 +55,10 @@ export type PacksParamsType = {
     page?: number
     pageCount?: number
 
-    user_id?: string
+    user_id?: string | null
 
     block?: boolean
+    id?: string
   }
 }
 

@@ -15,13 +15,12 @@ import { Navigate } from 'react-router-dom'
 
 import { PackType } from './packs-api'
 import PacksActions from './PacksActions'
-import { deletePackTC, updatePackTC } from './packsReducer'
 
 import { useAppDispatch } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 
-import { useAppDispatch } from 'app/store'
 import { GetCardsTC } from 'features/cards/card/card-reducer'
+import { deletePackTC, updatePackTC } from './packsReducer'
 
 interface Data {
   name: string
@@ -172,6 +171,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
     created_by: el.user_name,
     last_updated: el.updated,
     cards: el.cardsCount,
+    id: el._id,
   }))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
@@ -251,7 +251,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                     dispatch(
                       deletePackTC({
                         params: {
-                          id: row._id,
+                          id: row.id,
                         },
                       })
                     )
@@ -260,7 +260,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                     dispatch(
                       updatePackTC({
                         cardsPack: {
-                          _id: row._id,
+                          _id: row.id,
                           name: 'updated name',
                         },
                       })
@@ -270,7 +270,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name, row.cardsPack_id)}
+                      onClick={event => handleClick(event, row.name, row.id)}
                       role="checkbox"
                       // aria-checked={isItemSelected}
                       tabIndex={-1}

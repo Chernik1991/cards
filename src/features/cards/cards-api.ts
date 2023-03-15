@@ -24,12 +24,12 @@ export const cardsAPI = {
 export type GetCardsParamsType = {
   cardAnswer?: string
   cardQuestion?: string
-  cardsPack_id: string
+  cardsPack_id?: string | null
   min?: number
   max?: number
   sortCards?: string
   page?: number
-  pageCount?: string
+  pageCount?: number
 }
 export type SetCardParamsType = {
   card: {

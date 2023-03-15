@@ -1,13 +1,11 @@
-import { useEffect } from 'react'
-
 import Box from '@mui/material/Box'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { ResponsePacksType } from './packs-api'
 import e from './Packs.module.css'
-import { addPackTC, getPacksTC, setCountPageAC, setCurrentPageAC } from './packsReducer'
-import { SearchPackPanel } from './PacksSearchBar'
+import { addPackTC, getPacksTC } from './packsReducer'
 import { EnhancedTable } from './PacksTable'
+import { SearchPackPanel } from './SearchInput'
 import { PaginationComponent } from './PaginationComponent'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
@@ -33,9 +31,8 @@ export const Packs = () => {
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
   const paginationLabel = 'Packs per Page'
 
-  const onChangePageHandler = (page: any, size: any) => {
-    dispatch(setCurrentPageAC(page))
-    dispatch(setCountPageAC(size))
+  const onChangePageHandler = (page?: number, size?: number) => {
+    dispatch(getPacksTC({ params: { page: page, pageCount: size } }))
   }
 
   if (!isLoggedIn) {

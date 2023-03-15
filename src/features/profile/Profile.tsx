@@ -145,7 +145,6 @@ export const Profile = () => {
           </Box>
         </Box>
       </div>
-      ;
     </>
   )
 }
