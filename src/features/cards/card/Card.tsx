@@ -55,7 +55,7 @@ export const Card = () => {
   //   //пока только первый вопрос и вопрос хардкор, потом исправить
   // }
   const onChangePageHandler = (page: number, pageCount: number) => {
-    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: '6410a6ad77ad704a0476ae70' }))
+    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: '640ed7996c43a3121cc51bd5' }))
   }
   const handleClick = (event: React.MouseEvent<unknown>, name: string, card_id: string, cardsPack_id: string) => {
     delCardHandler(card_id, cardsPack_id)

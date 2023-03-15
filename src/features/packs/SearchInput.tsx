@@ -2,10 +2,19 @@ import React from 'react'
 
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
-import { RangeSlider } from './PacksSlider'
+
+import { SearchInput } from './InputSearch'
 import { PacksToggleButton } from './PacksToggleButton'
+import { useSearchPanelLogic } from './useSearchPanelLogic'
+import { InputSlider } from './Slider/DoubleSlider'
+import { useAppSelector } from '../../app/store'
 
 export const SearchPackPanel = () => {
+  const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelLogic()
+  const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
+  const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+  const status = useAppSelector(state => state.app.status)
+
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
       <Box sx={{ width: '500px' }}>
@@ -18,6 +27,7 @@ export const SearchPackPanel = () => {
         >
           Search
         </label>
+        <SearchInput disabled={status == 'loading'} onChangeText={onChangeSearchHandler} searchValue={''} />
       </Box>
       <Box>
         <Box>
@@ -27,7 +37,13 @@ export const SearchPackPanel = () => {
       </Box>
       <Box>
         <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Number of cards</label>
-        <RangeSlider />
+        <InputSlider
+          minValue={minCardsCount || 0}
+          maxValue={maxCardsCount || 0}
+          sliderWidth={155}
+          disabled={status == 'loading'}
+          onChangeValues={onChangeValuesHandler}
+        />
       </Box>
       <Box
         mb={'2'}

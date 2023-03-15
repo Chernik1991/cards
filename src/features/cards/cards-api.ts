@@ -82,7 +82,8 @@ export type CardsType = {
 export type ResponseGetCardsType = {
   cards: CardsType[]
   packUserId: string
-
+  maxCardsCount: number
+  minCardsCount: number
   packName: string
   packPrivate: boolean
   packCreated: string

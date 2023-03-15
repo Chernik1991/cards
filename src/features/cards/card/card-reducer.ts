@@ -41,6 +41,8 @@ const initialState: ResponseGetCardsType = {
   page: 0,
   packUserId: '',
   pageCount: 0,
+  maxCardsCount: 0,
+  minCardsCount: 0,
 }
 
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
