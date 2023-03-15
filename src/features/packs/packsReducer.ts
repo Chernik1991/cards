@@ -84,9 +84,9 @@ export const getPacksTC =
       const res = await packsAPI.getPacks(data)
 
       dispatch(setAppStatusAC('loading'))
-      console.log(res, getPacksTC)
+      console.log(res, 'getPacksTC')
 
-      if (res.data) {
+      if (res.request.status === 200) {
         dispatch(setAppStatusAC('succeeded'))
         dispatch(getUserPacksAC(res.data))
       } else {
@@ -107,8 +107,8 @@ export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) =
     const res = await packsAPI.setPack({ cardsPack: {} })
 
     dispatch(setAppStatusAC('loading'))
-
-    if (res.data) {
+    console.log(res, 'addPackTC')
+    if (res.request.status === 201) {
       dispatch(setAppStatusAC('succeeded'))
       // dispatch(getUserPacksAC(res.data))
     } else {

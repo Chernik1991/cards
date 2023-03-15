@@ -11,6 +11,7 @@ import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forg
 import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
 import { Card } from 'features/cards/card/Card'
+import { CardNotPack } from 'features/cards/card/CardNotPack'
 import { Packs } from 'features/packs/Packs'
 import { Profile } from 'features/profile/Profile'
 import { Test } from 'features/test/test'
@@ -25,6 +26,7 @@ export const PATH = {
   CREATE_NEW_PASSWORD: `/create-new-password/:token`,
   CARD: '/cards/card',
   PACKS: `/packs`,
+  CARD_NOT_PACK: `/card-not-pack`,
   TEST: '/test',
 }
 
@@ -42,6 +44,7 @@ export const Pages = () => {
           <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
           <Route path={PATH.CARD} element={<Card />} />
           <Route path={PATH.PACKS} element={<Packs />} />
+          <Route path={PATH.CARD_NOT_PACK} element={<CardNotPack />} />
           <Route path={PATH.TEST} element={<Test />} />
           <Route path={'*'} element={<Error404 />} />
         </Route>
