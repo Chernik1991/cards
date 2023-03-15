@@ -9,8 +9,8 @@ export const packsAPI = {
   setPack(data?: SetNewPackType) {
     return instance.post<SetNewPackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
   },
-  deletePack(id: any) {
-    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', id)
+  deletePack(data?: PacksParamsType) {
+    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', data)
   },
   updatePack(data: UpdatePackType) {
     return instance.put<UpdatePackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
@@ -75,6 +75,7 @@ export type PacksParamsType = {
     pageCount?: number
 
     user_id?: string
+    id?: string
 
     block?: boolean
   }

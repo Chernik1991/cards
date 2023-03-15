@@ -29,7 +29,7 @@ export const Profile = () => {
     }, [])
   }
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const getIdUser = useAppSelector<string>(state => state.profile._id)
+  //
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
@@ -42,7 +42,7 @@ export const Profile = () => {
   }
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(getPacksTC({ params: { user_id: userProfileData._id } }))
   }
 
   const customStyle = userProfileData.editedMode ? y.activeEditmode : ''

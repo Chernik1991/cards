@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
+
 import Box from '@mui/material/Box'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { ResponsePacksType } from './packs-api'
 import e from './Packs.module.css'
-import { addPackTC, setCountPageAC, setCurrentPageAC } from './packsReducer'
+import { addPackTC, getPacksTC, setCountPageAC, setCurrentPageAC } from './packsReducer'
 import { SearchPackPanel } from './PacksSearchBar'
 import EnhancedTable from './PacksTable'
 import { PaginationComponent } from './PaginationComponent'
@@ -16,6 +18,13 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+
+  // useEffect(() => {
+
+  //   } else {
+  //     dispatch(getPacksTC({ params: {} }))
+  //   }
+  // }, [])
   const newPackHandler = () => {
     dispatch(addPackTC())
   }

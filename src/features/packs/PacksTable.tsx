@@ -8,12 +8,17 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
+import { Navigate } from 'react-router-dom'
 
 import { PackType } from './packs-api'
+import PacksActions from './PacksActions'
+import { deletePackTC, updatePackTC } from './packsReducer'
+
+import { useAppDispatch } from 'app/store'
+import { PATH } from 'common/components/Routing/pages'
 
 interface Data {
   name: string
@@ -129,7 +134,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             align={headCell.numeric ? 'left' : 'right'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ backgroundColor: '#efefef' }}
+            sx={{ backgroundColor: '#efefef', padding: '15px 30px' }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -163,13 +168,11 @@ const EnhancedTable = (props: EnhancedTableType) => {
     created_by: el.user_name,
     last_updated: el.updated,
     cards: el.cardsCount,
+    _id: el._id,
   }))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
   const [selected, setSelected] = React.useState<readonly string[]>([])
-  const [page, setPage] = React.useState(0)
-  const [dense, setDense] = React.useState(false)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -189,72 +192,95 @@ const EnhancedTable = (props: EnhancedTableType) => {
     setSelected([])
   }
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name)
-    let newSelected: readonly string[] = []
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name)
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1))
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1))
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1))
-    }
-
-    setSelected(newSelected)
-  }
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-
   return (
-    <Box sx={{ width: '80%', padding: '30px' }}>
-      <Paper sx={{ width: '100%', mb: 2, padding: '15px 30px' }}>
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name)
+    <Box sx={{ width: '90%', maxWidth: '1400px', minWidth: '1000px', padding: '30px 0px' }}>
+      {rows.length ? (
+        <Paper sx={{ width: '100%', mb: 2, padding: '0px 0px' }}>
+          <TableContainer>
+            {}
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+                  // const isItemSelected = isSelected(row.name)
+                  const dispatch = useAppDispatch()
                   const labelId = `enhanced-table-checkbox-${index}`
+                  const data = new Date(row.last_updated)
+                  const monthCorrection = data.getMonth() + 1
+                  const getMonth = monthCorrection < 10 ? '0' + monthCorrection : monthCorrection
+                  const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
+                  const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
+                  const handleStudying = () => {
+                    // dispatch(logoutTC())
+
+                    return <Navigate to={PATH.STUDY} />
+                  }
+                  const handleDeletePack = () => {
+                    dispatch(
+                      deletePackTC({
+                        params: {
+                          id: row._id,
+                        },
+                      })
+                    )
+                  }
+                  const handleUpdatePackName = () => {
+                    dispatch(
+                      updatePackTC({
+                        cardsPack: {
+                          _id: row._id,
+                          name: 'updated name',
+                        },
+                      })
+                    )
+                  }
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name)}
+                      // onClick={event => handleClick(event, row.name)}
                       role="checkbox"
-                      aria-checked={isItemSelected}
+                      // aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={crypto.randomUUID()}
-                      selected={isItemSelected}
-                      // sx={{  }}
+                      // selected={isItemSelected}
                     >
-                      <TableCell style={{ minWidth: '200px' }} component="th" id={labelId} scope="row">
+                      <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
                         {row.name}
                       </TableCell>
-                      <TableCell align="left">{row.cards}</TableCell>
-                      <TableCell align="left">{row.last_updated}</TableCell>
-                      <TableCell align="left">{row.created_by}</TableCell>
-                      <TableCell align="left">{row.actions}</TableCell>
+                      <TableCell align="left" sx={paddingStyle}>
+                        {row.cards}
+                      </TableCell>
+                      <TableCell align="left" sx={paddingStyle}>
+                        {finalDate}
+                      </TableCell>
+                      <TableCell align="left" sx={{ ...paddingStyle, minWidth: 'none' }}>
+                        {row.created_by}
+                      </TableCell>
+                      <PacksActions
+                        align="left"
+                        sx={{ ...paddingStyle, minWidth: 'none' }}
+                        handleStudyingUp={handleStudying}
+                        handleUpdatePackNameUp={handleUpdatePackName}
+                        handleDeletePackUp={handleDeletePack}
+                      />
                     </TableRow>
                   )
                 })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      ) : (
+        ''
+      )}
     </Box>
   )
 }
