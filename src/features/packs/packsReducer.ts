@@ -83,9 +83,10 @@ export const getPacksTC =
       dispatch(setAppStatusAC('loading'))
       const res = await packsAPI.getPacks(data)
 
-      // console.log(res, getPacksTC)
+      dispatch(setAppStatusAC('loading'))
+      console.log(res, getPacksTC)
 
-      if (res.data) {
+      if (res.request.status === 200) {
         dispatch(setAppStatusAC('succeeded'))
         dispatch(getUserPacksAC(res.data))
       } else {
@@ -118,6 +119,21 @@ export const addPackTC =
       }
     } catch (e) {
       const err = e as Error | AxiosError<{ error: string }>
+export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) => {
+  try {
+    const res = await packsAPI.setPack({ cardsPack: {} })
+
+    dispatch(setAppStatusAC('loading'))
+    console.log(res, 'addPackTC')
+    if (res.request.status === 201) {
+      dispatch(setAppStatusAC('succeeded'))
+      // dispatch(getUserPacksAC(res.data))
+    } else {
+      dispatch(setAppStatusAC('failed'))
+      console.log('Error1')
+    }
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
 
       dispatch(setAppStatusAC('failed'))
       errorUtils(err, dispatch)
