@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios'
-import { Dispatch } from 'redux'
 
-import { packsAPI, PacksParamsType, ResponsePacksType, SetNewPackType } from './packs-api'
+import { packsAPI, PacksParamsType, ResponsePacksType, SetNewPackType, UpdatePackType } from './packs-api'
 
 import { setAppStatusAC } from 'app/app-reducer'
 import { AppThunkType } from 'app/store'
@@ -36,7 +35,7 @@ const initialState: ResponsePacksType = {
   pageCount: 0,
 }
 
-export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
+export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsPacksType): ResponsePacksType => {
   switch (action.type) {
     case 'getPacks': {
       const packsData = { ...action.payload.data }
@@ -81,12 +80,13 @@ export const getPacksTC =
   (data?: PacksParamsType): AppThunkType =>
   async dispatch => {
     try {
+      dispatch(setAppStatusAC('loading'))
       const res = await packsAPI.getPacks(data)
 
       dispatch(setAppStatusAC('loading'))
       console.log(res, getPacksTC)
 
-      if (res.data) {
+      if (res.request.status === 200) {
         dispatch(setAppStatusAC('succeeded'))
         dispatch(getUserPacksAC(res.data))
       } else {
@@ -102,13 +102,30 @@ export const getPacksTC =
     }
   }
 
+export const addPackTC =
+  (data?: SetNewPackType): AppThunkType =>
+  async dispatch => {
+    try {
+      dispatch(setAppStatusAC('loading'))
+      const res = await packsAPI.setPack({ cardsPack: {} })
+
+      if (res.data) {
+        dispatch(setAppStatusAC('succeeded'))
+        // ! filter MY ALL HERE OR IN URL
+        dispatch(getPacksTC())
+      } else {
+        dispatch(setAppStatusAC('failed'))
+        console.log('Error1')
+      }
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
 export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) => {
   try {
     const res = await packsAPI.setPack({ cardsPack: {} })
 
     dispatch(setAppStatusAC('loading'))
-
-    if (res.data) {
+    console.log(res, 'addPackTC')
+    if (res.request.status === 201) {
       dispatch(setAppStatusAC('succeeded'))
       // dispatch(getUserPacksAC(res.data))
     } else {
@@ -118,13 +135,58 @@ export const addPackTC = (data?: SetNewPackType) => async (dispatch: Dispatch) =
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 
-    dispatch(setAppStatusAC('failed'))
-    errorUtils(err, dispatch)
-    console.log('Error2')
+      dispatch(setAppStatusAC('failed'))
+      errorUtils(err, dispatch)
+      console.log('Error2')
+    }
   }
-}
 
-type ActionsType = getUserPacksType | setCurrentPageType | setCountPageType
+export const updatePackTC =
+  (data: UpdatePackType): AppThunkType =>
+  async dispatch => {
+    try {
+      dispatch(setAppStatusAC('loading'))
+      const res = await packsAPI.updatePack(data)
+
+      if (res.data) {
+        dispatch(setAppStatusAC('succeeded'))
+        dispatch(getPacksTC())
+      } else {
+        dispatch(setAppStatusAC('failed'))
+        console.log('Error1')
+      }
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
+
+      dispatch(setAppStatusAC('failed'))
+      errorUtils(err, dispatch)
+      console.log('Error2')
+    }
+  }
+export const deletePackTC =
+  (data?: PacksParamsType): AppThunkType =>
+  async dispatch => {
+    try {
+      dispatch(setAppStatusAC('loading'))
+      const res = await packsAPI.deletePack(data)
+
+      if (res.data) {
+        dispatch(setAppStatusAC('succeeded'))
+        dispatch(getPacksTC())
+      } else {
+        dispatch(setAppStatusAC('failed'))
+        console.log('Error1')
+      }
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
+
+      dispatch(setAppStatusAC('failed'))
+      errorUtils(err, dispatch)
+      console.log('Error2')
+    }
+  }
+
+type ActionsPacksType = getUserPacksType | setCurrentPageType | setCountPageType
 
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
 export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>

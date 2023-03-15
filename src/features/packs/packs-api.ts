@@ -9,8 +9,8 @@ export const packsAPI = {
   setPack(data?: SetNewPackType) {
     return instance.post<SetNewPackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
   },
-  deletePack(id: any) {
-    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', id)
+  deletePack(data?: PacksParamsType) {
+    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', data)
   },
   updatePack(data: UpdatePackType) {
     return instance.put<UpdatePackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
@@ -18,26 +18,7 @@ export const packsAPI = {
 }
 
 export type ResponsePacksType = {
-  cardPacks: [
-    {
-      cardsCount: number
-      created: string
-      deckCover: string
-      grade: number
-      more_id: string
-      name: string
-      path: string
-      private: boolean
-      rating: number
-      shots: number
-      type: string
-      updated: string
-      user_id: string
-      user_name: string
-      __v: string
-      _id: string
-    }
-  ]
+  cardPacks: [PackType]
   cardPacksTotalCount: number
   // количество колод
   maxCardsCount: number
@@ -74,7 +55,7 @@ export type PacksParamsType = {
     page?: number
     pageCount?: number
 
-    user_id?: string | null
+    user_id?: string
 
     block?: boolean
   }

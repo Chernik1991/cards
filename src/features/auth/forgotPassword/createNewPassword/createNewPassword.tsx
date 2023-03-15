@@ -88,31 +88,12 @@ export const CreateNewPassword = () => {
               width: '50ch',
             }}
           >
-            {/*<TextField*/}
-            {/*  margin="normal"*/}
-            {/*  required //посмотреть убрать*/}
-            {/*  fullWidth //посмотреть убрать*/}
-            {/*  id="email"*/}
-            {/*  label="Email Address"*/}
-            {/*  autoComplete="email" //посмотреть убрать*/}
-            {/*  autoFocus //посмотреть убрать*/}
-            {/*  {...formik.getFieldProps('email')}*/}
-            {/*  helperText={*/}
-            {/*    formik.touched.email && formik.errors.email ? (*/}
-            {/*      <div style={{ color: 'red' }}>{formik.errors.email}</div>*/}
-            {/*    ) : (*/}
-            {/*      ' '*/}
-            {/*    )*/}
-            {/*  }*/}
-            {/*/>*/}
             <FormControl sx={{ width: '50ch' }} variant={'outlined'}>
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
-                // variant="filled"
                 required
                 fullWidth
-                // margin="normal"
                 autoComplete="current-password"
                 type={Password ? 'text' : 'password'}
                 aria-describedby="component-error-text"
@@ -142,7 +123,7 @@ export const CreateNewPassword = () => {
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>{'Create new password and we will send you further instructions to email'}</Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
               Create new password
             </Button>
           </Box>

@@ -3,31 +3,31 @@ import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 import {
   cardsAPI,
-  DeleteCardsParamsType,
+  DeleteCardsType,
   GetCardsParamsType,
   ResponseGetCardsType,
   SetCardParamsType,
-  UpdateCardParamsType,
+  UpdateCardType,
 } from 'features/cards/cards-api'
 
 const initialState: ResponseGetCardsType = {
   cards: [
-    {
-      _id: '',
-      cardsPack_id: '',
-      user_id: '',
-      question: 'No question',
-      answer: 'No answer',
-      grade: 0,
-      shots: 0,
-      comments: '',
-      type: '',
-      rating: 0,
-      more_id: '',
-      created: '',
-      updated: '',
-      __v: 0,
-    },
+    // {
+    //   _id: '',
+    //   cardsPack_id: '',
+    //   user_id: '',
+    //   question: 'No question',
+    //   answer: 'No answer',
+    //   grade: 0,
+    //   shots: 0,
+    //   comments: '',
+    //   type: '',
+    //   rating: 0,
+    //   more_id: '',
+    //   created: '',
+    //   updated: '',
+    //   __v: 0,
+    // },
   ],
   cardsTotalCount: 0,
   token: '',
@@ -46,13 +46,15 @@ const initialState: ResponseGetCardsType = {
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
   switch (action.type) {
     case 'CARDS/SET-CARDS-DATA':
-      return { ...state, ...action.payload.data }
+      return { ...action.payload.data }
     case 'CARDS/SET-CURRENT-PAGE': {
       return { ...state, page: action.payload.data.page }
     }
     case 'CARDS/SET-CARDS-PAGE-COUNT': {
       return { ...state, pageCount: action.payload.data.pageCount }
     }
+    case 'CLEAR-DATA':
+      return { ...state, cards: [] }
     default:
       return state
   }
@@ -64,7 +66,6 @@ export const setCardsDataAC = (data: ResponseGetCardsType) =>
     type: 'CARDS/SET-CARDS-DATA',
     payload: { data },
   } as const)
-
 export const setCardsCurrentPageAC = (data: ResponseGetCardsType) =>
   ({
     type: 'CARDS/SET-CURRENT-PAGE',
@@ -75,6 +76,7 @@ export const setCardsPageCountAC = (data: ResponseGetCardsType) =>
     type: 'CARDS/SET-CARDS-PAGE-COUNT',
     payload: { data },
   } as const)
+export const clearCardDataAC = () => ({ type: 'CLEAR-DATA' } as const)
 //thunks
 export const GetCardsTC =
   (data: GetCardsParamsType): AppThunkType =>
@@ -84,12 +86,11 @@ export const GetCardsTC =
       const res = await cardsAPI.getCards(data)
 
       console.log(res, 'getCards')
-      console.log(res.data.cards)
+      console.log(res.data.cards, 'res.data.cards')
+      console.log(res.data, 'res.data')
       if (res.request.status === 200) {
-        if (res.data.cards.length > 0) {
-          dispatch(setCardsDataAC(res.data))
-          dispatch(setAppStatusAC('succeeded'))
-        }
+        dispatch(setCardsDataAC(res.data))
+        dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
       }
@@ -109,7 +110,7 @@ export const CreateCardsTC =
 
       console.log(res, 'CreateCardsTC')
       if (res.request.status === 201) {
-        // dispatch(setCardsDataAC(res.data))
+        dispatch(GetCardsTC({ cardsPack_id: data.card.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
@@ -120,15 +121,16 @@ export const CreateCardsTC =
     }
   }
 export const DeleteCardsTC =
-  (data: DeleteCardsParamsType): AppThunkType =>
+  (data: DeleteCardsType): AppThunkType =>
   async dispatch => {
+    console.log(data, 'data')
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.delCards(data)
+      const res = await cardsAPI.delCards(data.id)
 
       console.log(res, 'DeleteCardsTC')
       if (res.request.status === 200) {
-        // dispatch(setCardsDataAC(res.data))
+        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
@@ -139,11 +141,16 @@ export const DeleteCardsTC =
     }
   }
 export const UpdateCardsTC =
-  (data: UpdateCardParamsType): AppThunkType =>
+  (data: UpdateCardType): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.updateCards(data)
+      const res = await cardsAPI.updateCards({
+        card: {
+          _id: data.id,
+          question: '1234',
+        },
+      })
 
       console.log(res, 'UpdateCardTC')
       if (res.request.status === 200) {
@@ -158,14 +165,9 @@ export const UpdateCardsTC =
     }
   }
 //types
-export type ActionsType = setCardsData | setCardsCurrentPage | setCardsPageCount
+export type ActionsType = setCardsData | setCardsCurrentPage | setCardsPageCount | clearCardData
 
 export type setCardsData = ReturnType<typeof setCardsDataAC>
 export type setCardsCurrentPage = ReturnType<typeof setCardsCurrentPageAC>
 export type setCardsPageCount = ReturnType<typeof setCardsPageCountAC>
-
-/*
-type InitialStateType = {
-  car: ResponseGetCardsType
-}
-*/
+export type clearCardData = ReturnType<typeof clearCardDataAC>

@@ -11,24 +11,16 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import { Navigate } from 'react-router-dom'
-
-import { PackType } from './packs-api'
-import PacksActions from './PacksActions'
-import { deletePackTC, updatePackTC } from './packsReducer'
 
 import { useAppDispatch } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
+import { DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
+import { CardsType } from 'features/cards/cards-api'
 
-import { useAppDispatch } from 'app/store'
-import { GetCardsTC } from 'features/cards/card/card-reducer'
-
-interface Data {
-  name: string
-  actions: string
-  created_by: string
+type Data = {
+  question: string
+  grade: number
   last_updated: string
-  cards: string
+  answer: string
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -82,16 +74,16 @@ type HeadCell = {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'name',
+    id: 'question',
     numeric: true,
     disablePadding: false,
-    label: 'Name',
+    label: 'Question',
   },
   {
-    id: 'cards',
+    id: 'answer',
     numeric: true,
     disablePadding: false,
-    label: 'Cards',
+    label: 'Answer',
   },
   {
     id: 'last_updated',
@@ -100,16 +92,10 @@ const headCells: readonly HeadCell[] = [
     label: 'Last Updated',
   },
   {
-    id: 'created_by',
+    id: 'grade',
     numeric: true,
     disablePadding: false,
-    label: 'Created by',
-  },
-  {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: 'Actions',
+    label: 'Grade',
   },
 ]
 
@@ -137,7 +123,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             align={headCell.numeric ? 'left' : 'right'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ backgroundColor: '#efefef', padding: '15px 30px' }}
+            sx={{ backgroundColor: '#efefef' }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -161,21 +147,32 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 type EnhancedTableType = {
-  cardsPacks: PackType[]
+  cards: CardsType[]
 }
-
 export const EnhancedTable = (props: EnhancedTableType) => {
   const dispatch = useAppDispatch()
-  const rows = props.cardsPacks.map((el: PackType) => ({
-    name: el.name,
-    actions: '',
-    created_by: el.user_name,
-    last_updated: el.updated,
-    cards: el.cardsCount,
+  const rows = props.cards.map((el: CardsType) => ({
+    id: el._id,
+    cardsPack_id: el.cardsPack_id,
+    user_id: el.user_id,
+    question: el.question,
+    answer: el.answer,
+    grade: el.grade,
+    shots: el.shots,
+    comments: el.comments,
+    type: el.type,
+    rating: el.rating,
+    more_id: el.more_id,
+    created: el.created,
+    last_updated: new Date(el.updated).toLocaleString(),
+    __v: el.__v,
   }))
   const [order, setOrder] = React.useState<Order>('asc')
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
+  const [orderBy, setOrderBy] = React.useState<keyof Data>('question')
   const [selected, setSelected] = React.useState<readonly string[]>([])
+  const [page, setPage] = React.useState(0)
+  const [dense, setDense] = React.useState(false)
+  const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -186,13 +183,26 @@ export const EnhancedTable = (props: EnhancedTableType) => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map(n => n.name)
+      const newSelected = rows.map(n => n.question)
 
       setSelected(newSelected)
 
       return
     }
     setSelected([])
+  }
+  const handleQuestionClick = (
+    event: React.MouseEvent<unknown>,
+    newQuestion: string,
+    id: string,
+    cardsPack_id: string
+  ) => {
+    console.log(cardsPack_id, 'handleClick')
+    dispatch(UpdateCardsTC({ question: newQuestion, id: id, cardsPack_id: cardsPack_id }))
+  }
+  const handleAnswerClick = (event: React.MouseEvent<unknown>, id: string, cardsPack_id: string) => {
+    console.log(id, 'handleAnswerClick')
+    dispatch(DeleteCardsTC({ id: id, cardsPack_id: cardsPack_id }))
   }
   const handleClick = (event: React.MouseEvent<unknown>, name: string, cardsPack_id: string) => {
     console.log(cardsPack_id, 'handleClick')
@@ -209,7 +219,6 @@ export const EnhancedTable = (props: EnhancedTableType) => {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1))
     }
-
     setSelected(newSelected)
   }
 
@@ -218,94 +227,57 @@ export const EnhancedTable = (props: EnhancedTableType) => {
   // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
-    <Box sx={{ width: '90%', maxWidth: '1400px', minWidth: '1000px', padding: '30px 0px' }}>
-      {rows.length ? (
-        <Paper sx={{ width: '100%', mb: 2, padding: '0px 0px' }}>
-          <TableContainer>
-            {}
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody>
-                {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-                  // const isItemSelected = isSelected(row.name)
-                  const dispatch = useAppDispatch()
+    <Box sx={{ width: '100%', padding: '30px' }}>
+      <Paper sx={{ width: '100%', mb: 2, padding: '15px 30px' }}>
+        <TableContainer>
+          <Table sx={{ minWidth: 850 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
+            <EnhancedTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.question)
                   const labelId = `enhanced-table-checkbox-${index}`
-                  const data = new Date(row.last_updated)
-                  const monthCorrection = data.getMonth() + 1
-                  const getMonth = monthCorrection < 10 ? '0' + monthCorrection : monthCorrection
-                  const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
-                  const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
-                  const handleStudying = () => {
-                    // dispatch(logoutTC())
-
-                    return <Navigate to={PATH.STUDY} />
-                  }
-                  const handleDeletePack = () => {
-                    dispatch(
-                      deletePackTC({
-                        params: {
-                          id: row._id,
-                        },
-                      })
-                    )
-                  }
-                  const handleUpdatePackName = () => {
-                    dispatch(
-                      updatePackTC({
-                        cardsPack: {
-                          _id: row._id,
-                          name: 'updated name',
-                        },
-                      })
-                    )
-                  }
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name, row.cardsPack_id)}
+                      // onClick={event => handleClick(event, row.question, row.cardsPack_id)}
                       role="checkbox"
-                      // aria-checked={isItemSelected}
+                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={crypto.randomUUID()}
-                      // selected={isItemSelected}
+                      selected={isItemSelected}
+                      // sx={{  }}
                     >
-                      <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
-                        {row.name}
+                      <TableCell
+                        style={{ minWidth: '200px' }}
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        onClick={event => handleQuestionClick(event, row.question, row.id, row.cardsPack_id)}
+                      >
+                        {row.question}
                       </TableCell>
-                      <TableCell align="left" sx={paddingStyle}>
-                        {row.cards}
+                      <TableCell align="left" onClick={event => handleAnswerClick(event, row.id, row.cardsPack_id)}>
+                        {row.answer}
                       </TableCell>
-                      <TableCell align="left" sx={paddingStyle}>
-                        {finalDate}
-                      </TableCell>
-                      <TableCell align="left" sx={{ ...paddingStyle, minWidth: 'none' }}>
-                        {row.created_by}
-                      </TableCell>
-                      <PacksActions
-                        align="left"
-                        sx={{ ...paddingStyle, minWidth: 'none' }}
-                        handleStudyingUp={handleStudying}
-                        handleUpdatePackNameUp={handleUpdatePackName}
-                        handleDeletePackUp={handleDeletePack}
-                      />
+                      <TableCell align="left">{row.last_updated}</TableCell>
+                      <TableCell align="left">{row.grade}</TableCell>
                     </TableRow>
                   )
                 })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      ) : (
-        ''
-      )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </Box>
   )
 }

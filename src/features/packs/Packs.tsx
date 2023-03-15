@@ -1,11 +1,13 @@
+import { useEffect } from 'react'
+
 import Box from '@mui/material/Box'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { ResponsePacksType } from './packs-api'
 import e from './Packs.module.css'
-import { addPackTC, setCountPageAC, setCurrentPageAC } from './packsReducer'
+import { addPackTC, getPacksTC, setCountPageAC, setCurrentPageAC } from './packsReducer'
 import { SearchPackPanel } from './PacksSearchBar'
-import EnhancedTable from './PacksTable'
+import { EnhancedTable } from './PacksTable'
 import { PaginationComponent } from './PaginationComponent'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
@@ -16,14 +18,16 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+
+  // useEffect(() => {
+
+  //   } else {
+  //     dispatch(getPacksTC({ params: {} }))
+  //   }
+  // }, [])
   const newPackHandler = () => {
     dispatch(addPackTC())
   }
-
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN} replace />
-  }
-
   const page = useAppSelector(state => state.packs.page)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
@@ -33,6 +37,11 @@ export const Packs = () => {
     dispatch(setCurrentPageAC(page))
     dispatch(setCountPageAC(size))
   }
+
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN} replace />
+  }
+  //Возможно убрать т.к. по умолчанию уже залогинен
 
   return (
     <div className={e.packsContainer}>

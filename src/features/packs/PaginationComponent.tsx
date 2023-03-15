@@ -2,7 +2,7 @@ import { ChangeEvent, FC, MouseEvent, useEffect, useState } from 'react'
 
 import TablePagination from '@mui/material/TablePagination'
 
-import { useThrottle } from '../../common/hooks/useTrottle'
+import { useThrottle } from 'common/hooks/useTrottle'
 
 type PaginationComponentPropsType = {
   labelRowsPerPage?: string

@@ -167,7 +167,7 @@ export const Login = () => {
                 </Link>
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
               Sign In
             </Button>
             <Grid container flexDirection={'column'} alignItems={'center'}>
