@@ -5,10 +5,10 @@ import { Box, IconButton } from '@mui/material'
 
 import { PacksToggleButton } from './PacksToggleButton'
 
-import { useAppSelector } from 'app/store'
 import { SearchInput } from 'features/packs/InputSearch'
 import { InputSlider } from 'features/packs/Slider/DoubleSlider'
 import { useSearchPanelLogic } from 'features/packs/useSearchPanelLogic'
+import { useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
   const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelLogic()

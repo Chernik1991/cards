@@ -1,14 +1,13 @@
 import Box from '@mui/material/Box'
 
-import { PaginationComponent } from './components/pagination/PaginationComponent'
-import { SearchPackPanel } from './components/pagination/SearchPackPanel'
-import { EnhancedTable } from './components/table/PacksTable'
-import { ResponsePacksType } from './packs-api'
-import e from './Packs.module.css'
-import { addPackTC, getPacksTC } from './packsReducer'
-
-import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
+import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
+import { SearchPackPanel } from 'features/packs/components/pagination/SearchPackPanel'
+import { EnhancedTable } from 'features/packs/components/table/PacksTable'
+import { ResponsePacksType } from 'features/packs/packs-api'
+import e from 'features/packs/Packs.module.css'
+import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
   const dispatch = useAppDispatch()

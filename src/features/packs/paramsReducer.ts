@@ -1,4 +1,4 @@
-import { PacksParamsType } from './packs-api'
+import { PacksParamsType } from 'features/packs/packs-api'
 
 const initialState: PacksParamsType = {
   packName: null,

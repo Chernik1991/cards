@@ -1,5 +1,4 @@
 import { setAppStatusAC } from 'app/app-reducer'
-import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 import {
   cardsAPI,
@@ -9,6 +8,7 @@ import {
   SetCardType,
   UpdateCardType,
 } from 'features/cards/cards-api'
+import { AppThunkType } from 'store/store'
 
 const initialState: ResponseGetCardsType = {
   cards: [

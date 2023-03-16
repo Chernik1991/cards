@@ -3,16 +3,16 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
-import { PATH } from 'common/components/Routing/pages'
 import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
-import s from 'features/cards/card/CardNotPack.module.css'
 import { SearchPackPanel } from 'features/cards/card/CardsSearchBar'
-import { EnhancedTable } from 'features/cards/card/CardsTable'
-import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/card/selectorCard'
+import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
+import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
+import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
 import { getPacksTC } from 'features/packs/packsReducer'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Card = () => {
   const dispatch = useAppDispatch()

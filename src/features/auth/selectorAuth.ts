@@ -1,4 +1,4 @@
-import { AppStateType } from 'app/store'
+import { AppStateType } from 'store/store'
 
 // export const pageCard = (state: AppStateType) => state.cards.page
 // export const cards = (state: AppStateType) => state.cards.cards

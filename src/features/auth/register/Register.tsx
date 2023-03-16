@@ -19,10 +19,10 @@ import { Navigate } from 'react-router-dom'
 import { registerTC } from './register-reducer'
 import s from './RegisterStyle.module.css'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 import { isLoggedInAuth, isRegisterAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 type FormikErrorType = {
   email?: string

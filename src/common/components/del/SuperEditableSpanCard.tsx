@@ -1,9 +1,9 @@
 import React, { DetailedHTMLProps, HTMLAttributes, InputHTMLAttributes, useState } from 'react'
 
-import s from 'features/cards/card/del/SuperInputText.module.css'
+import s from 'common/components/del/SuperInputText.module.css'
 
 // import editIcon from './editIcon.svg'
-import SuperInputTextCard from 'features/cards/card/del/SuperInputTextCard'
+import SuperInputTextCard from 'common/components/del/SuperInputTextCard'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>

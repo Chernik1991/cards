@@ -3,11 +3,10 @@ import * as React from 'react'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-import { setAppStatusAC } from '../../../../app/app-reducer'
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
-import { getPacksTC } from '../../packsReducer'
-
+import { setAppStatusAC } from 'app/app-reducer'
+import { getPacksTC } from 'features/packs/packsReducer'
 import { setUserParamsAC } from 'features/packs/paramsReducer'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const PacksToggleButton = () => {
   const dispatch = useAppDispatch()

@@ -3,10 +3,9 @@ import { ChangeEvent, FC, memo, useEffect, useState } from 'react'
 import InputBase, { InputBaseProps } from '@mui/material/InputBase'
 import Paper from '@mui/material/Paper'
 
-import find from '../../assets/img/icons/find.svg'
-import useDebounce from '../../common/hooks/useDebounce'
-
-import s from './InputSearch.module.css'
+import find from 'assets/img/icons/find.svg'
+import { useDebounce } from 'common/hooks/useDebounce'
+import s from 'features/packs/InputSearch.module.css'
 
 type SearchInputPropsType = InputBaseProps & {
   searchValue: string

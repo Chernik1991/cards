@@ -18,9 +18,9 @@ import { deletePackTC, updatePackTC } from '../../packsReducer'
 
 import PacksActions from './PacksActions'
 
-import { useAppDispatch } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { GetCardsTC, setPackIdAC } from 'features/cards/card/card-reducer'
+import { PATH } from 'routes/pages'
+import { useAppDispatch } from 'store/store'
 
 interface Data {
   name: string

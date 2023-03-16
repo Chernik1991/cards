@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 
 import y from '../profile/Profile.module.css'
 
-import { PATH } from 'common/components/Routing/pages'
+import { PATH } from 'routes/pages'
 
 const Study = () => {
   return (

@@ -7,12 +7,12 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { CreateCardsTC } from 'features/cards/card/card-reducer'
-import s from 'features/cards/card/CardNotPack.module.css'
-import { cardsLengthCards, packUserId } from 'features/cards/card/selectorCard'
+import s from 'features/cards/cardNotPack/CardNotPack.module.css'
+import { cardsLengthCards, packUserId } from 'features/cards/selectorCard'
 import { getPacksTC } from 'features/packs/packsReducer'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const CardNotPack = () => {
   const dispatch = useAppDispatch()

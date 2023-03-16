@@ -8,11 +8,11 @@ import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
-import { useAppSelector } from 'app/store'
 import checkEmail from 'assets/img/icons/checkEmail.svg'
-import s from 'common/components/header/HeaderStyles.module.css'
-import { PATH } from 'common/components/Routing/pages'
 import { emailAuth } from 'features/auth/selectorAuth'
+import s from 'header/HeaderStyles.module.css'
+import { PATH } from 'routes/pages'
+import { useAppSelector } from 'store/store'
 
 const theme = createTheme()
 

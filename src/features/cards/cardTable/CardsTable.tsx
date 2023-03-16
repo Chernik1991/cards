@@ -10,10 +10,10 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { useAppDispatch } from 'app/store'
 import { DeleteCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
-import { CardActions } from 'features/cards/card/CardActions'
 import { CardsType } from 'features/cards/cards-api'
+import { CardActions } from 'features/cards/cardTable/CardActions'
+import { useAppDispatch } from 'store/store'
 
 type Data = {
   question: string

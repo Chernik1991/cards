@@ -1,4 +1,4 @@
-import { AppStateType } from 'app/store'
+import { AppStateType } from 'store/store'
 
 export const currentNameProfile = (state: AppStateType) => state.profile.currentName
 export const userIdProfile = (state: AppStateType) => state.profile._id

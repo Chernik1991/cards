@@ -2,20 +2,19 @@ import React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 
-import Error404 from './pages/Error404'
-
-import { Layout } from 'common/components/Routing/layout/Layout'
 import { CheckEmail } from 'features/auth/forgotPassword/checkEmail/checkEmail'
 import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPassword/createNewPassword'
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
 import { Card } from 'features/cards/card/Card'
-import { CardNotPack } from 'features/cards/card/CardNotPack'
+import { CardNotPack } from 'features/cards/cardNotPack/CardNotPack'
 import { Packs } from 'features/packs/Packs'
 import { Profile } from 'features/profile/Profile'
 import Study from 'features/studying/Studying'
 import { Test } from 'features/test/test'
+import { Layout } from 'routes/layout/Layout'
+import Error404 from 'routes/pages/Error404'
 
 export const PATH = {
   HASH: '#',

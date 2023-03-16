@@ -1,7 +1,7 @@
 import { setAppStatusAC } from 'app/app-reducer'
-import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 import { authAPI, RegisterParamsType } from 'features/auth/auth-api'
+import { AppThunkType } from 'store/store'
 
 const initialState: InitialStateType = {
   isRegister: false,

@@ -15,9 +15,9 @@ import { Navigate, useParams } from 'react-router-dom'
 
 import { setNewPasswordTC } from './newPassword-reducer'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { isSetNewPasswordAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 const theme = createTheme()
 

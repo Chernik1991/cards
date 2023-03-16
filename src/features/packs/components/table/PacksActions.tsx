@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import e from './PacksActions.module.css'
 
-import { PATH } from 'common/components/Routing/pages'
+import { PATH } from 'routes/pages'
 
 type PacksActionsType = {
   sx: Object

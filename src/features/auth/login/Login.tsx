@@ -25,10 +25,10 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { loginTC } from 'features/auth/login/auth-reducer'
 import { isLoggedInAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 const theme = createTheme()
 

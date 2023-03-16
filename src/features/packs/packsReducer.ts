@@ -1,10 +1,9 @@
 import { AxiosError } from 'axios'
 
-import { packsAPI, PacksParamsType, ResponsePacksType, SetNewPackType, UpdatePackType } from './packs-api'
-
 import { setAppStatusAC } from 'app/app-reducer'
-import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
+import { packsAPI, PacksParamsType, ResponsePacksType, SetNewPackType, UpdatePackType } from 'features/packs/packs-api'
+import { AppThunkType } from 'store/store'
 
 const initialState: ResponsePacksType = {
   cardPacks: [

@@ -6,11 +6,9 @@ import { Navigate, NavLink } from 'react-router-dom'
 
 import y from './Profile.module.css'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
 import userPic1 from 'assets/img/profile/Alex.jpg'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEditableSpan'
-import { PATH } from 'common/components/Routing/pages'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import { isLoggedInAuth } from 'features/auth/selectorAuth'
 import { getPacksTC } from 'features/packs/packsReducer'
@@ -22,6 +20,8 @@ import {
   nameProfile,
   userIdProfile,
 } from 'features/profile/selectorProfile'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Profile = () => {
   const dispatch = useAppDispatch()

@@ -1,8 +1,7 @@
 import { useCallback } from 'react'
 
-import { useAppDispatch } from '../../app/store'
-
-import { getPacksTC } from './packsReducer'
+import { getPacksTC } from 'features/packs/packsReducer'
+import { useAppDispatch } from 'store/store'
 
 export const useSearchPanelLogic = () => {
   const dispatch = useAppDispatch()
