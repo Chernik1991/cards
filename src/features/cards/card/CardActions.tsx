@@ -1,29 +1,16 @@
-import * as React from 'react'
-
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import SchoolIcon from '@mui/icons-material/School'
 import TableCell from '@mui/material/TableCell'
 
-import s from 'common/components/header/HeaderStyles.module.css'
-import { PATH } from 'common/components/Routing/pages'
-
-type PacksActionsType = {
+type CardActionsType = {
   sx: Object
   align: 'left' | 'center' | 'right' | 'justify' | 'inherit' | undefined
-  handleStudyingUp: () => void
-  handleUpdatePackNameUp: () => void
-  handleDeletePackUp: () => void
+  handleUpdateCardName: () => void
+  handleDeleteCard: () => void
 }
 
-export const PacksActions = ({
-  align,
-  sx,
-  handleStudyingUp,
-  handleUpdatePackNameUp,
-  handleDeletePackUp,
-}: PacksActionsType) => {
-  const updatePackJSX = (
-    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onClick={handleUpdatePackNameUp}>
+export const CardActions = ({ align, sx, handleUpdateCardName, handleDeleteCard }: CardActionsType) => {
+  const updateCardJSX = (
+    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onClick={handleUpdateCardName}>
       <path
         d="M19 20H5C4.73478 20 4.48043 20.1054 4.29289 20.2929C4.10536 20.4804 4 20.7348 4 21C4 21.2652 4.10536 21.5196 4.29289 21.7071C4.48043 21.8946 4.73478 22 5 22H19C19.2652 22 19.5196 21.8946 19.7071 21.7071C19.8946 21.5196 20 21.2652 20 21C20 20.7348 19.8946 20.4804 19.7071 20.2929C19.5196 20.1054 19.2652 20 19 20Z"
         fill="black"
@@ -37,13 +24,8 @@ export const PacksActions = ({
 
   return (
     <TableCell align={align} sx={sx}>
-      <label htmlFor="" id="SchoolIcon" onClick={handleStudyingUp}>
-        <a className={s.headerA} href={PATH.HASH + PATH.CARD}>
-          <SchoolIcon id="SchoolIcon" />
-        </a>
-      </label>
-      {updatePackJSX}
-      <label htmlFor="" id="deleteIcon" onClick={handleDeletePackUp}>
+      {updateCardJSX}
+      <label htmlFor="" id="deleteIcon" onClick={handleDeleteCard}>
         <DeleteOutlineIcon id="deleteIcon" />
       </label>
     </TableCell>

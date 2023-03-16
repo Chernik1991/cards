@@ -125,7 +125,7 @@ export const updatePackTC =
     }
   }
 export const deletePackTC =
-  (data?: PacksParamsType): AppThunkType =>
+  (data: PacksParamsType): AppThunkType =>
   async dispatch => {
     try {
       dispatch(setAppStatusAC('loading'))

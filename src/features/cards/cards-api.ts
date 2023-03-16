@@ -8,16 +8,18 @@ export const cardsAPI = {
       params: { ...data },
     })
   },
-  setCards(data: SetCardParamsType) {
-    return instance.post<SetCardParamsType, AxiosResponse<ResponseSetCardType>>('/cards/card', data)
+  setCards(data: SetCardType) {
+    return instance.post<SetCardParamsType, AxiosResponse<ResponseSetCardType>>('/cards/card', { card: { ...data } })
   },
   delCards(data: string) {
     return instance.delete<DeleteCardsParamsType, AxiosResponse<ResponseDeleteCardsType>>('/cards/card', {
       params: { id: data },
     })
   },
-  updateCards(data: UpdateCardParamsType) {
-    return instance.put<UpdateCardParamsType, AxiosResponse<ResponseUpdateCardType>>('/cards/card', data)
+  updateCards(data: UpdateParamsType) {
+    return instance.put<UpdateCardParamsType, AxiosResponse<ResponseUpdateCardType>>('/cards/card', {
+      card: { ...data },
+    })
   },
 }
 
@@ -32,17 +34,18 @@ export type GetCardsParamsType = {
   pageCount?: number
 }
 export type SetCardParamsType = {
-  card: {
-    cardsPack_id: string
-    question: string
-    answer: string
-    grade?: number
-    shots?: number
-    answerImg?: string
-    questionImg?: string
-    questionVideo?: string
-    answerVideo?: string
-  }
+  card: SetCardType
+}
+export type SetCardType = {
+  cardsPack_id: string
+  question: string
+  answer: string
+  grade?: number
+  shots?: number
+  answerImg?: string
+  questionImg?: string
+  questionVideo?: string
+  answerVideo?: string
 }
 export type DeleteCardsParamsType = {
   id: string
@@ -52,10 +55,11 @@ export type DeleteCardsType = {
   cardsPack_id: string
 }
 export type UpdateCardParamsType = {
-  card: {
-    _id: string
-    question?: string
-  }
+  card: UpdateParamsType
+}
+export type UpdateParamsType = {
+  _id: string
+  question?: string
 }
 export type UpdateCardType = {
   id: string
@@ -94,6 +98,7 @@ export type ResponseGetCardsType = {
   maxGrade: number
   token: string
   tokenDeathTime: number
+  setPackId?: string
 }
 export type ResponseSetCardType = {
   newCard: CardsType

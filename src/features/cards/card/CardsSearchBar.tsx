@@ -2,6 +2,8 @@ import React from 'react'
 
 import { Box } from '@mui/material'
 
+import { CustomizedInputBase } from 'common/utils/CustomizedInputBase'
+
 export const SearchPackPanel = () => {
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'100px'} alignItems={'end'}>
@@ -15,6 +17,7 @@ export const SearchPackPanel = () => {
         >
           Search
         </label>
+        <CustomizedInputBase />
       </Box>
     </Box>
   )

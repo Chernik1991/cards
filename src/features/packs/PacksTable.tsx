@@ -11,18 +11,15 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import { Navigate } from 'react-router-dom'
 
 import { PackType } from './packs-api'
-import PacksActions from './PacksActions'
+import { PacksActions } from './PacksActions'
 
 import { useAppDispatch } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
+import { GetCardsTC, setPackIdAC } from 'features/cards/card/card-reducer'
+import { deletePackTC, updatePackTC } from 'features/packs/packsReducer'
 
-import { GetCardsTC } from 'features/cards/card/card-reducer'
-import { deletePackTC, updatePackTC } from './packsReducer'
-
-interface Data {
+type Data = {
   name: string
   actions: string
   created_by: string
@@ -52,10 +49,6 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
 function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
 
@@ -171,7 +164,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
     created_by: el.user_name,
     last_updated: el.updated,
     cards: el.cardsCount,
-    id: el._id,
+    pack_id: el._id,
   }))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
@@ -195,8 +188,6 @@ export const EnhancedTable = (props: EnhancedTableType) => {
     setSelected([])
   }
   const handleClick = (event: React.MouseEvent<unknown>, name: string, cardsPack_id: string) => {
-    console.log(cardsPack_id, 'handleClick')
-    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
     const selectedIndex = selected.indexOf(name)
     let newSelected: readonly string[] = []
 
@@ -212,10 +203,6 @@ export const EnhancedTable = (props: EnhancedTableType) => {
 
     setSelected(newSelected)
   }
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1
-
-  // Avoid a layout jump when reaching the last page with empty rows.
 
   return (
     <Box sx={{ width: '90%', maxWidth: '1400px', minWidth: '1000px', padding: '30px 0px' }}>
@@ -234,7 +221,6 @@ export const EnhancedTable = (props: EnhancedTableType) => {
               />
               <TableBody>
                 {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-                  // const isItemSelected = isSelected(row.name)
                   const dispatch = useAppDispatch()
                   const labelId = `enhanced-table-checkbox-${index}`
                   const data = new Date(row.last_updated)
@@ -242,16 +228,16 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                   const getMonth = monthCorrection < 10 ? '0' + monthCorrection : monthCorrection
                   const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
                   const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
-                  const handleStudying = () => {
-                    // dispatch(logoutTC())
 
-                    return <Navigate to={PATH.STUDY} />
+                  const handleStudying = () => {
+                    dispatch(GetCardsTC({ cardsPack_id: row.pack_id }))
+                    dispatch(setPackIdAC(row.pack_id))
                   }
                   const handleDeletePack = () => {
                     dispatch(
                       deletePackTC({
                         params: {
-                          id: row.id,
+                          id: row.pack_id,
                         },
                       })
                     )
@@ -260,7 +246,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                     dispatch(
                       updatePackTC({
                         cardsPack: {
-                          _id: row.id,
+                          _id: row.pack_id,
                           name: 'updated name',
                         },
                       })
@@ -270,7 +256,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name, row.id)}
+                      // onClick={event => handleClick(event, row.name, row.pack_id)}
                       role="checkbox"
                       // aria-checked={isItemSelected}
                       tabIndex={-1}

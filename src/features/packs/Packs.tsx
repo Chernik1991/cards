@@ -6,7 +6,6 @@ import e from './Packs.module.css'
 import { addPackTC, getPacksTC } from './packsReducer'
 import { EnhancedTable } from './PacksTable'
 import { SearchPackPanel } from './SearchInput'
-import { PaginationComponent } from './PaginationComponent'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
@@ -16,13 +15,7 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-
-  // useEffect(() => {
-
-  //   } else {
-  //     dispatch(getPacksTC({ params: {} }))
-  //   }
-  // }, [])
+  const user_id = useAppSelector(state => state.profile._id)
   const newPackHandler = () => {
     dispatch(addPackTC())
   }
@@ -32,7 +25,7 @@ export const Packs = () => {
   const paginationLabel = 'Packs per Page'
 
   const onChangePageHandler = (page?: number, size?: number) => {
-    dispatch(getPacksTC({ params: { page: page, pageCount: size } }))
+    dispatch(getPacksTC({ params: { page: page, pageCount: size, user_id: user_id } }))
   }
 
   if (!isLoggedIn) {
@@ -59,13 +52,19 @@ export const Packs = () => {
       </Box>
       <SearchPackPanel />
       <EnhancedTable cardsPacks={userPacks.cardPacks} />
-      <PaginationComponent
-        totalCount={cardPacksTotalCount}
-        currentPage={page ?? 1}
-        pageSize={pageCount ?? 4}
-        onPageChanged={onChangePageHandler}
-        labelRowsPerPage={paginationLabel}
-      />
+      {/*<div>*/}
+      {/*  {pageCount !== 0 ? (*/}
+      {/*    <PaginationComponent*/}
+      {/*      totalCount={cardPacksTotalCount}*/}
+      {/*      currentPage={page ?? 1}*/}
+      {/*      pageSize={pageCount ?? 4}*/}
+      {/*      onPageChanged={onChangePageHandler}*/}
+      {/*      labelRowsPerPage={paginationLabel}*/}
+      {/*    />*/}
+      {/*  ) : (*/}
+      {/*    ''*/}
+      {/*  )}*/}
+      {/*</div>*/}
     </div>
   )
 }
