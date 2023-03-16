@@ -3,17 +3,18 @@ import * as React from 'react'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-import { setAppStatusAC } from '../../app/app-reducer'
-import { useAppDispatch, useAppSelector } from '../../app/store'
+import { setAppStatusAC } from '../../../../app/app-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../app/store'
+import { getPacksTC } from '../../packsReducer'
 
-import { getPacksTC } from './packsReducer'
+import { setUserParamsAC } from 'features/packs/paramsReducer'
 
 export const PacksToggleButton = () => {
   const dispatch = useAppDispatch()
 
   const getIdUser = useAppSelector<string>(state => state.profile._id)
 
-  const [alignment, setAlignment] = React.useState('all')
+  const [alignment, setAlignment] = React.useState('my')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
@@ -23,11 +24,13 @@ export const PacksToggleButton = () => {
 
   const handleChangeMy = () => {
     dispatch(setAppStatusAC('loading'))
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(setUserParamsAC({ user_id: getIdUser }))
+    dispatch(getPacksTC({ user_id: getIdUser }))
   }
   const handleChangeAll = () => {
     dispatch(setAppStatusAC('loading'))
-    dispatch(getPacksTC({ params: { user_id: null } }))
+    dispatch(setUserParamsAC({ user_id: null }))
+    dispatch(getPacksTC({ user_id: null }))
   }
 
   return (

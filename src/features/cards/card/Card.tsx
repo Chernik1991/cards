@@ -3,7 +3,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { PaginationComponent } from '../../packs/PaginationComponent'
+import { PaginationComponent } from '../../packs/components/pagination/PaginationComponent'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
@@ -29,7 +29,7 @@ export const Card = () => {
   /*const cardsPack_id = useAppSelector(state => state.packs.cardPacks._id)*/
   const paginationLabel = 'Cards per Page'
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(getPacksTC({ user_id: getIdUser }))
     dispatch(clearCardDataAC())
     //пока только мои колоды загружаются, потом исправить
   }

@@ -2,6 +2,7 @@ import React from 'react'
 
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
+
 import { RangeSlider } from './PacksSlider'
 import { PacksToggleButton } from './PacksToggleButton'
 

@@ -37,7 +37,7 @@ const initialState: ResponsePacksType = {
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
   switch (action.type) {
-    case 'getPacks': {
+    case 'PACKS/GET-PACKS': {
       const packsData = { ...action.payload.data }
 
       return { ...packsData }
@@ -47,7 +47,7 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
   }
 }
 
-export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'getPacks', payload: { data } } as const)
+export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'PACKS/GET-PACKS', payload: { data } } as const)
 
 type ActionsType = getUserPacksType
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
@@ -79,16 +79,17 @@ export const getPacksTC =
   }
 
 export const addPackTC =
-  (data?: SetNewPackType): AppThunkType =>
+  (data?: SetNewPackType, user_id?: string | null | undefined): AppThunkType =>
   async dispatch => {
     try {
+      const settingsChecker = user_id ? { user_id } : {}
       const res = await packsAPI.setPack({ cardsPack: {} })
 
       dispatch(setAppStatusAC('loading'))
       console.log(res, 'addPackTC')
       if (res.request.status === 201) {
         dispatch(setAppStatusAC('succeeded'))
-        // dispatch(getUserPacksAC(res.data))
+        dispatch(getPacksTC(settingsChecker))
       } else {
         dispatch(setAppStatusAC('failed'))
         console.log('Error1')
@@ -103,15 +104,17 @@ export const addPackTC =
   }
 
 export const updatePackTC =
-  (data: UpdatePackType): AppThunkType =>
+  (data: UpdatePackType, user_id?: string | null | undefined): AppThunkType =>
   async dispatch => {
     try {
+      const settingsChecker = user_id ? { user_id } : {}
+
       dispatch(setAppStatusAC('loading'))
-      const res = await packsAPI.updatePack(data)
+      const res = await packsAPI.updatePack({ cardsPack: { _id: data.cardsPack._id, name: data.cardsPack.name } })
 
       if (res.data) {
         dispatch(setAppStatusAC('succeeded'))
-        dispatch(getPacksTC())
+        dispatch(getPacksTC(settingsChecker))
       } else {
         dispatch(setAppStatusAC('failed'))
         console.log('Error1')
@@ -125,15 +128,16 @@ export const updatePackTC =
     }
   }
 export const deletePackTC =
-  (data?: PacksParamsType): AppThunkType =>
+  (data?: PacksParamsType, user_id?: string | null | undefined): AppThunkType =>
   async dispatch => {
     try {
       dispatch(setAppStatusAC('loading'))
       const res = await packsAPI.deletePack(data)
+      const settingsChecker = user_id ? { user_id } : {}
 
       if (res.data) {
         dispatch(setAppStatusAC('succeeded'))
-        dispatch(getPacksTC())
+        dispatch(getPacksTC(settingsChecker))
       } else {
         dispatch(setAppStatusAC('failed'))
         console.log('Error1')

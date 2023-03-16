@@ -4,13 +4,13 @@ import { instance } from 'features/auth/auth-api'
 
 export const packsAPI = {
   getPacks(data?: PacksParamsType) {
-    return instance.get<PacksParamsType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
+    return instance.get<PacksParamsType, AxiosResponse<ResponsePacksType>>('cards/pack', { params: { ...data } })
   },
   setPack(data?: SetNewPackType) {
     return instance.post<SetNewPackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
   },
   deletePack(data?: PacksParamsType) {
-    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', data)
+    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', { params: { ...data } })
   },
   updatePack(data: UpdatePackType) {
     return instance.put<UpdatePackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
@@ -47,19 +47,17 @@ export type PackType = {
 }
 
 export type PacksParamsType = {
-  params: {
-    packName?: string
-    min?: number
-    max?: number
-    sortPacks?: string | null
-    page?: number
-    pageCount?: number
+  packName?: number | null
+  min?: number | null
+  max?: number | null
+  sortPacks?: string | null
+  page?: number | null
+  pageCount?: number | null
 
-    user_id?: string | null
+  user_id?: string | null | undefined
 
-    block?: boolean
-    id?: string
-  }
+  block?: boolean
+  id?: string | null
 }
 
 export type SetNewPackType = {

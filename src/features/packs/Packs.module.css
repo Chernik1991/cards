@@ -13,9 +13,8 @@ a:visited {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   width: 100%;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   padding: 50px 60px 0 60px;
 }
 

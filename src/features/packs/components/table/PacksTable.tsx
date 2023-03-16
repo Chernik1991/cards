@@ -11,16 +11,16 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import { Navigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
-import { PackType } from './packs-api'
+import { PackType } from '../../packs-api'
+import { deletePackTC, updatePackTC } from '../../packsReducer'
+
 import PacksActions from './PacksActions'
 
 import { useAppDispatch } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
-
 import { GetCardsTC } from 'features/cards/card/card-reducer'
-import { deletePackTC, updatePackTC } from './packsReducer'
 
 interface Data {
   name: string
@@ -161,6 +161,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 type EnhancedTableType = {
   cardsPacks: PackType[]
+  userID: string
+  userIDsettings: string | null | undefined
 }
 
 export const EnhancedTable = (props: EnhancedTableType) => {
@@ -172,6 +174,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
     last_updated: el.updated,
     cards: el.cardsCount,
     id: el._id,
+    packOwnerID: el.user_id,
   }))
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('name')
@@ -194,9 +197,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
     }
     setSelected([])
   }
-  const handleClick = (event: React.MouseEvent<unknown>, name: string, cardsPack_id: string) => {
-    console.log(cardsPack_id, 'handleClick')
-    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name)
     let newSelected: readonly string[] = []
 
@@ -212,10 +213,10 @@ export const EnhancedTable = (props: EnhancedTableType) => {
 
     setSelected(newSelected)
   }
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1
-
-  // Avoid a layout jump when reaching the last page with empty rows.
+  const cardsListHandler = (cardsPack_id: string) => {
+    console.log(cardsPack_id, 'handleClick')
+    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+  }
 
   return (
     <Box sx={{ width: '90%', maxWidth: '1400px', minWidth: '1000px', padding: '30px 0px' }}>
@@ -234,7 +235,6 @@ export const EnhancedTable = (props: EnhancedTableType) => {
               />
               <TableBody>
                 {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-                  // const isItemSelected = isSelected(row.name)
                   const dispatch = useAppDispatch()
                   const labelId = `enhanced-table-checkbox-${index}`
                   const data = new Date(row.last_updated)
@@ -242,43 +242,34 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                   const getMonth = monthCorrection < 10 ? '0' + monthCorrection : monthCorrection
                   const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
                   const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
+                  const crudAccessValue = row.packOwnerID === props.userID
+
+                  console.log(row.id, props.userID)
+
                   const handleStudying = () => {
                     // dispatch(logoutTC())
 
                     return <Navigate to={PATH.STUDY} />
                   }
                   const handleDeletePack = () => {
-                    dispatch(
-                      deletePackTC({
-                        params: {
-                          id: row.id,
-                        },
-                      })
-                    )
+                    dispatch(deletePackTC({ id: row.id }, props.userIDsettings))
                   }
                   const handleUpdatePackName = () => {
-                    dispatch(
-                      updatePackTC({
-                        cardsPack: {
-                          _id: row.id,
-                          name: 'updated name',
-                        },
-                      })
-                    )
+                    dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, props.userIDsettings))
                   }
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.name, row.id)}
+                      onClick={event => handleClick(event, row.name)}
                       role="checkbox"
-                      // aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={crypto.randomUUID()}
-                      // selected={isItemSelected}
                     >
                       <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
-                        {row.name}
+                        <NavLink to={PATH.CARD} onClick={event => cardsListHandler(row.id)}>
+                          {row.name}
+                        </NavLink>
                       </TableCell>
                       <TableCell align="left" sx={paddingStyle}>
                         {row.cards}
@@ -291,7 +282,8 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                       </TableCell>
                       <PacksActions
                         align="left"
-                        sx={{ ...paddingStyle, minWidth: 'none' }}
+                        crudAccess={crudAccessValue}
+                        sx={{ ...paddingStyle, minWidth: 'none', display: 'flex', width: '150px' }}
                         handleStudyingUp={handleStudying}
                         handleUpdatePackNameUp={handleUpdatePackName}
                         handleDeletePackUp={handleDeletePack}

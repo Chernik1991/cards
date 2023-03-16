@@ -17,6 +17,7 @@ import { PATH } from 'common/components/Routing/pages'
 import { ResponseLoginType } from 'features/auth/auth-api'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import { getPacksTC } from 'features/packs/packsReducer'
+import { setUserParamsAC } from 'features/packs/paramsReducer'
 
 export const Profile = () => {
   const dispatch = useAppDispatch()
@@ -42,7 +43,8 @@ export const Profile = () => {
   }
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(setUserParamsAC({ user_id: getIdUser }))
+    dispatch(getPacksTC({ user_id: getIdUser }))
   }
 
   const customStyle = userProfileData.editedMode ? y.activeEditmode : ''

@@ -1,52 +1,42 @@
 import Box from '@mui/material/Box'
-import { Navigate } from 'react-router-dom'
 
+import { PaginationComponent } from './components/pagination/PaginationComponent'
+import { SearchPackPanel } from './components/pagination/SearchInput'
+import { EnhancedTable } from './components/table/PacksTable'
 import { ResponsePacksType } from './packs-api'
 import e from './Packs.module.css'
 import { addPackTC, getPacksTC } from './packsReducer'
-import { EnhancedTable } from './PacksTable'
-import { SearchPackPanel } from './SearchInput'
-import { PaginationComponent } from './PaginationComponent'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
-import { PATH } from 'common/components/Routing/pages'
 
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-
-  // useEffect(() => {
-
-  //   } else {
-  //     dispatch(getPacksTC({ params: {} }))
-  //   }
-  // }, [])
-  const newPackHandler = () => {
-    dispatch(addPackTC())
-  }
   const page = useAppSelector(state => state.packs.page)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
+  const userID = useAppSelector(state => state.profile._id)
+  const paramsID = useAppSelector(state => state.packsParams.user_id)
+  const newPackHandler = () => {
+    const userParams = paramsID ? paramsID : ''
+
+    dispatch(addPackTC({ cardsPack: {} }, userParams))
+  }
+
   const paginationLabel = 'Packs per Page'
 
   const onChangePageHandler = (page?: number, size?: number) => {
-    dispatch(getPacksTC({ params: { page: page, pageCount: size } }))
+    dispatch(getPacksTC({ page: page, pageCount: size, user_id: paramsID }))
   }
-
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN} replace />
-  }
-  //Возможно убрать т.к. по умолчанию уже залогинен
 
   return (
     <div className={e.packsContainer}>
       <Box
         sx={{
-          gridArea: 'left',
-          width: '80%',
+          gridArea: 'center',
           display: 'flex',
+          width: '100%',
           justifyContent: 'space-between',
           alignItems: 'center',
           paddingTop: 4,
@@ -58,7 +48,7 @@ export const Packs = () => {
         </SuperButton>
       </Box>
       <SearchPackPanel />
-      <EnhancedTable cardsPacks={userPacks.cardPacks} />
+      <EnhancedTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
       <PaginationComponent
         totalCount={cardPacksTotalCount}
         currentPage={page ?? 1}

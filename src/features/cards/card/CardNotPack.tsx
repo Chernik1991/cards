@@ -22,7 +22,7 @@ export const CardNotPack = () => {
   const getIdUser = useAppSelector<string>(state => state.profile._id)
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(getPacksTC({ user_id: getIdUser }))
     //пока что переход только на мои паки
   }
   const postCardHandler = () => {
