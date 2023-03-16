@@ -20,7 +20,7 @@ import PacksActions from './PacksActions'
 
 import { useAppDispatch } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
-import { GetCardsTC } from 'features/cards/card/card-reducer'
+import { GetCardsTC, setPackIdAC } from 'features/cards/card/card-reducer'
 
 interface Data {
   name: string
@@ -215,6 +215,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
   }
   const cardsListHandler = (cardsPack_id: string) => {
     console.log(cardsPack_id, 'handleClick')
+    dispatch(setPackIdAC(cardsPack_id))
     dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
   }
 

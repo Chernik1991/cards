@@ -47,7 +47,7 @@ export type PackType = {
 }
 
 export type PacksParamsType = {
-  packName?: number | null
+  packName?: string | null
   min?: number | null
   max?: number | null
   sortPacks?: string | null

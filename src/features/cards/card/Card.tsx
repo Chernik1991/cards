@@ -24,7 +24,7 @@ export const Card = () => {
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   const paginationLabel = 'Cards per Page'
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: user_id } }))
+    dispatch(getPacksTC({ user_id: user_id }))
     dispatch(clearCardDataAC())
     //пока только мои колоды загружаются, потом исправить
   }

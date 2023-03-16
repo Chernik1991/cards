@@ -2,9 +2,8 @@ import { ChangeEvent, FC, memo, SyntheticEvent, useCallback, useEffect, useState
 
 import TextField from '@mui/material/TextField'
 
-import { SliderComponent } from './SliderComponent'
-
 import s from './Slider.module.css'
+import { SliderComponent } from './SliderComponent'
 
 type InputSliderPropsType = {
   minValue: number

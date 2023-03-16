@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+
 import { Slider, SliderProps } from '@mui/material'
 
 type SliderComponentPropsType = SliderProps & { width?: number }
