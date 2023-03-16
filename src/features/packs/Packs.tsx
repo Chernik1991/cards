@@ -6,6 +6,8 @@ import { EnhancedTable } from './components/table/PacksTable'
 import { ResponsePacksType } from './packs-api'
 import e from './Packs.module.css'
 import { addPackTC, getPacksTC } from './packsReducer'
+import { EnhancedTable } from './PacksTable'
+import { SearchPackPanel } from './SearchInput'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
@@ -13,6 +15,11 @@ import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const user_id = useAppSelector(state => state.profile._id)
+  const newPackHandler = () => {
+    dispatch(addPackTC())
+  }
   const page = useAppSelector(state => state.packs.page)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
@@ -27,6 +34,7 @@ export const Packs = () => {
   const paginationLabel = 'Packs per Page'
 
   const onChangePageHandler = (page?: number, size?: number) => {
+    dispatch(getPacksTC({ params: { page: page, pageCount: size, user_id: user_id } }))
     dispatch(getPacksTC({ page: page, pageCount: size, user_id: paramsID }))
   }
 
@@ -48,6 +56,20 @@ export const Packs = () => {
         </SuperButton>
       </Box>
       <SearchPackPanel />
+      <EnhancedTable cardsPacks={userPacks.cardPacks} />
+      {/*<div>*/}
+      {/*  {pageCount !== 0 ? (*/}
+      {/*    <PaginationComponent*/}
+      {/*      totalCount={cardPacksTotalCount}*/}
+      {/*      currentPage={page ?? 1}*/}
+      {/*      pageSize={pageCount ?? 4}*/}
+      {/*      onPageChanged={onChangePageHandler}*/}
+      {/*      labelRowsPerPage={paginationLabel}*/}
+      {/*    />*/}
+      {/*  ) : (*/}
+      {/*    ''*/}
+      {/*  )}*/}
+      {/*</div>*/}
       <EnhancedTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
       <PaginationComponent
         totalCount={cardPacksTotalCount}

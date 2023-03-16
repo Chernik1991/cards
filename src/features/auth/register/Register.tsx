@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { VisibilityOff, Visibility } from '@mui/icons-material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -22,6 +22,7 @@ import s from './RegisterStyle.module.css'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
+import { isLoggedInAuth, isRegisterAuth } from 'features/auth/selectorAuth'
 
 type FormikErrorType = {
   email?: string
@@ -32,8 +33,8 @@ type FormikErrorType = {
 export const Register = () => {
   debugger
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const isRegister = useAppSelector<boolean>(state => state.reg.isRegister)
+  const isLoggedIn = useAppSelector(isLoggedInAuth)
+  const isRegister = useAppSelector(isRegisterAuth)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -77,11 +78,9 @@ export const Register = () => {
     },
     onSubmit: values => {
       dispatch(registerTC(values))
-      // formik.resetForm()
     },
   })
 
-  console.log(isRegister)
   if (isRegister) {
     return <Navigate to={PATH.LOGIN} />
   }

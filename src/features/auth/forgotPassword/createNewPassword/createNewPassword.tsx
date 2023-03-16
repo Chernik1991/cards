@@ -17,6 +17,7 @@ import { setNewPasswordTC } from './newPassword-reducer'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
+import { isSetNewPasswordAuth } from 'features/auth/selectorAuth'
 
 const theme = createTheme()
 
@@ -26,9 +27,8 @@ type FormikErrorType = {
 }
 export const CreateNewPassword = () => {
   const { token } = useParams<{ token: string }>()
-  const isSetNewPassword = useAppSelector<boolean>(state => state.pass.isSetNewPassword)
+  const isSetNewPassword = useAppSelector(isSetNewPasswordAuth)
   const dispatch = useAppDispatch()
-  // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -58,11 +58,8 @@ export const CreateNewPassword = () => {
     event.preventDefault()
   }
 
-  console.log(isSetNewPassword, '1')
   if (isSetNewPassword) {
-    console.log(isSetNewPassword, '2')
-
-    return <Navigate to={PATH.LOGIN} />
+    return <Navigate to={PATH.LOGIN} replace />
   }
 
   return (

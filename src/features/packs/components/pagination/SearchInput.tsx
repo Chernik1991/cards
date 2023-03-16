@@ -6,6 +6,8 @@ import { Box, IconButton } from '@mui/material'
 import { RangeSlider } from './PacksSlider'
 import { PacksToggleButton } from './PacksToggleButton'
 
+import { CustomizedInputBase } from 'common/utils/CustomizedInputBase'
+
 export const SearchPackPanel = () => {
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
@@ -19,6 +21,7 @@ export const SearchPackPanel = () => {
         >
           Search
         </label>
+        <CustomizedInputBase />
       </Box>
       <Box>
         <Box>

@@ -17,6 +17,7 @@ import { setForgotTC } from './forgotPassword-reducer'
 
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
+import { forgotPasswordAuth } from 'features/auth/selectorAuth'
 
 const theme = createTheme()
 
@@ -27,7 +28,7 @@ type FormikErrorType = {
 }
 export const ForgotPassword = () => {
   const dispatch = useAppDispatch()
-  const forgotPassword = useAppSelector<boolean>(state => state.forgot.forgotPassword)
+  const forgotPassword = useAppSelector(forgotPasswordAuth)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -55,7 +56,7 @@ link</a>
   })
 
   if (forgotPassword) {
-    return <Navigate to={PATH.CHECK_EMAIL} />
+    return <Navigate to={PATH.CHECK_EMAIL} replace />
   }
 
   return (

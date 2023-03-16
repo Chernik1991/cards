@@ -3,73 +3,46 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { PaginationComponent } from '../../packs/components/pagination/PaginationComponent'
-
 import { useAppDispatch, useAppSelector } from 'app/store'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PATH } from 'common/components/Routing/pages'
-import { clearCardDataAC, CreateCardsTC, DeleteCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
+import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
 import s from 'features/cards/card/CardNotPack.module.css'
 import { SearchPackPanel } from 'features/cards/card/CardsSearchBar'
 import { EnhancedTable } from 'features/cards/card/CardsTable'
+import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/card/selectorCard'
 import { CardsType } from 'features/cards/cards-api'
-// import e from 'features/packs/Packs.module.css'
 import { getPacksTC } from 'features/packs/packsReducer'
 
 export const Card = () => {
   const dispatch = useAppDispatch()
-  const rows = useAppSelector<Array<CardsType>>(state => state.cards.cards)
-  const cards = useAppSelector<Array<CardsType>>(state => state.cards.cards)
-  const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
-  //исправить, пока что грузится только 1 колода
-  const getIdUser = useAppSelector<string>(state => state.profile._id)
-  const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
-  const currentPage = useAppSelector(state => state.cards.page)
-  const pageCount = useAppSelector(state => state.cards.pageCount)
-  /*const cardsPack_id = useAppSelector(state => state.packs.cardPacks._id)*/
+  const page = useAppSelector(pageCard)
+  const rows = useAppSelector<Array<CardsType>>(cards)
+  const user_id = useAppSelector(packUserId)
+  const totalCount = useAppSelector(cardsTotalCount)
+  const pageCount = useAppSelector(cardsPageCount)
+  const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   const paginationLabel = 'Cards per Page'
   const packsListHandler = () => {
-    dispatch(getPacksTC({ user_id: getIdUser }))
+    dispatch(getPacksTC({ params: { user_id: user_id } }))
     dispatch(clearCardDataAC())
     //пока только мои колоды загружаются, потом исправить
-  }
-  const getCardHandler = () => {
-    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
   }
   const postCardHandler = () => {
     dispatch(
       CreateCardsTC({
-        card: {
-          answer: '123',
-          question: '1235555',
-          cardsPack_id: getIdPack,
-        },
+        answer: 'CreateCardsTC',
+        question: 'Card',
+        cardsPack_id: cardsPack_id,
       })
     )
   }
-  const delCardHandler = (card_id: string, cardsPack_id: string) => {
-    dispatch(DeleteCardsTC({ id: card_id, cardsPack_id: cardsPack_id }))
-  }
-  // const updateCardHandler = () => {
-  //   dispatch(UpdateCardsTC({ card: { _id: rows[0]._id, question: 'rows[0]._id' } }))
-  //   //пока только первый вопрос и вопрос хардкор, потом исправить
-  // }
   const onChangePageHandler = (page: number, pageCount: number) => {
-    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: '6410a6ad77ad704a0476ae70' }))
-  }
-  const handleClick = (event: React.MouseEvent<unknown>, name: string, card_id: string, cardsPack_id: string) => {
-    delCardHandler(card_id, cardsPack_id)
-    // console.log(cardsPack_id, 'handleClick')
-    // dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
-    // console.log(card_id, 'card_id')
-    // console.log(cardsPack_id, 'cardsPack_id')
-    // console.log(name, 'name')
+    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
   }
 
   if (rows.length === 0) {
-    console.log(rows.length, 'rows')
-
-    return <Navigate to={PATH.CARD_NOT_PACK} />
+    return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
 
   return (
@@ -126,7 +99,7 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <EnhancedTable cards={cards} />
+          <EnhancedTable cards={rows} />
         </Box>
         <Box
           sx={{
@@ -139,13 +112,19 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <PaginationComponent
-            totalCount={cardsTotalCount}
-            currentPage={currentPage ?? 1}
-            pageSize={pageCount ?? 4}
-            onPageChanged={onChangePageHandler}
-            labelRowsPerPage={paginationLabel}
-          />
+          {/*<div>*/}
+          {/*  {pageCount !== 0 ? (*/}
+          {/*    <PaginationComponent*/}
+          {/*      totalCount={totalCount}*/}
+          {/*      currentPage={page ?? 1}*/}
+          {/*      pageSize={pageCount ?? 4}*/}
+          {/*      onPageChanged={onChangePageHandler}*/}
+          {/*      labelRowsPerPage={paginationLabel}*/}
+          {/*    />*/}
+          {/*  ) : (*/}
+          {/*    ''*/}
+          {/*  )}*/}
+          {/*</div>*/}
         </Box>
       </div>
     </>

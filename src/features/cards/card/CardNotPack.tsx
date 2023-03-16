@@ -11,28 +11,27 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { CreateCardsTC } from 'features/cards/card/card-reducer'
 import s from 'features/cards/card/CardNotPack.module.css'
+import { cardsLengthCards, packUserId } from 'features/cards/card/selectorCard'
 import { getPacksTC } from 'features/packs/packsReducer'
 
 export const CardNotPack = () => {
   const dispatch = useAppDispatch()
-  const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
+  const getIdPack = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   const namePack = useAppSelector<string>(state => state.packs.cardPacks[0].name)
-  const lengthCards = useAppSelector<any>(state => state.cards.cards.length)
+  const lengthCards = useAppSelector(cardsLengthCards)
   //исправить, пока что грузится только 1 колода
-  const getIdUser = useAppSelector<string>(state => state.profile._id)
+  const user_id = useAppSelector(packUserId)
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ user_id: getIdUser }))
+    dispatch(getPacksTC({ params: { user_id: user_id } }))
     //пока что переход только на мои паки
   }
   const postCardHandler = () => {
     dispatch(
       CreateCardsTC({
-        card: {
-          answer: '123',
-          question: '1235555',
-          cardsPack_id: getIdPack,
-        },
+        answer: 'CreateCardsTC',
+        question: 'CardNotPack',
+        cardsPack_id: getIdPack,
       })
     )
   }

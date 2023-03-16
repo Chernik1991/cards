@@ -12,11 +12,12 @@ import { useAppSelector } from 'app/store'
 import checkEmail from 'assets/img/icons/checkEmail.svg'
 import s from 'common/components/header/HeaderStyles.module.css'
 import { PATH } from 'common/components/Routing/pages'
+import { emailAuth } from 'features/auth/selectorAuth'
 
 const theme = createTheme()
 
 export const CheckEmail = () => {
-  const email = useAppSelector<string>(state => state.forgot.email)
+  const email = useAppSelector(emailAuth)
 
   return (
     <ThemeProvider theme={theme}>
