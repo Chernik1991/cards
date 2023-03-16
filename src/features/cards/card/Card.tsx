@@ -42,9 +42,7 @@ export const Card = () => {
   }
 
   if (rows.length === 0) {
-    console.log(rows.length, 'rows')
-
-    return <Navigate to={PATH.CARD_NOT_PACK} />
+    return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
 
   return (

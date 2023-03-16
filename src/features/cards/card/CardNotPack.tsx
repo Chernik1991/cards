@@ -11,14 +11,14 @@ import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { CreateCardsTC } from 'features/cards/card/card-reducer'
 import s from 'features/cards/card/CardNotPack.module.css'
-import { packUserId } from 'features/cards/card/selectorCard'
+import { cardsLengthCards, packUserId } from 'features/cards/card/selectorCard'
 import { getPacksTC } from 'features/packs/packsReducer'
 
 export const CardNotPack = () => {
   const dispatch = useAppDispatch()
   const getIdPack = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   const namePack = useAppSelector<string>(state => state.packs.cardPacks[0].name)
-  const lengthCards = useAppSelector(state => state.cards.cards.length)
+  const lengthCards = useAppSelector(cardsLengthCards)
   //исправить, пока что грузится только 1 колода
   const user_id = useAppSelector(packUserId)
 

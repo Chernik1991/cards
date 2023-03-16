@@ -81,9 +81,6 @@ export const GetCardsTC =
     try {
       const res = await cardsAPI.getCards(data)
 
-      console.log(res, 'getCards')
-      console.log(res.data.cards, 'res.data.cards')
-      console.log(res.data, 'res.data')
       if (res.request.status === 200) {
         dispatch(setCardsDataAC(res.data))
         dispatch(setAppStatusAC('succeeded'))
@@ -104,7 +101,6 @@ export const CreateCardsTC =
     try {
       const res = await cardsAPI.setCards(data)
 
-      console.log(res, 'CreateCardsTC')
       if (res.request.status === 201) {
         dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
@@ -144,9 +140,7 @@ export const UpdateCardsTC =
         question: data.question,
       })
 
-      console.log(res, 'UpdateCardTC')
       if (res.request.status === 200) {
-        console.log(res, 'res.request.status')
         dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
       } else {

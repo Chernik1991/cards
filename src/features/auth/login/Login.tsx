@@ -28,6 +28,7 @@ import { Navigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'app/store'
 import { PATH } from 'common/components/Routing/pages'
 import { loginTC } from 'features/auth/login/auth-reducer'
+import { isLoggedInAuth } from 'features/auth/selectorAuth'
 
 const theme = createTheme()
 
@@ -38,7 +39,7 @@ type FormikErrorType = {
 }
 export const Login = () => {
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector(isLoggedInAuth)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -75,7 +76,7 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
-    return <Navigate to={PATH.PROFILE} />
+    return <Navigate to={PATH.PROFILE} replace />
   }
 
   return (
