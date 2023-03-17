@@ -4,9 +4,9 @@ import { LinearProgress } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
 import { RequestStatusType } from 'app/app-reducer'
-import { useAppSelector } from 'app/store'
-import { Footer } from 'common/components/footer/footer'
-import { Header } from 'common/components/header/Header'
+import { Footer } from 'footer/footer'
+import { Header } from 'header/Header'
+import { useAppSelector } from 'store/store'
 
 // import { Header } from '../header/Header'
 // import { Sidebar } from '../sidebar/Sidebar'

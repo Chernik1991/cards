@@ -1,8 +1,8 @@
 import { setAppIsInitializedAC, setAppStatusAC } from 'app/app-reducer'
-import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 import { authAPI, LoginParamsType } from 'features/auth/auth-api'
 import { setUserDataAC } from 'features/profile/reducerProfile'
+import { AppThunkType } from 'store/store'
 
 const initialState: InitialStateType = {
   isLoggedIn: false,

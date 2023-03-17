@@ -5,8 +5,8 @@ import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEve
 import s from './SuperInputText.module.css'
 
 import { setAppErrorAC } from 'app/app-reducer'
-import { useAppDispatch } from 'app/store'
 import { setNewCurrnetNameAC, updateUserDataTC } from 'features/profile/reducerProfile'
+import { useAppDispatch } from 'store/store'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>

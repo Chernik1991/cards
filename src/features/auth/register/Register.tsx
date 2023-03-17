@@ -19,9 +19,10 @@ import { Navigate } from 'react-router-dom'
 import { registerTC } from './register-reducer'
 import s from './RegisterStyle.module.css'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
+import { isLoggedInAuth, isRegisterAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 type FormikErrorType = {
   email?: string
@@ -32,8 +33,8 @@ type FormikErrorType = {
 export const Register = () => {
   console.log('Register')
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const isRegister = useAppSelector<boolean>(state => state.reg.isRegister)
+  const isLoggedIn = useAppSelector(isLoggedInAuth)
+  const isRegister = useAppSelector(isRegisterAuth)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -77,7 +78,6 @@ export const Register = () => {
     },
     onSubmit: values => {
       dispatch(registerTC(values))
-      // formik.resetForm()
     },
   })
 

@@ -25,9 +25,10 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
 import { loginTC } from 'features/auth/login/auth-reducer'
+import { isLoggedInAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 const theme = createTheme()
 
@@ -37,9 +38,8 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 export const Login = () => {
-  console.log('Login')
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector(isLoggedInAuth)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -76,9 +76,7 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
-    console.log('Login navigate to Profile')
-
-    return <Navigate to={PATH.PROFILE} />
+    return <Navigate to={PATH.PROFILE} replace />
   }
 
   return (
@@ -170,7 +168,7 @@ export const Login = () => {
                 </Link>
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
               Sign In
             </Button>
             <Grid container flexDirection={'column'} alignItems={'center'}>

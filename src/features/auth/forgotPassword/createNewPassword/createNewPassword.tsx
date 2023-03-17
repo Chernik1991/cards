@@ -15,8 +15,9 @@ import { Navigate, useParams } from 'react-router-dom'
 
 import { setNewPasswordTC } from './newPassword-reducer'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
+import { isSetNewPasswordAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 const theme = createTheme()
 
@@ -27,9 +28,8 @@ type FormikErrorType = {
 export const CreateNewPassword = () => {
   console.log('CreateNewPassword')
   const { token } = useParams<{ token: string }>()
-  const isSetNewPassword = useAppSelector<boolean>(state => state.pass.isSetNewPassword)
+  const isSetNewPassword = useAppSelector(isSetNewPasswordAuth)
   const dispatch = useAppDispatch()
-  // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -59,11 +59,8 @@ export const CreateNewPassword = () => {
     event.preventDefault()
   }
 
-  console.log(isSetNewPassword, '1')
   if (isSetNewPassword) {
-    console.log(isSetNewPassword, '2')
-
-    return <Navigate to={PATH.LOGIN} />
+    return <Navigate to={PATH.LOGIN} replace />
   }
 
   return (
@@ -89,31 +86,12 @@ export const CreateNewPassword = () => {
               width: '50ch',
             }}
           >
-            {/*<TextField*/}
-            {/*  margin="normal"*/}
-            {/*  required //посмотреть убрать*/}
-            {/*  fullWidth //посмотреть убрать*/}
-            {/*  id="email"*/}
-            {/*  label="Email Address"*/}
-            {/*  autoComplete="email" //посмотреть убрать*/}
-            {/*  autoFocus //посмотреть убрать*/}
-            {/*  {...formik.getFieldProps('email')}*/}
-            {/*  helperText={*/}
-            {/*    formik.touched.email && formik.errors.email ? (*/}
-            {/*      <div style={{ color: 'red' }}>{formik.errors.email}</div>*/}
-            {/*    ) : (*/}
-            {/*      ' '*/}
-            {/*    )*/}
-            {/*  }*/}
-            {/*/>*/}
             <FormControl sx={{ width: '50ch' }} variant={'outlined'}>
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
-                // variant="filled"
                 required
                 fullWidth
-                // margin="normal"
                 autoComplete="current-password"
                 type={Password ? 'text' : 'password'}
                 aria-describedby="component-error-text"
@@ -143,7 +121,7 @@ export const CreateNewPassword = () => {
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>{'Create new password and we will send you further instructions to email'}</Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
               Create new password
             </Button>
           </Box>

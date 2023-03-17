@@ -8,7 +8,6 @@ a:visited {
 }
 
 .profileContainer {
-  background-color: #f9f9fa;
   display: inline-flex;
   width: 100%;
   align-items: center;
@@ -161,7 +160,7 @@ a:visited {
   align-items: cenetr;
   position: relative;
   width: 85%;
-  top: 20px;
+  top: 40px;
   font-size: 0.8rem;
 }
 

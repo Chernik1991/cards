@@ -6,8 +6,8 @@ import editIcon from './editIcon.svg'
 import s from './SuperEditableSpan.module.css'
 
 import { setAppErrorAC } from 'app/app-reducer'
-import { useAppDispatch } from 'app/store'
 import { editedModeAC, setNewCurrnetNameAC, setNewNameAC, updateUserDataTC } from 'features/profile/reducerProfile'
+import { useAppDispatch } from 'store/store'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>

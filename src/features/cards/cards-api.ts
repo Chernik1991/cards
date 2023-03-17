@@ -8,16 +8,18 @@ export const cardsAPI = {
       params: { ...data },
     })
   },
-  setCards(data: SetCardParamsType) {
-    return instance.post<SetCardParamsType, AxiosResponse<ResponseSetCardType>>('/cards/card', data)
+  setCards(data: SetCardType) {
+    return instance.post<SetCardParamsType, AxiosResponse<ResponseSetCardType>>('/cards/card', { card: { ...data } })
   },
-  delCards(data: DeleteCardsParamsType) {
+  delCards(data: string) {
     return instance.delete<DeleteCardsParamsType, AxiosResponse<ResponseDeleteCardsType>>('/cards/card', {
-      params: { ...data },
+      params: { id: data },
     })
   },
-  updateCards(data: UpdateCardParamsType) {
-    return instance.put<UpdateCardParamsType, AxiosResponse<ResponseUpdateCardType>>('/cards/card', data)
+  updateCards(data: UpdateParamsType) {
+    return instance.put<UpdateCardParamsType, AxiosResponse<ResponseUpdateCardType>>('/cards/card', {
+      card: { ...data },
+    })
   },
 }
 
@@ -29,29 +31,40 @@ export type GetCardsParamsType = {
   max?: number
   sortCards?: string
   page?: number
-  pageCount?: string
+  pageCount?: number
 }
 export type SetCardParamsType = {
-  card: {
-    cardsPack_id: string
-    question: string
-    answer: string
-    grade?: number
-    shots?: number
-    answerImg?: string
-    questionImg?: string
-    questionVideo?: string
-    answerVideo?: string
-  }
+  card: SetCardType
+}
+export type SetCardType = {
+  cardsPack_id: string
+  question: string
+  answer: string
+  grade?: number
+  shots?: number
+  answerImg?: string
+  questionImg?: string
+  questionVideo?: string
+  answerVideo?: string
 }
 export type DeleteCardsParamsType = {
   id: string
 }
+export type DeleteCardsType = {
+  id: string
+  cardsPack_id: string
+}
 export type UpdateCardParamsType = {
-  card: {
-    _id: string
-    question?: string
-  }
+  card: UpdateParamsType
+}
+export type UpdateParamsType = {
+  _id: string
+  question?: string
+}
+export type UpdateCardType = {
+  id: string
+  question?: string
+  cardsPack_id: string
 }
 export type CardsType = {
   _id: string
@@ -73,7 +86,8 @@ export type CardsType = {
 export type ResponseGetCardsType = {
   cards: CardsType[]
   packUserId: string
-
+  maxCardsCount: number
+  minCardsCount: number
   packName: string
   packPrivate: boolean
   packCreated: string
@@ -85,6 +99,7 @@ export type ResponseGetCardsType = {
   maxGrade: number
   token: string
   tokenDeathTime: number
+  setPackId?: string
 }
 export type ResponseSetCardType = {
   newCard: CardsType

@@ -15,8 +15,9 @@ import { Navigate } from 'react-router-dom'
 
 import { setForgotTC } from './forgotPassword-reducer'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
+import { forgotPasswordAuth } from 'features/auth/selectorAuth'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 const theme = createTheme()
 
@@ -28,7 +29,7 @@ type FormikErrorType = {
 export const ForgotPassword = () => {
   console.log('ForgotPassword')
   const dispatch = useAppDispatch()
-  const forgotPassword = useAppSelector<boolean>(state => state.forgot.forgotPassword)
+  const forgotPassword = useAppSelector(forgotPasswordAuth)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}
@@ -56,7 +57,7 @@ link</a>
   })
 
   if (forgotPassword) {
-    return <Navigate to={PATH.CHECK_EMAIL} />
+    return <Navigate to={PATH.CHECK_EMAIL} replace />
   }
 
   return (
@@ -108,7 +109,7 @@ link</a>
                 <Grid item>{'Enter your email address and we will send you further instructions '}</Grid>
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
               Send instructions
             </Button>
             <Grid container flexDirection={'column'} alignItems={'center'}>

@@ -1,116 +1,132 @@
 import * as React from 'react'
-import { memo, useLayoutEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { PATH } from 'common/components/Routing/pages'
-import { CreateCardsTC, DeleteCardsTC, GetCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
-import { InputCard } from 'features/cards/card/InputCard'
+import SuperButton from 'common/components/c2-SuperButton/SuperButton'
+import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
+import { SearchPackPanel } from 'features/cards/card/CardsSearchBar'
+import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
+import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
+import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
 import { getPacksTC } from 'features/packs/packsReducer'
-import s from 'features/profile/Profile.module.css'
+import { PATH } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
-export const Card = memo(() => {
-  console.log('Card')
+export const Card = () => {
   const dispatch = useAppDispatch()
-  const rows = useAppSelector<Array<CardsType>>(state => state.cards.cards)
-  const getIdPack = useAppSelector<string>(state => state.packs.cardPacks[0]._id)
-  const getIdUser = useAppSelector<string>(state => state.profile._id)
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-
-  useLayoutEffect(() => {
-    if (!isLoggedIn) {
-      return
-    }
-    dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
-  }, [])
+  const page = useAppSelector(pageCard)
+  const rows = useAppSelector<Array<CardsType>>(cards)
+  const user_id = useAppSelector(packUserId)
+  const totalCount = useAppSelector(cardsTotalCount)
+  const pageCount = useAppSelector(cardsPageCount)
+  const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
+  const paginationLabel = 'Cards per Page'
   const packsListHandler = () => {
-    dispatch(getPacksTC({ params: { user_id: getIdUser } }))
+    dispatch(getPacksTC({ user_id: user_id }))
+    dispatch(clearCardDataAC())
+    //пока только мои колоды загружаются, потом исправить
   }
-  const getcardHendler = () => {
-    // dispatch(GetCardsTC({ cardsPack_id: getIdPack }))
-  }
-  const postcardHendler = () => {
+  const postCardHandler = () => {
     dispatch(
       CreateCardsTC({
-        card: {
-          answer: '123',
-          question: '1235555',
-          cardsPack_id: getIdPack,
-        },
+        answer: 'CreateCardsTC',
+        question: 'Card',
+        cardsPack_id: cardsPack_id,
       })
     )
   }
-  const delcardHendler = () => {
-    dispatch(DeleteCardsTC({ id: '640cd015893e3319116cae74' }))
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
   }
-  const updatecardHendler = (id: string, title: string) =>
-    dispatch(UpdateCardsTC({ card: { _id: id, question: title } }))
-  //
-  // if (!isLoggedIn) {
-  //   return <Navigate to={PATH.LOGIN} />
-  // }
+
+  if (rows.length === 0) {
+    return <Navigate to={PATH.CARD_NOT_PACK} replace />
+  }
 
   return (
     <>
-      <button onClick={getcardHendler}>get card</button>
-      <button onClick={postcardHendler}>new card</button>
-      <button onClick={delcardHendler}>del card</button>
-      {/*<button onClick={updatecardHendler}>update card</button>*/}
-      <div>{rows[0]._id}</div>
-      <Box
-        sx={{
-          gridArea: 'left',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          paddingTop: 4,
-        }}
-      >
-        <NavLink className={s.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
-          <svg className={s.backArrow} viewBox="0 0 512 512">
-            <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
-          </svg>
-          <span> Back to Packs List</span>
-        </NavLink>
-      </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Question</TableCell>
-              <TableCell align="right">Answer</TableCell>
-              <TableCell align="right">Last Updated</TableCell>
-              <TableCell align="right">Grade</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row: any) => (
-              <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  <div>
-                    <InputCard onClick={updatecardHendler} id={row._id} question={row.question} />
-                  </div>
-                </TableCell>
-                <TableCell align="right">{row.answer}</TableCell>
-                <TableCell align="right">{row.updated}</TableCell>
-                <TableCell align="right">{row.grade}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      ;
+      <div className={s.packsContainer}>
+        <Box sx={{ m: 1, width: '50ch', marginLeft: 17 }}>
+          <NavLink className={s.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
+            <svg className={s.backArrow} viewBox="0 0 512 512">
+              <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
+            </svg>
+            <span> Back to Packs List</span>
+          </NavLink>
+        </Box>
+        <Box
+          sx={{
+            gridArea: 'left',
+            width: '80%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingTop: 4,
+            marginLeft: 18,
+            marginRight: 10,
+          }}
+        >
+          <h2>My pack</h2>
+          <SuperButton className={s.newPackButton} onClick={postCardHandler}>
+            Add new card
+          </SuperButton>
+        </Box>
+        <Box
+          sx={{
+            gridArea: 'left',
+            width: '80%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingTop: 2,
+            marginLeft: 18,
+            marginRight: 10,
+          }}
+        >
+          <SearchPackPanel />
+        </Box>
+        <Box
+          sx={{
+            gridArea: 'left',
+            width: '84%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 4,
+            marginLeft: 14,
+            marginRight: 10,
+          }}
+        >
+          <EnhancedTable cards={rows} />
+        </Box>
+        <Box
+          sx={{
+            gridArea: 'left',
+            width: '84%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: 14,
+            marginRight: 10,
+          }}
+        >
+          {/*<div>*/}
+          {/*  {pageCount !== 0 ? (*/}
+          {/*    <PaginationComponent*/}
+          {/*      totalCount={totalCount}*/}
+          {/*      currentPage={page ?? 1}*/}
+          {/*      pageSize={pageCount ?? 4}*/}
+          {/*      onPageChanged={onChangePageHandler}*/}
+          {/*      labelRowsPerPage={paginationLabel}*/}
+          {/*    />*/}
+          {/*  ) : (*/}
+          {/*    ''*/}
+          {/*  )}*/}
+          {/*</div>*/}
+        </Box>
+      </div>
     </>
   )
-})
+}

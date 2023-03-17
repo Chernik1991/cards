@@ -3,9 +3,9 @@ import React, { useEffect } from 'react'
 import './App.css'
 import { CircularProgress } from '@mui/material'
 
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { Pages } from 'common/components/Routing/pages'
 import { initializeAppTC } from 'features/auth/login/auth-reducer'
+import { Pages } from 'routes/pages'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const App = () => {
   console.log(1, 'app')

@@ -1,33 +1,33 @@
 import { setAppStatusAC } from 'app/app-reducer'
-import { AppThunkType } from 'app/store'
 import { errorUtils } from 'common/utils/error-utils'
 import {
   cardsAPI,
-  DeleteCardsParamsType,
+  DeleteCardsType,
   GetCardsParamsType,
   ResponseGetCardsType,
-  SetCardParamsType,
-  UpdateCardParamsType,
+  SetCardType,
+  UpdateCardType,
 } from 'features/cards/cards-api'
+import { AppThunkType } from 'store/store'
 
-const initialState: InitialStateType = {
+const initialState: ResponseGetCardsType = {
   cards: [
-    {
-      _id: '',
-      cardsPack_id: '',
-      user_id: '',
-      question: 'No question',
-      answer: 'No answer',
-      grade: 0,
-      shots: 0,
-      comments: '',
-      type: '',
-      rating: 0,
-      more_id: '',
-      created: '',
-      updated: '',
-      __v: 0,
-    },
+    // {
+    //   _id: '',
+    //   cardsPack_id: '',
+    //   user_id: '',
+    //   question: 'No question',
+    //   answer: 'No answer',
+    //   grade: 0,
+    //   shots: 0,
+    //   comments: '',
+    //   type: '',
+    //   rating: 0,
+    //   more_id: '',
+    //   created: '',
+    //   updated: '',
+    //   __v: 0,
+    // },
   ],
   cardsTotalCount: 0,
   token: '',
@@ -41,17 +41,22 @@ const initialState: InitialStateType = {
   page: 0,
   packUserId: '',
   pageCount: 0,
+  maxCardsCount: 0,
+  minCardsCount: 0,
+  setPackId: '',
 }
 
-export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-  console.log('cardsReducer')
+export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
   switch (action.type) {
     case 'CARDS/SET-CARDS-DATA':
-      // eslint-disable-next-line no-case-declarations
-      const cardsData = { ...action.payload.data }
-
-      return { ...cardsData }
-
+      return { ...state, ...action.payload.data }
+    case 'CLEAR-DATA':
+      return { ...state, cards: [] }
+    case 'CARDS/SET-PACK-ID':
+      return {
+        ...state,
+        setPackId: action.payload.data,
+      }
     default:
       return state
   }
@@ -63,22 +68,24 @@ export const setCardsDataAC = (data: ResponseGetCardsType) =>
     type: 'CARDS/SET-CARDS-DATA',
     payload: { data },
   } as const)
+export const setPackIdAC = (data: string) =>
+  ({
+    type: 'CARDS/SET-PACK-ID',
+    payload: { data },
+  } as const)
+
+export const clearCardDataAC = () => ({ type: 'CLEAR-DATA' } as const)
 //thunks
 export const GetCardsTC =
   (data: GetCardsParamsType): AppThunkType =>
   async dispatch => {
-    console.log('GetCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.getCards(data)
 
-      console.log(res, 'getCards')
-      console.log(res.data.cards)
       if (res.request.status === 200) {
-        if (res.data.cards.length > 0) {
-          dispatch(setCardsDataAC(res.data))
-          dispatch(setAppStatusAC('succeeded'))
-        }
+        dispatch(setCardsDataAC(res.data))
+        dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
       }
@@ -90,16 +97,14 @@ export const GetCardsTC =
     }
   }
 export const CreateCardsTC =
-  (data: SetCardParamsType): AppThunkType =>
+  (data: SetCardType): AppThunkType =>
   async dispatch => {
-    console.log('CreateCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.setCards(data)
 
-      console.log(res, 'CreateCardsTC')
       if (res.request.status === 201) {
-        // dispatch(setCardsDataAC(res.data))
+        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
@@ -110,16 +115,14 @@ export const CreateCardsTC =
     }
   }
 export const DeleteCardsTC =
-  (data: DeleteCardsParamsType): AppThunkType =>
+  (data: DeleteCardsType): AppThunkType =>
   async dispatch => {
-    console.log('DeleteCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.delCards(data)
+      const res = await cardsAPI.delCards(data.id)
 
-      console.log(res, 'DeleteCardsTC')
       if (res.request.status === 200) {
-        // dispatch(setCardsDataAC(res.data))
+        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
@@ -130,16 +133,17 @@ export const DeleteCardsTC =
     }
   }
 export const UpdateCardsTC =
-  (data: UpdateCardParamsType): AppThunkType =>
+  (data: UpdateCardType): AppThunkType =>
   async dispatch => {
-    console.log('UpdateCardsTC')
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.updateCards(data)
+      const res = await cardsAPI.updateCards({
+        _id: data.id,
+        question: data.question,
+      })
 
-      console.log(res, 'UpdateCardTC')
       if (res.request.status === 200) {
-        // dispatch(setCardsDataAC(res.data))
+        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
         dispatch(setAppStatusAC('succeeded'))
       } else {
         dispatch(setAppStatusAC('failed'))
@@ -150,5 +154,8 @@ export const UpdateCardsTC =
     }
   }
 //types
-type ActionsType = ReturnType<typeof setCardsDataAC>
-type InitialStateType = ResponseGetCardsType
+export type ActionsType = setCardsData | clearCardData | setPackId
+
+export type setCardsData = ReturnType<typeof setCardsDataAC>
+export type clearCardData = ReturnType<typeof clearCardDataAC>
+export type setPackId = ReturnType<typeof setPackIdAC>
