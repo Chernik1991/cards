@@ -5,16 +5,18 @@ import { Box, IconButton } from '@mui/material'
 
 import { PacksToggleButton } from './PacksToggleButton'
 
+import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'features/packs/InputSearch'
+import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
 import { InputSlider } from 'features/packs/Slider/DoubleSlider'
 import { useSearchPanelLogic } from 'features/packs/useSearchPanelLogic'
 import { useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
   const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelLogic()
-  const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
-  const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
-  const status = useAppSelector(state => state.app.status)
+  const minCardsCount = useAppSelector(packMinCardsCount)
+  const maxCardsCount = useAppSelector(packMaxCardsCount)
+  const status = useAppSelector(appStatus)
 
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>

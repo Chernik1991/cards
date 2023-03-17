@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
@@ -10,6 +11,7 @@ import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
 import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
+import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
 import { getPacksTC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -80,12 +82,20 @@ export const Card = () => {
               </SuperButton>
             ) : (
               <NavLink to={PATH.STUDY} replace>
-                <SuperButton>
-                  {/*<NavLink to={PATH.STUDY} replace>*/}
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: '20px',
+                    minWidth: '115px',
+                    fontSize: '16px',
+                    lineHeight: '20px',
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontStyle: 'Medium',
+                    textTransform: 'none',
+                  }}
+                >
                   Learn to pack
-                  {/*</NavLink>*/}
-                  {/*<a href={PATH.HASH + PATH.STUDY}>Learn to pack</a>*/}
-                </SuperButton>
+                </Button>
               </NavLink>
             )}
           </div>
@@ -129,19 +139,19 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          {/*<div>*/}
-          {/*  {pageCount !== 0 ? (*/}
-          {/*    <PaginationComponent*/}
-          {/*      totalCount={totalCount}*/}
-          {/*      currentPage={page ?? 1}*/}
-          {/*      pageSize={pageCount ?? 4}*/}
-          {/*      onPageChanged={onChangePageHandler}*/}
-          {/*      labelRowsPerPage={paginationLabel}*/}
-          {/*    />*/}
-          {/*  ) : (*/}
-          {/*    ''*/}
-          {/*  )}*/}
-          {/*</div>*/}
+          <div>
+            {pageCount !== 0 ? (
+              <PaginationComponent
+                totalCount={totalCount}
+                currentPage={page ?? 1}
+                pageSize={pageCount ?? 4}
+                onPageChanged={onChangePageHandler}
+                labelRowsPerPage={paginationLabel}
+              />
+            ) : (
+              ''
+            )}
+          </div>
         </Box>
       </div>
     </>
