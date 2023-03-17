@@ -50,7 +50,7 @@ export const Profile = () => {
 
   const packsListHandler = () => {
     dispatch(setUserParamsAC({ user_id: userId }))
-    dispatch(getPacksTC({ user_id: userId }))
+    // dispatch(getPacksTC({ user_id: userId }))
   }
 
   const customStyle = editedMode ? y.activeEditmode : ''

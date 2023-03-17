@@ -14,11 +14,12 @@ export const Packs = () => {
   const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const user_id = useAppSelector(state => state.profile._id)
-  const page = useAppSelector(state => state.packs.page)
-  const pageCount = useAppSelector(state => state.packs.pageCount)
+  const page = useAppSelector(state => state.packsParams.page)
+  const pageCount = useAppSelector(state => state.packsParams.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
   const userID = useAppSelector(state => state.profile._id)
   const paramsID = useAppSelector(state => state.packsParams.user_id)
+  const fullParams = useAppSelector(state => state.packsParams)
   const newPackHandler = () => {
     const userParams = paramsID ? paramsID : ''
 
@@ -49,7 +50,12 @@ export const Packs = () => {
         </SuperButton>
       </Box>
       <SearchPackPanel />
-      <EnhancedTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
+      <EnhancedTable
+        cardsPacks={userPacks.cardPacks}
+        userID={userID}
+        userIDsettings={paramsID}
+        queryParams={fullParams}
+      />
       <PaginationComponent
         totalCount={cardPacksTotalCount}
         currentPage={page ?? 1}

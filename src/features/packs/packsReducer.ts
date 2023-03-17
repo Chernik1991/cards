@@ -59,7 +59,6 @@ export const getPacksTC =
       const res = await packsAPI.getPacks(data)
 
       dispatch(setAppStatusAC('loading'))
-      console.log(res, getPacksTC)
 
       if (res.request.status === 200) {
         dispatch(setAppStatusAC('succeeded'))
