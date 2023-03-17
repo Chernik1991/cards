@@ -17,13 +17,12 @@ import { useAppDispatch, useAppSelector } from 'store/store'
 export const CardNotPack = () => {
   const dispatch = useAppDispatch()
   const getIdPack = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
-  const namePack = useAppSelector<string>(state => state.packs.cardPacks[0].name)
+  const namePack = useAppSelector(state => state.packs.cardPacks.map(el => (el._id === getIdPack ? el.name : '')))
   const lengthCards = useAppSelector(cardsLengthCards)
-  //исправить, пока что грузится только 1 колода
   const user_id = useAppSelector(packUserId)
 
   const packsListHandler = () => {
-    dispatch(getPacksTC({ user_id: user_id }))
+    dispatch(getPacksTC())
     //пока что переход только на мои паки
   }
   const postCardHandler = () => {

@@ -250,7 +250,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                   const handleStudying = () => {
                     // dispatch(logoutTC())
 
-                    return <Navigate to={PATH.STUDY} />
+                    return <Navigate to={PATH.STUDY} replace />
                   }
                   const handleDeletePack = () => {
                     dispatch(deletePackTC({ id: row.id }, props.userIDsettings))
