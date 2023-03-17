@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
-import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
 import { SearchPackPanel } from 'features/packs/components/pagination/SearchPackPanel'
 import { EnhancedTable } from 'features/packs/components/table/PacksTable'
 import { ResponsePacksType } from 'features/packs/packs-api'
@@ -50,13 +49,13 @@ export const Packs = () => {
       </Box>
       <SearchPackPanel />
       <EnhancedTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
-      <PaginationComponent
-        totalCount={cardPacksTotalCount}
-        currentPage={page ?? 1}
-        pageSize={pageCount ?? 4}
-        onPageChanged={onChangePageHandler}
-        labelRowsPerPage={paginationLabel}
-      />
+      {/*<PaginationComponent*/}
+      {/*  totalCount={cardPacksTotalCount}*/}
+      {/*  currentPage={page ?? 1}*/}
+      {/*  pageSize={pageCount ?? 4}*/}
+      {/*  onPageChanged={onChangePageHandler}*/}
+      {/*  labelRowsPerPage={paginationLabel}*/}
+      {/*/>*/}
     </div>
   )
 }

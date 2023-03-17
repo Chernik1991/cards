@@ -19,16 +19,16 @@ export const Card = () => {
   const page = useAppSelector(pageCard)
   const rows = useAppSelector<Array<CardsType>>(cards)
   const user_id = useAppSelector(packUserId)
+  const my_id = useAppSelector(state => state.profile._id)
   const totalCount = useAppSelector(cardsTotalCount)
   const pageCount = useAppSelector(cardsPageCount)
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   const paginationLabel = 'Cards per Page'
   const packsListHandler = () => {
-    dispatch(getPacksTC({ user_id: user_id }))
+    dispatch(getPacksTC())
     dispatch(clearCardDataAC())
-    //пока только мои колоды загружаются, потом исправить
   }
-  const postCardHandler = () => {
+  const addNewCardHandler = () => {
     dispatch(
       CreateCardsTC({
         answer: 'CreateCardsTC',
@@ -37,11 +37,15 @@ export const Card = () => {
       })
     )
   }
+  // const learnToPackHandler = () => {
+  //   return <Navigate to={PATH.STUDY} replace />
+  // }
+
   const onChangePageHandler = (page: number, pageCount: number) => {
     dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
   }
 
-  if (rows.length === 0) {
+  if (rows.length === 0 && my_id === user_id) {
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
 
@@ -68,10 +72,23 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <h2>My pack</h2>
-          <SuperButton className={s.newPackButton} onClick={postCardHandler}>
-            Add new card
-          </SuperButton>
+          <h2>{my_id === user_id ? 'My Pack' : 'Friend’s Pack'}</h2>
+          <div>
+            {my_id === user_id ? (
+              <SuperButton className={s.newPackButton} onClick={addNewCardHandler}>
+                Add new card
+              </SuperButton>
+            ) : (
+              <NavLink to={PATH.STUDY} replace>
+                <SuperButton>
+                  {/*<NavLink to={PATH.STUDY} replace>*/}
+                  Learn to pack
+                  {/*</NavLink>*/}
+                  {/*<a href={PATH.HASH + PATH.STUDY}>Learn to pack</a>*/}
+                </SuperButton>
+              </NavLink>
+            )}
+          </div>
         </Box>
         <Box
           sx={{
@@ -99,7 +116,7 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <EnhancedTable cards={rows} />
+          <EnhancedTable cards={rows} my_id={my_id} />
         </Box>
         <Box
           sx={{
