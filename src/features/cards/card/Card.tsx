@@ -27,7 +27,7 @@ export const Card = () => {
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   const paginationLabel = 'Cards per Page'
   const packsListHandler = () => {
-    dispatch(getPacksTC())
+    dispatch(getPacksTC({}))
     dispatch(clearCardDataAC())
   }
   const addNewCardHandler = () => {

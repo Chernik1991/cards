@@ -3,8 +3,8 @@ import { AxiosResponse } from 'axios'
 import { instance } from 'features/auth/auth-api'
 
 export const packsAPI = {
-  getPacks(data?: PacksParamsType) {
-    return instance.get<PacksParamsType, AxiosResponse<ResponsePacksType>>('cards/pack', { params: { ...data } })
+  getPacks(params: PacksParamsType) {
+    return instance.get<PacksParamsType, AxiosResponse<ResponsePacksType>>('cards/pack', { params })
   },
   setPack(data?: SetNewPackType) {
     return instance.post<SetNewPackType, AxiosResponse<ResponsePacksType>>('cards/pack', data)
@@ -47,7 +47,7 @@ export type PackType = {
 }
 
 export type PacksParamsType = {
-  packName?: string | null
+  packName?: string
   min?: number | null
   max?: number | null
   sortPacks?: string | null

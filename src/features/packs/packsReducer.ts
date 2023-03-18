@@ -52,7 +52,7 @@ type ActionsType = getUserPacksType
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
 
 export const getPacksTC =
-  (data?: PacksParamsType): AppThunkType =>
+  (data: PacksParamsType): AppThunkType =>
   async dispatch => {
     try {
       dispatch(setAppStatusAC('loading'))
