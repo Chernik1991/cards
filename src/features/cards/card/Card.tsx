@@ -1,18 +1,18 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
-import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
-import { SearchPackPanel } from 'features/cards/card/CardsSearchBar'
+import { CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
+import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
 import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
 import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
-import { getPacksTC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -25,31 +25,48 @@ export const Card = () => {
   const totalCount = useAppSelector(cardsTotalCount)
   const pageCount = useAppSelector(cardsPageCount)
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
+  //временно
+
   const paginationLabel = 'Cards per Page'
+  const isNotEmptyPack = !!rows.length
+  // const [searchParams, setSearchParams] = useState('')
+  const searchParams = cardsPack_id
+
+  // const { cardsPack_id } = useParams()
   const packsListHandler = () => {
-    dispatch(getPacksTC({}))
-    dispatch(clearCardDataAC())
+    // dispatch(getPacksTC({}))
+    // dispatch(clearCardDataAC())
   }
   const addNewCardHandler = () => {
-    dispatch(
-      CreateCardsTC({
-        answer: 'CreateCardsTC',
-        question: 'Card',
-        cardsPack_id: cardsPack_id,
-      })
-    )
+    if (cardsPack_id) {
+      dispatch(
+        CreateCardsTC({
+          answer: 'CreateCardsTC',
+          question: 'Card',
+          cardsPack_id,
+        })
+      )
+    }
   }
   // const learnToPackHandler = () => {
   //   return <Navigate to={PATH.STUDY} replace />
   // }
 
   const onChangePageHandler = (page: number, pageCount: number) => {
-    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
+    if (cardsPack_id) {
+      dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
+    }
   }
 
   if (rows.length === 0 && my_id === user_id) {
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
+  useEffect(() => {
+    if (cardsPack_id) {
+      dispatch(GetCardsTC({ cardsPack_id, cardAnswer: searchParams, page, pageCount }))
+    }
+  }, [cardsPack_id, searchParams])
+  console.log('1')
 
   return (
     <>
@@ -112,7 +129,14 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <SearchPackPanel />
+          {/*<SearchPackPanel />*/}
+          <SearchCardPanel
+            cardsPack_id={cardsPack_id}
+            // isNotEmptyPack={!!empty}
+            // isMyPack={isMyPack}
+            // setSearchParams={setSearchParams}
+            // addNewCard={addNewCard}
+          />
         </Box>
         <Box
           sx={{
@@ -140,7 +164,7 @@ export const Card = () => {
           }}
         >
           <div>
-            {pageCount !== 0 ? (
+            {isNotEmptyPack && (
               <PaginationComponent
                 totalCount={totalCount}
                 currentPage={page ?? 1}
@@ -148,8 +172,6 @@ export const Card = () => {
                 onPageChanged={onChangePageHandler}
                 labelRowsPerPage={paginationLabel}
               />
-            ) : (
-              ''
             )}
           </div>
         </Box>

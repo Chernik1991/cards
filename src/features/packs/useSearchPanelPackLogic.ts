@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { getPacksTC } from 'features/packs/packsReducer'
 import { useAppDispatch } from 'store/store'
 
-export const useSearchPanelLogic = () => {
+export const useSearchPanelPackLogic = () => {
   const dispatch = useAppDispatch()
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {

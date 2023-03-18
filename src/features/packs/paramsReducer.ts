@@ -17,9 +17,9 @@ const initialState: PacksParamsType = {
 export const paramsReducer = (state: PacksParamsType = initialState, action: ActionsType): PacksParamsType => {
   switch (action.type) {
     case 'PACKS/SET-PARAMS': {
-      const packsData = { ...action.payload.data }
+      // const packsData = { ...action.payload.data }
 
-      return { ...packsData }
+      return { ...state, ...action.payload.data }
     }
     default:
       return state
