@@ -6,12 +6,13 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { setAppStatusAC } from 'app/app-reducer'
 import { getPacksTC } from 'features/packs/packsReducer'
 import { setUserParamsAC } from 'features/packs/paramsReducer'
+import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const PacksToggleButton = () => {
   const dispatch = useAppDispatch()
 
-  const getIdUser = useAppSelector<string>(state => state.profile._id)
+  const getIdUser = useAppSelector(userIdProfile)
 
   const [alignment, setAlignment] = React.useState('my')
 

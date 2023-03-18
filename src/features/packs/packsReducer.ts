@@ -30,8 +30,8 @@ const initialState: ResponsePacksType = {
   // количество колод
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0, // выбранная страница
-  pageCount: 0,
+  page: 1, // выбранная страница
+  pageCount: 4,
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
@@ -52,7 +52,7 @@ type ActionsType = getUserPacksType
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
 
 export const getPacksTC =
-  (data?: PacksParamsType): AppThunkType =>
+  (data: PacksParamsType): AppThunkType =>
   async dispatch => {
     try {
       dispatch(setAppStatusAC('loading'))
@@ -73,7 +73,7 @@ export const getPacksTC =
 
       dispatch(setAppStatusAC('failed'))
       errorUtils(err, dispatch)
-      console.log('Error2')
+      console.log('Error2 getPacksTC')
     }
   }
 
@@ -98,7 +98,7 @@ export const addPackTC =
 
       dispatch(setAppStatusAC('failed'))
       errorUtils(err, dispatch)
-      console.log('Error2')
+      console.log('Error2 addPackTC')
     }
   }
 
@@ -123,7 +123,7 @@ export const updatePackTC =
 
       dispatch(setAppStatusAC('failed'))
       errorUtils(err, dispatch)
-      console.log('Error2')
+      console.log('Error2 updatePackTC')
     }
   }
 export const deletePackTC =

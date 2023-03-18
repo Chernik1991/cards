@@ -22,7 +22,7 @@ export const CardNotPack = () => {
   const user_id = useAppSelector(packUserId)
 
   const packsListHandler = () => {
-    dispatch(getPacksTC())
+    dispatch(getPacksTC({}))
     //пока что переход только на мои паки
   }
   const postCardHandler = () => {

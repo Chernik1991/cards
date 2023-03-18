@@ -3,21 +3,26 @@ import Box from '@mui/material/Box'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { SearchPackPanel } from 'features/packs/components/pagination/SearchPackPanel'
 import { EnhancedTable } from 'features/packs/components/table/PacksTable'
-import { ResponsePacksType } from 'features/packs/packs-api'
 import e from 'features/packs/Packs.module.css'
 import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
+import {
+  packCardPacks,
+  packCardPacksTotalCount,
+  packPage,
+  packPageCount,
+  packParamsID,
+} from 'features/packs/selectorPack'
+import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
   const dispatch = useAppDispatch()
-  const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const user_id = useAppSelector(state => state.profile._id)
-  const page = useAppSelector(state => state.packs.page)
-  const pageCount = useAppSelector(state => state.packs.pageCount)
-  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  const userID = useAppSelector(state => state.profile._id)
-  const paramsID = useAppSelector(state => state.packsParams.user_id)
+  const cardPacks = useAppSelector(packCardPacks)
+  const page = useAppSelector(packPage)
+  const pageCount = useAppSelector(packPageCount)
+  const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
+  const userID = useAppSelector(userIdProfile)
+  const paramsID = useAppSelector(packParamsID)
   const newPackHandler = () => {
     const userParams = paramsID ? paramsID : ''
 
@@ -48,7 +53,7 @@ export const Packs = () => {
         </SuperButton>
       </Box>
       <SearchPackPanel />
-      <EnhancedTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
+      <EnhancedTable cardsPacks={cardPacks} userID={userID} userIDsettings={paramsID} />
       {/*<PaginationComponent*/}
       {/*  totalCount={cardPacksTotalCount}*/}
       {/*  currentPage={page ?? 1}*/}

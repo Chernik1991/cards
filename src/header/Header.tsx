@@ -41,22 +41,24 @@ export const Header = () => {
         {auth ? (
           userJSX
         ) : (
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: '20px',
-              minWidth: '115px',
-              fontSize: '16px',
-              lineHeight: '20px',
-              fontFamily: 'Montserrat, sans-serif',
-              fontStyle: 'Medium',
-              textTransform: 'none',
-            }}
-          >
-            <a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>
+          <NavLink to={PATH.LOGIN} replace>
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: '20px',
+                minWidth: '115px',
+                fontSize: '16px',
+                lineHeight: '20px',
+                fontFamily: 'Montserrat, sans-serif',
+                fontStyle: 'Medium',
+                textTransform: 'none',
+              }}
+            >
+              {/*<a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>*/}
               Sign In
-            </a>
-          </Button>
+              {/*</a>*/}
+            </Button>
+          </NavLink>
         )}
       </div>
       <ErrorSnackbar />

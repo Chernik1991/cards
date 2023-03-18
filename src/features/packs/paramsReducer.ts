@@ -1,7 +1,7 @@
 import { PacksParamsType } from 'features/packs/packs-api'
 
 const initialState: PacksParamsType = {
-  packName: null,
+  packName: '',
   min: null,
   max: null,
   sortPacks: null,
