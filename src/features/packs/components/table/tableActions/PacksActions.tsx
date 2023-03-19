@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom'
 
 import e from './PacksActions.module.css'
 
+import { SomeJSX2 } from 'features/packs/modal/constants/AddNewPack'
+import { ModalBasic } from 'features/packs/modal/ModalBasic'
 import { PATH } from 'routes/pages'
 
 type PacksActionsType = {
@@ -14,6 +16,8 @@ type PacksActionsType = {
   handleStudyingUp: () => void
   handleUpdatePackNameUp: () => void
   handleDeletePackUp: () => void
+  // modalState: boolean
+  // modalChangeState: () => void
 }
 
 const PacksActions = ({
@@ -23,7 +27,9 @@ const PacksActions = ({
   handleStudyingUp,
   handleUpdatePackNameUp,
   handleDeletePackUp,
-}: PacksActionsType) => {
+}: // modalState,
+// modalChangeState,
+PacksActionsType) => {
   const updatePackJSX = (
     <NavLink to={'#'} onClick={handleStudyingUp}>
       <svg
@@ -59,6 +65,9 @@ const PacksActions = ({
         <NavLink to={PATH.STUDY} onClick={handleStudyingUp}>
           <SchoolIcon id="SchoolIcon" sx={{ width: '20px' }} />
         </NavLink>
+        {/* <ModalBasic handleState={modalState} handleClose={modalChangeState}>
+          <SomeJSX2 />
+        </ModalBasic> */}
         {crudAccess ? crudPanel : ''}
       </div>
     </TableCell>

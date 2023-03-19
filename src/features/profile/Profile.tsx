@@ -12,7 +12,7 @@ import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEdita
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import { isLoggedInAuth } from 'features/auth/selectorAuth'
 import { getPacksTC } from 'features/packs/packsReducer'
-import { setUserParamsAC } from 'features/packs/paramsReducer'
+// import { setUserParamsAC } from 'features/packs/paramsReducer'
 import {
   currentNameProfile,
   editedModeProfile,
@@ -49,7 +49,7 @@ export const Profile = () => {
   }
 
   const packsListHandler = () => {
-    dispatch(setUserParamsAC({ user_id: userId }))
+    // dispatch(setUserParamsAC({ user_id: userId }))
     // dispatch(getPacksTC({ user_id: userId }))
   }
 
@@ -134,7 +134,7 @@ export const Profile = () => {
                 <SuperEditableSpan
                   // className={s.spanContainer}
                   value={currentName}
-                  defaultInputClassName={y.pfofileInput}
+                  defaultInputClassName={y.profileInput}
                   spanProps={{
                     className: y.userNickName,
                     defaultText: name,

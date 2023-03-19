@@ -5,15 +5,16 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 import { setAppStatusAC } from 'app/app-reducer'
 import { getPacksTC } from 'features/packs/packsReducer'
-import { setUserParamsAC } from 'features/packs/paramsReducer'
+// import { setUserParamsAC } from 'features/packs/paramsReducer'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const PacksToggleButton = () => {
   const dispatch = useAppDispatch()
 
-  const getIdUser = useAppSelector<string>(state => state.profile._id)
+  const getIdUser = useAppSelector(state => state.profile._id)
+  // const fullParams = useAppSelector(state => state.packsParams)
 
-  const [alignment, setAlignment] = React.useState('my')
+  const [alignment, setAlignment] = React.useState('all')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
@@ -21,15 +22,15 @@ export const PacksToggleButton = () => {
     }
   }
 
-  const handleChangeMy = () => {
-    dispatch(setAppStatusAC('loading'))
-    dispatch(setUserParamsAC({ user_id: getIdUser }))
-    dispatch(getPacksTC({ user_id: getIdUser }))
-  }
   const handleChangeAll = () => {
     dispatch(setAppStatusAC('loading'))
-    dispatch(setUserParamsAC({ user_id: null }))
-    dispatch(getPacksTC({ user_id: null }))
+    // dispatch(setUserParamsAC({ user_id: null }))
+    dispatch(getPacksTC({}))
+  }
+  const handleChangeMy = () => {
+    dispatch(setAppStatusAC('loading'))
+    // dispatch(setUserParamsAC({ user_id: getIdUser }))
+    dispatch(getPacksTC({ user_id: getIdUser }))
   }
 
   return (

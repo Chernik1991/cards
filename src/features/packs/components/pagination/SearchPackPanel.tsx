@@ -12,9 +12,11 @@ import { useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
   const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelLogic()
-  const minCardsCount = useAppSelector(state => state.packsParams.min)
-  const maxCardsCount = useAppSelector(state => state.packsParams.max)
+  const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
+  const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
   const status = useAppSelector(state => state.app.status)
+
+  console.log(minCardsCount, maxCardsCount)
 
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>

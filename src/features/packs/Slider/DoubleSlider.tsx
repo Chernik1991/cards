@@ -17,6 +17,8 @@ export const InputSlider: FC<InputSliderPropsType> = memo(
   ({ minValue, maxValue, sliderWidth, onChangeValues, disabled }) => {
     const [value, setValue] = useState<number[]>([minValue, maxValue])
 
+    console.log(minValue, maxValue)
+
     const onChangeSliderHandler = useCallback(
       (event: Event | SyntheticEvent<Element, Event>, value: number | number[]) => {
         if (!Array.isArray(value)) return

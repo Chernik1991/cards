@@ -9,10 +9,10 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { PacksParamsType, PackType } from '../../packs-api'
+import { PackType } from '../../packs-api'
 import { deletePackTC, updatePackTC } from '../../packsReducer'
 
-import PacksActions from './PacksActions'
+import PacksActions from './tableActions/PacksActions'
 import { TableHeadComponent } from './tableHead/TableHeadComponent'
 
 import { GetCardsTC, setPackIdAC } from 'features/cards/card/card-reducer'
@@ -24,17 +24,13 @@ type Data = {
   actions: string
   created_by: string
   updated: string
-  cards: string
+  cardsCount: string
 }
-
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
+//  with example https://mui.com/material-ui/react-table/
 
 export type HeadCell = {
   disablePadding: boolean
-  id: keyof Data
+  id: string
   label: string
   numeric: boolean
 }
@@ -47,7 +43,7 @@ export const headCells: HeadCell[] = [
     label: 'Name',
   },
   {
-    id: 'cards',
+    id: 'cardsCount',
     numeric: true,
     disablePadding: false,
     label: 'Cards',
@@ -72,32 +68,27 @@ export const headCells: HeadCell[] = [
   },
 ]
 
-type EnhancedTableType = {
+type PacksTableType = {
   cardsPacks: PackType[]
   userID: string
   userIDsettings: string | null | undefined
-  queryParams: PacksParamsType
 }
 
-export const EnhancedTable = (props: EnhancedTableType) => {
+export const PacksTable = (props: PacksTableType) => {
   const dispatch = useAppDispatch()
   const rows = props.cardsPacks.map((el: PackType) => ({
     name: el.name,
     actions: '',
     created_by: el.user_name,
     updated: el.updated,
-    cards: el.cardsCount,
+    cardsCount: el.cardsCount,
     id: el._id,
     packOwnerID: el.user_id,
   }))
-  // const [order, setOrder] = React.useState<Order>('desc')
   const [orderBy, setOrderBy] = React.useState<string>('name')
   const [selected, setSelected] = React.useState<readonly string[]>([])
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
-    // const isAsc = orderBy === property && order === 'asc'
-
-    // setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)
   }
 
@@ -134,24 +125,24 @@ export const EnhancedTable = (props: EnhancedTableType) => {
   }
 
   return (
-    <Box sx={{ width: '90%', maxWidth: '1400px', minWidth: '1000px', padding: '30px 0px' }}>
+    <Box sx={{ width: '100%', minWidth: '1000px', padding: '30px 0px' }}>
       {rows.length ? (
         <Paper sx={{ width: '100%', mb: 2, padding: '0px 0px' }}>
           <TableContainer>
-            {}
             <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
               <TableHeadComponent
                 numSelected={selected.length}
-                // order={order}
                 orderBy={orderBy}
                 onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
-                queryParams={props.queryParams}
                 headCells={headCells}
               />
               <TableBody>
                 {rows.map((row, index) => {
+                  // const [open, setOpen] = React.useState('false')
+                  // const handleOpen = (value: string) => setOpen(value)
+                  // const handleClose = () => setOpen('false')
                   const dispatch = useAppDispatch()
                   const labelId = `enhanced-table-checkbox-${index}`
                   const data = new Date(row.updated)
@@ -161,7 +152,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                   const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
                   const crudAccessValue = row.packOwnerID === props.userID
                   const handleStudying = () => {
-                    // dispatch(logoutTC())
+                    // handleOpen(row.id)
 
                     return <Navigate to={PATH.STUDY} />
                   }
@@ -186,7 +177,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                         </NavLink>
                       </TableCell>
                       <TableCell align="left" sx={paddingStyle}>
-                        {row.cards}
+                        {row.cardsCount}
                       </TableCell>
                       <TableCell align="left" sx={paddingStyle}>
                         {finalDate}
@@ -201,6 +192,8 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                         handleStudyingUp={handleStudying}
                         handleUpdatePackNameUp={handleUpdatePackName}
                         handleDeletePackUp={handleDeletePack}
+                        // modalChangeState={handleClose}
+                        // modalState={open === row.id}
                       />
                     </TableRow>
                   )

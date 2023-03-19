@@ -9,7 +9,6 @@ import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
 import { cardsReducer } from 'features/cards/card/card-reducer'
 import { packsReducer } from 'features/packs/packsReducer'
-import { paramsReducer } from 'features/packs/paramsReducer'
 import { profileReducer } from 'features/profile/reducerProfile'
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
   forgot: forgotReducer,
   packs: packsReducer,
   cards: cardsReducer,
-  packsParams: paramsReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
