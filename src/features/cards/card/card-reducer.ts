@@ -11,24 +11,7 @@ import {
 import { AppThunkType } from 'store/store'
 
 const initialState: ResponseGetCardsType = {
-  cards: [
-    // {
-    //   _id: '',
-    //   cardsPack_id: '',
-    //   user_id: '',
-    //   question: 'No question',
-    //   answer: 'No answer',
-    //   grade: 0,
-    //   shots: 0,
-    //   comments: '',
-    //   type: '',
-    //   rating: 0,
-    //   more_id: '',
-    //   created: '',
-    //   updated: '',
-    //   __v: 0,
-    // },
-  ],
+  cards: [],
   cardsTotalCount: 0,
   token: '',
   tokenDeathTime: 0,
@@ -83,12 +66,8 @@ export const GetCardsTC =
     try {
       const res = await cardsAPI.getCards(data)
 
-      if (res.request.status === 200) {
-        dispatch(setCardsDataAC(res.data))
-        dispatch(setAppStatusAC('succeeded'))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(setCardsDataAC(res.data))
+      dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
@@ -103,12 +82,8 @@ export const CreateCardsTC =
     try {
       const res = await cardsAPI.setCards(data)
 
-      if (res.request.status === 201) {
-        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
-        dispatch(setAppStatusAC('succeeded'))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
+      dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
@@ -121,12 +96,8 @@ export const DeleteCardsTC =
     try {
       const res = await cardsAPI.delCards(data.id)
 
-      if (res.request.status === 200) {
-        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
-        dispatch(setAppStatusAC('succeeded'))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
+      dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
@@ -142,12 +113,8 @@ export const UpdateCardsTC =
         question: data.question,
       })
 
-      if (res.request.status === 200) {
-        dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
-        dispatch(setAppStatusAC('succeeded'))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))
+      dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))

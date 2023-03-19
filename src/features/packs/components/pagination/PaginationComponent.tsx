@@ -31,6 +31,8 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
 
   console.log(page)
 
+  console.log('PaginationComponent')
+
   useEffect(() => {
     setRowsPerPage(pageSize)
   }, [pageSize])

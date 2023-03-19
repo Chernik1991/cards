@@ -4,8 +4,10 @@ import Box from '@mui/material/Box'
 
 import { SomeJSX2 } from './modal/constants/AddNewPack'
 import { ModalBasic } from './modal/ModalBasic'
+import { useSearchParams } from 'react-router-dom'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
+import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
 import { SearchPackPanel } from 'features/packs/components/pagination/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { ResponsePacksType } from 'features/packs/packs-api'
@@ -29,6 +31,11 @@ export const Packs = () => {
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
   const paramsID = useAppSelector(packParamsID)
+  const isNotEmptyPack = !!cardPacks.length
+  const [searchParams, setSearchParams] = useSearchParams()
+  const myPacks = useAppSelector(state => state.packs.myPacks)
+  const params = Object.fromEntries(searchParams)
+
   const newPackHandler = () => {
     handleOpen('one')
     const userParams = paramsID ? paramsID : ''
@@ -43,8 +50,14 @@ export const Packs = () => {
 
   const paginationLabel = 'Packs per Page'
 
-  const onChangePageHandler = (page?: number, size?: number) => {
-    dispatch(getPacksTC({ page: page, pageCount: size }))
+  const onChangePageHandler = (page: number, size: number) => {
+    if (myPacks) {
+      dispatch(getPacksTC({ user_id: userID, page: page, pageCount: size }))
+      setSearchParams({ user_id: userID, page: page.toString(), pageCount: pageCount.toString() })
+    } else {
+      dispatch(getPacksTC({ page: page, pageCount: size }))
+      setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+    }
   }
   const someJSX = <div>1</div>
 

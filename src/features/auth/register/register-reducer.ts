@@ -21,23 +21,14 @@ export const setIsRegisterAC = (value: boolean) => ({ type: 'register/SIGN-UP', 
 export const registerTC =
   (data: RegisterParamsType): AppThunkType =>
   async dispatch => {
-    debugger
+    console.log('registerTC')
     try {
       const res = await authAPI.register(data)
 
-      console.log(res, 'res')
-
       dispatch(setAppStatusAC('loading'))
-
-      if (res.data.addedUser._id) {
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(setIsRegisterAC(true))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setIsRegisterAC(true))
     } catch (e: any) {
-      // const err = e as Error | AxiosError<{ error: string }>
-
       errorUtils(e, dispatch)
 
       dispatch(setAppStatusAC('failed'))

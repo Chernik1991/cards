@@ -122,18 +122,16 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                     <TableCell align="left">
                       <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
                     </TableCell>
-                    <div>
-                      {props.my_id === row.user_id ? (
-                        <CardActions
-                          align="left"
-                          sx={{ ...paddingStyle, minWidth: 'none' }}
-                          handleUpdateCardName={handleUpdateCardName}
-                          handleDeleteCard={handleDeleteCard}
-                        />
-                      ) : (
-                        ''
-                      )}
-                    </div>
+                    {props.my_id === row.user_id ? (
+                      <CardActions
+                        align="left"
+                        sx={{ ...paddingStyle, minWidth: 'none' }}
+                        handleUpdateCardName={handleUpdateCardName}
+                        handleDeleteCard={handleDeleteCard}
+                      />
+                    ) : (
+                      ''
+                    )}
                   </TableRow>
                 )
               })}

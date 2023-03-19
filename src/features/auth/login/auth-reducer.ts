@@ -23,6 +23,7 @@ export const setIsLoggedInAC = (value: boolean) => ({ type: 'LOGIN/SET-IS-LOGGED
 export const loginTC =
   (data: LoginParamsType): AppThunkType =>
   async dispatch => {
+    console.log('loginTC')
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await authAPI.login(data)
@@ -40,6 +41,7 @@ export const loginTC =
     }
   }
 export const initializeAppTC = (): AppThunkType => async dispatch => {
+  console.log(2, 'initializeAppTC')
   dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.me()
@@ -58,16 +60,13 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
   }
 }
 export const logoutTC = (): AppThunkType => async dispatch => {
+  console.log('logoutTC')
   dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.logOut()
 
-    if (res.status === 200) {
-      dispatch(setIsLoggedInAC(false))
-      dispatch(setAppStatusAC('succeeded'))
-    } else {
-      dispatch(setAppStatusAC('failed'))
-    }
+    dispatch(setIsLoggedInAC(false))
+    dispatch(setAppStatusAC('succeeded'))
   } catch (e: any) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))

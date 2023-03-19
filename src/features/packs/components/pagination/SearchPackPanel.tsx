@@ -9,11 +9,11 @@ import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'features/packs/InputSearch'
 import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
 import { InputSlider } from 'features/packs/Slider/DoubleSlider'
-import { useSearchPanelLogic } from 'features/packs/useSearchPanelLogic'
+import { useSearchPanelPackLogic } from 'features/packs/useSearchPanelPackLogic'
 import { useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
-  const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelLogic()
+  const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelPackLogic()
   const minCardsCount = useAppSelector(packMinCardsCount)
   const maxCardsCount = useAppSelector(packMaxCardsCount)
   const status = useAppSelector(appStatus)
