@@ -1,6 +1,5 @@
 import { AppStateType } from 'store/store'
 
-export const packParamsID = (state: AppStateType) => state.packsParams.user_id
 export const packCardPacks = (state: AppStateType) => state.packs.cardPacks
 export const packPage = (state: AppStateType) => state.packs.page
 export const packPageCount = (state: AppStateType) => state.packs.pageCount
