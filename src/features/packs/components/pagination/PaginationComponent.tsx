@@ -12,14 +12,12 @@ type PaginationComponentPropsType = {
   totalCount: number
   currentPage: number
   pageSize: number
-  restParams: PacksParamsType
   onPageChanged: (page: number, pageCount: number) => void
 }
 
 export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   totalCount,
   pageSize,
-  restParams,
   onPageChanged,
   currentPage,
   labelRowsPerPage,

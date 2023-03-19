@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import Box from '@mui/material/Box'
+import { useSearchParams } from 'react-router-dom'
 
 import { SomeJSX2 } from './modal/constants/AddNewPack'
 import { ModalBasic } from './modal/ModalBasic'
-import { useSearchParams } from 'react-router-dom'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
@@ -13,13 +13,7 @@ import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { ResponsePacksType } from 'features/packs/packs-api'
 import e from 'features/packs/Packs.module.css'
 import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
-import {
-  packCardPacks,
-  packCardPacksTotalCount,
-  packPage,
-  packPageCount,
-  packParamsID,
-} from 'features/packs/selectorPack'
+import { packCardPacks, packCardPacksTotalCount, packPage, packPageCount } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -30,15 +24,17 @@ export const Packs = () => {
   const pageCount = useAppSelector(packPageCount)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
-  const paramsID = useAppSelector(packParamsID)
   const isNotEmptyPack = !!cardPacks.length
   const [searchParams, setSearchParams] = useSearchParams()
   const myPacks = useAppSelector(state => state.packs.myPacks)
+  const userPacks = useAppSelector(state => state.packs)
   const params = Object.fromEntries(searchParams)
+  const [open, setOpen] = useState('false')
+  const handleOpen = (value: string) => setOpen(value)
+  const handleClose = () => setOpen('false')
 
   const newPackHandler = () => {
     handleOpen('one')
-    const userParams = paramsID ? paramsID : ''
 
     // dispatch(addPackTC({ cardsPack: {} }, userParams))
   }
@@ -80,15 +76,14 @@ export const Packs = () => {
           </SuperButton>
         </Box>
         <SearchPackPanel />
-        <PacksTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
-        {/* <PaginationComponent
+        <PacksTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={userID} />
+        <PaginationComponent
           totalCount={cardPacksTotalCount}
           currentPage={page ?? 1}
           pageSize={pageCount ?? 4}
           onPageChanged={onChangePageHandler}
           labelRowsPerPage={paginationLabel}
-          restParams={fullParams}
-        /> */}
+        />
         <ModalBasic handleState={open === 'one'} handleClose={handleClose}>
           <SomeJSX2 />
         </ModalBasic>

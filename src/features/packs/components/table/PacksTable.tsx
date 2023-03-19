@@ -73,7 +73,7 @@ export const headCells: HeadCell[] = [
 type PacksTableType = {
   cardsPacks: PackType[]
   userID: string
-  userIDsettings: string | null | undefined
+  userIDsettings: string
 }
 
 export const PacksTable = (props: PacksTableType) => {
@@ -124,8 +124,8 @@ export const PacksTable = (props: PacksTableType) => {
   const cardsListHandler = (cardsPack_id: string) => {
     console.log(cardsPack_id, 'handleClick')
     setSearchParams({ cardsPack_id: cardsPack_id })
-    if (props.userIDsettings) {
-      setSearchParams({ packUserId: props.userIDsettings })
+    if (props.userID) {
+      setSearchParams({ packUserId: props.userID })
     }
     dispatch(setPackIdAC(cardsPack_id))
     // dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
@@ -164,10 +164,10 @@ export const PacksTable = (props: PacksTableType) => {
                     return <Navigate to={PATH.STUDY} replace />
                   }
                   const handleDeletePack = () => {
-                    dispatch(deletePackTC({ id: row.id }, props.userIDsettings))
+                    dispatch(deletePackTC({ id: row.id }, props.userID))
                   }
                   const handleUpdatePackName = () => {
-                    dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, props.userIDsettings))
+                    dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, props.userID))
                   }
 
                   return (
