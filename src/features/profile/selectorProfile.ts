@@ -5,4 +5,3 @@ export const userIdProfile = (state: AppStateType) => state.profile._id
 export const editedModeProfile = (state: AppStateType) => state.profile.editedMode
 export const nameProfile = (state: AppStateType) => state.profile.name
 export const emailProfile = (state: AppStateType) => state.profile.email
-export const paramsProfile = (state: AppStateType) => state.packsParams

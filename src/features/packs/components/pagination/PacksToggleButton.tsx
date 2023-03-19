@@ -14,7 +14,7 @@ export const PacksToggleButton = () => {
 
   const getIdUser = useAppSelector(userIdProfile)
 
-  const [alignment, setAlignment] = React.useState('my')
+  const [alignment, setAlignment] = React.useState('all')
 
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
@@ -22,15 +22,15 @@ export const PacksToggleButton = () => {
     }
   }
 
-  const handleChangeMy = () => {
-    dispatch(setAppStatusAC('loading'))
-    dispatch(setUserParamsAC({ user_id: getIdUser }))
-    dispatch(getPacksTC({ user_id: getIdUser }))
-  }
   const handleChangeAll = () => {
     dispatch(setAppStatusAC('loading'))
-    dispatch(setUserParamsAC({ user_id: null }))
-    dispatch(getPacksTC({ user_id: null }))
+    // dispatch(setUserParamsAC({ user_id: null }))
+    dispatch(getPacksTC({}))
+  }
+  const handleChangeMy = () => {
+    dispatch(setAppStatusAC('loading'))
+    // dispatch(setUserParamsAC({ user_id: getIdUser }))
+    dispatch(getPacksTC({ user_id: getIdUser }))
   }
 
   return (

@@ -12,33 +12,32 @@ import { getPacksTC } from '../../../packsReducer'
 import { HeadCell } from '../PacksTable'
 
 import { PacksParamsType } from 'features/packs/packs-api'
-import { setUserParamsAC } from 'features/packs/paramsReducer'
+// import { setUserParamsAC } from 'features/packs/paramsReducer'
 import { useAppDispatch } from 'store/store'
 
-type EnhancedTableProps = {
+type TableHeadComponentProps = {
   numSelected: number
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
   orderBy: string
   rowCount: number
-  queryParams: PacksParamsType
   headCells: HeadCell[]
 }
 
-export const TableHeadComponent = (props: EnhancedTableProps) => {
+export const TableHeadComponent = (props: TableHeadComponentProps) => {
   const dispatch = useAppDispatch()
   const [sort, setSort] = React.useState(1)
   const [sortProperety, setSortProperety] = React.useState('name')
 
-  const { orderBy, onRequestSort, queryParams } = props
+  const { orderBy, onRequestSort } = props
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
-    const newParams = { ...queryParams, sortPacks: sort + property }
+    const newParams = { sortPacks: sort + property }
 
     onRequestSort(event, property)
     setSortProperety(orderBy)
-    dispatch(setUserParamsAC(newParams))
+    // dispatch(setUserParamsAC(newParams))
     dispatch(getPacksTC(newParams))
-    if (sort === 0 && sortProperety === orderBy) {
+    if (sort === 0) {
       setSort(1)
     } else {
       setSort(0)
@@ -58,9 +57,9 @@ export const TableHeadComponent = (props: EnhancedTableProps) => {
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === sortProperety ? 'desc' : 'asc'}
+              direction={sort ? 'asc' : 'desc'}
               onClick={createSortHandler(headCell.id)}
-              IconComponent={ArrowDropUp}
+              IconComponent={ArrowDropDown}
               sx={{ fontWeight: '600' }}
             >
               {orderBy === headCell.id ? (

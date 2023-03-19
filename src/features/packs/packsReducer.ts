@@ -39,7 +39,7 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
     case 'PACKS/GET-PACKS': {
       const packsData = { ...action.payload.data }
 
-      return { ...packsData }
+      return { ...state, ...packsData }
     }
     default:
       return state

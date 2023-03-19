@@ -9,13 +9,21 @@ a:visited {
 }
 
 .packsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.packsBoxContainer {
+  position: relative;
+  margin: auto 0px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  max-width: 1440px;
   /* background-color: #ffffff; */
-  padding: 50px 60px 0 60px;
 }
 
 .newPackButton {
