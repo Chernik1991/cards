@@ -1,8 +1,8 @@
 import { Box } from '@mui/material'
 
-import { SearchInput } from '../../packs/InputSearch'
+import { SearchInput } from '../../../common/components/inputSearch/InputSearch'
 
-import { useSearchPanelPackLogic } from 'features/packs/useSearchPanelPackLogic'
+import { useSearchPanelPackLogic } from 'common/components/inputSearch/useSearchPanelPackLogic'
 
 export const SearchCardPanel = () => {
   const { onChangeSearchHandler } = useSearchPanelPackLogic()

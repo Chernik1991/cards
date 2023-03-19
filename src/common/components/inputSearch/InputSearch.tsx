@@ -4,8 +4,8 @@ import InputBase, { InputBaseProps } from '@mui/material/InputBase'
 import Paper from '@mui/material/Paper'
 
 import find from 'assets/img/icons/find.svg'
+import s from 'common/components/inputSearch/InputSearch.module.css'
 import { useDebounce } from 'common/hooks/useDebounce'
-import s from 'features/packs/InputSearch.module.css'
 
 type SearchInputPropsType = InputBaseProps & {
   searchValue: string

@@ -12,7 +12,7 @@ import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
 import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
-import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
+import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 

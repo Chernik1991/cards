@@ -3,13 +3,13 @@ import React from 'react'
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
 
-import { PacksToggleButton } from './PacksToggleButton'
+import { PacksToggleButton } from './components/ToggleButton/PacksToggleButton'
 
 import { appStatus } from 'app/selectorApp'
-import { SearchInput } from 'features/packs/InputSearch'
+import { SearchInput } from 'common/components/inputSearch/InputSearch'
+import { useSearchPanelPackLogic } from 'common/components/inputSearch/useSearchPanelPackLogic'
+import { InputSlider } from 'features/packs/components/slider/DoubleSlider'
 import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
-import { InputSlider } from 'features/packs/Slider/DoubleSlider'
-import { useSearchPanelPackLogic } from 'features/packs/useSearchPanelPackLogic'
 import { useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {

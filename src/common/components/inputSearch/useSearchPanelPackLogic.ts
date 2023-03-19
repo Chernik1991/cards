@@ -10,10 +10,8 @@ export const useSearchPanelPackLogic = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {
-    if (searchValue !== '') {
-      dispatch(getPacksTC({ packName: searchValue }))
-      setSearchParams({ ...searchParams, packName: searchValue.toString() })
-    }
+    dispatch(getPacksTC({ packName: searchValue }))
+    setSearchParams({ ...searchParams, packName: searchValue.toString() })
   }, [])
 
   const onChangeValuesHandler = useCallback((values: number[]) => {

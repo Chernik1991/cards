@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 
 import { appStatus } from 'app/selectorApp'
 import { GetCardsTC } from 'features/cards/card/card-reducer'
-import { SearchInput } from 'features/packs/InputSearch'
+import { SearchInput } from 'common/components/inputSearch/InputSearch'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 type PropsType = {

@@ -45,7 +45,7 @@ export type CardPacks = {
   __v: number
 }
 
-export type getResponse = {
+/*export type getResponse = {
   cardPacks: CardPacks[]
   page: number
   pageCount: number
@@ -54,7 +54,7 @@ export type getResponse = {
   maxCardsCount: number
   token: string
   tokenDeathTime: number
-}
+}*/
 export type PackType = {
   cardsCount: number
   created: string

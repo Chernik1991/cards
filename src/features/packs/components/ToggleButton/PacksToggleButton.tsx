@@ -6,7 +6,6 @@ import { useSearchParams } from 'react-router-dom'
 
 import { setAppStatusAC } from 'app/app-reducer'
 import { getPacksTC, setMyPacksAC } from 'features/packs/packsReducer'
-import { setUserParamsAC } from 'features/packs/paramsReducer'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
