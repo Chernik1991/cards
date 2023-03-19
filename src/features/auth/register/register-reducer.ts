@@ -8,7 +8,6 @@ const initialState: InitialStateType = {
 }
 
 export const registerReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-  console.log('registerReducer')
   switch (action.type) {
     case 'register/SIGN-UP':
       return { ...state, isRegister: action.value }
@@ -26,19 +25,10 @@ export const registerTC =
     try {
       const res = await authAPI.register(data)
 
-      console.log(res, 'res')
-
       dispatch(setAppStatusAC('loading'))
-
-      if (res.data.addedUser._id) {
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(setIsRegisterAC(true))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setIsRegisterAC(true))
     } catch (e: any) {
-      // const err = e as Error | AxiosError<{ error: string }>
-
       errorUtils(e, dispatch)
 
       dispatch(setAppStatusAC('failed'))

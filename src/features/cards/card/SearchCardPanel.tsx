@@ -8,16 +8,25 @@ import { SearchInput } from 'features/packs/InputSearch'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 type PropsType = {
-  cardsPack_id: string | undefined
+  cardsPack_id: string
+  searchParams: any
+  searchCardPanelParams: (data: any) => void
 }
 
 export const SearchCardPanel = (props: PropsType) => {
+  // const [searchParams, setSearchParams] = useSearchParams()
+  // const params = Object.fromEntries(props.searchParams)
   const dispatch = useAppDispatch()
   const status = useAppSelector(appStatus)
   const onChangeSearchHandler = useCallback((searchValue: string) => {
-    if (props.cardsPack_id) {
+    if (searchValue !== '') {
       dispatch(GetCardsTC({ cardsPack_id: props.cardsPack_id, cardQuestion: searchValue }))
+      props.searchCardPanelParams({
+        cardsPack_id: props.cardsPack_id.toString(),
+        cardQuestion: searchValue.toString(),
+      })
     }
+    console.log('SearchCardPanel')
   }, [])
 
   return (

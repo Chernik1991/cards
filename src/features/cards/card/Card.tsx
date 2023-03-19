@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
-import { CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
+import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
 import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
@@ -21,7 +21,11 @@ export const Card = () => {
   const page = useAppSelector(pageCard)
   const rows = useAppSelector<Array<CardsType>>(cards)
   const user_id = useAppSelector(packUserId)
+
+  console.log(user_id)
   const my_id = useAppSelector(state => state.profile._id)
+
+  console.log(my_id)
   const totalCount = useAppSelector(cardsTotalCount)
   const pageCount = useAppSelector(cardsPageCount)
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
@@ -29,13 +33,12 @@ export const Card = () => {
 
   const paginationLabel = 'Cards per Page'
   const isNotEmptyPack = !!rows.length
-  // const [searchParams, setSearchParams] = useState('')
-  const searchParams = cardsPack_id
+  const [searchParams, setSearchParams] = useSearchParams()
+  // const [cardsPack_id, setCardsPack_id] = useState('')
 
-  // const { cardsPack_id } = useParams()
   const packsListHandler = () => {
     // dispatch(getPacksTC({}))
-    // dispatch(clearCardDataAC())
+    dispatch(clearCardDataAC())
   }
   const addNewCardHandler = () => {
     if (cardsPack_id) {
@@ -48,25 +51,36 @@ export const Card = () => {
       )
     }
   }
-  // const learnToPackHandler = () => {
-  //   return <Navigate to={PATH.STUDY} replace />
-  // }
-
+  const searchCardPanelParams = (data: any) => {
+    setSearchParams({ ...data })
+  }
   const onChangePageHandler = (page: number, pageCount: number) => {
-    if (cardsPack_id) {
-      dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
-    }
+    const params = Object.fromEntries(searchParams)
+
+    dispatch(GetCardsTC({ cardsPack_id: params.cardsPack_id, page: page, pageCount: pageCount }))
+    setSearchParams({
+      cardsPack_id: params.cardsPack_id.toString(),
+      page: page.toString(),
+      pageCount: pageCount.toString(),
+    })
+    console.log('Card onChangePageHandler')
   }
 
   if (rows.length === 0 && my_id === user_id) {
+    console.log(rows.length === 0, 'rows.length === 0')
+    console.log(my_id === user_id, 'my_id === user_id')
+
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
   useEffect(() => {
-    if (cardsPack_id) {
-      dispatch(GetCardsTC({ cardsPack_id, cardAnswer: searchParams, page, pageCount }))
-    }
-  }, [cardsPack_id, searchParams])
-  console.log('1')
+    const params = Object.fromEntries(searchParams)
+
+    console.log(params)
+
+    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+    // setCardsPack_id(params.cardsPack_id)
+    setSearchParams({ cardsPack_id: cardsPack_id })
+  }, [cardsPack_id])
 
   return (
     <>
@@ -92,30 +106,28 @@ export const Card = () => {
           }}
         >
           <h2>{my_id === user_id ? 'My Pack' : 'Friend’s Pack'}</h2>
-          <div>
-            {my_id === user_id ? (
-              <SuperButton className={s.newPackButton} onClick={addNewCardHandler}>
-                Add new card
-              </SuperButton>
-            ) : (
-              <NavLink to={PATH.STUDY} replace>
-                <Button
-                  variant="contained"
-                  sx={{
-                    borderRadius: '20px',
-                    minWidth: '115px',
-                    fontSize: '16px',
-                    lineHeight: '20px',
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontStyle: 'Medium',
-                    textTransform: 'none',
-                  }}
-                >
-                  Learn to pack
-                </Button>
-              </NavLink>
-            )}
-          </div>
+          {my_id === user_id ? (
+            <SuperButton className={s.newPackButton} onClick={addNewCardHandler}>
+              Add new card
+            </SuperButton>
+          ) : (
+            <NavLink to={PATH.STUDY} replace>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: '20px',
+                  minWidth: '115px',
+                  fontSize: '16px',
+                  lineHeight: '20px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontStyle: 'Medium',
+                  textTransform: 'none',
+                }}
+              >
+                Learn to pack
+              </Button>
+            </NavLink>
+          )}
         </Box>
         <Box
           sx={{
@@ -129,12 +141,12 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          {/*<SearchPackPanel />*/}
           <SearchCardPanel
             cardsPack_id={cardsPack_id}
+            searchParams={searchParams}
             // isNotEmptyPack={!!empty}
             // isMyPack={isMyPack}
-            // setSearchParams={setSearchParams}
+            searchCardPanelParams={searchCardPanelParams}
             // addNewCard={addNewCard}
           />
         </Box>
@@ -163,17 +175,15 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <div>
-            {isNotEmptyPack && (
-              <PaginationComponent
-                totalCount={totalCount}
-                currentPage={page ?? 1}
-                pageSize={pageCount ?? 4}
-                onPageChanged={onChangePageHandler}
-                labelRowsPerPage={paginationLabel}
-              />
-            )}
-          </div>
+          {isNotEmptyPack && (
+            <PaginationComponent
+              totalCount={totalCount}
+              currentPage={page ?? 1}
+              pageSize={pageCount ?? 4}
+              onPageChanged={onChangePageHandler}
+              labelRowsPerPage={paginationLabel}
+            />
+          )}
         </Box>
       </div>
     </>

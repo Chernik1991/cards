@@ -65,12 +65,8 @@ export const logoutTC = (): AppThunkType => async dispatch => {
   try {
     const res = await authAPI.logOut()
 
-    if (res.status === 200) {
-      dispatch(setIsLoggedInAC(false))
-      dispatch(setAppStatusAC('succeeded'))
-    } else {
-      dispatch(setAppStatusAC('failed'))
-    }
+    dispatch(setIsLoggedInAC(false))
+    dispatch(setAppStatusAC('succeeded'))
   } catch (e: any) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))

@@ -25,6 +25,7 @@ export type ResponsePacksType = {
   minCardsCount: number
   page: number // выбранная страница
   pageCount: number
+  myPacks?: boolean
 }
 export type CardPacks = {
   _id: string

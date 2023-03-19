@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box'
+import { useSearchParams } from 'react-router-dom'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
+import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
 import { SearchPackPanel } from 'features/packs/components/pagination/SearchPackPanel'
 import { EnhancedTable } from 'features/packs/components/table/PacksTable'
 import e from 'features/packs/Packs.module.css'
@@ -23,6 +25,11 @@ export const Packs = () => {
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
   const paramsID = useAppSelector(packParamsID)
+  const isNotEmptyPack = !!cardPacks.length
+  const [searchParams, setSearchParams] = useSearchParams()
+  const myPacks = useAppSelector(state => state.packs.myPacks)
+  const params = Object.fromEntries(searchParams)
+
   const newPackHandler = () => {
     const userParams = paramsID ? paramsID : ''
 
@@ -31,8 +38,14 @@ export const Packs = () => {
 
   const paginationLabel = 'Packs per Page'
 
-  const onChangePageHandler = (page?: number, size?: number) => {
-    dispatch(getPacksTC({ page: page, pageCount: size, user_id: paramsID }))
+  const onChangePageHandler = (page: number, size: number) => {
+    if (myPacks) {
+      dispatch(getPacksTC({ user_id: userID, page: page, pageCount: size }))
+      setSearchParams({ user_id: userID, page: page.toString(), pageCount: pageCount.toString() })
+    } else {
+      dispatch(getPacksTC({ page: page, pageCount: size }))
+      setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+    }
   }
 
   return (
@@ -54,13 +67,15 @@ export const Packs = () => {
       </Box>
       <SearchPackPanel />
       <EnhancedTable cardsPacks={cardPacks} userID={userID} userIDsettings={paramsID} />
-      {/*<PaginationComponent*/}
-      {/*  totalCount={cardPacksTotalCount}*/}
-      {/*  currentPage={page ?? 1}*/}
-      {/*  pageSize={pageCount ?? 4}*/}
-      {/*  onPageChanged={onChangePageHandler}*/}
-      {/*  labelRowsPerPage={paginationLabel}*/}
-      {/*/>*/}
+      {isNotEmptyPack && (
+        <PaginationComponent
+          totalCount={cardPacksTotalCount}
+          currentPage={page ?? 1}
+          pageSize={pageCount ?? 4}
+          onPageChanged={onChangePageHandler}
+          labelRowsPerPage={paginationLabel}
+        />
+      )}
     </div>
   )
 }

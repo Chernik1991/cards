@@ -11,14 +11,14 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../packs-api'
 import { deletePackTC, updatePackTC } from '../../packsReducer'
 
 import PacksActions from './PacksActions'
 
-import { GetCardsTC, setPackIdAC } from 'features/cards/card/card-reducer'
+import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
@@ -166,6 +166,7 @@ type EnhancedTableType = {
 }
 
 export const EnhancedTable = (props: EnhancedTableType) => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useAppDispatch()
   const rows = props.cardsPacks.map((el: PackType) => ({
     name: el.name,
@@ -215,8 +216,12 @@ export const EnhancedTable = (props: EnhancedTableType) => {
   }
   const cardsListHandler = (cardsPack_id: string) => {
     console.log(cardsPack_id, 'handleClick')
+    setSearchParams({ cardsPack_id: cardsPack_id })
+    if (props.userIDsettings) {
+      setSearchParams({ packUserId: props.userIDsettings })
+    }
     dispatch(setPackIdAC(cardsPack_id))
-    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+    // dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
   }
 
   return (

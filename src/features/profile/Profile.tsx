@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
 import y from './Profile.module.css'
 
@@ -11,7 +11,6 @@ import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEditableSpan'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import { isLoggedInAuth } from 'features/auth/selectorAuth'
-import { setUserParamsAC } from 'features/packs/paramsReducer'
 import {
   currentNameProfile,
   editedModeProfile,
@@ -31,6 +30,7 @@ export const Profile = () => {
   const editedMode = useAppSelector(editedModeProfile)
   const name = useAppSelector(nameProfile)
   const email = useAppSelector(emailProfile)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
   if (!userId) {
@@ -41,18 +41,14 @@ export const Profile = () => {
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
   }
-
   const logOutHandler = () => {
     dispatch(logoutTC())
 
     return <Navigate to={PATH.LOGIN} replace />
   }
-
   const packsListHandler = () => {
-    dispatch(setUserParamsAC({ user_id: userId }))
-    //     dispatch(getPacksTC({ user_id: userId }))
+    setSearchParams({ user_id: userId.toString() })
   }
-
   const customStyle = editedMode ? y.activeEditmode : ''
 
   return (

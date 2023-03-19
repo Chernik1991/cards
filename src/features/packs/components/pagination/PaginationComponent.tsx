@@ -23,6 +23,8 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   const [page, setPage] = useState(currentPage)
   const throttledPage = useThrottle(page, 3000)
 
+  console.log('PaginationComponent')
+
   useEffect(() => {
     setRowsPerPage(pageSize)
   }, [pageSize])
