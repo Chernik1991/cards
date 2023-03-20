@@ -32,6 +32,8 @@ export const PATH = {
 }
 
 export const Pages = () => {
+  console.log('Pages')
+
   return (
     <div>
       <Routes>

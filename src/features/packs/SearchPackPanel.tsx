@@ -3,18 +3,20 @@ import React from 'react'
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
 
-import { PacksToggleButton } from './PacksToggleButton'
+import { PacksToggleButton } from './components/ToggleButton/PacksToggleButton'
 
-import { SearchInput } from 'features/packs/InputSearch'
-import { InputSlider } from 'features/packs/Slider/DoubleSlider'
-import { useSearchPanelLogic } from 'features/packs/useSearchPanelLogic'
+import { appStatus } from 'app/selectorApp'
+import { SearchInput } from 'common/components/inputSearch/InputSearch'
+import { useSearchPanelPackLogic } from 'common/components/inputSearch/useSearchPanelPackLogic'
+import { InputSlider } from 'features/packs/components/slider/DoubleSlider'
+import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
 import { useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
-  const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelLogic()
-  const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
-  const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
-  const status = useAppSelector(state => state.app.status)
+  const { onChangeSearchHandler, onChangeValuesHandler } = useSearchPanelPackLogic()
+  const minCardsCount = useAppSelector(packMinCardsCount)
+  const maxCardsCount = useAppSelector(packMaxCardsCount)
+  const status = useAppSelector(appStatus)
 
   console.log(minCardsCount, maxCardsCount)
 

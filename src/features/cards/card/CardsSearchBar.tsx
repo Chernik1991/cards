@@ -1,10 +1,11 @@
 import { Box } from '@mui/material'
 
-import { SearchInput } from '../../packs/InputSearch'
-import { useSearchPanelLogic } from '../../packs/useSearchPanelLogic'
+import { SearchInput } from '../../../common/components/inputSearch/InputSearch'
 
-export const SearchPackPanel = () => {
-  const { onChangeSearchHandler } = useSearchPanelLogic()
+import { useSearchPanelPackLogic } from 'common/components/inputSearch/useSearchPanelPackLogic'
+
+export const SearchCardPanel = () => {
+  const { onChangeSearchHandler } = useSearchPanelPackLogic()
 
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'100px'} alignItems={'end'}>

@@ -1,16 +1,18 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
-import { SearchPackPanel } from 'features/cards/card/CardsSearchBar'
+import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
 import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
-import { getPacksTC } from 'features/packs/packsReducer'
+import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -19,31 +21,66 @@ export const Card = () => {
   const page = useAppSelector(pageCard)
   const rows = useAppSelector<Array<CardsType>>(cards)
   const user_id = useAppSelector(packUserId)
+
+  console.log(user_id)
+  const my_id = useAppSelector(state => state.profile._id)
+
+  console.log(my_id)
   const totalCount = useAppSelector(cardsTotalCount)
   const pageCount = useAppSelector(cardsPageCount)
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
+  //временно
+
   const paginationLabel = 'Cards per Page'
+  const isNotEmptyPack = !!rows.length
+  const [searchParams, setSearchParams] = useSearchParams()
+  // const [cardsPack_id, setCardsPack_id] = useState('')
+
   const packsListHandler = () => {
-    dispatch(getPacksTC({ user_id: user_id }))
+    // dispatch(getPacksTC({}))
     dispatch(clearCardDataAC())
-    //пока только мои колоды загружаются, потом исправить
   }
-  const postCardHandler = () => {
-    dispatch(
-      CreateCardsTC({
-        answer: 'CreateCardsTC',
-        question: 'Card',
-        cardsPack_id: cardsPack_id,
-      })
-    )
+  const addNewCardHandler = () => {
+    if (cardsPack_id) {
+      dispatch(
+        CreateCardsTC({
+          answer: 'CreateCardsTC',
+          question: 'Card',
+          cardsPack_id,
+        })
+      )
+    }
+  }
+  const searchCardPanelParams = (data: any) => {
+    setSearchParams({ ...data })
   }
   const onChangePageHandler = (page: number, pageCount: number) => {
-    dispatch(GetCardsTC({ page: page, pageCount: pageCount, cardsPack_id: cardsPack_id }))
+    const params = Object.fromEntries(searchParams)
+
+    dispatch(GetCardsTC({ cardsPack_id: params.cardsPack_id, page: page, pageCount: pageCount }))
+    setSearchParams({
+      cardsPack_id: params.cardsPack_id.toString(),
+      page: page.toString(),
+      pageCount: pageCount.toString(),
+    })
+    console.log('Card onChangePageHandler')
   }
 
-  if (rows.length === 0) {
+  if (rows.length === 0 && my_id === user_id) {
+    console.log(rows.length === 0, 'rows.length === 0')
+    console.log(my_id === user_id, 'my_id === user_id')
+
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
+  useEffect(() => {
+    const params = Object.fromEntries(searchParams)
+
+    console.log(params)
+
+    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+    // setCardsPack_id(params.cardsPack_id)
+    setSearchParams({ cardsPack_id: cardsPack_id })
+  }, [cardsPack_id])
 
   return (
     <>
@@ -68,10 +105,29 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <h2>My pack</h2>
-          <SuperButton className={s.newPackButton} onClick={postCardHandler}>
-            Add new card
-          </SuperButton>
+          <h2>{my_id === user_id ? 'My Pack' : 'Friend’s Pack'}</h2>
+          {my_id === user_id ? (
+            <SuperButton className={s.newPackButton} onClick={addNewCardHandler}>
+              Add new card
+            </SuperButton>
+          ) : (
+            <NavLink to={PATH.STUDY} replace>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: '20px',
+                  minWidth: '115px',
+                  fontSize: '16px',
+                  lineHeight: '20px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontStyle: 'Medium',
+                  textTransform: 'none',
+                }}
+              >
+                Learn to pack
+              </Button>
+            </NavLink>
+          )}
         </Box>
         <Box
           sx={{
@@ -85,7 +141,14 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <SearchPackPanel />
+          <SearchCardPanel
+            cardsPack_id={cardsPack_id}
+            searchParams={searchParams}
+            // isNotEmptyPack={!!empty}
+            // isMyPack={isMyPack}
+            searchCardPanelParams={searchCardPanelParams}
+            // addNewCard={addNewCard}
+          />
         </Box>
         <Box
           sx={{
@@ -99,7 +162,7 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <EnhancedTable cards={rows} />
+          <EnhancedTable cards={rows} my_id={my_id} />
         </Box>
         <Box
           sx={{
@@ -112,19 +175,15 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          {/*<div>*/}
-          {/*  {pageCount !== 0 ? (*/}
-          {/*    <PaginationComponent*/}
-          {/*      totalCount={totalCount}*/}
-          {/*      currentPage={page ?? 1}*/}
-          {/*      pageSize={pageCount ?? 4}*/}
-          {/*      onPageChanged={onChangePageHandler}*/}
-          {/*      labelRowsPerPage={paginationLabel}*/}
-          {/*    />*/}
-          {/*  ) : (*/}
-          {/*    ''*/}
-          {/*  )}*/}
-          {/*</div>*/}
+          {isNotEmptyPack && (
+            <PaginationComponent
+              totalCount={totalCount}
+              currentPage={page ?? 1}
+              pageSize={pageCount ?? 4}
+              onPageChanged={onChangePageHandler}
+              labelRowsPerPage={paginationLabel}
+            />
+          )}
         </Box>
       </div>
     </>

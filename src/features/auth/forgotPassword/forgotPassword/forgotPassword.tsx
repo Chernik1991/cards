@@ -27,6 +27,7 @@ type FormikErrorType = {
   message?: string
 }
 export const ForgotPassword = () => {
+  console.log('ForgotPassword')
   const dispatch = useAppDispatch()
   const forgotPassword = useAppSelector(forgotPasswordAuth)
   const formik = useFormik({

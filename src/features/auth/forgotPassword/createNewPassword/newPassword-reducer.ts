@@ -1,5 +1,3 @@
-import { AxiosError } from 'axios'
-
 import { setAppStatusAC } from 'app/app-reducer'
 import { errorUtils } from 'common/utils/error-utils'
 import { authAPI, SetNewPasswordParamsType } from 'features/auth/auth-api'
@@ -20,31 +18,20 @@ export const setNewPasswordReducer = (
       return state
   }
 }
-const answer = 'setNewPassword success —ฅ/ᐠ.̫ .ᐟฅ—'
 
 export const setIsSetNewPasswordAC = (value: boolean) => ({ type: 'Set-New-Password', value } as const)
 
 export const setNewPasswordTC =
   (data: SetNewPasswordParamsType): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
-      debugger
       const res = await authAPI.setNewPassword(data)
 
-      dispatch(setAppStatusAC('loading'))
-
-      if (res.data.info === answer) {
-        console.log(res.data, 'res.data')
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(setIsSetNewPasswordAC(true))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
-      errorUtils(err, dispatch)
-
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(setIsSetNewPasswordAC(true))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
   }

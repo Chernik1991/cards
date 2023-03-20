@@ -1,5 +1,3 @@
-import { AxiosError } from 'axios'
-
 import { setAppStatusAC } from 'app/app-reducer'
 import { errorUtils } from 'common/utils/error-utils'
 import { packsAPI, PacksParamsType, ResponsePacksType, SetNewPackType, UpdatePackType } from 'features/packs/packs-api'
@@ -27,19 +25,20 @@ const initialState: ResponsePacksType = {
     },
   ],
   cardPacksTotalCount: 0,
-  // количество колод
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0, // выбранная страница
-  pageCount: 0,
+  page: 1,
+  pageCount: 4,
+  myPacks: false,
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
   switch (action.type) {
     case 'PACKS/GET-PACKS': {
-      const packsData = { ...action.payload.data }
-
-      return { ...state, ...packsData }
+      return { ...state, ...action.payload.data }
+    }
+    case 'PACKS/SET-MY-PACKS': {
+      return { ...state, myPacks: action.payload.myPacks }
     }
     default:
       return state
@@ -47,104 +46,70 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
 }
 
 export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'PACKS/GET-PACKS', payload: { data } } as const)
+export const setMyPacksAC = (myPacks: boolean) => ({ type: 'PACKS/SET-MY-PACKS', payload: { myPacks } } as const)
 
-type ActionsType = getUserPacksType
+type ActionsType = getUserPacksType | setMyPacksType
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
+export type setMyPacksType = ReturnType<typeof setMyPacksAC>
 
 export const getPacksTC =
-  (data?: PacksParamsType): AppThunkType =>
+  (data: PacksParamsType): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
-      dispatch(setAppStatusAC('loading'))
       const res = await packsAPI.getPacks(data)
 
-      dispatch(setAppStatusAC('loading'))
-
-      if (res.request.status === 200) {
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(getUserPacksAC(res.data))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-        console.log('Error1')
-      }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(getUserPacksAC(res.data))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
-      errorUtils(err, dispatch)
-      console.log('Error2')
     }
   }
 
 export const addPackTC =
   (data?: SetNewPackType, user_id?: string | null | undefined): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
       const settingsChecker = user_id ? { user_id } : {}
       const res = await packsAPI.setPack({ cardsPack: {} })
 
-      dispatch(setAppStatusAC('loading'))
-      console.log(res, 'addPackTC')
-      if (res.request.status === 201) {
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(getPacksTC(settingsChecker))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-        console.log('Error1')
-      }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(getPacksTC(settingsChecker))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
-      errorUtils(err, dispatch)
-      console.log('Error2')
     }
   }
 
 export const updatePackTC =
   (data: UpdatePackType, user_id?: string | null | undefined): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
       const settingsChecker = user_id ? { user_id } : {}
-
-      dispatch(setAppStatusAC('loading'))
       const res = await packsAPI.updatePack({ cardsPack: { _id: data.cardsPack._id, name: data.cardsPack.name } })
 
-      if (res.data) {
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(getPacksTC(settingsChecker))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-        console.log('Error1')
-      }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(getPacksTC(settingsChecker))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
-      errorUtils(err, dispatch)
-      console.log('Error2')
     }
   }
 export const deletePackTC =
   (data?: PacksParamsType, user_id?: string | null | undefined): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
-      dispatch(setAppStatusAC('loading'))
       const res = await packsAPI.deletePack(data)
       const settingsChecker = user_id ? { user_id } : {}
 
-      if (res.data) {
-        dispatch(setAppStatusAC('succeeded'))
-        dispatch(getPacksTC(settingsChecker))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-        console.log('Error1')
-      }
-    } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
+      dispatch(setAppStatusAC('succeeded'))
+      dispatch(getPacksTC(settingsChecker))
+    } catch (e: any) {
+      errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
-      errorUtils(err, dispatch)
-      console.log('Error2')
     }
   }

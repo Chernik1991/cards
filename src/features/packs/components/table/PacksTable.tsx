@@ -7,7 +7,9 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import { Navigate, NavLink } from 'react-router-dom'
+import TableSortLabel from '@mui/material/TableSortLabel'
+import { visuallyHidden } from '@mui/utils'
+import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
 import { PackType } from '../../packs-api'
 import { deletePackTC, updatePackTC } from '../../packsReducer'
@@ -15,7 +17,7 @@ import { deletePackTC, updatePackTC } from '../../packsReducer'
 import PacksActions from './tableActions/PacksActions'
 import { TableHeadComponent } from './tableHead/TableHeadComponent'
 
-import { GetCardsTC, setPackIdAC } from 'features/cards/card/card-reducer'
+import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
@@ -71,10 +73,11 @@ export const headCells: HeadCell[] = [
 type PacksTableType = {
   cardsPacks: PackType[]
   userID: string
-  userIDsettings: string | null | undefined
+  userIDsettings: string
 }
 
 export const PacksTable = (props: PacksTableType) => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const dispatch = useAppDispatch()
   const rows = props.cardsPacks.map((el: PackType) => ({
     name: el.name,
@@ -120,8 +123,12 @@ export const PacksTable = (props: PacksTableType) => {
   }
   const cardsListHandler = (cardsPack_id: string) => {
     console.log(cardsPack_id, 'handleClick')
+    setSearchParams({ cardsPack_id: cardsPack_id })
+    if (props.userID) {
+      setSearchParams({ packUserId: props.userID })
+    }
     dispatch(setPackIdAC(cardsPack_id))
-    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+    // dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
   }
 
   return (
@@ -154,13 +161,13 @@ export const PacksTable = (props: PacksTableType) => {
                   const handleStudying = () => {
                     // handleOpen(row.id)
 
-                    return <Navigate to={PATH.STUDY} />
+                    return <Navigate to={PATH.STUDY} replace />
                   }
                   const handleDeletePack = () => {
-                    dispatch(deletePackTC({ id: row.id }, props.userIDsettings))
+                    dispatch(deletePackTC({ id: row.id }, props.userID))
                   }
                   const handleUpdatePackName = () => {
-                    dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, props.userIDsettings))
+                    dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, props.userID))
                   }
 
                   return (

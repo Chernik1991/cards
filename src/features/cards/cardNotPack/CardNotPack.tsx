@@ -10,22 +10,20 @@ import { Navigate, NavLink } from 'react-router-dom'
 import { CreateCardsTC } from 'features/cards/card/card-reducer'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { cardsLengthCards, packUserId } from 'features/cards/selectorCard'
-import { getPacksTC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const CardNotPack = () => {
   const dispatch = useAppDispatch()
   const getIdPack = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
-  const namePack = useAppSelector<string>(state => state.packs.cardPacks[0].name)
+  const namePack = useAppSelector(state => state.packs.cardPacks.map(el => (el._id === getIdPack ? el.name : '')))
   const lengthCards = useAppSelector(cardsLengthCards)
-  //исправить, пока что грузится только 1 колода
   const user_id = useAppSelector(packUserId)
 
-  const packsListHandler = () => {
-    dispatch(getPacksTC({ user_id: user_id }))
-    //пока что переход только на мои паки
-  }
+  // const packsListHandler = () => {
+  //   dispatch(getPacksTC({}))
+  //   //пока что переход только на мои паки
+  // }
   const postCardHandler = () => {
     dispatch(
       CreateCardsTC({
@@ -46,7 +44,11 @@ export const CardNotPack = () => {
     <>
       <CssBaseline />
       <Box sx={{ m: 1, width: '50ch', marginLeft: 17 }}>
-        <NavLink className={s.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
+        <NavLink
+          className={s.backContainer}
+          to={PATH.PACKS}
+          // onClick={packsListHandler}
+        >
           <svg className={s.backArrow} viewBox="0 0 512 512">
             <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
           </svg>

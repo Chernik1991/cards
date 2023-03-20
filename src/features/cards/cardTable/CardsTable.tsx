@@ -63,6 +63,7 @@ type HeadCell = {
 }
 type EnhancedTableType = {
   cards: CardsType[]
+  my_id: string
 }
 export const EnhancedTable = (props: EnhancedTableType) => {
   const dispatch = useAppDispatch()
@@ -121,12 +122,16 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                     <TableCell align="left">
                       <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
                     </TableCell>
-                    <CardActions
-                      align="left"
-                      sx={{ ...paddingStyle, minWidth: 'none' }}
-                      handleUpdateCardName={handleUpdateCardName}
-                      handleDeleteCard={handleDeleteCard}
-                    />
+                    {props.my_id === row.user_id ? (
+                      <CardActions
+                        align="left"
+                        sx={{ ...paddingStyle, minWidth: 'none' }}
+                        handleUpdateCardName={handleUpdateCardName}
+                        handleDeleteCard={handleDeleteCard}
+                      />
+                    ) : (
+                      ''
+                    )}
                   </TableRow>
                 )
               })}

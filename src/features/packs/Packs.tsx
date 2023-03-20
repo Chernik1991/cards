@@ -1,40 +1,40 @@
 import { useState } from 'react'
 
 import Box from '@mui/material/Box'
+import { useSearchParams } from 'react-router-dom'
 
 import { SomeJSX2 } from './modal/constants/AddNewPack'
 import { ModalBasic } from './modal/ModalBasic'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
-import { PaginationComponent } from 'features/packs/components/pagination/PaginationComponent'
-import { SearchPackPanel } from 'features/packs/components/pagination/SearchPackPanel'
+import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
+import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { ResponsePacksType } from 'features/packs/packs-api'
 import e from 'features/packs/Packs.module.css'
 import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
+import { packCardPacks, packCardPacksTotalCount, packPage, packPageCount } from 'features/packs/selectorPack'
+import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
   const dispatch = useAppDispatch()
-  const userPacks = useAppSelector<ResponsePacksType>(state => state.packs)
-  // const page = useAppSelector(state => state.packsParams.page)
-  // const pageCount = useAppSelector(state => state.packsParams.pageCount)
-  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  const userID = useAppSelector(state => state.profile._id)
-  const paramsID = useAppSelector(state => state.profile._id)
-
-  // const fullParams = useAppSelector(state => state.packsParams)
+  const cardPacks = useAppSelector(packCardPacks)
+  const page = useAppSelector(packPage)
+  const pageCount = useAppSelector(packPageCount)
+  const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
+  const userID = useAppSelector(userIdProfile)
+  const isNotEmptyPack = !!cardPacks.length
+  const [searchParams, setSearchParams] = useSearchParams()
+  const myPacks = useAppSelector(state => state.packs.myPacks)
+  const userPacks = useAppSelector(state => state.packs)
+  const params = Object.fromEntries(searchParams)
   const [open, setOpen] = useState('false')
   const handleOpen = (value: string) => setOpen(value)
   const handleClose = () => setOpen('false')
-  // const handleOpen1 = (value: boolean) => {
-  //   value
-  // }
-  // const handleOpen2 = () => {}
 
   const newPackHandler = () => {
     handleOpen('one')
-    const userParams = paramsID ? paramsID : ''
 
     // dispatch(addPackTC({ cardsPack: {} }, userParams))
   }
@@ -46,8 +46,14 @@ export const Packs = () => {
 
   const paginationLabel = 'Packs per Page'
 
-  const onChangePageHandler = (page?: number, size?: number) => {
-    dispatch(getPacksTC({ page: page, pageCount: size }))
+  const onChangePageHandler = (page: number, size: number) => {
+    if (myPacks) {
+      dispatch(getPacksTC({ user_id: userID, page: page, pageCount: size }))
+      setSearchParams({ user_id: userID, page: page.toString(), pageCount: pageCount.toString() })
+    } else {
+      dispatch(getPacksTC({ page: page, pageCount: size }))
+      setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+    }
   }
   const someJSX = <div>1</div>
 
@@ -70,15 +76,14 @@ export const Packs = () => {
           </SuperButton>
         </Box>
         <SearchPackPanel />
-        <PacksTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={paramsID} />
-        {/* <PaginationComponent
+        <PacksTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={userID} />
+        <PaginationComponent
           totalCount={cardPacksTotalCount}
           currentPage={page ?? 1}
           pageSize={pageCount ?? 4}
           onPageChanged={onChangePageHandler}
           labelRowsPerPage={paginationLabel}
-          restParams={fullParams}
-        /> */}
+        />
         <ModalBasic handleState={open === 'one'} handleClose={handleClose}>
           <SomeJSX2 />
         </ModalBasic>

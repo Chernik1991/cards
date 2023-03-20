@@ -12,14 +12,12 @@ type PaginationComponentPropsType = {
   totalCount: number
   currentPage: number
   pageSize: number
-  restParams: PacksParamsType
   onPageChanged: (page: number, pageCount: number) => void
 }
 
 export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   totalCount,
   pageSize,
-  restParams,
   onPageChanged,
   currentPage,
   labelRowsPerPage,
@@ -30,6 +28,8 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   const dispatch = useAppDispatch()
 
   console.log(page)
+
+  console.log('PaginationComponent')
 
   useEffect(() => {
     setRowsPerPage(pageSize)

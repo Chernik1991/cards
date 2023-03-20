@@ -1,22 +1,22 @@
 import { useCallback } from 'react'
 
-import { setAppErrorAC } from 'app/app-reducer'
-import { getPacksTC } from 'features/packs/packsReducer'
-// import { setUserParamsAC } from 'features/packs/paramsReducer'
-import { useAppDispatch, useAppSelector } from 'store/store'
+import { useSearchParams } from 'react-router-dom'
 
-export const useSearchPanelLogic = () => {
+import { getPacksTC } from 'features/packs/packsReducer'
+import { useAppDispatch } from 'store/store'
+
+export const useSearchPanelPackLogic = () => {
   const dispatch = useAppDispatch()
-  // const params = useAppSelector(paramsProfile)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {
-    // dispatch(setUserParamsAC({ packName: searchValue }))
     dispatch(getPacksTC({ packName: searchValue }))
+    setSearchParams({ ...searchParams, packName: searchValue.toString() })
   }, [])
 
   const onChangeValuesHandler = useCallback((values: number[]) => {
-    // dispatch(setUserParamsAC({ min: values[0], max: values[1] }))
     dispatch(getPacksTC({ min: values[0], max: values[1] }))
+    setSearchParams({ ...searchParams, min: values[0].toString(), max: values[1].toString() })
   }, [])
 
   return { onChangeSearchHandler, onChangeValuesHandler }
