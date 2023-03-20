@@ -40,17 +40,52 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
     case 'PACKS/SET-MY-PACKS': {
       return { ...state, myPacks: action.payload.myPacks }
     }
+    case 'PACKS/UPDATE-PACK-NAME': {
+      const newState = { ...state }
+
+      newState.cardPacks[0].name = action.payload.data.cardsPack.name
+
+      return { ...state, ...newState }
+    }
+    case 'PACKS/UPDATE-PACK-PRIVATE': {
+      const newState = { ...state }
+
+      newState.cardPacks[0].private = action.payload.data.cardsPack.private
+
+      return { ...state, ...newState }
+    }
+    case 'PACKS/ADD-NEW-PACK': {
+      const newState = { ...state }
+
+      newState.cardPacks[0].name = action.payload.data.cardsPack.name
+      newState.cardPacks[0].private = action.payload.data.cardsPack.private
+
+      return { ...state, ...newState }
+    }
     default:
       return state
   }
 }
 
 export const getUserPacksAC = (data: ResponsePacksType) => ({ type: 'PACKS/GET-PACKS', payload: { data } } as const)
+export const addNewUserPackAC = (data: UpdatePackType) => ({ type: 'PACKS/ADD-NEW-PACK', payload: { data } } as const)
+export const updateUserPackNameAC = (data: UpdatePackType) =>
+  ({ type: 'PACKS/UPDATE-PACK-NAME', payload: { data } } as const)
+export const updateUserPackPrivateAC = (data: UpdatePackType) =>
+  ({ type: 'PACKS/UPDATE-PACK-PRIVATE', payload: { data } } as const)
 export const setMyPacksAC = (myPacks: boolean) => ({ type: 'PACKS/SET-MY-PACKS', payload: { myPacks } } as const)
 
-type ActionsType = getUserPacksType | setMyPacksType
+type ActionsType =
+  | getUserPacksType
+  | setMyPacksType
+  | updateUserPackNameType
+  | updateUserPackPrivateType
+  | addNewUserPackType
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
 export type setMyPacksType = ReturnType<typeof setMyPacksAC>
+export type addNewUserPackType = ReturnType<typeof addNewUserPackAC>
+export type updateUserPackNameType = ReturnType<typeof updateUserPackNameAC>
+export type updateUserPackPrivateType = ReturnType<typeof updateUserPackPrivateAC>
 
 export const getPacksTC =
   (data: PacksParamsType): AppThunkType =>
@@ -89,7 +124,9 @@ export const updatePackTC =
     dispatch(setAppStatusAC('loading'))
     try {
       const settingsChecker = user_id ? { user_id } : {}
-      const res = await packsAPI.updatePack({ cardsPack: { _id: data.cardsPack._id, name: data.cardsPack.name } })
+      const res = await packsAPI.updatePack({
+        cardsPack: { _id: data.cardsPack._id, name: data.cardsPack.name, private: data.cardsPack.private },
+      })
 
       dispatch(setAppStatusAC('succeeded'))
       dispatch(getPacksTC(settingsChecker))

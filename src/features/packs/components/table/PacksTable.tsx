@@ -7,6 +7,7 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import { useSearchParams } from 'react-router-dom'
 import TableRow from '@mui/material/TableRow'
 import { NavLink } from 'react-router-dom'
 
@@ -14,19 +15,22 @@ import { PackType } from '../../packs-api'
 import { deletePackTC, updatePackTC } from '../../packsReducer'
 
 import { PacksActions } from './tableActions/PacksActions'
+import { TableRowComponent } from './tableBody/TableRowComponent'
 import { TableHeadComponent } from './tableHead/TableHeadComponent'
 
 import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
-// type Data = {
-//   name: string
-//   actions: string
-//   created_by: string
-//   updated: string
-//   cardsCount: string
-// }
+type Data = {
+  name: string
+  actions: string
+  created_by: string
+  updated: string
+  cardsCount: string
+}
+//  with example https://mui.com/material-ui/react-table/
+
 export type HeadCell = {
   disablePadding: boolean
   id: string
@@ -71,6 +75,7 @@ type PacksTableType = {
   userID: string
   userIDsettings: string
   setParamsSorted: (sortPacks: string) => void
+  modalHandler: (value: string) => void
 }
 
 export const PacksTable = (props: PacksTableType) => {
@@ -88,6 +93,7 @@ export const PacksTable = (props: PacksTableType) => {
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => {
     setOrderBy(property)
+  }
     props.setParamsSorted(sortPacks)
   }
   const cardsListHandler = (cardsPack_id: string) => {
@@ -162,6 +168,36 @@ export const PacksTable = (props: PacksTableType) => {
           </Table>
         </TableContainer>
       </Paper>
+      {rows.length ? (
+        <Paper sx={{ width: '100%', mb: 2, padding: '0px 0px' }}>
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
+              <TableHeadComponent
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+                headCells={headCells}
+              />
+              <TableBody>
+                {rows.map((row, index) => {
+                  return (
+                    <TableRowComponent
+                      key={crypto.randomUUID()}
+                      row={row}
+                      index={index}
+                      userID={props.userID}
+                      cardsListHandler={cardsListHandler}
+                      modalHandler={props.modalHandler}
+                    />
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      ) : (
+        ''
+      )}
     </Box>
   )
 }

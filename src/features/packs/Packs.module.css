@@ -40,12 +40,12 @@ a:visited {
   box-shadow: 0px 0px 12px #818181;
 }
 
-.penFill {
-  fill: black;
-}
-
 .newPackButton:hover {
   transform: translateY(-1px);
   transition: 0.25s ease-in;
   background-color: #2857ce;
+}
+
+.penFill {
+  fill: black;
 }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { ArrowDropDown } from '@mui/icons-material'
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 import Box from '@mui/material/Box'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 
+import { getPacksTC } from '../../../packsReducer'
+import { useAppDispatch } from 'store/store'
 import { HeadCell } from 'features/packs/components/table/PacksTable'
 
 type TableHeadComponentProps = {
@@ -49,11 +51,6 @@ export const TableHeadComponent = (props: TableHeadComponentProps) => {
               IconComponent={ArrowDropDown}
               sx={{ fontWeight: '600' }}
             >
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {orderBy === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
               {headCell.label}
             </TableSortLabel>
           </TableCell>

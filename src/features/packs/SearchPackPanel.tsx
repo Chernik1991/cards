@@ -18,6 +18,8 @@ export const SearchPackPanel = () => {
   const maxCardsCount = useAppSelector(packMaxCardsCount)
   const status = useAppSelector(appStatus)
 
+  console.log(minCardsCount, maxCardsCount)
+
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
       <Box sx={{ width: '500px' }}>
