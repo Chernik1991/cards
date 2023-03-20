@@ -3,16 +3,18 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 
-import { SomeJSX2 } from './modal/constants/AddNewPack'
-import { ModalBasic } from './modal/ModalBasic'
+import { ModalBasic } from '../../common/components/c11-SuperModal/ModalBasic'
+
+import { AddNewPack } from './constants/AddNewPackModal/AddNewPack'
+import { DeletePack } from './constants/DeletePack'
+import { EditPack } from './constants/EditPack'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
-import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
-import { ResponsePacksType } from 'features/packs/packs-api'
 import e from 'features/packs/Packs.module.css'
 import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
+import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { packCardPacks, packCardPacksTotalCount, packPage, packPageCount } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -24,7 +26,6 @@ export const Packs = () => {
   const pageCount = useAppSelector(packPageCount)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
-  const isNotEmptyPack = !!cardPacks.length
   const [searchParams, setSearchParams] = useSearchParams()
   const myPacks = useAppSelector(state => state.packs.myPacks)
   const userPacks = useAppSelector(state => state.packs)
@@ -33,9 +34,10 @@ export const Packs = () => {
   const handleOpen = (value: string) => setOpen(value)
   const handleClose = () => setOpen('false')
 
-  const newPackHandler = () => {
-    handleOpen('one')
-
+  const modalOpenHandler = (value: string) => {
+    handleOpen(value)
+  }
+  const newPackHandler2 = () => {
     // dispatch(addPackTC({ cardsPack: {} }, userParams))
   }
   // const newPackHandler2 = () => {
@@ -55,7 +57,6 @@ export const Packs = () => {
       setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
     }
   }
-  const someJSX = <div>1</div>
 
   return (
     <div className={e.packsContainer}>
@@ -71,12 +72,17 @@ export const Packs = () => {
           }}
         >
           <h2>Packs list</h2>
-          <SuperButton className={e.newPackButton} onClick={newPackHandler}>
+          <SuperButton className={e.newPackButton} onClick={() => modalOpenHandler('add-pack')}>
             Add new pack
           </SuperButton>
         </Box>
         <SearchPackPanel />
-        <PacksTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={userID} />
+        <PacksTable
+          cardsPacks={userPacks.cardPacks}
+          userID={userID}
+          userIDsettings={userID}
+          modalHandler={modalOpenHandler}
+        />
         <PaginationComponent
           totalCount={cardPacksTotalCount}
           currentPage={page ?? 1}
@@ -84,11 +90,32 @@ export const Packs = () => {
           onPageChanged={onChangePageHandler}
           labelRowsPerPage={paginationLabel}
         />
-        <ModalBasic handleState={open === 'one'} handleClose={handleClose}>
-          <SomeJSX2 />
+        <ModalBasic
+          modalName={'Add new pack'}
+          deleteSave={false}
+          handleState={open === 'add-pack'}
+          handleClose={handleClose}
+          handleModalFn={() => ''}
+        >
+          <AddNewPack />
         </ModalBasic>
-        <ModalBasic handleState={open === 'two'} handleClose={handleClose}>
-          {someJSX}
+        <ModalBasic
+          modalName={'Edit pack'}
+          deleteSave={false}
+          handleState={open === 'edit-pack'}
+          handleClose={handleClose}
+          handleModalFn={() => ''}
+        >
+          <EditPack />
+        </ModalBasic>
+        <ModalBasic
+          modalName={'Delete pack'}
+          deleteSave={true}
+          handleState={open === 'delete-pack'}
+          handleClose={handleClose}
+          handleModalFn={() => ''}
+        >
+          <DeletePack />
         </ModalBasic>
       </div>
     </div>

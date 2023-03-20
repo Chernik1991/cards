@@ -12,7 +12,7 @@
   /*Свойство appearance изменяет внешний вид элемента интерфейса, при сохранении его функции.
        Если задать значение none, то чекбокс пропадет, но по нему, тем не менее,
        можно щелкать и состояние чекбокса будет меняться*/
-
+  
   width: 18px;
   height: 18px;
   margin-right: 8px;
@@ -22,7 +22,7 @@
 
   background-repeat: no-repeat;
   background-position: center center;
-  border: 2px solid #06c;
+  border: 2px solid black;
   border-radius: 3px;
 
   appearance: none;
@@ -30,16 +30,22 @@
 
 .checkbox:checked {
   background-image: url('checked.svg');
-
   appearance: none;
+  background-color: #366eff;
+  fill: black;
+  border: none;
   /*background: #99ff99;*/
 }
 
 .checkbox:focus {
-  border-color: #0059b3;
+  /* border-color: #366eff; */
+  /* border: none; */
 }
 
 .spanClassName {
+  position: relative;
+  left: 5px;
   font-family: 'Montserrat', sans-serif;
-  color: #06c;
+  color: black;
+
 }

@@ -3,8 +3,8 @@ import React, { useCallback } from 'react'
 import { Box } from '@mui/material'
 
 import { appStatus } from 'app/selectorApp'
-import { GetCardsTC } from 'features/cards/card/card-reducer'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
+import { GetCardsTC } from 'features/cards/card/card-reducer'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 type PropsType = {

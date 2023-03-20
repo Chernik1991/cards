@@ -1,0 +1,73 @@
+.closeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  /* background-color: none; */
+  background: none;
+  border: none;
+  border-radius: 10px;
+}
+
+/* .closeButton:hover {
+  transform: translateY(-1px);
+  transition: 0.25s ease-in;
+  background-color: #b6b6b6;
+  border-radius: 10px;
+} */
+.closeIcon {
+  fill: black;
+}
+
+.modalName {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.button {
+  padding: 0px 30px;
+
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  border: none;
+  min-width: 110px;
+
+  font-size: 1rem;
+  box-shadow: 0px 0px 12px #818181;
+}
+
+.buttonCancel {
+  background: #ffffff;
+  color: black;
+}
+.buttonCancel:hover {
+  background: #e5e5e5;
+  color: black;
+}
+.buttonDelete {
+  background: #ff3636;
+  color: #fff;
+}
+.buttonDelete:hover {
+  background: #d20d0d;
+  color: #fff;
+}
+
+.buttonSave {
+  background: #366eff;
+  color: fff;
+}
+.buttonSave:hover {
+  background: #2857ce;
+  color: #fff;
+}
+
+.button:hover {
+  /* transform: translateY(-1px); */
+  transition: 0.25s ease-in;
+  /* background-color: #2857ce; */
+}

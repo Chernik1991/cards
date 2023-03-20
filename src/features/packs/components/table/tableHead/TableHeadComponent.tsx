@@ -11,14 +11,10 @@ import { visuallyHidden } from '@mui/utils'
 import { getPacksTC } from '../../../packsReducer'
 import { HeadCell } from '../PacksTable'
 
-import { PacksParamsType } from 'features/packs/packs-api'
-// import { setUserParamsAC } from 'features/packs/paramsReducer'
 import { useAppDispatch } from 'store/store'
 
 type TableHeadComponentProps = {
-  numSelected: number
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
   orderBy: string
   rowCount: number
   headCells: HeadCell[]
@@ -62,11 +58,6 @@ export const TableHeadComponent = (props: TableHeadComponentProps) => {
               IconComponent={ArrowDropDown}
               sx={{ fontWeight: '600' }}
             >
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {/* {order === 'desc' ? 'sorted descending' : 'sorted ascending'} */}
-                </Box>
-              ) : null}
               {headCell.label}
             </TableSortLabel>
           </TableCell>
