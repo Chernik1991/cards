@@ -3,19 +3,16 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 
-import { ModalBasic } from '../../common/components/c11-SuperModal/ModalBasic'
-
 import { AddNewPack } from './constants/AddNewPackModal/AddNewPack'
 import { DeletePack } from './constants/DeletePack'
 import { EditPack } from './constants/EditPack'
 
+import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import e from 'features/packs/Packs.module.css'
 import { getPacksTC } from 'features/packs/packsReducer'
-import { SearchPackPanel } from 'features/packs/SearchPackPanel'
-import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
 import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { packCardPacks, packCardPacksTotalCount, packPage, packPageCount } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
@@ -39,15 +36,6 @@ export const Packs = () => {
   const modalOpenHandler = (value: string) => {
     handleOpen(value)
   }
-  const newPackHandler2 = () => {
-    // dispatch(addPackTC({ cardsPack: {} }, userParams))
-  }
-  // const newPackHandler2 = () => {
-  // handleOpen2()
-  // const userParams = paramsID ? paramsID : ''
-  // dispatch(addPackTC({ cardsPack: {} }, userParams))
-  // }
-
   const paginationLabel = 'Packs per Page'
 
   const onChangePageHandler = (page: number, size: number) => {
@@ -68,7 +56,6 @@ export const Packs = () => {
       dispatch(getPacksTC({ sortPacks: sortPacks }))
     }
   }
-  const someJSX = <div>1</div>
 
   return (
     <div className={e.packsContainer}>

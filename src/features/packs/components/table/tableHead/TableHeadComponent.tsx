@@ -1,15 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
-import Box from '@mui/material/Box'
+import { ArrowDropDown } from '@mui/icons-material'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { visuallyHidden } from '@mui/utils'
 
-import { getPacksTC } from '../../../packsReducer'
-import { useAppDispatch } from 'store/store'
 import { HeadCell } from 'features/packs/components/table/PacksTable'
 
 type TableHeadComponentProps = {
