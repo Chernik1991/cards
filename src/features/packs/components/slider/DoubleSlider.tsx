@@ -21,7 +21,6 @@ export const InputSlider: FC<InputSliderPropsType> = memo(
 
     const onChangeSliderHandler = useCallback(
       (event: Event | SyntheticEvent<Element, Event>, value: number | number[]) => {
-        if (!Array.isArray(value)) return
         if (Array.isArray(value)) {
           setValue([value[0], value[1]])
         }
@@ -54,8 +53,9 @@ export const InputSlider: FC<InputSliderPropsType> = memo(
     }, [value])
 
     useEffect(() => {
-      if (value[0] === minValue && value[1] === maxValue) return
-      setValue([minValue, maxValue])
+      if (value[0] === minValue && value[1] === maxValue) {
+        setValue([minValue, maxValue])
+      }
     }, [minValue, maxValue])
 
     const inputProps = {

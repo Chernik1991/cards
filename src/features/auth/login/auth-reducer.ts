@@ -28,31 +28,23 @@ export const loginTC =
     try {
       const res = await authAPI.login(data)
 
-      if (res.status === 200) {
-        dispatch(setIsLoggedInAC(true))
-        dispatch(setUserDataAC(res.data))
-        dispatch(setAppStatusAC('succeeded'))
-      } else {
-        dispatch(setAppStatusAC('failed'))
-      }
+      dispatch(setIsLoggedInAC(true))
+      dispatch(setUserDataAC(res.data))
+      dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
   }
 export const initializeAppTC = (): AppThunkType => async dispatch => {
-  console.log(2, 'initializeAppTC')
+  console.log('initializeAppTC')
   dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.me()
 
-    if (res.request.status === 200) {
-      dispatch(setIsLoggedInAC(true))
-      dispatch(setUserDataAC(res.data))
-      dispatch(setAppStatusAC('succeeded'))
-    } else {
-      dispatch(setAppStatusAC('failed'))
-    }
+    dispatch(setIsLoggedInAC(true))
+    dispatch(setUserDataAC(res.data))
+    dispatch(setAppStatusAC('succeeded'))
   } catch (e) {
     dispatch(setAppStatusAC('failed'))
   } finally {

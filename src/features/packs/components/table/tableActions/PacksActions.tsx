@@ -5,8 +5,6 @@ import { NavLink } from 'react-router-dom'
 
 import e from './PacksActions.module.css'
 
-import { SomeJSX2 } from 'features/packs/modal/constants/AddNewPack'
-import { ModalBasic } from 'features/packs/modal/ModalBasic'
 import { PATH } from 'routes/pages'
 
 type PacksActionsType = {
@@ -20,7 +18,7 @@ type PacksActionsType = {
   // modalChangeState: () => void
 }
 
-const PacksActions = ({
+export const PacksActions = ({
   align,
   sx,
   crudAccess,
@@ -73,5 +71,3 @@ PacksActionsType) => {
     </TableCell>
   )
 }
-
-export default PacksActions

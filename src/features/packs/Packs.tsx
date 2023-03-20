@@ -8,11 +8,10 @@ import { ModalBasic } from './modal/ModalBasic'
 
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
-import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
-import { ResponsePacksType } from 'features/packs/packs-api'
 import e from 'features/packs/Packs.module.css'
-import { addPackTC, getPacksTC } from 'features/packs/packsReducer'
+import { getPacksTC } from 'features/packs/packsReducer'
+import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { packCardPacks, packCardPacksTotalCount, packPage, packPageCount } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -35,14 +34,7 @@ export const Packs = () => {
 
   const newPackHandler = () => {
     handleOpen('one')
-
-    // dispatch(addPackTC({ cardsPack: {} }, userParams))
   }
-  // const newPackHandler2 = () => {
-  // handleOpen2()
-  // const userParams = paramsID ? paramsID : ''
-  // dispatch(addPackTC({ cardsPack: {} }, userParams))
-  // }
 
   const paginationLabel = 'Packs per Page'
 
@@ -53,6 +45,15 @@ export const Packs = () => {
     } else {
       dispatch(getPacksTC({ page: page, pageCount: size }))
       setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+    }
+  }
+  const setParamsSortedHandler = (sortPacks: string) => {
+    if (myPacks) {
+      setSearchParams({ user_id: userID, sortPacks: sortPacks })
+      dispatch(getPacksTC({ user_id: userID, sortPacks: sortPacks }))
+    } else {
+      setSearchParams({ sortPacks: sortPacks })
+      dispatch(getPacksTC({ sortPacks: sortPacks }))
     }
   }
   const someJSX = <div>1</div>
@@ -76,7 +77,12 @@ export const Packs = () => {
           </SuperButton>
         </Box>
         <SearchPackPanel />
-        <PacksTable cardsPacks={userPacks.cardPacks} userID={userID} userIDsettings={userID} />
+        <PacksTable
+          cardsPacks={userPacks.cardPacks}
+          userID={userID}
+          userIDsettings={userID}
+          setParamsSorted={setParamsSortedHandler}
+        />
         <PaginationComponent
           totalCount={cardPacksTotalCount}
           currentPage={page ?? 1}

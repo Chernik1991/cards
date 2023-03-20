@@ -88,4 +88,4 @@ export type ResponseInfoType = {
 export type ProfileType = {
   name: string
   avatar?: string
-} // убрать потом
+}

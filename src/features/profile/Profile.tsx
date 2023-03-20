@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import y from './Profile.module.css'
 
@@ -30,24 +30,23 @@ export const Profile = () => {
   const editedMode = useAppSelector(editedModeProfile)
   const name = useAppSelector(nameProfile)
   const email = useAppSelector(emailProfile)
-  const [searchParams, setSearchParams] = useSearchParams()
 
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
   if (!userId) {
+    console.log('!userId')
     useEffect(() => {
-      initializeAppTC()
+      dispatch(initializeAppTC())
     }, [])
   }
   if (!isLoggedIn) {
+    console.log('Profile !isLoggedIn')
+
     return <Navigate to={PATH.LOGIN} replace />
   }
   const logOutHandler = () => {
     dispatch(logoutTC())
 
     return <Navigate to={PATH.LOGIN} replace />
-  }
-  const packsListHandler = () => {
-    setSearchParams({ user_id: userId.toString() })
   }
   const customStyle = editedMode ? y.activeEditmode : ''
 
@@ -76,7 +75,7 @@ export const Profile = () => {
               paddingTop: 4,
             }}
           >
-            <NavLink className={y.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
+            <NavLink className={y.backContainer} to={PATH.PACKS}>
               <svg className={y.backArrow} viewBox="0 0 512 512">
                 <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
               </svg>
@@ -128,7 +127,6 @@ export const Profile = () => {
                   SAVE
                 </SuperButton>
                 <SuperEditableSpan
-                  // className={s.spanContainer}
                   value={currentName}
                   defaultInputClassName={y.profileInput}
                   spanProps={{

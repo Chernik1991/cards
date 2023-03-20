@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
@@ -90,7 +90,6 @@ export const CreateNewPassword = () => {
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
-                required
                 fullWidth
                 autoComplete="current-password"
                 type={Password ? 'text' : 'password'}
@@ -110,13 +109,11 @@ export const CreateNewPassword = () => {
                 label={'password'}
                 {...formik.getFieldProps('password')}
               />
-              <FormHelperText id="component-error-text">
-                {formik.touched.password && formik.errors.password ? (
-                  <div style={{ color: 'red' }}>{formik.errors.password}</div>
-                ) : (
-                  ' '
-                )}
-              </FormHelperText>
+              {formik.touched.password && formik.errors.password ? (
+                <div style={{ color: 'red', paddingTop: 10, paddingBottom: 10 }}>{formik.errors.password}</div>
+              ) : (
+                <div style={{ padding: 20 }}>{''}</div>
+              )}
             </FormControl>
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>{'Create new password and we will send you further instructions to email'}</Grid>

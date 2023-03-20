@@ -24,14 +24,12 @@ export const PacksToggleButton = () => {
 
   const handleChangeMy = () => {
     dispatch(setAppStatusAC('loading'))
-    // dispatch(setUserParamsAC({ user_id: getIdUser }))
     dispatch(getPacksTC({ user_id: getIdUser }))
     setSearchParams({ user_id: getIdUser.toString() })
     dispatch(setMyPacksAC(true))
   }
   const handleChangeAll = () => {
     dispatch(setAppStatusAC('loading'))
-    // dispatch(setUserParamsAC({ user_id: null }))
     dispatch(getPacksTC({}))
     setSearchParams({})
     dispatch(setMyPacksAC(false))

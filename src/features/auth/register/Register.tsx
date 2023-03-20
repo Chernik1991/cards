@@ -110,7 +110,7 @@ export const Register = () => {
           <form onSubmit={formik.handleSubmit}>
             <FormGroup>
               <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Email</InputLabel>
+                <InputLabel htmlFor="standard-adornment-Email">Email</InputLabel>
                 <Input id="standard-adornment-Email" type="text" {...formik.getFieldProps('email')} />
               </FormControl>
 
@@ -143,9 +143,9 @@ export const Register = () => {
               ) : null}
 
               <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Confirm password</InputLabel>
+                <InputLabel htmlFor="standard-adornment-confirm-password">Confirm password</InputLabel>
                 <Input
-                  id="standard-adornment-password"
+                  id="standard-adornment-confirm-password"
                   type={showPassword ? 'text' : 'password'}
                   {...formik.getFieldProps('confirmPassword')}
                   endAdornment={

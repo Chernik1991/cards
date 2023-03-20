@@ -3,9 +3,6 @@ import { ChangeEvent, FC, MouseEvent, useEffect, useState } from 'react'
 import TablePagination from '@mui/material/TablePagination'
 
 import { useThrottle } from 'common/hooks/useTrottle'
-import { PacksParamsType } from 'features/packs/packs-api'
-// import { setUserParamsAC } from 'features/packs/paramsReducer'
-import { useAppDispatch } from 'store/store'
 
 type PaginationComponentPropsType = {
   labelRowsPerPage?: string
@@ -22,23 +19,17 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   currentPage,
   labelRowsPerPage,
 }) => {
+  console.log('PaginationComponent')
   const [rowsPerPage, setRowsPerPage] = useState(pageSize)
   const [page, setPage] = useState(currentPage)
   const throttledPage = useThrottle(page, 3000)
-  const dispatch = useAppDispatch()
-
-  console.log(page)
-
-  console.log('PaginationComponent')
 
   useEffect(() => {
     setRowsPerPage(pageSize)
   }, [pageSize])
-
   useEffect(() => {
     setPage(currentPage)
   }, [currentPage])
-
   useEffect(() => {
     onPageChanged(page, rowsPerPage)
   }, [rowsPerPage, throttledPage])
@@ -47,7 +38,6 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
     setRowsPerPage(parseInt(event.target.value, 10))
   }
   const onChangePageHandler = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
-    // dispatch(setUserParamsAC({ ...restParams, page: page + 1 }))
     setPage(page + 1)
   }
 

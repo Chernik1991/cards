@@ -88,21 +88,18 @@ link</a>
           >
             <TextField
               margin="normal"
-              required //посмотреть убрать
-              fullWidth //посмотреть убрать
+              fullWidth
               id="email"
               label="Email Address"
-              autoComplete="email" //посмотреть убрать
-              autoFocus //посмотреть убрать
+              autoComplete="email"
+              autoFocus
               {...formik.getFieldProps('email')}
-              helperText={
-                formik.touched.email && formik.errors.email ? (
-                  <div style={{ color: 'red' }}>{formik.errors.email}</div>
-                ) : (
-                  ' '
-                )
-              }
             />
+            {formik.touched.email && formik.errors.email ? (
+              <div style={{ color: 'red', paddingTop: 10, paddingBottom: 10 }}>{formik.errors.email}</div>
+            ) : (
+              <div style={{ padding: 20 }}>{''}</div>
+            )}
             <Grid container>
               <Grid item xs></Grid>
               <Grid container flexDirection={'column'} alignItems={'center'}>

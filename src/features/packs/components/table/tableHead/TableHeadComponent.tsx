@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
+import { ArrowDropDown } from '@mui/icons-material'
 import Box from '@mui/material/Box'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
@@ -8,35 +8,23 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 
-import { getPacksTC } from '../../../packsReducer'
-import { HeadCell } from '../PacksTable'
-
-import { PacksParamsType } from 'features/packs/packs-api'
-// import { setUserParamsAC } from 'features/packs/paramsReducer'
-import { useAppDispatch } from 'store/store'
+import { HeadCell } from 'features/packs/components/table/PacksTable'
 
 type TableHeadComponentProps = {
-  numSelected: number
-  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onRequestSort: (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => void
   orderBy: string
   rowCount: number
   headCells: HeadCell[]
 }
 
 export const TableHeadComponent = (props: TableHeadComponentProps) => {
-  const dispatch = useAppDispatch()
-  const [sort, setSort] = React.useState(1)
-  const [sortProperety, setSortProperety] = React.useState('name')
+  const [sort, setSort] = useState(1)
 
   const { orderBy, onRequestSort } = props
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
-    const newParams = { sortPacks: sort + property }
+    const sortPacks = sort + property
 
-    onRequestSort(event, property)
-    setSortProperety(orderBy)
-    // dispatch(setUserParamsAC(newParams))
-    dispatch(getPacksTC(newParams))
+    onRequestSort(event, property, sortPacks)
     if (sort === 0) {
       setSort(1)
     } else {
@@ -52,7 +40,6 @@ export const TableHeadComponent = (props: TableHeadComponentProps) => {
             key={crypto.randomUUID()}
             align={headCell.numeric ? 'left' : 'right'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
-            // sortDirection={orderBy === headCell.id ? order : false}
             sx={{ backgroundColor: '#efefef', padding: '15px 30px' }}
           >
             <TableSortLabel
@@ -64,7 +51,7 @@ export const TableHeadComponent = (props: TableHeadComponentProps) => {
             >
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {/* {order === 'desc' ? 'sorted descending' : 'sorted ascending'} */}
+                  {orderBy === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </Box>
               ) : null}
               {headCell.label}

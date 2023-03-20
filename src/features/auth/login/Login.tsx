@@ -2,15 +2,7 @@ import * as React from 'react'
 import { useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import {
-  Avatar,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@mui/material'
+import { Avatar, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -38,6 +30,7 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 export const Login = () => {
+  console.log('Login')
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(isLoggedInAuth)
   const formik = useFormik({
@@ -107,26 +100,22 @@ export const Login = () => {
           >
             <TextField
               margin="normal"
-              required
               fullWidth
               id="email"
               label="Email Address"
               autoComplete="email"
               autoFocus
               {...formik.getFieldProps('email')}
-              helperText={
-                formik.touched.email && formik.errors.email ? (
-                  <div style={{ color: 'red' }}>{formik.errors.email}</div>
-                ) : (
-                  ' '
-                )
-              }
             />
+            {formik.touched.email && formik.errors.email ? (
+              <div style={{ color: 'red', paddingTop: 10, paddingBottom: 10 }}>{formik.errors.email}</div>
+            ) : (
+              <div style={{ padding: 20 }}>{''}</div>
+            )}
             <FormControl sx={{ width: '50ch' }} variant={'outlined'}>
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
-                required
                 fullWidth
                 autoComplete="current-password"
                 type={Password ? 'text' : 'password'}
@@ -146,13 +135,11 @@ export const Login = () => {
                 label={'password'}
                 {...formik.getFieldProps('password')}
               />
-              <FormHelperText id="component-error-text">
-                {formik.touched.password && formik.errors.password ? (
-                  <div style={{ color: 'red' }}>{formik.errors.password}</div>
-                ) : (
-                  ' '
-                )}
-              </FormHelperText>
+              {formik.touched.password && formik.errors.password ? (
+                <div style={{ color: 'red', paddingTop: 10, paddingBottom: 10 }}>{formik.errors.password}</div>
+              ) : (
+                <div style={{ padding: 20 }}>{''}</div>
+              )}
             </FormControl>
             <FormControlLabel
               control={

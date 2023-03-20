@@ -17,6 +17,7 @@ import { useAppSelector } from 'store/store'
 const theme = createTheme()
 
 export const CheckEmail = () => {
+  console.log('CheckEmail')
   const email = useAppSelector(emailAuth)
 
   return (
