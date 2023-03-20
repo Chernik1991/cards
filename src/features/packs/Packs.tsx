@@ -34,7 +34,14 @@ export const Packs = () => {
 
   const newPackHandler = () => {
     handleOpen('one')
+
+    // dispatch(addPackTC({ cardsPack: {} }, userParams))
   }
+  // const newPackHandler2 = () => {
+  // handleOpen2()
+  // const userParams = paramsID ? paramsID : ''
+  // dispatch(addPackTC({ cardsPack: {} }, userParams))
+  // }
 
   const paginationLabel = 'Packs per Page'
 
