@@ -62,6 +62,7 @@ type PacksTableType = {
 }
 
 export const PacksTable = (props: PacksTableType) => {
+  console.log('PacksTable')
   const dispatch = useAppDispatch()
   const rows = props.cardsPacks.map((el: PackType) => ({
     name: el.name,

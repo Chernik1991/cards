@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -17,23 +17,25 @@ import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Card = () => {
   const dispatch = useAppDispatch()
-  const page = useAppSelector(pageCard)
+  const cardPage = useAppSelector(pageCard)
+  const pageCount = useAppSelector(cardsPageCount)
+  const totalCount = useAppSelector(cardsTotalCount)
   const rows = useAppSelector<Array<CardsType>>(cards)
   const user_id = useAppSelector(packUserId)
-
-  console.log(user_id)
   const my_id = useAppSelector(state => state.profile._id)
-
-  console.log(my_id)
-  const totalCount = useAppSelector(cardsTotalCount)
-  const pageCount = useAppSelector(cardsPageCount)
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   //временно
-
   const paginationLabel = 'Cards per Page'
-  const isNotEmptyPack = !!rows.length
+  const isNotEmptyCard = !!rows.length
   const [searchParams, setSearchParams] = useSearchParams()
-  // const [cardsPack_id, setCardsPack_id] = useState('')
+  const params = Object.fromEntries(searchParams)
+  const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
+
+  useEffect(() => {
+    console.log('useEffect search')
+    dispatch(GetCardsTC({ ...search }))
+    setSearchParams({ ...search })
+  }, [search])
 
   const packsListHandler = () => {
     // dispatch(getPacksTC({}))
@@ -54,16 +56,20 @@ export const Card = () => {
     setSearchParams({ ...data })
   }
   const onChangePageHandler = (page: number, pageCount: number) => {
-    const params = Object.fromEntries(searchParams)
-
-    dispatch(GetCardsTC({ cardsPack_id: params.cardsPack_id, page: page, pageCount: pageCount }))
-    setSearchParams({
-      cardsPack_id: params.cardsPack_id.toString(),
-      page: page.toString(),
-      pageCount: pageCount.toString(),
-    })
-    console.log('Card onChangePageHandler')
+    if (cardPage == page && pageCount == 4) {
+      setSearchParams({ ...search, page: page, pageCount: pageCount })
+    } else {
+      setSearch({ ...search, page: page, pageCount: pageCount })
+    }
   }
+  //      dispatch(GetCardsTC({ cardsPack_id: params.cardsPack_id, page: cardPage, pageCount: pageCount }))
+  //   setSearchParams({
+  //     cardsPack_id: params.cardsPack_id.toString(),
+  //     page: cardPage.toString(),
+  //     pageCount: pageCount.toString(),
+  //   })
+  //   console.log('Card onChangePageHandler')
+  // }
 
   if (rows.length === 0 && my_id === user_id) {
     console.log(rows.length === 0, 'rows.length === 0')
@@ -71,15 +77,15 @@ export const Card = () => {
 
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
-  useEffect(() => {
-    const params = Object.fromEntries(searchParams)
-
-    console.log(params)
-
-    dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
-    // setCardsPack_id(params.cardsPack_id)
-    setSearchParams({ cardsPack_id: cardsPack_id })
-  }, [cardsPack_id])
+  // useEffect(() => {
+  //   const params = Object.fromEntries(searchParams)
+  //
+  //   console.log(params)
+  //
+  //   dispatch(GetCardsTC({ cardsPack_id: cardsPack_id }))
+  //   // setCardsPack_id(params.cardsPack_id)
+  //   setSearchParams({ cardsPack_id: cardsPack_id })
+  // }, [cardsPack_id])
 
   return (
     <>
@@ -161,7 +167,23 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <EnhancedTable cards={rows} my_id={my_id} />
+          {isNotEmptyCard ? (
+            <EnhancedTable cards={rows} my_id={my_id} />
+          ) : (
+            <Box
+              sx={{
+                gridArea: 'center',
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingLeft: 50,
+                paddingTop: 25,
+              }}
+            >
+              <div>{'not answer'}</div>
+            </Box>
+          )}
         </Box>
         <Box
           sx={{
@@ -174,14 +196,16 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          {isNotEmptyPack && (
+          {isNotEmptyCard ? (
             <PaginationComponent
               totalCount={totalCount}
-              currentPage={page ?? 1}
-              pageSize={pageCount ?? 4}
+              currentPage={params.page ? +params.page : cardPage}
+              pageSize={params.pageCount ? +params.pageCount : pageCount}
               onPageChanged={onChangePageHandler}
               labelRowsPerPage={paginationLabel}
             />
+          ) : (
+            ''
           )}
         </Box>
       </div>

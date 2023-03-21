@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
@@ -19,41 +19,60 @@ import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
+  console.log('Packs')
   const dispatch = useAppDispatch()
   const cardPacks = useAppSelector(packCardPacks)
-  const page = useAppSelector(packPage)
+  const pagePacks = useAppSelector(packPage)
   const pageCount = useAppSelector(packPageCount)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
   const [searchParams, setSearchParams] = useSearchParams()
+  const [search, setSearch] = useState<any>()
   const myPacks = useAppSelector(state => state.packs.myPacks)
   const userPacks = useAppSelector(state => state.packs)
   const params = Object.fromEntries(searchParams)
   const [open, setOpen] = useState('false')
+  const [searchInputCallBack, setSearchInputCallBack] = useState<boolean>(false)
+  const isNotEmptyPack = !!cardPacks.length
+
+  useEffect(() => {
+    console.log('useEffect search')
+    dispatch(getPacksTC({ ...search }))
+    setSearchParams({ ...search })
+  }, [search])
   const handleOpen = (value: string) => setOpen(value)
   const handleClose = () => setOpen('false')
-
+  const paginationLabel = 'Packs per Page'
   const modalOpenHandler = (value: string) => {
     handleOpen(value)
   }
-  const paginationLabel = 'Packs per Page'
-
   const onChangePageHandler = (page: number, size: number) => {
-    if (myPacks) {
-      dispatch(getPacksTC({ user_id: userID, page: page, pageCount: size }))
-      setSearchParams({ user_id: userID, page: page.toString(), pageCount: pageCount.toString() })
+    if (pagePacks == page && pageCount == 4) {
+      setSearchParams({ ...search, page: page, pageCount: size })
     } else {
-      dispatch(getPacksTC({ page: page, pageCount: size }))
-      setSearchParams({ page: page.toString(), pageCount: pageCount.toString() })
+      setSearch({ ...search, page: page, pageCount: size })
     }
   }
   const setParamsSortedHandler = (sortPacks: string) => {
-    if (myPacks) {
-      setSearchParams({ user_id: userID, sortPacks: sortPacks })
-      dispatch(getPacksTC({ user_id: userID, sortPacks: sortPacks }))
+    setSearch({ ...search, sortPacks: sortPacks })
+  }
+  const callBackSearchInput = () => {
+    setSearchInputCallBack(true)
+  }
+  const onChangeSearchHandler = (searchValue: string) => {
+    if (searchInputCallBack) {
+      setSearch({ ...search, packName: searchValue })
+    }
+  }
+  const onChangeValuesHandler = useCallback((values: number[]) => {
+    setSearch({ ...search, min: values[0], max: values[1] })
+  }, [])
+
+  const handleChangeMyPack = (my: boolean) => {
+    if (my) {
+      setSearch({ ...search, user_id: userID })
     } else {
-      setSearchParams({ sortPacks: sortPacks })
-      dispatch(getPacksTC({ sortPacks: sortPacks }))
+      setSearch({})
     }
   }
 
@@ -75,21 +94,47 @@ export const Packs = () => {
             Add new pack
           </SuperButton>
         </Box>
-        <SearchPackPanel />
-        <PacksTable
-          cardsPacks={userPacks.cardPacks}
-          userID={userID}
-          userIDsettings={userID}
-          setParamsSorted={setParamsSortedHandler}
-          modalHandler={modalOpenHandler}
+        <SearchPackPanel
+          searchParams={searchParams}
+          onChangeSearchHandler={onChangeSearchHandler}
+          onChangeValuesHandler={onChangeValuesHandler}
+          callBackSearchInput={callBackSearchInput}
+          handleChangeMyPack={handleChangeMyPack}
         />
-        <PaginationComponent
-          totalCount={cardPacksTotalCount}
-          currentPage={page ?? 1}
-          pageSize={pageCount ?? 4}
-          onPageChanged={onChangePageHandler}
-          labelRowsPerPage={paginationLabel}
-        />
+        {isNotEmptyPack ? (
+          <PacksTable
+            cardsPacks={userPacks.cardPacks}
+            userID={userID}
+            userIDsettings={userID}
+            setParamsSorted={setParamsSortedHandler}
+            modalHandler={modalOpenHandler}
+          />
+        ) : (
+          <Box
+            sx={{
+              gridArea: 'center',
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingLeft: 50,
+              paddingTop: 25,
+            }}
+          >
+            <div>{'not answer'}</div>
+          </Box>
+        )}
+        {isNotEmptyPack ? (
+          <PaginationComponent
+            totalCount={cardPacksTotalCount}
+            currentPage={params.page ? +params.page : pagePacks}
+            pageSize={params.pageCount ? +params.pageCount : pageCount}
+            onPageChanged={onChangePageHandler}
+            labelRowsPerPage={paginationLabel}
+          />
+        ) : (
+          ''
+        )}
         <ModalBasic
           modalName={'Add new pack'}
           deleteSave={false}

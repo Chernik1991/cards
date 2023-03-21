@@ -1,38 +1,25 @@
 import * as React from 'react'
+import { useState } from 'react'
 
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import { useSearchParams } from 'react-router-dom'
 
-import { setAppStatusAC } from 'app/app-reducer'
-import { getPacksTC, setMyPacksAC } from 'features/packs/packsReducer'
-import { userIdProfile } from 'features/profile/selectorProfile'
-import { useAppDispatch, useAppSelector } from 'store/store'
-
-export const PacksToggleButton = () => {
-  const dispatch = useAppDispatch()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const getIdUser = useAppSelector(userIdProfile)
-
-  const [alignment, setAlignment] = React.useState('all')
-
+type PacksToggleButtonType = {
+  handleChangeMyPack: (my: boolean) => void
+}
+export const PacksToggleButton = (props: PacksToggleButtonType) => {
+  console.log('PacksToggleButton')
+  const [alignment, setAlignment] = useState('all')
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment)
     }
   }
-
   const handleChangeMy = () => {
-    dispatch(setAppStatusAC('loading'))
-    dispatch(getPacksTC({ user_id: getIdUser }))
-    setSearchParams({ user_id: getIdUser.toString() })
-    dispatch(setMyPacksAC(true))
+    props.handleChangeMyPack(true)
   }
   const handleChangeAll = () => {
-    dispatch(setAppStatusAC('loading'))
-    dispatch(getPacksTC({}))
-    setSearchParams({})
-    dispatch(setMyPacksAC(false))
+    props.handleChangeMyPack(false)
   }
 
   return (
