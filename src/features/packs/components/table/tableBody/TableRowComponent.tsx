@@ -3,10 +3,7 @@ import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
-import PacksActions from '../tableActions/PacksActions'
-
 import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
-import { deletePackTC, updatePackTC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 

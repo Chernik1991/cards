@@ -8,10 +8,6 @@ import { DeletePack } from './modals/DeletePack/DeletePack'
 import { EditPack } from './modals/EditPack/EditPack'
 import { clearUserStateTypeAC } from './modals/modalsReducer'
 
-import { AddNewPack } from './constants/AddNewPackModal/AddNewPack'
-import { DeletePack } from './constants/DeletePack'
-import { EditPack } from './constants/EditPack'
-
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
@@ -46,7 +42,6 @@ export const Packs = () => {
   const packsAdditionalSettingsPrivate = useAppSelector(packAdditionalSettingsPrivate)
   const [searchParams, setSearchParams] = useSearchParams()
   const [search, setSearch] = useState<any>()
-  const myPacks = useAppSelector(state => state.packs.myPacks)
   const userPacks = useAppSelector(state => state.packs)
   const [open, setOpen] = useState('false')
   const [error, setError] = useState(false)
@@ -65,8 +60,6 @@ export const Packs = () => {
     setOpen('false')
   }
 
-  const handleClose = () => setOpen('false')
-  const paginationLabel = 'Packs per Page'
   const modalOpenHandler = (value: string) => {
     handleOpen(value)
   }
@@ -104,6 +97,7 @@ export const Packs = () => {
   }
   const addNewPack = () => {
     if (packsAdditionalSettings.name) {
+      //!add user_id for soring adter adding NewPack
       dispatch(
         addPackTC({
           name: packsAdditionalSettings.name,
@@ -120,6 +114,7 @@ export const Packs = () => {
   }
   const updatePack = () => {
     if (packsAdditionalSettings.name) {
+      //!add user_id for soring adter adding NewPack
       dispatch(
         updatePackTC({
           _id: packsAdditionalSettings._id,
@@ -135,6 +130,7 @@ export const Packs = () => {
     }
   }
   const deletePack = () => {
+    //!add user_id for soring adter adding NewPack
     dispatch(deletePackTC({ id: packsAdditionalSettings._id }))
     handleClose()
   }

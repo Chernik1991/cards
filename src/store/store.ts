@@ -8,10 +8,10 @@ import { forgotReducer } from 'features/auth/forgotPassword/forgotPassword/forgo
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
 import { cardsReducer } from 'features/cards/card/card-reducer'
+import { learnReducer } from 'features/learn/learnReducer'
 import { modalsReducer } from 'features/packs/modals/modalsReducer'
 import { packsReducer } from 'features/packs/packsReducer'
 import { profileReducer } from 'features/profile/reducerProfile'
-import { learnReducer } from '../features/learn/learnReducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
