@@ -3,7 +3,7 @@ import React from 'react'
 import error404 from 'routes/pages/404.svg'
 import s from 'routes/pages/Error404.module.css'
 
-const Error404 = () => {
+export const Error404 = () => {
   return (
     <div>
       <div className={s.wrapper}>
@@ -12,5 +12,3 @@ const Error404 = () => {
     </div>
   )
 }
-
-export default Error404

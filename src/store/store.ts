@@ -10,6 +10,7 @@ import { registerReducer } from 'features/auth/register/register-reducer'
 import { cardsReducer } from 'features/cards/card/card-reducer'
 import { packsReducer } from 'features/packs/packsReducer'
 import { profileReducer } from 'features/profile/reducerProfile'
+import { learnReducer } from '../features/learn/learnReducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   forgot: forgotReducer,
   packs: packsReducer,
   cards: cardsReducer,
+  learn: learnReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

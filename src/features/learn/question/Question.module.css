@@ -1,0 +1,13 @@
+.questionContainer {
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    padding: 30px 33px;
+}
+
+.numberOfAnswers {
+    opacity: 0.5;
+}
