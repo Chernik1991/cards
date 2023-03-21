@@ -11,6 +11,7 @@ import { cardsReducer } from 'features/cards/card/card-reducer'
 import { modalsReducer } from 'features/packs/modals/modalsReducer'
 import { packsReducer } from 'features/packs/packsReducer'
 import { profileReducer } from 'features/profile/reducerProfile'
+import { learnReducer } from '../features/learn/learnReducer'
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния.
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   forgot: forgotReducer,
   packs: packsReducer,
   cards: cardsReducer,
+  learn: learnReducer,
   packsAdditionalSettings: modalsReducer,
 })
 
