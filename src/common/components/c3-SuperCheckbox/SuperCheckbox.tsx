@@ -2,6 +2,9 @@ import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'reac
 
 import s from './SuperCheckbox.module.css'
 
+import { updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
+import { useAppDispatch } from 'store/store'
+
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
@@ -20,7 +23,14 @@ const SuperCheckbox: React.FC<SuperCheckboxPropsType> = ({
 
   ...restProps // все остальные пропсы попадут в объект restProps
 }) => {
+  const dispatch = useAppDispatch()
   const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.id === 'AddNewPackCheckbox') {
+      dispatch(updateUserPackPrivateAC(e.currentTarget.checked as boolean))
+    }
+    if (e.currentTarget.id === 'EditPackCheckbox') {
+      dispatch(updateUserPackPrivateAC(e.currentTarget.checked as boolean))
+    }
     if (onChangeChecked) {
       onChangeChecked(e.currentTarget.checked)
     }

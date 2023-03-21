@@ -72,6 +72,7 @@ export const PacksTable = (props: PacksTableType) => {
     cardsCount: el.cardsCount,
     id: el._id,
     packOwnerID: el.user_id,
+    private: el.private,
   }))
   const [orderBy, setOrderBy] = useState<string>('name')
 

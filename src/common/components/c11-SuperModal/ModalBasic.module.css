@@ -10,14 +10,14 @@
   border-radius: 10px;
 }
 
-/* .closeButton:hover {
+.closeButton:hover {
   transform: translateY(-1px);
   transition: 0.25s ease-in;
   background-color: #b6b6b6;
   border-radius: 10px;
-} */
+}
 .closeIcon {
-  fill: black;
+  fill: black !important;
 }
 
 .modalName {

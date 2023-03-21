@@ -3,6 +3,10 @@ import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
+import PacksActions from '../tableActions/PacksActions'
+
+import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
+import { deletePackTC, updatePackTC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
@@ -22,12 +26,10 @@ type ExtendedType = {
   cardsCount: number
   id: string
   packOwnerID: string
+  private: boolean
 }
 
 export const TableRowComponent = ({ row, index, userID, cardsListHandler, modalHandler }: TableRowType) => {
-  // const [open, setOpen] = React.useState('false')
-  // const handleOpen = (value: string) => setOpen(value)
-  // const handleClose = () => setOpen('false')
   const dispatch = useAppDispatch()
   const labelId = `enhanced-table-checkbox-${index}`
   const data = new Date(row.updated)
@@ -43,10 +45,15 @@ export const TableRowComponent = ({ row, index, userID, cardsListHandler, modalH
     return <Navigate to={PATH.STUDY} replace />
   }
   const handleDeletePack = () => {
+    dispatch(addNewUserPackAC(row.name))
+    dispatch(updateUserPackIDAC(row.id))
     modalHandler('delete-pack')
     // dispatch(deletePackTC({ id: row.id }, userID))
   }
   const handleUpdatePackName = () => {
+    dispatch(addNewUserPackAC(row.name))
+    dispatch(updateUserPackPrivateAC(row.private))
+    dispatch(updateUserPackIDAC(row.id))
     modalHandler('edit-pack')
     // dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, userID))
   }
@@ -80,8 +87,6 @@ export const TableRowComponent = ({ row, index, userID, cardsListHandler, modalH
         handleStudyingUp={handleStudying}
         handleUpdatePackNameUp={handleUpdatePackName}
         handleDeletePackUp={handleDeletePack}
-        // modalChangeState={handleClose}
-        // modalState={open === row.id}
       />
     </TableRow>
   )

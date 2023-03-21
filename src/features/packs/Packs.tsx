@@ -3,6 +3,11 @@ import { useCallback, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 
+import { AddNewPack } from './modals/AddNewPackModal/AddNewPack'
+import { DeletePack } from './modals/DeletePack/DeletePack'
+import { EditPack } from './modals/EditPack/EditPack'
+import { clearUserStateTypeAC } from './modals/modalsReducer'
+
 import { AddNewPack } from './constants/AddNewPackModal/AddNewPack'
 import { DeletePack } from './constants/DeletePack'
 import { EditPack } from './constants/EditPack'
@@ -12,9 +17,18 @@ import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import e from 'features/packs/Packs.module.css'
-import { getPacksTC } from 'features/packs/packsReducer'
+import { addPackTC, getPacksTC, updatePackTC, deletePackTC } from 'features/packs/packsReducer'
 import { SearchPackPanel } from 'features/packs/SearchPackPanel'
-import { packCardPacks, packCardPacksTotalCount, packPage, packPageCount } from 'features/packs/selectorPack'
+import {
+  packAdditionalSettings,
+  packAdditionalSettingsName,
+  packAdditionalSettingsPrivate,
+  packCardPacks,
+  packCardPacksTotalCount,
+  packMyPacks,
+  packPage,
+  packPageCount,
+} from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -26,12 +40,17 @@ export const Packs = () => {
   const pageCount = useAppSelector(packPageCount)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
+  const myPacks = useAppSelector(packMyPacks)
+  const packsAdditionalSettings = useAppSelector(packAdditionalSettings)
+  const packsAdditionalSettingsName = useAppSelector(packAdditionalSettingsName)
+  const packsAdditionalSettingsPrivate = useAppSelector(packAdditionalSettingsPrivate)
   const [searchParams, setSearchParams] = useSearchParams()
   const [search, setSearch] = useState<any>()
   const myPacks = useAppSelector(state => state.packs.myPacks)
   const userPacks = useAppSelector(state => state.packs)
-  const params = Object.fromEntries(searchParams)
   const [open, setOpen] = useState('false')
+  const [error, setError] = useState(false)
+  const params = Object.fromEntries(searchParams)
   const [searchInputCallBack, setSearchInputCallBack] = useState<boolean>(false)
   const isNotEmptyPack = !!cardPacks.length
 
@@ -41,11 +60,19 @@ export const Packs = () => {
     setSearchParams({ ...search })
   }, [search])
   const handleOpen = (value: string) => setOpen(value)
+  const handleClose = () => {
+    dispatch(clearUserStateTypeAC())
+    setOpen('false')
+  }
+
   const handleClose = () => setOpen('false')
   const paginationLabel = 'Packs per Page'
   const modalOpenHandler = (value: string) => {
     handleOpen(value)
   }
+
+  const paginationLabel = 'Packs per Page'
+
   const onChangePageHandler = (page: number, size: number) => {
     if (pagePacks == page && pageCount == 4) {
       setSearchParams({ ...search, page: page, pageCount: size })
@@ -74,6 +101,42 @@ export const Packs = () => {
     } else {
       setSearch({})
     }
+  }
+  const addNewPack = () => {
+    if (packsAdditionalSettings.name) {
+      dispatch(
+        addPackTC({
+          name: packsAdditionalSettings.name,
+          deckCover: packsAdditionalSettings.deckCover,
+          private: packsAdditionalSettings.private,
+        })
+      )
+      dispatch(clearUserStateTypeAC())
+      handleClose()
+    } else {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+    }
+  }
+  const updatePack = () => {
+    if (packsAdditionalSettings.name) {
+      dispatch(
+        updatePackTC({
+          _id: packsAdditionalSettings._id,
+          name: packsAdditionalSettings.name,
+          private: packsAdditionalSettings.private,
+        })
+      )
+      dispatch(clearUserStateTypeAC())
+      handleClose()
+    } else {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+    }
+  }
+  const deletePack = () => {
+    dispatch(deletePackTC({ id: packsAdditionalSettings._id }))
+    handleClose()
   }
 
   return (
@@ -140,27 +203,45 @@ export const Packs = () => {
           deleteSave={false}
           handleState={open === 'add-pack'}
           handleClose={handleClose}
-          handleModalFn={() => ''}
+          handleModalFn={addNewPack}
         >
-          <AddNewPack />
+          <AddNewPack
+            error={
+              error ? (
+                <span style={{ fontSize: '10px', position: 'relative', top: '60px' }}>Pack name required</span>
+              ) : (
+                ''
+              )
+            }
+          />
         </ModalBasic>
         <ModalBasic
           modalName={'Edit pack'}
           deleteSave={false}
           handleState={open === 'edit-pack'}
           handleClose={handleClose}
-          handleModalFn={() => ''}
+          handleModalFn={updatePack}
         >
-          <EditPack />
+          <EditPack
+            packStatus={packsAdditionalSettingsPrivate}
+            packName={packsAdditionalSettingsName}
+            error={
+              error ? (
+                <span style={{ fontSize: '10px', position: 'relative', top: '60px' }}>Pack name required</span>
+              ) : (
+                ''
+              )
+            }
+          />
         </ModalBasic>
         <ModalBasic
           modalName={'Delete pack'}
           deleteSave={true}
           handleState={open === 'delete-pack'}
           handleClose={handleClose}
-          handleModalFn={() => ''}
+          handleModalFn={deletePack}
         >
-          <DeletePack />
+          <DeletePack packName={packsAdditionalSettingsName} />
         </ModalBasic>
       </div>
     </div>
