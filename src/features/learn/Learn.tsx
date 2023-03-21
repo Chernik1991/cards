@@ -1,14 +1,12 @@
+import { Paper } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import y from '../profile/Profile.module.css'
-
-import s from './Learn.module.css'
-
+import { Answer } from 'features/learn/answer/Answer'
+import s from 'features/learn/Learn.module.css'
+import { Question } from 'features/learn/question/Question'
+import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
-import { useAppSelector } from '../../store/store'
-import Paper from '@mui/material/Paper'
-import { Question } from './question/Question'
-import { Answer } from './answer/Answer'
+import { useAppSelector } from 'store/store'
 
 export const Learn = () => {
   const packName = useAppSelector(state => state.cards.packName)

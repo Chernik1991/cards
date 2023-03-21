@@ -3,10 +3,9 @@ import React from 'react'
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
 
-import { PacksToggleButton } from './components/ToggleButton/PacksToggleButton'
-
 import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
+import { PacksToggleButton } from 'features/packs/components/ToggleButton/PacksToggleButton'
 import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
 import { useAppSelector } from 'store/store'
 

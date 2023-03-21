@@ -7,10 +7,9 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 
-import { TableRowComponent } from './tableBody/TableRowComponent'
-import { TableHeadComponent } from './tableHead/TableHeadComponent'
-
 import { setPackIdAC } from 'features/cards/card/card-reducer'
+import { TableRowComponent } from 'features/packs/components/table/tableBody/TableRowComponent'
+import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { PackType } from 'features/packs/packs-api'
 import { useAppDispatch } from 'store/store'
 

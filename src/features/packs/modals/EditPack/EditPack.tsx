@@ -1,9 +1,8 @@
 import { ReactNode } from 'react'
 
-import o from './EditPack.module.css'
-
 import SuperInputText from 'common/components/c1-SuperInputText/SuperInputText'
 import SuperCheckbox from 'common/components/c3-SuperCheckbox/SuperCheckbox'
+import o from 'features/packs/modals/EditPack/EditPack.module.css'
 
 type EditPackType = {
   error?: ReactNode

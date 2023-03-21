@@ -3,17 +3,16 @@ import { useCallback, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 
-import { AddNewPack } from './modals/AddNewPackModal/AddNewPack'
-import { DeletePack } from './modals/DeletePack/DeletePack'
-import { EditPack } from './modals/EditPack/EditPack'
-import { clearUserStateTypeAC } from './modals/modalsReducer'
-
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
+import { AddNewPack } from 'features/packs/modals/AddNewPackModal/AddNewPack'
+import { DeletePack } from 'features/packs/modals/DeletePack/DeletePack'
+import { EditPack } from 'features/packs/modals/EditPack/EditPack'
+import { clearUserStateTypeAC } from 'features/packs/modals/modalsReducer'
 import e from 'features/packs/Packs.module.css'
-import { addPackTC, getPacksTC, updatePackTC, deletePackTC } from 'features/packs/packsReducer'
+import { addPackTC, deletePackTC, getPacksTC, updatePackTC } from 'features/packs/packsReducer'
 import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import {
   packAdditionalSettings,

@@ -3,8 +3,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import TableCell from '@mui/material/TableCell'
 import { NavLink } from 'react-router-dom'
 
-import e from './PacksActions.module.css'
-
+import e from 'features/packs/components/table/tableActions/PacksActions.module.css'
 import { PATH } from 'routes/pages'
 
 type PacksActionsType = {

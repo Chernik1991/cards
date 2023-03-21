@@ -1,4 +1,4 @@
-import o from './DeletePack.module.css'
+import o from 'features/packs/modals/DeletePack/DeletePack.module.css'
 
 type DeletePackType = {
   packName: string | undefined

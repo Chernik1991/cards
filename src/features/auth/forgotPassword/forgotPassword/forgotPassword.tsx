@@ -13,8 +13,7 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
-import { setForgotTC } from './forgotPassword-reducer'
-
+import { setForgotTC } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
 import { forgotPasswordAuth } from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'

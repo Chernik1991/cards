@@ -4,13 +4,12 @@ import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import y from './Profile.module.css'
-
 import userPic1 from 'assets/img/profile/Alex.jpg'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEditableSpan'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import { isLoggedInAuth } from 'features/auth/selectorAuth'
+import y from 'features/profile/Profile.module.css'
 import {
   currentNameProfile,
   editedModeProfile,

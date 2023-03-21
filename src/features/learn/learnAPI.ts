@@ -1,4 +1,4 @@
-import { instance } from '../auth/auth-api'
+import { instance } from 'features/auth/auth-api'
 
 export const learnAPI = {
   setGradeCard(data: setGradeCardDataType) {
