@@ -14,8 +14,6 @@ type PacksActionsType = {
   handleStudyingUp: () => void
   handleUpdatePackNameUp: () => void
   handleDeletePackUp: () => void
-  // modalState: boolean
-  // modalChangeState: () => void
 }
 
 const PacksActions = ({
@@ -25,11 +23,9 @@ const PacksActions = ({
   handleStudyingUp,
   handleUpdatePackNameUp,
   handleDeletePackUp,
-}: // modalState,
-// modalChangeState,
-PacksActionsType) => {
+}: PacksActionsType) => {
   const updatePackJSX = (
-    <NavLink to={'#'} onClick={handleStudyingUp}>
+    <NavLink to={'#'} onClick={handleUpdatePackNameUp}>
       <svg
         width="20"
         height="20"
@@ -63,9 +59,6 @@ PacksActionsType) => {
         <NavLink to={PATH.STUDY} onClick={handleStudyingUp}>
           <SchoolIcon id="SchoolIcon" sx={{ width: '20px' }} />
         </NavLink>
-        {/* <ModalBasic handleState={modalState} handleClose={modalChangeState}>
-          <SomeJSX2 />
-        </ModalBasic> */}
         {crudAccess ? crudPanel : ''}
       </div>
     </TableCell>

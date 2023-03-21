@@ -16,13 +16,6 @@ import { TableHeadComponent } from './tableHead/TableHeadComponent'
 import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { useAppDispatch } from 'store/store'
 
-type Data = {
-  name: string
-  actions: string
-  created_by: string
-  updated: string
-  cardsCount: string
-}
 //  with example https://mui.com/material-ui/react-table/
 
 export type HeadCell = {
@@ -83,6 +76,7 @@ export const PacksTable = (props: PacksTableType) => {
     cardsCount: el.cardsCount,
     id: el._id,
     packOwnerID: el.user_id,
+    private: el.private,
   }))
   const [orderBy, setOrderBy] = React.useState<string>('name')
 
@@ -129,7 +123,7 @@ export const PacksTable = (props: PacksTableType) => {
           </TableContainer>
         </Paper>
       ) : (
-        ''
+        <div></div>
       )}
     </Box>
   )
