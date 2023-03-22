@@ -1,10 +1,11 @@
-import { CardsType } from '../cards/cards-api'
-import { AppThunkType } from '../../store/store'
 import { setAppStatusAC } from '../../app/app-reducer'
 import { errorUtils } from '../../common/utils/error-utils'
+import { AppThunkType } from '../../store/store'
+import { setCardsDataAC } from '../cards/card/card-reducer'
+import { CardsType } from '../cards/cards-api'
+
 import { learnAPI, setGradeCardDataType } from './learnAPI'
 import { learnLogic } from './learnLogic'
-import { setCardsDataAC } from '../cards/card/card-reducer'
 
 const initialState: learnStateType = {
   isShowAnswer: false,
@@ -14,8 +15,6 @@ const initialState: learnStateType = {
 
 export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
   const gregerg = getState().learn.currentCard
-  // console.log(2, card_id, grade, cards)
-  console.log(gregerg)
 
   dispatch(setAppStatusAC('loading'))
   try {

@@ -1,5 +1,6 @@
-import { instance } from 'features/auth/auth-api'
 import { AxiosResponse } from 'axios'
+
+import { instance } from 'features/auth/auth-api'
 
 export const learnAPI = {
   setGradeCard(data: setGradeCardDataType) {

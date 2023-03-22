@@ -1,9 +1,10 @@
 import { Button } from '@mui/material'
 
+import { changeGradeTC } from '../learnReducer'
+
 import s from 'features/learn/answer/Answer.module.css'
 import { Grades } from 'features/learn/answer/Grades'
 import { useAppDispatch, useAppSelector } from 'store/store'
-import { changeGradeTC } from '../learnReducer'
 
 export const Answer = () => {
   const dispatch = useAppDispatch()

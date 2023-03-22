@@ -1,5 +1,12 @@
+import { useEffect, useState } from 'react'
+
 import { Paper } from '@mui/material'
 import { NavLink, useSearchParams } from 'react-router-dom'
+
+import { GetCardsTC } from '../cards/card/card-reducer'
+
+import { setCurrentCardAC } from './learnReducer'
+import { randomCard } from './randomCard'
 
 import { Answer } from 'features/learn/answer/Answer'
 import s from 'features/learn/Learn.module.css'
@@ -7,10 +14,6 @@ import { Question } from 'features/learn/question/Question'
 import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
-import { useEffect, useState } from 'react'
-import { GetCardsTC } from '../cards/card/card-reducer'
-import { setCurrentCardAC } from './learnReducer'
-import { randomCard } from './randomCard'
 
 export const Learn = () => {
   const cards = useAppSelector(state => state.cards.cards)
