@@ -8,7 +8,7 @@ import { changeGradeTC } from '../learnReducer'
 export const Answer = () => {
   const dispatch = useAppDispatch()
   const onNextHandler = () => {
-    /* dispatch(changeGradeTC())*/
+    dispatch(changeGradeTC())
     console.log(114)
   }
   const Answer = useAppSelector(state => state.learn.currentCard.answer)

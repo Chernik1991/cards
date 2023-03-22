@@ -8,32 +8,29 @@ import { setCardsDataAC } from '../cards/card/card-reducer'
 
 const initialState: learnStateType = {
   isShowAnswer: false,
-  grade: 1,
+  grade: 0,
   currentCard: {} as CardsType,
 }
 
-export const changeGradeTC = (): AppThunkType => async dispatch => {
-  /*const { card_id, grade, cards } = learnLogic()*/
+export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
+  const gregerg = getState().learn.currentCard
+  // console.log(2, card_id, grade, cards)
+  console.log(gregerg)
 
   dispatch(setAppStatusAC('loading'))
   try {
-    /* const data: setGradeCardDataType = { card_id, grade }*/
+    // const data: setGradeCardDataType = { card_id, grade }
+    // console.log(data)
 
-    /* const res = await learnAPI.setGradeCard(data)*/
+    // const res = await learnAPI.setGradeCard(data)
 
-    /*  dispatch(
-      setCardsDataAC(
-        cards.map(el =>
-          el._id === res.data.card_id
-            ? {
-                ...el,
-                grade: res.data.grade,
-                shots: res.data.shots,
-              }
-            : el
-        )
-      )
-    )*/
+    // dispatch(
+    //   setCardsDataAC(
+    //     cards.map(el =>
+    //       el._id === res.data.cardsPack_id ? { ...el, grade: res.data.grade, shots: res.data.shots } : el
+    //     )
+    //   )
+    // )
 
     dispatch(setAppStatusAC('succeeded'))
   } catch (e: any) {
@@ -61,7 +58,7 @@ export const learnReducer = (state: learnStateType = initialState, action: Actio
 
 export const setShowAnswerAC = (isShowAnswer: boolean) => ({ type: 'SET-SHOW-ANSWER', isShowAnswer } as const)
 export const setGradeAC = (grade: number) => ({ type: 'SET-GRADE', grade } as const)
-export const setCurrentCardAC = (currentCard: {}) => ({ type: 'SET-CURRENT-CARD', currentCard } as const)
+export const setCurrentCardAC = (currentCard: CardsType) => ({ type: 'SET-CURRENT-CARD', currentCard } as const)
 
 export type learnStateType = {
   isShowAnswer: boolean

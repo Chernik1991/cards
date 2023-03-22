@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 
 export const learnAPI = {
   setGradeCard(data: setGradeCardDataType) {
-    return instance.put<setGradeCardDataType, AxiosResponse<setGradeCardResponseType>>('cards/grade', data)
+    return instance.put<setGradeCardDataType, AxiosResponse<setGradeCardResponseType>>('cards/grade', { data })
   },
 }
 

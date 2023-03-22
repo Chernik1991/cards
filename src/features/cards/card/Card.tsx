@@ -206,7 +206,7 @@ export const Card = () => {
               Add new card
             </SuperButton>
           ) : (
-            <NavLink to={PATH.STUDY} replace>
+            <NavLink to={PATH.LEARN} replace>
               <SuperButton className={s.newPackButton}>Learn to pack</SuperButton>
             </NavLink>
           )}
