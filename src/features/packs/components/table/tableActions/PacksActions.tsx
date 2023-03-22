@@ -55,7 +55,7 @@ export const PacksActions = ({
   return (
     <TableCell align={align} sx={sx}>
       <div className={e.actionsContainer}>
-        <NavLink to={PATH.STUDY} onClick={handleStudyingUp}>
+        <NavLink to={PATH.LEARN} onClick={handleStudyingUp}>
           <SchoolIcon id="SchoolIcon" sx={{ width: '20px' }} />
         </NavLink>
         {crudAccess ? crudPanel : ''}

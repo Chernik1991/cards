@@ -1,17 +1,40 @@
 import { Paper } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 
 import { Answer } from 'features/learn/answer/Answer'
 import s from 'features/learn/Learn.module.css'
 import { Question } from 'features/learn/question/Question'
 import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
-import { useAppSelector } from 'store/store'
+import { useAppDispatch, useAppSelector } from 'store/store'
+import { useEffect, useState } from 'react'
+import { GetCardsTC } from '../cards/card/card-reducer'
+import { setCurrentCardAC } from './learnReducer'
+import { randomCard } from './randomCard'
 
 export const Learn = () => {
+  const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
-
   const isShowAnswer = useAppSelector(state => state.learn.isShowAnswer)
+  const cardsPack_id = useAppSelector(state => state.packsAdditionalSettings.cardsPack._id)
+  const dispatch = useAppDispatch()
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const params = Object.fromEntries(searchParams)
+
+  const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
+
+  useEffect(() => {
+    dispatch(GetCardsTC({ ...search }))
+    setSearchParams({ ...search })
+  }, [search])
+
+  useEffect(() => {
+    if (cards.length > 0) {
+      dispatch(setCurrentCardAC(randomCard(cards)))
+    }
+  }, [dispatch, cards, cardsPack_id])
 
   return (
     <div>

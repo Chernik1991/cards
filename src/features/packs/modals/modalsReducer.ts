@@ -1,6 +1,6 @@
 type ModalType = {
   cardsPack: {
-    _id?: string
+    _id: string
     name?: string
     private?: boolean
     deckCover?: string
@@ -8,7 +8,9 @@ type ModalType = {
 }
 
 const initialState: ModalType = {
-  cardsPack: {},
+  cardsPack: {
+    _id: '',
+  },
 }
 
 export const modalsReducer = (state: ModalType = initialState, action: ActionsType): ModalType => {
@@ -38,7 +40,7 @@ export const modalsReducer = (state: ModalType = initialState, action: ActionsTy
     case 'PACKS/CLEAR-STATE': {
       const newState = { ...state }
 
-      newState.cardsPack = {}
+      newState.cardsPack = { _id: '' }
 
       return { ...state, ...newState }
     }

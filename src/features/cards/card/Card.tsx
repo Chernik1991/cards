@@ -116,7 +116,7 @@ export const Card = () => {
               Add new card
             </SuperButton>
           ) : (
-            <NavLink to={PATH.STUDY} replace>
+            <NavLink to={PATH.LEARN} replace>
               <Button
                 variant="contained"
                 sx={{
