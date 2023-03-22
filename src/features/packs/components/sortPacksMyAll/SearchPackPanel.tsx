@@ -3,9 +3,10 @@ import React from 'react'
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
 import { Box, IconButton } from '@mui/material'
 
+import { SortPacksMyAll } from './SortPacksMyAll'
+
 import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
-import { PacksToggleButton } from 'features/packs/components/ToggleButton/PacksToggleButton'
 import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
 import { useAppSelector } from 'store/store'
 
@@ -47,7 +48,7 @@ export const SearchPackPanel = (props: SearchPackPanelType) => {
         <Box>
           <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Show packs cards</label>
         </Box>
-        <PacksToggleButton handleChangeMyPack={props.handleChangeMyPack} />
+        <SortPacksMyAll handleChangeMyPack={props.handleChangeMyPack} />
       </Box>
       {/*<Box>*/}
       {/*  <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Number of cards</label>*/}

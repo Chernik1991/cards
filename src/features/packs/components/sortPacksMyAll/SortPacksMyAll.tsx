@@ -7,7 +7,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 type PacksToggleButtonType = {
   handleChangeMyPack: (my: boolean) => void
 }
-export const PacksToggleButton = (props: PacksToggleButtonType) => {
+export const SortPacksMyAll = (props: PacksToggleButtonType) => {
   console.log('PacksToggleButton')
   const [alignment, setAlignment] = useState('all')
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
