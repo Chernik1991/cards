@@ -79,22 +79,9 @@ export const CardNotPack = () => {
             <Grid item>{`This pack is empty. Click add new card to fill this pack `}</Grid>
           </Grid>
           <Grid container flexDirection={'column'} alignItems={'center'} marginBottom={'49px'}>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: '20px',
-                minWidth: '115px',
-                fontSize: '16px',
-                lineHeight: '20px',
-                fontFamily: 'Montserrat, sans-serif',
-                fontStyle: 'Medium',
-                textTransform: 'none',
-              }}
-            >
-              <a href={PATH.HASH + PATH.CARD} onClick={postCardHandler}>
-                Add new card
-              </a>
-            </Button>
+            <NavLink className={s.newPackButton} to={PATH.HASH + PATH.CARD} onClick={postCardHandler}>
+              Add new card
+            </NavLink>
           </Grid>
         </Box>
       </Box>

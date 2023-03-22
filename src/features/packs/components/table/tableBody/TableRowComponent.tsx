@@ -2,6 +2,7 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
+import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
 import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'
@@ -11,7 +12,6 @@ type TableRowType = {
   row: ExtendedType
   index: number
   userID: string
-  cardsListHandler: (cardsPack_id: string) => void
   modalHandler: (value: string) => void
 }
 
@@ -26,7 +26,7 @@ type ExtendedType = {
   private: boolean
 }
 
-export const TableRowComponent = ({ row, index, userID, cardsListHandler, modalHandler }: TableRowType) => {
+export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRowType) => {
   const dispatch = useAppDispatch()
   const labelId = `enhanced-table-checkbox-${index}`
   const data = new Date(row.updated)
@@ -54,15 +54,12 @@ export const TableRowComponent = ({ row, index, userID, cardsListHandler, modalH
     modalHandler('edit-pack')
     // dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, userID))
   }
+  const cardsListHandler = (cardsPack_id: string) => {
+    dispatch(setPackIdAC(cardsPack_id))
+  }
 
   return (
-    <TableRow
-      hover
-      // onClick={event => handleClick(event, row.name)}
-      role="checkbox"
-      tabIndex={-1}
-      key={crypto.randomUUID()}
-    >
+    <TableRow hover role="checkbox" tabIndex={-1} key={crypto.randomUUID()}>
       <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
         <NavLink to={PATH.CARD} onClick={event => cardsListHandler(row.id)}>
           {row.name}

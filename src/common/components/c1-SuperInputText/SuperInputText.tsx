@@ -5,6 +5,7 @@ import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEve
 import s from './SuperInputText.module.css'
 
 import { setAppErrorAC } from 'app/app-reducer'
+import { addNewUseCardAnswerAC, addNewUseCardQuestionAC } from 'features/cards/cardModals/cardModalsReducer'
 import { addNewUserPackAC } from 'features/packs/modals/modalsReducer'
 import { setNewCurrnetNameAC, updateUserDataTC } from 'features/profile/reducerProfile'
 import { useAppDispatch } from 'store/store'
@@ -43,7 +44,12 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = ({
     }
     if (e.currentTarget.id === 'userEditNickName') {
       dispatch(addNewUserPackAC(e.currentTarget.value))
-      console.log(3)
+    }
+    if (e.currentTarget.id === 'CardQuestion') {
+      dispatch(addNewUseCardQuestionAC(e.currentTarget.value as string))
+    }
+    if (e.currentTarget.id === 'CardAnswer') {
+      dispatch(addNewUseCardAnswerAC(e.currentTarget.value as string))
     }
   }
 

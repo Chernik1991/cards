@@ -10,6 +10,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
+import { addNewUseCardAnswerAC, addNewUseCardQuestionAC, updateUserCardIDAC } from '../cardModals/cardModalsReducer'
+
 import { DeleteCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
 import { CardActions } from 'features/cards/cardTable/CardActions'
@@ -64,6 +66,7 @@ type HeadCell = {
 type EnhancedTableType = {
   cards: CardsType[]
   my_id: string
+  modalHandler: (value: string) => void
 }
 export const EnhancedTable = (props: EnhancedTableType) => {
   const dispatch = useAppDispatch()
@@ -105,19 +108,38 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                 const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
                 const handleDeleteCard = () => {
                   console.log(row.id, 'handleDeleteCard')
-                  dispatch(DeleteCardsTC({ id: row.id, cardsPack_id: row.cardsPack_id }))
+                  // dispatch(DeleteCardsTC({ id: row.id, cardsPack_id: row.cardsPack_id }))
+                  dispatch(addNewUseCardQuestionAC(row.question))
+                  dispatch(updateUserCardIDAC(row.id))
+                  props.modalHandler('delete-card')
                 }
                 const handleUpdateCardName = () => {
                   console.log(row.cardsPack_id, 'handleUpdateCardName')
-                  dispatch(UpdateCardsTC({ question: 'update question', id: row.id, cardsPack_id: row.cardsPack_id }))
+                  // dispatch(UpdateCardsTC({ question: 'update question', id: row.id, cardsPack_id: row.cardsPack_id }))
+                  dispatch(addNewUseCardQuestionAC(row.question))
+                  dispatch(addNewUseCardAnswerAC(row.answer))
+                  dispatch(updateUserCardIDAC(row.id))
+                  props.modalHandler('edit-card')
                 }
 
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={crypto.randomUUID()}>
-                    <TableCell style={{ minWidth: '200px' }} component="th" id={labelId} scope="row">
+                    <TableCell
+                      style={{ minWidth: '200px', cursor: 'pointer' }}
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      onClick={handleUpdateCardName}
+                    >
                       {row.question}
                     </TableCell>
-                    <TableCell align="left">{row.answer}</TableCell>
+                    <TableCell
+                      align="left"
+                      style={{ minWidth: '200px', cursor: 'pointer' }}
+                      onClick={handleUpdateCardName}
+                    >
+                      {row.answer}
+                    </TableCell>
                     <TableCell align="left">{row.last_updated}</TableCell>
                     <TableCell align="left">
                       <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />

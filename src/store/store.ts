@@ -8,6 +8,7 @@ import { forgotReducer } from 'features/auth/forgotPassword/forgotPassword/forgo
 import { authReducer } from 'features/auth/login/auth-reducer'
 import { registerReducer } from 'features/auth/register/register-reducer'
 import { cardsReducer } from 'features/cards/card/card-reducer'
+import { cardModalsReducer } from 'features/cards/cardModals/cardModalsReducer'
 import { learnReducer } from 'features/learn/learnReducer'
 import { modalsReducer } from 'features/packs/modals/modalsReducer'
 import { packsReducer } from 'features/packs/packsReducer'
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   cards: cardsReducer,
   learn: learnReducer,
   packsAdditionalSettings: modalsReducer,
+  cardsAdditionalSettings: cardModalsReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

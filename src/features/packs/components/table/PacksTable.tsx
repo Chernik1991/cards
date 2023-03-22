@@ -7,11 +7,9 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 
-import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { TableRowComponent } from 'features/packs/components/table/tableBody/TableRowComponent'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { PackType } from 'features/packs/packs-api'
-import { useAppDispatch } from 'store/store'
 
 export type HeadCell = {
   disablePadding: boolean
@@ -62,7 +60,6 @@ type PacksTableType = {
 
 export const PacksTable = (props: PacksTableType) => {
   console.log('PacksTable')
-  const dispatch = useAppDispatch()
   const rows = props.cardsPacks.map((el: PackType) => ({
     name: el.name,
     actions: '',
@@ -78,9 +75,6 @@ export const PacksTable = (props: PacksTableType) => {
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => {
     setOrderBy(property)
     props.setParamsSorted(sortPacks)
-  }
-  const cardsListHandler = (cardsPack_id: string) => {
-    dispatch(setPackIdAC(cardsPack_id))
   }
 
   return (
@@ -102,7 +96,6 @@ export const PacksTable = (props: PacksTableType) => {
                     row={row}
                     index={index}
                     userID={props.userID}
-                    cardsListHandler={cardsListHandler}
                     modalHandler={props.modalHandler}
                   />
                 )

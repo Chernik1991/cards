@@ -80,6 +80,8 @@ export const CreateCardsTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
+      console.log(data)
+
       const res = await cardsAPI.setCards(data)
 
       dispatch(GetCardsTC({ cardsPack_id: data.cardsPack_id }))

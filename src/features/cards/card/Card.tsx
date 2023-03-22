@@ -1,17 +1,39 @@
 import { useEffect, useState } from 'react'
 
-import { Button } from '@mui/material'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
+import { AddNewCard } from '../cardModals/AddCard/AddCard'
+import { clearUserStateCardAC } from '../cardModals/cardModalsReducer'
+import { DeleteCard } from '../cardModals/DeleteCard/DeleteCard'
+import { EditCard } from '../cardModals/EditCard/EditCard'
+
+import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
-import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/card-reducer'
+import {
+  clearCardDataAC,
+  CreateCardsTC,
+  DeleteCardsTC,
+  GetCardsTC,
+  UpdateCardsTC,
+} from 'features/cards/card/card-reducer'
 import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
-import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
+import {
+  cards,
+  cardsAdditionalSettingsQuestion,
+  cardsAdditionalSettingsAnswer,
+  cardsPageCount,
+  cardsTotalCount,
+  packUserId,
+  packUserName,
+  pageCard,
+  cardsAdditionalSettingsID,
+} from 'features/cards/selectorCard'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -22,6 +44,10 @@ export const Card = () => {
   const totalCount = useAppSelector(cardsTotalCount)
   const rows = useAppSelector<Array<CardsType>>(cards)
   const user_id = useAppSelector(packUserId)
+  const packName = useAppSelector(packUserName)
+  const cardsQuestion = useAppSelector(cardsAdditionalSettingsQuestion)
+  const cardsAnswer = useAppSelector(cardsAdditionalSettingsAnswer)
+  const cardID = useAppSelector(cardsAdditionalSettingsID)
   const my_id = useAppSelector(state => state.profile._id)
   const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
   //временно
@@ -30,6 +56,9 @@ export const Card = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
+  const [open, setOpen] = useState('false')
+  const [errorQuestion, SetErrorQuestion] = useState(false)
+  const [errorAnswer, SetErrorAnswer] = useState(false)
 
   useEffect(() => {
     console.log('useEffect search')
@@ -37,20 +66,72 @@ export const Card = () => {
     setSearchParams({ ...search })
   }, [search])
 
-  const packsListHandler = () => {
-    // dispatch(getPacksTC({}))
+  const cardsListHandler = () => {
     dispatch(clearCardDataAC())
   }
+  const handleOpen = (value: string) => setOpen(value)
+  const handleClose = () => {
+    // dispatch(clearUserStateTypeAC())
+    dispatch(clearUserStateCardAC())
+    setOpen('false')
+  }
+
+  const modalOpenHandler = (value: string) => {
+    handleOpen(value)
+  }
+
   const addNewCardHandler = () => {
-    if (cardsPack_id) {
+    if (cardsAnswer === '') {
+      SetErrorAnswer(true)
+      setTimeout(() => SetErrorAnswer(false), 3000)
+    }
+    if (cardsQuestion === '') {
+      SetErrorQuestion(true)
+      setTimeout(() => SetErrorQuestion(false), 3000)
+    }
+    if (cardsAnswer && cardsQuestion) {
       dispatch(
         CreateCardsTC({
-          answer: 'CreateCardsTC',
-          question: 'Card',
+          answer: cardsAnswer || '',
+          question: cardsQuestion || '',
           cardsPack_id,
         })
       )
+      dispatch(clearUserStateCardAC())
+      handleClose()
     }
+  }
+  const editCardHandler = () => {
+    if (cardsAnswer === '') {
+      SetErrorAnswer(true)
+      setTimeout(() => SetErrorAnswer(false), 3000)
+    }
+    if (cardsQuestion === '') {
+      SetErrorQuestion(true)
+      setTimeout(() => SetErrorQuestion(false), 3000)
+    }
+    if (cardsAnswer && cardsQuestion) {
+      dispatch(
+        UpdateCardsTC({
+          answer: cardsAnswer || '',
+          question: cardsQuestion || '',
+          id: cardID,
+          cardsPack_id,
+        })
+      )
+      dispatch(clearUserStateCardAC())
+      handleClose()
+    }
+  }
+  const deleteCardHandler = () => {
+    dispatch(
+      DeleteCardsTC({
+        id: cardID,
+        cardsPack_id,
+      })
+    )
+    dispatch(clearUserStateCardAC())
+    handleClose()
   }
   const searchCardPanelParams = (data: any) => {
     setSearchParams({ ...data })
@@ -91,7 +172,7 @@ export const Card = () => {
     <>
       <div className={s.packsContainer}>
         <Box sx={{ m: 1, width: '50ch', marginLeft: 17 }}>
-          <NavLink className={s.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
+          <NavLink className={s.backContainer} to={PATH.PACKS} onClick={cardsListHandler}>
             <svg className={s.backArrow} viewBox="0 0 512 512">
               <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
             </svg>
@@ -110,27 +191,23 @@ export const Card = () => {
             marginRight: 10,
           }}
         >
-          <h2>{my_id === user_id ? 'My Pack' : 'Friend’s Pack'}</h2>
+          <div className={s.PackNameContainer}>
+            <h2>{packName}</h2>
+            {my_id === user_id ? (
+              <span>
+                <MoreVertIcon className={s.PackInfo} />
+              </span>
+            ) : (
+              ''
+            )}
+          </div>
           {my_id === user_id ? (
-            <SuperButton className={s.newPackButton} onClick={addNewCardHandler}>
+            <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-card')}>
               Add new card
             </SuperButton>
           ) : (
             <NavLink to={PATH.STUDY} replace>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: '20px',
-                  minWidth: '115px',
-                  fontSize: '16px',
-                  lineHeight: '20px',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontStyle: 'Medium',
-                  textTransform: 'none',
-                }}
-              >
-                Learn to pack
-              </Button>
+              <SuperButton className={s.newPackButton}>Learn to pack</SuperButton>
             </NavLink>
           )}
         </Box>
@@ -168,7 +245,7 @@ export const Card = () => {
           }}
         >
           {isNotEmptyCard ? (
-            <EnhancedTable cards={rows} my_id={my_id} />
+            <EnhancedTable cards={rows} my_id={my_id} modalHandler={modalOpenHandler} />
           ) : (
             <Box
               sx={{
@@ -208,6 +285,38 @@ export const Card = () => {
             ''
           )}
         </Box>
+        <ModalBasic
+          modalName={'Add new card'}
+          deleteSave={false}
+          handleState={open === 'add-card'}
+          handleClose={handleClose}
+          handleModalFn={addNewCardHandler}
+        >
+          <AddNewCard errorQuestion={errorQuestion} errorAnswer={errorAnswer} />
+        </ModalBasic>
+        <ModalBasic
+          modalName={'Edit card'}
+          deleteSave={false}
+          handleState={open === 'edit-card'}
+          handleClose={handleClose}
+          handleModalFn={editCardHandler}
+        >
+          <EditCard
+            errorQuestion={errorQuestion}
+            errorAnswer={errorAnswer}
+            valueAnswer={cardsAnswer}
+            valueQuestion={cardsQuestion}
+          />
+        </ModalBasic>
+        <ModalBasic
+          modalName={'Delete card'}
+          deleteSave={true}
+          handleState={open === 'delete-card'}
+          handleClose={handleClose}
+          handleModalFn={deleteCardHandler}
+        >
+          <DeleteCard cardName={cardsQuestion} />
+        </ModalBasic>
       </div>
     </>
   )

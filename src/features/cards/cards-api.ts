@@ -64,6 +64,7 @@ export type UpdateParamsType = {
 export type UpdateCardType = {
   id: string
   question?: string
+  answer?: string
   cardsPack_id: string
 }
 export type CardsType = {
