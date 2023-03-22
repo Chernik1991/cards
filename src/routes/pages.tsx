@@ -27,7 +27,7 @@ export const PATH = {
   CARD: '/cards/card',
   PACKS: `/packs`,
   CARD_NOT_PACK: `/card-not-pack`,
-  STUDY: `/study`,
+  LEARN: `/learn`,
   TEST: '/test',
 }
 
@@ -47,7 +47,7 @@ export const Pages = () => {
           <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
           <Route path={PATH.CARD} element={<Card />} />
           <Route path={PATH.PACKS} element={<Packs />} />
-          <Route path={PATH.STUDY} element={<Learn />} />
+          <Route path={PATH.LEARN} element={<Learn />} />
           <Route path={PATH.CARD_NOT_PACK} element={<CardNotPack />} />
           <Route path={PATH.TEST} element={<Test />} />
           <Route path={'*'} element={<Error404 />} />

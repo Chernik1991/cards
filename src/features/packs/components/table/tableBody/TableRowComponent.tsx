@@ -6,7 +6,7 @@ import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
 import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'
-import { useAppDispatch } from 'store/store'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 type TableRowType = {
   row: ExtendedType
@@ -35,11 +35,11 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
   const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
   const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
   const crudAccessValue = row.packOwnerID === userID
+  const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
 
   const handleStudying = () => {
-    // handleOpen(row.id)
-
-    return <Navigate to={PATH.STUDY} replace />
+    dispatch(updateUserPackIDAC(row.id))
+    return <Navigate to={PATH.LEARN} replace />
   }
   const handleDeletePack = () => {
     dispatch(addNewUserPackAC(row.name))

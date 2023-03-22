@@ -2,18 +2,21 @@ import { Button } from '@mui/material'
 
 import s from 'features/learn/answer/Answer.module.css'
 import { Grades } from 'features/learn/answer/Grades'
-import { useAppSelector } from 'store/store'
+import { useAppDispatch, useAppSelector } from 'store/store'
+import { changeGradeTC } from '../learnReducer'
 
 export const Answer = () => {
+  const dispatch = useAppDispatch()
   const onNextHandler = () => {
-    console.log(111)
+    /* dispatch(changeGradeTC())*/
+    console.log(114)
   }
-  const finalAnswer = useAppSelector(state => state.packs.minCardsCount)
+  const Answer = useAppSelector(state => state.learn.currentCard.answer)
 
   return (
     <div className={s.answer}>
       <span>
-        <b>Answer: </b> {finalAnswer}
+        <b>Answer: </b> {Answer}
       </span>
       <Grades />
       <Button variant="contained" onClick={onNextHandler}>
