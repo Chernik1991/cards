@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
+import { CardMenu } from '../cardMenu/CardMenu'
 import { AddNewCard } from '../cardModals/AddCard/AddCard'
 import { clearUserStateCardAC } from '../cardModals/cardModalsReducer'
 import { DeleteCard } from '../cardModals/DeleteCard/DeleteCard'
@@ -192,14 +192,8 @@ export const Card = () => {
           }}
         >
           <div className={s.PackNameContainer}>
-            <h2>{packName}</h2>
-            {my_id === user_id ? (
-              <span>
-                <MoreVertIcon className={s.PackInfo} />
-              </span>
-            ) : (
-              ''
-            )}
+            <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>{packName}</span>
+            {my_id === user_id ? <CardMenu /> : ''}
           </div>
           {my_id === user_id ? (
             <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-card')}>

@@ -1,0 +1,43 @@
+.menu {
+  position: relative;
+  top: 20px;
+  /* border: 1px solid blue; */
+  max-height: 70px;
+  min-height: 70px;
+}
+.arrowUp {
+  position: relative;
+  left: 15px;
+  width: 5px;
+  height: 5px;
+  top: -125px;
+  transform: rotate(45deg);
+  background-color: #fff;
+  border-top: 1.5px solid #e1e1e1;
+  border-left: 1.5px solid #e1e1e1;
+}
+
+.labelStyle {
+  position: relative;
+  left: 5px;
+  top: 3px;
+}
+
+.menuContainer {
+  position: relative;
+  left: -90px;
+  width: 115px;
+  border: 1.5px solid #e1e1e1;
+  border-radius: 0px;
+}
+
+.packInfo {
+  transform: scale(0.8);
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  fill: black;
+}
+.profileInfoStyle {
+  width: 100%;
+}

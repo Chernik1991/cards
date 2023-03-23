@@ -27,22 +27,16 @@ a:visited {
 }
 
 .PackNameContainer {
+  /* position: relative; */
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
   width: 100%;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-c;
   font-size: 0.9rem;
-}
-.PackInfo {
-  transform: scale(0.8);
-  border: 2px solid black;
-  border-radius: 50%;
-  position: relative;
-  left: 10px;
-  top: 3px;
-  cursor: pointer;
-  fill: black;
+  max-height: 70px;
+  min-height: 70px;
 }
 
 .backContainer:hover {
@@ -112,13 +106,14 @@ a:visited {
 
 .logOut {
   padding: 10px 10px 10px 5px;
-  border-radius: 45px;
-  border: 1px solid #ebebec;
+
   display: flex;
   align-items: center;
   justify-content: center;
   width: 30%;
   min-width: 100px;
+  border-radius: 45px;
+  border: 1px solid #ebebec;
   box-shadow: 0 0 8px #c3c3c3;
 }
 

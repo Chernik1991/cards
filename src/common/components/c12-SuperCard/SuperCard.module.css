@@ -1,0 +1,26 @@
+.option {
+  width: 100%;
+  min-height: 35px;
+  cursor: pointer;
+}
+.option:hover {
+  width: 100%;
+  transform: translateX(2px);
+  transition: all 0.2s ease-in;
+  /* background: #c0c9cf; */
+}
+
+.scaledIcon svg {
+  position: relative;
+  top: 2px;
+  transform: scale(1.2);
+}
+
+.fixedDesctiprion {
+  display: flex;
+  width: 60%;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.2=1rem;
+}
+
