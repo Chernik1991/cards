@@ -4,7 +4,7 @@ import { instance } from 'features/auth/auth-api'
 
 export const learnAPI = {
   setGradeCard(data: setGradeCardDataType) {
-    return instance.put<setGradeCardDataType, AxiosResponse<setGradeCardResponseType>>('cards/grade', { data })
+    return instance.put<setGradeCardDataType, AxiosResponse<setGradeCardResponseType>>('/cards/grade', data)
   },
 }
 
@@ -14,10 +14,16 @@ export type setGradeCardDataType = {
 }
 
 export type setGradeCardResponseType = {
-  _id: string
-  cardsPack_id: string
-  card_id: string
-  user_id: string
-  grade: number
-  shots: number
+  updatedGrade: {
+    card_id: string
+    cardsPack_id: string
+    created: string
+    grade: number
+    more_id: string
+    shots: number
+    updated: string
+    user_id: string
+    __v: number
+    _id: string
+  }
 }

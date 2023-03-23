@@ -20,6 +20,7 @@ export const Learn = () => {
   const packName = useAppSelector(state => state.cards.packName)
   const isShowAnswer = useAppSelector(state => state.learn.isShowAnswer)
   const cardsPack_id = useAppSelector(state => state.packsAdditionalSettings.cardsPack._id)
+  const [first, setFirst] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -28,16 +29,26 @@ export const Learn = () => {
 
   const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
 
-  useEffect(() => {
-    dispatch(GetCardsTC({ ...search }))
+  /*useEffect(() => {
+    dispatch(GetCardsTC({ ...search, pageCount: cards.length }))
     setSearchParams({ ...search })
-  }, [search])
+  }, [search])*/
 
   useEffect(() => {
-    if (cards.length > 0) {
-      dispatch(setCurrentCardAC(randomCard(cards)))
+    setSearchParams({ ...search })
+    if (first) {
+      dispatch(GetCardsTC({ ...search, pageCount: cards.length }))
+      setFirst(false)
     }
-  }, [dispatch, cards, cardsPack_id])
+    if (cards.length > 0) {
+      console.log(cards)
+      dispatch(setCurrentCardAC(randomCard(cards)))
+      console.log(cards)
+    }
+    return () => {
+      console.log('LearnContainer useEffect off')
+    }
+  }, [dispatch, cards, cardsPack_id, first, search])
 
   return (
     <div>

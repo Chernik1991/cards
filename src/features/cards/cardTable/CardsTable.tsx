@@ -11,8 +11,6 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
 import { addNewUseCardAnswerAC, addNewUseCardQuestionAC, updateUserCardIDAC } from '../cardModals/cardModalsReducer'
-
-import { DeleteCardsTC, UpdateCardsTC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
 import { CardActions } from 'features/cards/cardTable/CardActions'
 import { useAppDispatch } from 'store/store'
@@ -142,7 +140,7 @@ export const EnhancedTable = (props: EnhancedTableType) => {
                     </TableCell>
                     <TableCell align="left">{row.last_updated}</TableCell>
                     <TableCell align="left">
-                      <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
+                      <Rating name="read-only" value={row.grade} readOnly precision={0.1} />
                     </TableCell>
                     {props.my_id === row.user_id ? (
                       <CardActions
