@@ -10,7 +10,7 @@ import { clearCardDataAC, CreateCardsTC, GetCardsTC } from 'features/cards/card/
 import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
-import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
+import { CardsTable } from 'features/cards/cardTable/CardsTable'
 import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -168,7 +168,7 @@ export const Card = () => {
           }}
         >
           {isNotEmptyCard ? (
-            <EnhancedTable cards={rows} my_id={my_id} />
+            <CardsTable cards={rows} my_id={my_id} />
           ) : (
             <Box
               sx={{
@@ -181,7 +181,7 @@ export const Card = () => {
                 paddingTop: 25,
               }}
             >
-              <div>{'not answer'}</div>
+              <div>{'No data available. Change your search options'}</div>
             </Box>
           )}
         </Box>

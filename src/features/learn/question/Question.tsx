@@ -1,8 +1,8 @@
 import { Button } from '@mui/material'
 
-import s from './Question.module.css'
-import { useAppDispatch, useAppSelector } from '../../../store/store'
-import { setShowAnswerAC } from '../learnReducer'
+import { setShowAnswerAC } from 'features/learn/learnReducer'
+import s from 'features/learn/question/Question.module.css'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Question = () => {
   const question = useAppSelector(state => state.cards.packUserId)
@@ -13,6 +13,7 @@ export const Question = () => {
   const onClickHandler = () => {
     dispatch(setShowAnswerAC(true))
   }
+
   return (
     <div className={s.questionContainer}>
       <div className={s.question}>

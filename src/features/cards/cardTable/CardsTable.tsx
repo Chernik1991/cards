@@ -65,7 +65,7 @@ type EnhancedTableType = {
   cards: CardsType[]
   my_id: string
 }
-export const EnhancedTable = (props: EnhancedTableType) => {
+export const CardsTable = (props: EnhancedTableType) => {
   const dispatch = useAppDispatch()
   const rows = props.cards.map((el: CardsType) => ({
     id: el._id,

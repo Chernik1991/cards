@@ -1,25 +1,41 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-type PacksToggleButtonType = {
-  handleChangeMyPack: (my: boolean) => void
-}
-export const PacksToggleButton = (props: PacksToggleButtonType) => {
+import { filterAllOffPacksAC, isMyPacksAC } from 'features/packs/packsReducer'
+import { packFilterOff, packIsMyPacks, packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
+import { useAppDispatch, useAppSelector } from 'store/store'
+
+export const PacksToggleButton = () => {
   console.log('PacksToggleButton')
+  const dispatch = useAppDispatch()
+  const isMyPacks = useAppSelector(packIsMyPacks)
+  const filterOff = useAppSelector(packFilterOff)
+  const minCardsCount = useAppSelector(packMinCardsCount)
+  const maxCardsCount = useAppSelector(packMaxCardsCount)
   const [alignment, setAlignment] = useState('all')
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment)
     }
   }
+
+  useEffect(() => {
+    if (isMyPacks) {
+      setAlignment('my')
+    } else {
+      setAlignment('all')
+    }
+  }, [isMyPacks])
   const handleChangeMy = () => {
-    props.handleChangeMyPack(true)
+    dispatch(isMyPacksAC(true))
+    dispatch(filterAllOffPacksAC(filterOff, minCardsCount, maxCardsCount))
   }
   const handleChangeAll = () => {
-    props.handleChangeMyPack(false)
+    dispatch(isMyPacksAC(false))
+    dispatch(filterAllOffPacksAC(filterOff, minCardsCount, maxCardsCount))
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
@@ -6,13 +6,21 @@ import { useSearchParams } from 'react-router-dom'
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
+import { isLoggedInAuth } from 'features/auth/selectorAuth'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { AddNewPack } from 'features/packs/modals/AddNewPackModal/AddNewPack'
 import { DeletePack } from 'features/packs/modals/DeletePack/DeletePack'
 import { EditPack } from 'features/packs/modals/EditPack/EditPack'
 import { clearUserStateTypeAC } from 'features/packs/modals/modalsReducer'
 import e from 'features/packs/Packs.module.css'
-import { addPackTC, deletePackTC, getPacksTC, updatePackTC } from 'features/packs/packsReducer'
+import {
+  addPackTC,
+  deletePackTC,
+  getPacksTC,
+  pageCountPacksAC,
+  pagePacksAC,
+  updatePackTC,
+} from 'features/packs/packsReducer'
 import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import {
   packAdditionalSettings,
@@ -20,9 +28,17 @@ import {
   packAdditionalSettingsPrivate,
   packCardPacks,
   packCardPacksTotalCount,
-  packMyPacks,
+  packFilterOff,
+  packIsMyPacks,
+  packMax,
+  packMaxCardsCount,
+  packMin,
+  packMinCardsCount,
   packPage,
   packPageCount,
+  packSearch,
+  packSort,
+  searchParamsURL,
 } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -33,27 +49,70 @@ export const Packs = () => {
   const cardPacks = useAppSelector(packCardPacks)
   const pagePacks = useAppSelector(packPage)
   const pageCount = useAppSelector(packPageCount)
+  const search = useAppSelector(packSearch)
+  const sort = useAppSelector(packSort)
+  const minCardsCount = useAppSelector(packMinCardsCount)
+  const maxCardsCount = useAppSelector(packMaxCardsCount)
+  const min = useAppSelector(packMin)
+  const max = useAppSelector(packMax)
+  const filterOff = useAppSelector(packFilterOff)
+  const isMyPacks = useAppSelector(packIsMyPacks)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const userID = useAppSelector(userIdProfile)
-  const myPacks = useAppSelector(packMyPacks)
   const packsAdditionalSettings = useAppSelector(packAdditionalSettings)
   const packsAdditionalSettingsName = useAppSelector(packAdditionalSettingsName)
   const packsAdditionalSettingsPrivate = useAppSelector(packAdditionalSettingsPrivate)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [search, setSearch] = useState<any>()
   const userPacks = useAppSelector(state => state.packs)
   const [open, setOpen] = useState('false')
   const [error, setError] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
-  const [searchInputCallBack, setSearchInputCallBack] = useState<boolean>(false)
   const isNotEmptyPack = !!cardPacks.length
+  const paginationLabel = 'Packs per Page'
+  const searchParamsPacks = useAppSelector(searchParamsURL)
+  const [search1, setSearch] = useState<any>()
+  const isLoggedIn = useAppSelector(isLoggedInAuth)
+
+  // useEffect(() => {
+  //   if (searchParamsPacks) {
+  //     setSearch(searchParamsPacks)
+  //     console.log(searchParamsPacks, '11111111111111111111')
+  //   }
+  // }, [searchParamsPacks])
 
   useEffect(() => {
+    const { user_id, page, pageCount, sortPacks, packName, max, min } = searchParamsPacks
+
+    if (user_id) {
+      setSearchParams({
+        user_id: user_id.toString(),
+        page: page.toString(),
+        pageCount: pageCount.toString(),
+        sortPacks: sortPacks,
+        packName: packName,
+        max: max.toString(),
+        min: min.toString(),
+      })
+    } else {
+      setSearchParams({
+        page: page.toString(),
+        pageCount: pageCount.toString(),
+        sortPacks: sortPacks,
+        packName: packName,
+        max: max.toString(),
+        min: min.toString(),
+      })
+    }
+  }, [searchParamsPacks])
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return
+    }
     console.log('useEffect search')
-    dispatch(getPacksTC({ ...search }))
-    setSearchParams({ ...search })
-  }, [search])
+    dispatch(getPacksTC())
+  }, [search, pageCount, pagePacks, sort, isMyPacks, max, min, packFilterOff, minCardsCount, maxCardsCount])
   const handleOpen = (value: string) => setOpen(value)
+
   const handleClose = () => {
     dispatch(clearUserStateTypeAC())
     setOpen('false')
@@ -62,37 +121,9 @@ export const Packs = () => {
   const modalOpenHandler = (value: string) => {
     handleOpen(value)
   }
-
-  const paginationLabel = 'Packs per Page'
-
-  const onChangePageHandler = (page: number, size: number) => {
-    if (pagePacks == page && pageCount == 4) {
-      setSearchParams({ ...search, page: page, pageCount: size })
-    } else {
-      setSearch({ ...search, page: page, pageCount: size })
-    }
-  }
-  const setParamsSortedHandler = (sortPacks: string) => {
-    setSearch({ ...search, sortPacks: sortPacks })
-  }
-  const callBackSearchInput = () => {
-    setSearchInputCallBack(true)
-  }
-  const onChangeSearchHandler = (searchValue: string) => {
-    if (searchInputCallBack) {
-      setSearch({ ...search, packName: searchValue })
-    }
-  }
-  const onChangeValuesHandler = useCallback((values: number[]) => {
-    setSearch({ ...search, min: values[0], max: values[1] })
-  }, [])
-
-  const handleChangeMyPack = (my: boolean) => {
-    if (my) {
-      setSearch({ ...search, user_id: userID })
-    } else {
-      setSearch({})
-    }
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(pagePacksAC(page))
+    dispatch(pageCountPacksAC(pageCount))
   }
   const addNewPack = () => {
     if (packsAdditionalSettings.name) {
@@ -130,7 +161,9 @@ export const Packs = () => {
   }
   const deletePack = () => {
     //!add user_id for soring adter adding NewPack
-    dispatch(deletePackTC({ id: packsAdditionalSettings._id }))
+    if (packsAdditionalSettings._id) {
+      dispatch(deletePackTC(packsAdditionalSettings._id))
+    }
     handleClose()
   }
 
@@ -152,21 +185,9 @@ export const Packs = () => {
             Add new pack
           </SuperButton>
         </Box>
-        <SearchPackPanel
-          searchParams={searchParams}
-          onChangeSearchHandler={onChangeSearchHandler}
-          onChangeValuesHandler={onChangeValuesHandler}
-          callBackSearchInput={callBackSearchInput}
-          handleChangeMyPack={handleChangeMyPack}
-        />
+        <SearchPackPanel />
         {isNotEmptyPack ? (
-          <PacksTable
-            cardsPacks={userPacks.cardPacks}
-            userID={userID}
-            userIDsettings={userID}
-            setParamsSorted={setParamsSortedHandler}
-            modalHandler={modalOpenHandler}
-          />
+          <PacksTable modalHandler={modalOpenHandler} />
         ) : (
           <Box
             sx={{
@@ -179,7 +200,7 @@ export const Packs = () => {
               paddingTop: 25,
             }}
           >
-            <div>{'not answer'}</div>
+            <div>{'No data available. Change your search options'}</div>
           </Box>
         )}
         {isNotEmptyPack ? (
