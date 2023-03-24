@@ -8,7 +8,6 @@ import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import { useSearchParams } from 'react-router-dom'
 
-import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { TableRowComponent } from 'features/packs/components/table/tableBody/TableRowComponent'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { CardPacksType } from 'features/packs/packs-api'
@@ -16,7 +15,6 @@ import { sortPacksAC } from 'features/packs/packsReducer'
 import { packCardPacks, packSort } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
-import { PackType } from 'features/packs/packs-api'
 
 export type HeadCell = {
   disablePadding: boolean
@@ -85,9 +83,6 @@ export const PacksTable = (props: PacksTableType) => {
     setOrderBy(property)
     dispatch(sortPacksAC(sortPacks))
   }
-  const cardsListHandler = (cardsPack_id: string) => {
-    dispatch(setPackIdAC(cardsPack_id))
-  }
 
   useEffect(() => {
     setOrderBy(params.sortPacks ? params.sortPacks : sort)
@@ -113,7 +108,6 @@ export const PacksTable = (props: PacksTableType) => {
                     row={row}
                     index={index}
                     userID={userID}
-                    cardsListHandler={cardsListHandler}
                     modalHandler={props.modalHandler}
                   />
                 )

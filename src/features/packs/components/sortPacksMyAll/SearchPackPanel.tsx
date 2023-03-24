@@ -7,10 +7,7 @@ import { SortPacksMyAll } from './SortPacksMyAll'
 
 import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
-import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
-import { useAppSelector } from 'store/store'
 import { PacksSlider } from 'features/packs/components/slider/PacksSlider'
-import { PacksToggleButton } from 'features/packs/components/ToggleButton/PacksToggleButton'
 import { FilterAllOff } from 'features/packs/FilterAllOff'
 import { maxAC, minAC, pagePacksAC, searchPacksAC } from 'features/packs/packsReducer'
 import { packMaxCardsCount, packMinCardsCount, packSearch } from 'features/packs/selectorPack'
@@ -57,7 +54,7 @@ export const SearchPackPanel = () => {
         <Box>
           <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Show packs cards</label>
         </Box>
-        <PacksToggleButton />
+        <SortPacksMyAll />
       </Box>
       <Box>
         <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Number of cards</label>
@@ -70,7 +67,6 @@ export const SearchPackPanel = () => {
           disabled={status == 'loading'}
           onChangeValues={onChangeValuesHandler}
         />
-        <SortPacksMyAll handleChangeMyPack={props.handleChangeMyPack} />
       </Box>
       <Box
         mb={'2'}

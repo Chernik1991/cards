@@ -23,18 +23,16 @@ import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { CardsTable } from 'features/cards/cardTable/CardsTable'
-import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
-import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
 import {
   cards,
-  cardsAdditionalSettingsQuestion,
   cardsAdditionalSettingsAnswer,
+  cardsAdditionalSettingsID,
+  cardsAdditionalSettingsQuestion,
   cardsPageCount,
   cardsTotalCount,
   packUserId,
   packUserName,
   pageCard,
-  cardsAdditionalSettingsID,
 } from 'features/cards/selectorCard'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -241,7 +239,7 @@ export const Card = () => {
           }}
         >
           {isNotEmptyCard ? (
-            <EnhancedTable cards={rows} my_id={my_id} modalHandler={modalOpenHandler} />
+            <CardsTable cards={rows} my_id={my_id} modalHandler={modalOpenHandler} />
           ) : (
             <Box
               sx={{

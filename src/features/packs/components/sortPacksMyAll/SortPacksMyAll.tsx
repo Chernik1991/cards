@@ -8,8 +8,8 @@ import { isMyPacksAC } from 'features/packs/packsReducer'
 import { packIsMyPacks } from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
-export const PacksToggleButton = () => {
-  // console.log('PacksToggleButton')
+export const SortPacksMyAll = () => {
+  // console.log('SortPacksMyAll')
   const dispatch = useAppDispatch()
   const isMyPacks = useAppSelector(packIsMyPacks)
   const [alignment, setAlignment] = useState('all')

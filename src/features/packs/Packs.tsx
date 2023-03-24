@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 
-import { SearchPackPanel } from './components/sortPacksMyAll/SearchPackPanel'
-
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
+import { SearchPackPanel } from 'features/packs/components/sortPacksMyAll/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { AddNewPack } from 'features/packs/modals/AddNewPackModal/AddNewPack'
 import { DeletePack } from 'features/packs/modals/DeletePack/DeletePack'
@@ -22,8 +21,6 @@ import {
   pagePacksAC,
   updatePackTC,
 } from 'features/packs/packsReducer'
-import { SearchPackPanel } from 'features/packs/SearchPackPanel'
-import { addPackTC, deletePackTC, getPacksTC, updatePackTC } from 'features/packs/packsReducer'
 import {
   packAdditionalSettings,
   packAdditionalSettingsName,

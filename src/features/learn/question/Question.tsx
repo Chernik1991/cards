@@ -4,8 +4,6 @@ import { setShowAnswerAC } from 'features/learn/learnReducer'
 import s from 'features/learn/question/Question.module.css'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
-import s from './Question.module.css'
-
 export const Question = () => {
   const { question, shots } = useAppSelector(state => state.learn.currentCard)
   const isShowAnswer = useAppSelector(state => state.learn.isShowAnswer)
@@ -14,6 +12,7 @@ export const Question = () => {
   const onClickHandler = () => {
     dispatch(setShowAnswerAC(true))
   }
+
   return (
     <div className={s.questionContainer}>
       <div className={s.question}>
