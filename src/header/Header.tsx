@@ -1,30 +1,57 @@
-import React from 'react'
+import { useState } from 'react'
 
 import { Button } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
+import { menuHeaderDataInfo } from './headerData'
+
 import itINC from 'assets/img/icons/itINC.svg'
 import defaultPic from 'assets/img/profile/Alex.jpg'
+import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 import { ResponseLoginType } from 'features/auth/auth-api' //
+import { logoutTC } from 'features/auth/login/auth-reducer'
+import o from 'features/cards/cardMenu/CardMenu.module.css'
 import s from 'header/HeaderStyles.module.css'
 import { PATH } from 'routes/pages'
-import { useAppSelector } from 'store/store'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Header = () => {
+  const [activeMenu, setActiveMenu] = useState(false)
+  const dispatch = useAppDispatch()
   const auth = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const profileData = useAppSelector<ResponseLoginType>(state => state.profile)
   // const userPhoto = profileData.avatar ? profileData.avatar : defaultPic
+  const handleOpenMenu = () => {
+    setActiveMenu(!activeMenu)
+  }
+  const handleOpen = (value: string) => {
+    if (value === 'Log Out') {
+      dispatch(logoutTC())
+    }
+  }
+
+  const active = (
+    <div className={o.profileInfoStyle + ' ' + s.headerContainer}>
+      <SuperCard
+        cardStyle={o.menuContainer}
+        menuData={menuHeaderDataInfo}
+        menuCardHandler={handleOpen}
+        maxHeight={'85px'}
+      />
+      <div className={o.arrowUp + ' ' + s.headerArrow} />
+    </div>
+  )
 
   const userJSX = (
-    <div className={s.userDataContainer}>
+    <div className={s.userDataContainer} onClick={handleOpenMenu}>
+      {activeMenu ? <div>{active}</div> : ''}
       <span className={s.userName}>{profileData.name}</span>
       <img className={s.userPhoto} src={defaultPic} alt="userPhoto" />
     </div>
   )
-
-  return (
-    <div>
+  const routes = (
+    <>
       <NavLink to={PATH.LOGIN}>[Login] </NavLink>
       <NavLink to={PATH.REGISTER}>[Register] </NavLink>
       <NavLink to={PATH.PROFILE}>[Profile] </NavLink>
@@ -36,6 +63,12 @@ export const Header = () => {
       <NavLink to={PATH.CARD_NOT_PACK}>[CardNotPack]</NavLink>
       <NavLink to={PATH.TEST}>[Test]</NavLink>
       <NavLink to={'*'}>[Error404]</NavLink>
+    </>
+  )
+
+  return (
+    <div>
+      {routes}
       <div className={s.headerBlock}>
         <img alt={'IMG'} src={itINC} />
         {auth ? (

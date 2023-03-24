@@ -15,26 +15,35 @@
 }
 
 .userDataContainer {
-  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  cursor: pointer;
 }
 
 .userPhoto {
   display: flex;
-
   width: 50px;
-
   border-radius: 50%;
 }
 
 .userName {
   position: relative;
   left: -15px;
-
   font-size: 1.2rem;
-
   border: none;
   border-bottom: 1px dashed gray;
+}
+
+.headerContainer {
+  position: relative;
+  left: 220px;
+  top: 77px;
+  z-index: 1;
+  font-size: 14px;
+}
+
+.headerArrow {
+  position: relative;
+  top: -90px;
 }

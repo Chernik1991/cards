@@ -1,4 +1,5 @@
 import TableCell from '@mui/material/TableCell'
+import { NavLink } from 'react-router-dom'
 
 import { menuDataInfo } from 'features/cards/cardMenu/CardData'
 import e from 'features/packs/components/table/tableActions/PacksActions.module.css'
@@ -21,26 +22,20 @@ export const PacksActions = ({
   handleUpdatePackNameUp,
   handleDeletePackUp,
 }: PacksActionsType) => {
-  const EditPackJSX = (
-    <a href={'#'} onClick={handleUpdatePackNameUp}>
-      {menuDataInfo[0].icon}
-    </a>
-  )
+  const EditPackJSX = <span onClick={handleUpdatePackNameUp}>{menuDataInfo[0].icon}</span>
   const crudPanel = (
     <>
       {EditPackJSX}
-      <a href={'#'} onClick={handleDeletePackUp}>
-        {menuDataInfo[1].icon}
-      </a>
+      <span onClick={handleDeletePackUp}>{menuDataInfo[1].icon}</span>
     </>
   )
 
   return (
     <TableCell align={align} sx={sx}>
       <div className={e.actionsContainer}>
-        <a href={PATH.LEARN} onClick={handleStudyingUp}>
+        <NavLink to={PATH.LEARN} onClick={handleStudyingUp}>
           {menuDataInfo[2].icon}
-        </a>
+        </NavLink>
         {crudAccess ? crudPanel : ''}
       </div>
     </TableCell>
