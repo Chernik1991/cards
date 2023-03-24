@@ -9,10 +9,10 @@ import { useDebounce } from 'common/hooks/useDebounce'
 
 type SearchInputPropsType = InputBaseProps & {
   searchValue: string
-  onChangeText?: (value: string) => void
+  onChangeText: (value: string) => void
 }
 export const SearchInput: FC<SearchInputPropsType> = memo(({ onChangeText, searchValue, ...restProps }) => {
-  const [value, setValue] = useState<string>(searchValue || '')
+  const [value, setValue] = useState<string>(searchValue)
   const debouncedValue = useDebounce<string>(value, 800)
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,23 +24,20 @@ export const SearchInput: FC<SearchInputPropsType> = memo(({ onChangeText, searc
   }, [searchValue])
 
   useEffect(() => {
-    onChangeText?.(debouncedValue)
+    onChangeText(debouncedValue)
   }, [debouncedValue])
 
   return (
     <div>
       <Paper component="form" elevation={0} className={s.container} sx={{ background: 'transparent' }}>
         <img src={find} className={s.findIcon} alt="find" />
-        {/*<div onClick={onClickHandler}>*/}
         <InputBase
           className={s.input}
           value={value}
           onChange={onChangeHandler}
           placeholder="Provide your text"
-          // inputProps={{ 'aria-label': 'provide your text' }}
           {...restProps}
         />
-        {/*</div>*/}
       </Paper>
     </div>
   )

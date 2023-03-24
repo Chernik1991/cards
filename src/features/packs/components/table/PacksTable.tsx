@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -13,7 +13,7 @@ import { TableRowComponent } from 'features/packs/components/table/tableBody/Tab
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { CardPacksType } from 'features/packs/packs-api'
 import { sortPacksAC } from 'features/packs/packsReducer'
-import { packCardPacks } from 'features/packs/selectorPack'
+import { packCardPacks, packSort } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -61,13 +61,13 @@ type PacksTableType = {
 }
 
 export const PacksTable = (props: PacksTableType) => {
+  // console.log('PacksTable')
   const cardPacks = useAppSelector(packCardPacks)
   const userID = useAppSelector(userIdProfile)
-
-  console.log('PacksTable')
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
+  const sort = useAppSelector(packSort)
   const rows = cardPacks.map((el: CardPacksType) => ({
     name: el.name,
     actions: '',
@@ -78,27 +78,20 @@ export const PacksTable = (props: PacksTableType) => {
     packOwnerID: el.user_id,
     private: el.private,
   }))
-  const [orderBy, setOrderBy] = useState<string>('name')
+  const [orderBy, setOrderBy] = useState<string>(sort)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => {
-    // const sliceSort = params.sortPacks.slice(1)
-    //
-    // setOrderBy(sliceSort ?? property)
-    // console.log(property, 'property')
-    //
-    // dispatch(sortPacksAC(sortPacks))
-    // console.log(sortPacks, 'sortPacks')
-    const sliceSort = params.sortPacks.slice(1)
-
     setOrderBy(property)
-    console.log(property, 'property')
-
     dispatch(sortPacksAC(sortPacks))
-    console.log(sortPacks, 'sortPacks')
   }
   const cardsListHandler = (cardsPack_id: string) => {
     dispatch(setPackIdAC(cardsPack_id))
   }
+
+  useEffect(() => {
+    setOrderBy(params.sortPacks ? params.sortPacks : sort)
+    dispatch(sortPacksAC(params.sortPacks ? params.sortPacks : sort))
+  }, [params.sortPacks])
 
   return (
     <Box sx={{ width: '100%', minWidth: '1000px', padding: '30px 0px' }}>

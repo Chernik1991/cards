@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import { Box } from '@mui/material'
 
 import { appStatus } from 'app/selectorApp'
+import { SearchInput } from 'common/components/inputSearch/InputSearch'
 import { GetCardsTC } from 'features/cards/card/card-reducer'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -13,8 +14,8 @@ type PropsType = {
 }
 
 export const SearchCardPanel = (props: PropsType) => {
-  // const [searchParams, setSearchParams] = useSearchParams()
-  // const params = Object.fromEntries(props.searchParams)
+  // console.log('SearchCardPanel')
+  const params = Object.fromEntries(props.searchParams)
   const dispatch = useAppDispatch()
   const status = useAppSelector(appStatus)
   const onChangeSearchHandler = useCallback((searchValue: string) => {
@@ -25,7 +26,6 @@ export const SearchCardPanel = (props: PropsType) => {
         cardQuestion: searchValue.toString(),
       })
     }
-    console.log('SearchCardPanel')
   }, [])
 
   return (
@@ -40,7 +40,11 @@ export const SearchCardPanel = (props: PropsType) => {
         >
           Search
         </label>
-        {/*<SearchInput disabled={status === 'loading'} onChangeText={onChangeSearchHandler} searchValue={''} />*/}
+        <SearchInput
+          disabled={status === 'loading'}
+          onChangeText={onChangeSearchHandler}
+          searchValue={params.cardQuestion || ''}
+        />
       </Box>
     </Box>
   )

@@ -10,26 +10,7 @@ import {
 import { AppThunkType } from 'store/store'
 
 const initialState: ResponsePacksType = {
-  cardPacks: [
-    // {
-    // cardsCount: 0,
-    // created: 'string',
-    // deckCover: 'string',
-    // grade: 0,
-    // more_id: 'string',
-    // name: 'string',
-    // path: 'string',
-    // private: false,
-    // rating: 0,
-    // shots: 0,
-    // type: 'string',
-    // updated: 'string',
-    // user_id: 'string',
-    // user_name: 'string',
-    // __v: 'string',
-    // _id: 'string',
-    // },
-  ],
+  cardPacks: [],
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
@@ -45,7 +26,7 @@ const initialState: ResponsePacksType = {
     user_id: '',
     page: 1,
     pageCount: 4,
-    sortPacks: '',
+    sortPacks: '0updated',
     packName: '',
     max: 0,
     min: 0,
@@ -187,28 +168,17 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
           min: min,
         })
 
-    isMyPacks
-      ? dispatch(
-          setSearchParamsPacksAC({
-            user_id: userID,
-            page,
-            pageCount,
-            sortPacks: sort,
-            packName: search,
-            max: max,
-            min: min,
-          })
-        )
-      : dispatch(
-          setSearchParamsPacksAC({
-            page,
-            pageCount,
-            sortPacks: sort,
-            packName: search,
-            max: max,
-            min: min,
-          })
-        )
+    dispatch(
+      setSearchParamsPacksAC({
+        user_id: userID,
+        page,
+        pageCount,
+        sortPacks: sort,
+        packName: search,
+        max: max,
+        min: min,
+      })
+    )
     dispatch(setAppStatusAC('succeeded'))
     dispatch(getUserPacksAC(res.data))
   } catch (e: any) {

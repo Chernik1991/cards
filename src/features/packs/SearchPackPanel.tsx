@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Box } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
@@ -13,30 +13,23 @@ import { packMaxCardsCount, packMinCardsCount, packSearch } from 'features/packs
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
-  console.log('SearchPackPanel')
+  // console.log('SearchPackPanel')
   const dispatch = useAppDispatch()
-  const [searchInputCallBack, setSearchInputCallBack] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const defaultMin = useAppSelector(packMinCardsCount)
   const defaultMax = useAppSelector(packMaxCardsCount)
   const status = useAppSelector(appStatus)
   const search = useAppSelector(packSearch)
-  const callBackSearchInput = () => {
-    setSearchInputCallBack(true)
-  }
+
   const searchHandler = (search: string) => {
     dispatch(searchPacksAC(search))
     dispatch(pagePacksAC(1))
-    // }
   }
   const onChangeValuesHandler = (values: number[]) => {
-    console.log(values, '666666666666666666666')
     dispatch(minAC(values[0]))
     dispatch(maxAC(values[1]))
   }
-
-  console.log(+params.min, '444444444444444444')
 
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
@@ -53,7 +46,7 @@ export const SearchPackPanel = () => {
         <SearchInput
           disabled={status === 'loading'}
           onChangeText={searchHandler}
-          searchValue={params.packName ? params.packName : search}
+          searchValue={params.packName || search}
         />
       </Box>
       <Box>
@@ -64,16 +57,9 @@ export const SearchPackPanel = () => {
       </Box>
       <Box>
         <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Number of cards</label>
-        {/*<InputSlider*/}
-        {/*  minValue={minCardsCount}*/}
-        {/*  maxValue={maxCardsCount}*/}
-        {/*  sliderWidth={155}*/}
-        {/*  disabled={status == 'loading'}*/}
-        {/*  onChangeValues={onChangeValuesHandler}*/}
-        {/*/>*/}
         <PacksSlider
           minValue={+params.min || defaultMin}
-          maxValue={+params.max ?? defaultMax}
+          maxValue={+params.max || defaultMax}
           defaultMax={defaultMax}
           defaultMin={defaultMin}
           sliderWidth={155}

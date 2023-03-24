@@ -34,7 +34,7 @@ export type ResponsePacksType = {
   searchParamsPacks: searchParamsPacksType
 }
 export type searchParamsPacksType = {
-  user_id?: string
+  user_id: string
   page: number
   pageCount: number
   sortPacks: string
