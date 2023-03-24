@@ -4,58 +4,46 @@ import { instance } from 'features/auth/auth-api'
 
 export const packsAPI = {
   getPacks(params: PacksParamsType) {
-    return instance.get<PacksParamsType, AxiosResponse<ResponsePacksType>>('cards/pack', { params })
+    return instance.get<PacksParamsType, AxiosResponse<ResponsePacksType>>('cards/pack', {
+      params,
+    })
   },
-  setPack(data?: SetNewPackType) {
+  setPack(data: SetNewPackType) {
     return instance.post<SetNewPackType, AxiosResponse<ResponsePacksType>>('cards/pack', { cardsPack: { ...data } })
   },
-  deletePack(data?: PacksParamsType) {
-    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', { params: { ...data } })
+  deletePack(params: string) {
+    return instance.delete<{}, AxiosResponse<ResponsePacksType>>('cards/pack', { params })
   },
   updatePack(data: UpdatePackType) {
     return instance.put<UpdatePackType, AxiosResponse<ResponsePacksType>>('cards/pack', { cardsPack: { ...data } })
   },
 }
-
 export type ResponsePacksType = {
-  cardPacks: [PackType]
-  cardPacksTotalCount: number
-  // количество колод
-  maxCardsCount: number
-  minCardsCount: number
-  page: number // выбранная страница
-  pageCount: number
-  myPacks?: boolean
-}
-export type CardPacks = {
-  _id: string
-  user_id: string
-  user_name: string
-  private: boolean
-  name: string
-  path: string
-  grade: number
-  shots: number
-  cardsCount: number
-  type: string
-  rating: number
-  created: string
-  updated: string
-  more_id: string
-  __v: number
-}
-
-/*export type getResponse = {
-  cardPacks: CardPacks[]
+  cardPacks: CardPacksType[]
   page: number
   pageCount: number
   cardPacksTotalCount: number
   minCardsCount: number
   maxCardsCount: number
-  token: string
-  tokenDeathTime: number
-}*/
-export type PackType = {
+  isMyPacks?: boolean
+  sort: string
+  search: string
+  max: number
+  min: number
+  filterOff: boolean
+  searchParamsPacks: searchParamsPacksType
+}
+export type searchParamsPacksType = {
+  user_id: string
+  page: number
+  pageCount: number
+  sortPacks: string
+  packName: string
+  max: number
+  min: number
+}
+
+export type CardPacksType = {
   cardsCount: number
   created: string
   deckCover: string
@@ -73,7 +61,6 @@ export type PackType = {
   __v: string
   _id: string
 }
-
 export type PacksParamsType = {
   packName?: string
   min?: number | null
@@ -81,19 +68,14 @@ export type PacksParamsType = {
   sortPacks?: string | null
   page?: number | null
   pageCount?: number | null
-
   user_id?: string | null | undefined
-
   block?: boolean
-  id?: string | null
 }
-
 export type SetNewPackType = {
   name?: string
   deckCover?: string
   private?: boolean
 }
-
 export type UpdatePackType = {
   _id: string | undefined
   name: string

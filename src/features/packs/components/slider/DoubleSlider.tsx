@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, memo, SyntheticEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, FC, memo, SyntheticEvent, useCallback, useState } from 'react'
 
 import TextField from '@mui/material/TextField'
 
@@ -45,18 +45,18 @@ export const InputSlider: FC<InputSliderPropsType> = memo(
       },
       [minValue]
     )
-
-    useEffect(() => {
-      if (value[0] > value[1]) {
-        setValue([value[1], value[0]])
-      }
-    }, [value])
-
-    useEffect(() => {
-      if (value[0] === minValue && value[1] === maxValue) {
-        setValue([minValue, maxValue])
-      }
-    }, [minValue, maxValue])
+    //
+    // useEffect(() => {
+    //   if (value[0] > value[1]) {
+    //     setValue([value[1], value[0]])
+    //   }
+    // }, [value])
+    //
+    // useEffect(() => {
+    //   if (value[0] === minValue && value[1] === maxValue) {
+    //     setValue([minValue, maxValue])
+    //   }
+    // }, [minValue, maxValue])
 
     const inputProps = {
       inputMode: 'numeric',

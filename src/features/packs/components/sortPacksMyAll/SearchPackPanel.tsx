@@ -1,7 +1,7 @@
 import React from 'react'
 
-import FilterAltOffIcon from '@mui/icons-material/FilterAltOff'
-import { Box, IconButton } from '@mui/material'
+import { Box } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 import { SortPacksMyAll } from './SortPacksMyAll'
 
@@ -9,21 +9,31 @@ import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
 import { packMaxCardsCount, packMinCardsCount } from 'features/packs/selectorPack'
 import { useAppSelector } from 'store/store'
+import { PacksSlider } from 'features/packs/components/slider/PacksSlider'
+import { PacksToggleButton } from 'features/packs/components/ToggleButton/PacksToggleButton'
+import { FilterAllOff } from 'features/packs/FilterAllOff'
+import { maxAC, minAC, pagePacksAC, searchPacksAC } from 'features/packs/packsReducer'
+import { packMaxCardsCount, packMinCardsCount, packSearch } from 'features/packs/selectorPack'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
-type SearchPackPanelType = {
-  searchParams: Iterable<readonly [PropertyKey, any]>
-  onChangeSearchHandler: (searchValue: string) => void
-  onChangeValuesHandler: (values: number[]) => void
-  callBackSearchInput: () => void
-  handleChangeMyPack: (my: boolean) => void
-}
-
-export const SearchPackPanel = (props: SearchPackPanelType) => {
-  console.log('SearchPackPanel')
-  const params = Object.fromEntries(props.searchParams)
-  const minCardsCount = useAppSelector(packMinCardsCount)
-  const maxCardsCount = useAppSelector(packMaxCardsCount)
+export const SearchPackPanel = () => {
+  // console.log('SearchPackPanel')
+  const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const params = Object.fromEntries(searchParams)
+  const defaultMin = useAppSelector(packMinCardsCount)
+  const defaultMax = useAppSelector(packMaxCardsCount)
   const status = useAppSelector(appStatus)
+  const search = useAppSelector(packSearch)
+
+  const searchHandler = (search: string) => {
+    dispatch(searchPacksAC(search))
+    dispatch(pagePacksAC(1))
+  }
+  const onChangeValuesHandler = (values: number[]) => {
+    dispatch(minAC(values[0]))
+    dispatch(maxAC(values[1]))
+  }
 
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
@@ -39,27 +49,29 @@ export const SearchPackPanel = (props: SearchPackPanelType) => {
         </label>
         <SearchInput
           disabled={status === 'loading'}
-          onChangeText={props.onChangeSearchHandler}
-          searchValue={params.packName}
-          callBackSearchInput={props.callBackSearchInput}
+          onChangeText={searchHandler}
+          searchValue={params.packName || search}
         />
       </Box>
       <Box>
         <Box>
           <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Show packs cards</label>
         </Box>
+        <PacksToggleButton />
+      </Box>
+      <Box>
+        <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Number of cards</label>
+        <PacksSlider
+          minValue={+params.min || defaultMin}
+          maxValue={+params.max || defaultMax}
+          defaultMax={defaultMax}
+          defaultMin={defaultMin}
+          sliderWidth={155}
+          disabled={status == 'loading'}
+          onChangeValues={onChangeValuesHandler}
+        />
         <SortPacksMyAll handleChangeMyPack={props.handleChangeMyPack} />
       </Box>
-      {/*<Box>*/}
-      {/*  <label style={{ fontSize: '20px', paddingLeft: '10px', fontWeight: '600' }}>Number of cards</label>*/}
-      {/*  <InputSlider*/}
-      {/*    minValue={minCardsCount || 0}*/}
-      {/*    maxValue={maxCardsCount || 0}*/}
-      {/*    sliderWidth={155}*/}
-      {/*    disabled={status == 'loading'}*/}
-      {/*    onChangeValues={props.onChangeValuesHandler}*/}
-      {/*  />*/}
-      {/*</Box>*/}
       <Box
         mb={'2'}
         sx={{
@@ -68,9 +80,7 @@ export const SearchPackPanel = (props: SearchPackPanelType) => {
           borderRadius: '5px',
         }}
       >
-        <IconButton aria-label="delete" size="large">
-          <FilterAltOffIcon fontSize="inherit" />
-        </IconButton>
+        <FilterAllOff />
       </Box>
     </Box>
   )

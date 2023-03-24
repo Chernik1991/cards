@@ -16,9 +16,8 @@ type TableHeadComponentProps = {
 }
 
 export const TableHeadComponent = (props: TableHeadComponentProps) => {
-  const [sort, setSort] = useState(1)
-
   const { orderBy, onRequestSort } = props
+  const [sort, setSort] = useState(+orderBy.slice(0, 0) || 1)
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     const sortPacks = sort + property
 
@@ -41,7 +40,7 @@ export const TableHeadComponent = (props: TableHeadComponentProps) => {
             sx={{ backgroundColor: '#efefef', padding: '15px 30px' }}
           >
             <TableSortLabel
-              active={orderBy === headCell.id}
+              active={orderBy.slice(1) === headCell.id}
               direction={sort ? 'asc' : 'desc'}
               onClick={createSortHandler(headCell.id)}
               IconComponent={ArrowDropDown}

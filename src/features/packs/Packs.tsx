@@ -14,6 +14,15 @@ import { DeletePack } from 'features/packs/modals/DeletePack/DeletePack'
 import { EditPack } from 'features/packs/modals/EditPack/EditPack'
 import { clearUserStateTypeAC } from 'features/packs/modals/modalsReducer'
 import e from 'features/packs/Packs.module.css'
+import {
+  addPackTC,
+  deletePackTC,
+  getPacksTC,
+  pageCountPacksAC,
+  pagePacksAC,
+  updatePackTC,
+} from 'features/packs/packsReducer'
+import { SearchPackPanel } from 'features/packs/SearchPackPanel'
 import { addPackTC, deletePackTC, getPacksTC, updatePackTC } from 'features/packs/packsReducer'
 import {
   packAdditionalSettings,
@@ -21,11 +30,17 @@ import {
   packAdditionalSettingsPrivate,
   packCardPacks,
   packCardPacksTotalCount,
-  packMyPacks,
+  packIsMyPacks,
+  packMax,
+  packMaxCardsCount,
+  packMin,
+  packMinCardsCount,
   packPage,
   packPageCount,
+  packSearch,
+  packSort,
+  searchParamsURL,
 } from 'features/packs/selectorPack'
-import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
@@ -34,26 +49,55 @@ export const Packs = () => {
   const cardPacks = useAppSelector(packCardPacks)
   const pagePacks = useAppSelector(packPage)
   const pageCount = useAppSelector(packPageCount)
+  const search = useAppSelector(packSearch)
+  const sort = useAppSelector(packSort)
+  const minCardsCount = useAppSelector(packMinCardsCount)
+  const maxCardsCount = useAppSelector(packMaxCardsCount)
+  const min = useAppSelector(packMin)
+  const max = useAppSelector(packMax)
+  const isMyPacks = useAppSelector(packIsMyPacks)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
-  const userID = useAppSelector(userIdProfile)
-  const myPacks = useAppSelector(packMyPacks)
   const packsAdditionalSettings = useAppSelector(packAdditionalSettings)
   const packsAdditionalSettingsName = useAppSelector(packAdditionalSettingsName)
   const packsAdditionalSettingsPrivate = useAppSelector(packAdditionalSettingsPrivate)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [search, setSearch] = useState<any>()
-  const userPacks = useAppSelector(state => state.packs)
   const [open, setOpen] = useState('false')
   const [error, setError] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
-  const [searchInputCallBack, setSearchInputCallBack] = useState<boolean>(false)
   const isNotEmptyPack = !!cardPacks.length
+  const paginationLabel = 'Packs per Page'
+  const searchParamsPacks = useAppSelector(searchParamsURL)
 
   useEffect(() => {
-    console.log('useEffect search')
-    dispatch(getPacksTC({ ...search }))
-    setSearchParams({ ...search })
-  }, [search])
+    const { user_id, page, pageCount, sortPacks, packName, max, min } = searchParamsPacks
+    let param = {}
+
+    if (pagePacks !== 1) {
+      param = { ...param, page: page.toString() }
+    }
+    if (pageCount !== 4) {
+      param = { ...param, pageCount: pageCount.toString() }
+    }
+    if (sortPacks !== '0updated') {
+      param = { ...param, sortPacks: sortPacks }
+    }
+    if (packName !== '') {
+      param = { ...param, packName: packName }
+    }
+    if (max !== maxCardsCount) {
+      param = { ...param, max: max.toString() }
+    }
+    if (min !== minCardsCount) {
+      param = { ...param, min: min.toString() }
+    }
+    if (isMyPacks) {
+      param = { ...param, user_id: user_id.toString() }
+    }
+    setSearchParams({ ...param })
+  }, [searchParamsPacks])
+  useEffect(() => {
+    dispatch(getPacksTC())
+  }, [search, pageCount, pagePacks, sort, isMyPacks, max, min])
   const handleOpen = (value: string) => setOpen(value)
   const handleClose = () => {
     dispatch(clearUserStateTypeAC())
@@ -63,37 +107,9 @@ export const Packs = () => {
   const modalOpenHandler = (value: string) => {
     handleOpen(value)
   }
-
-  const paginationLabel = 'Packs per Page'
-
-  const onChangePageHandler = (page: number, size: number) => {
-    if (pagePacks == page && pageCount == 4) {
-      setSearchParams({ ...search, page: page, pageCount: size })
-    } else {
-      setSearch({ ...search, page: page, pageCount: size })
-    }
-  }
-  const setParamsSortedHandler = (sortPacks: string) => {
-    setSearch({ ...search, sortPacks: sortPacks })
-  }
-  const callBackSearchInput = () => {
-    setSearchInputCallBack(true)
-  }
-  const onChangeSearchHandler = (searchValue: string) => {
-    if (searchInputCallBack) {
-      setSearch({ ...search, packName: searchValue })
-    }
-  }
-  const onChangeValuesHandler = useCallback((values: number[]) => {
-    setSearch({ ...search, min: values[0], max: values[1] })
-  }, [])
-
-  const handleChangeMyPack = (my: boolean) => {
-    if (my) {
-      setSearch({ ...search, user_id: userID })
-    } else {
-      setSearch({})
-    }
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(pagePacksAC(page))
+    dispatch(pageCountPacksAC(pageCount))
   }
   const addNewPack = () => {
     if (packsAdditionalSettings.name) {
@@ -131,7 +147,9 @@ export const Packs = () => {
   }
   const deletePack = () => {
     //!add user_id for soring adter adding NewPack
-    dispatch(deletePackTC({ id: packsAdditionalSettings._id }))
+    if (packsAdditionalSettings._id) {
+      dispatch(deletePackTC(packsAdditionalSettings._id))
+    }
     handleClose()
   }
 
@@ -153,21 +171,9 @@ export const Packs = () => {
             Add new pack
           </SuperButton>
         </Box>
-        <SearchPackPanel
-          searchParams={searchParams}
-          onChangeSearchHandler={onChangeSearchHandler}
-          onChangeValuesHandler={onChangeValuesHandler}
-          callBackSearchInput={callBackSearchInput}
-          handleChangeMyPack={handleChangeMyPack}
-        />
+        <SearchPackPanel />
         {isNotEmptyPack ? (
-          <PacksTable
-            cardsPacks={userPacks.cardPacks}
-            userID={userID}
-            userIDsettings={userID}
-            setParamsSorted={setParamsSortedHandler}
-            modalHandler={modalOpenHandler}
-          />
+          <PacksTable modalHandler={modalOpenHandler} />
         ) : (
           <Box
             sx={{
@@ -180,14 +186,14 @@ export const Packs = () => {
               paddingTop: 25,
             }}
           >
-            <div>{'not answer'}</div>
+            <div>{'No data available. Change your search options'}</div>
           </Box>
         )}
         {isNotEmptyPack ? (
           <PaginationComponent
             totalCount={cardPacksTotalCount}
-            currentPage={params.page ? +params.page : pagePacks}
-            pageSize={params.pageCount ? +params.pageCount : pageCount}
+            currentPage={+params.page || pagePacks}
+            pageSize={+params.pageCount || pageCount}
             onPageChanged={onChangePageHandler}
             labelRowsPerPage={paginationLabel}
           />

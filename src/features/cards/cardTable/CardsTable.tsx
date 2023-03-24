@@ -66,7 +66,7 @@ type EnhancedTableType = {
   my_id: string
   modalHandler: (value: string) => void
 }
-export const EnhancedTable = (props: EnhancedTableType) => {
+export const CardsTable = (props: EnhancedTableType) => {
   const dispatch = useAppDispatch()
   const rows = props.cards.map((el: CardsType) => ({
     id: el._id,

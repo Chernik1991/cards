@@ -22,6 +22,8 @@ import {
 import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
+import { CardsTable } from 'features/cards/cardTable/CardsTable'
+import { cards, cardsPageCount, cardsTotalCount, packUserId, pageCard } from 'features/cards/selectorCard'
 import { EnhancedTable } from 'features/cards/cardTable/CardsTable'
 import {
   cards,
@@ -252,7 +254,7 @@ export const Card = () => {
                 paddingTop: 25,
               }}
             >
-              <div>{'not answer'}</div>
+              <div>{'No data available. Change your search options'}</div>
             </Box>
           )}
         </Box>

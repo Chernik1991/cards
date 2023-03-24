@@ -1,14 +1,21 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
+import { useSearchParams } from 'react-router-dom'
 
+import { setPackIdAC } from 'features/cards/card/card-reducer'
 import { TableRowComponent } from 'features/packs/components/table/tableBody/TableRowComponent'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
+import { CardPacksType } from 'features/packs/packs-api'
+import { sortPacksAC } from 'features/packs/packsReducer'
+import { packCardPacks, packSort } from 'features/packs/selectorPack'
+import { userIdProfile } from 'features/profile/selectorProfile'
+import { useAppDispatch, useAppSelector } from 'store/store'
 import { PackType } from 'features/packs/packs-api'
 
 export type HeadCell = {
@@ -51,16 +58,18 @@ export const headCells: HeadCell[] = [
 ]
 
 type PacksTableType = {
-  cardsPacks: PackType[]
-  userID: string
-  userIDsettings: string
-  setParamsSorted: (sortPacks: string) => void
   modalHandler: (value: string) => void
 }
 
 export const PacksTable = (props: PacksTableType) => {
-  console.log('PacksTable')
-  const rows = props.cardsPacks.map((el: PackType) => ({
+  // console.log('PacksTable')
+  const cardPacks = useAppSelector(packCardPacks)
+  const userID = useAppSelector(userIdProfile)
+  const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const params = Object.fromEntries(searchParams)
+  const sort = useAppSelector(packSort)
+  const rows = cardPacks.map((el: CardPacksType) => ({
     name: el.name,
     actions: '',
     created_by: el.user_name,
@@ -70,12 +79,20 @@ export const PacksTable = (props: PacksTableType) => {
     packOwnerID: el.user_id,
     private: el.private,
   }))
-  const [orderBy, setOrderBy] = useState<string>('name')
+  const [orderBy, setOrderBy] = useState<string>(sort)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => {
     setOrderBy(property)
-    props.setParamsSorted(sortPacks)
+    dispatch(sortPacksAC(sortPacks))
   }
+  const cardsListHandler = (cardsPack_id: string) => {
+    dispatch(setPackIdAC(cardsPack_id))
+  }
+
+  useEffect(() => {
+    setOrderBy(params.sortPacks ? params.sortPacks : sort)
+    dispatch(sortPacksAC(params.sortPacks ? params.sortPacks : sort))
+  }, [params.sortPacks])
 
   return (
     <Box sx={{ width: '100%', minWidth: '1000px', padding: '30px 0px' }}>
@@ -95,7 +112,8 @@ export const PacksTable = (props: PacksTableType) => {
                     key={crypto.randomUUID()}
                     row={row}
                     index={index}
-                    userID={props.userID}
+                    userID={userID}
+                    cardsListHandler={cardsListHandler}
                     modalHandler={props.modalHandler}
                   />
                 )

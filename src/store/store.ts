@@ -14,8 +14,6 @@ import { modalsReducer } from 'features/packs/modals/modalsReducer'
 import { packsReducer } from 'features/packs/packsReducer'
 import { profileReducer } from 'features/profile/reducerProfile'
 
-// объединяя reducer-ы с помощью combineReducers,
-// мы задаём структуру нашего единственного объекта-состояния.
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
@@ -32,16 +30,14 @@ const rootReducer = combineReducers({
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
-// export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppThunk>()
 export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
-//Types
 
+//Types
 export type AppStateType = ReturnType<typeof rootReducer>
-export type AppDispatch = typeof store.dispatch
 export type AppThunk = ThunkDispatch<AppStateType, any, AnyAction>
-export type AppThunkDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AnyAction>
+
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore.
 window.store = store
