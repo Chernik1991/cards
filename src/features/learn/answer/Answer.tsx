@@ -1,11 +1,11 @@
 import { Button } from '@mui/material'
 
 import { changeGradeTC, setCurrentCardAC } from '../learnReducer'
+import { randomCard } from '../randomCard'
 
 import s from 'features/learn/answer/Answer.module.css'
 import { Grades } from 'features/learn/answer/Grades'
 import { useAppDispatch, useAppSelector } from 'store/store'
-import { randomCard } from '../randomCard'
 
 export const Answer = () => {
   const cards = useAppSelector(state => state.cards.cards)

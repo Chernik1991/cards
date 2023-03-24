@@ -1,10 +1,12 @@
+import { useEffect } from 'react'
+
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
+
 import { useAppDispatch } from '../../../store/store'
 import { setGradeAC } from '../learnReducer'
-import { useEffect } from 'react'
 
 export const Grades = () => {
   const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer']
@@ -17,6 +19,7 @@ export const Grades = () => {
   const onChangeGrade = (index: number) => {
     dispatch(setGradeAC(index + 1))
   }
+
   return (
     <FormControl>
       <span>Rate yourself:</span>

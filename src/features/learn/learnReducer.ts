@@ -1,10 +1,10 @@
 import { setAppStatusAC } from '../../app/app-reducer'
 import { errorUtils } from '../../common/utils/error-utils'
 import { AppThunkType } from '../../store/store'
+import { setCardLearnAC } from '../cards/card/card-reducer'
 import { CardsType } from '../cards/cards-api'
 
 import { learnAPI, setGradeCardDataType } from './learnAPI'
-import { setCardLearnAC } from '../cards/card/card-reducer'
 
 const initialState: learnStateType = {
   isShowAnswer: false,
@@ -16,13 +16,12 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
   const card_id = getState().learn.currentCard._id
   const grade = getState().learn.currentCard.grade
   const cards = getState().cards.cards
-  console.log(card_id, grade, cards)
+
   dispatch(setAppStatusAC('loading'))
   try {
     const data: setGradeCardDataType = { card_id, grade }
-    console.log(data)
     const res = await learnAPI.setGradeCard(data)
-    console.log(res)
+
     dispatch(
       setCardLearnAC(
         cards.map(el =>
@@ -49,7 +48,6 @@ export const learnReducer = (state: learnStateType = initialState, action: Actio
       return { ...state, grade: action.grade }
     }
     case 'SET-CURRENT-CARD': {
-      console.log(action.currentCard)
       return { ...state, currentCard: action.currentCard }
     }
 
