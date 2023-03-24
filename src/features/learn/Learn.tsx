@@ -45,6 +45,7 @@ export const Learn = () => {
       dispatch(setCurrentCardAC(randomCard(cards)))
       console.log(cards)
     }
+
     return () => {
       console.log('LearnContainer useEffect off')
     }
