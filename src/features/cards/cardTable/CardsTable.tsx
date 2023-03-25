@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { Rating } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -7,23 +8,28 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import { useSearchParams } from 'react-router-dom'
 
 import { addNewUseCardAnswerAC, addNewUseCardQuestionAC, updateUserCardIDAC } from '../cardModals/cardModalsReducer'
 
+import { sortCardsAC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
 import { CardActions } from 'features/cards/cardTable/CardActions'
-import { useAppDispatch } from 'store/store'
+import { cards, cardsSort } from 'features/cards/selectorCard'
+import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
+import { sortPacksAC } from 'features/packs/packsReducer'
+import { userIdProfile } from 'features/profile/selectorProfile'
+import { useAppDispatch, useAppSelector } from 'store/store'
 
-type Data = {
-  question: string
-  grade: number
-  last_updated: string
-  answer: string
-  actions: string
+type HeadCell = {
+  disablePadding: boolean
+  id: string
+  label: string
+  numeric: boolean
 }
-const headCells: readonly HeadCell[] = [
+
+const headCells: HeadCell[] = [
   {
     id: 'question',
     numeric: true,
@@ -37,7 +43,7 @@ const headCells: readonly HeadCell[] = [
     label: 'Answer',
   },
   {
-    id: 'last_updated',
+    id: 'updated',
     numeric: true,
     disablePadding: false,
     label: 'Last Updated',
@@ -56,20 +62,18 @@ const headCells: readonly HeadCell[] = [
   },
 ]
 
-type HeadCell = {
-  disablePadding: boolean
-  id: keyof Data
-  label: string
-  numeric: boolean
-}
-type EnhancedTableType = {
-  cards: CardsType[]
-  my_id: string
+type Props = {
   modalHandler: (value: string) => void
 }
-export const CardsTable = (props: EnhancedTableType) => {
+export const CardsTable = (props: Props) => {
+  // console.log('CardsTable')
   const dispatch = useAppDispatch()
-  const rows = props.cards.map((el: CardsType) => ({
+  const dataCards = useAppSelector(cards)
+  const userID = useAppSelector(userIdProfile)
+  const sort = useAppSelector(cardsSort)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const params = Object.fromEntries(searchParams)
+  const rows = dataCards.map((el: CardsType) => ({
     id: el._id,
     actions: '',
     cardsPack_id: el.cardsPack_id,
@@ -86,21 +90,29 @@ export const CardsTable = (props: EnhancedTableType) => {
     last_updated: new Date(el.updated).toLocaleString(),
     __v: el.__v,
   }))
+  const [orderBy, setOrderBy] = useState<string>(sort)
+
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortCards: string) => {
+    setOrderBy(property)
+    dispatch(sortCardsAC(sortCards))
+  }
+
+  useEffect(() => {
+    setOrderBy(params.sortCards || sort)
+    dispatch(sortPacksAC(params.sortCards || sort))
+  }, [params.sortCards])
 
   return (
     <Box sx={{ width: '100%', padding: '30px' }}>
       <Paper sx={{ width: '100%', mb: 2, padding: '15px 30px' }}>
         <TableContainer>
-          <Table sx={{ minWidth: 850 }} aria-labelledby="tableTitle">
-            <TableHead>
-              <TableRow>
-                {headCells.map(headCell => (
-                  <TableCell key={headCell.id} sx={{ backgroundColor: '#efefef' }}>
-                    {headCell.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
+            <TableHeadComponent
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+              headCells={headCells}
+            />
             <TableBody>
               {rows.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`
@@ -143,7 +155,7 @@ export const CardsTable = (props: EnhancedTableType) => {
                     <TableCell align="left">
                       <Rating name="read-only" value={row.grade} readOnly precision={0.1} />
                     </TableCell>
-                    {props.my_id === row.user_id ? (
+                    {userID === row.user_id ? (
                       <CardActions
                         align="left"
                         sx={{ ...paddingStyle, minWidth: 'none' }}

@@ -1,32 +1,28 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 
 import { Box } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 
 import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
-import { GetCardsTC } from 'features/cards/card/card-reducer'
+import { cardQuestionAC, pageCardsAC } from 'features/cards/card/card-reducer'
+import { cardsMaxCardsCount, cardsMinCardsCount, searchQuestion } from 'features/cards/selectorCard'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
-type PropsType = {
-  cardsPack_id: string
-  searchParams: any
-  searchCardPanelParams: (data: any) => void
-}
-
-export const SearchCardPanel = (props: PropsType) => {
-  // console.log('SearchCardPanel')
-  const params = Object.fromEntries(props.searchParams)
+export const SearchCardPanel = () => {
+  console.log('SearchCardPanel')
   const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const params = Object.fromEntries(searchParams)
+  const defaultMin = useAppSelector(cardsMinCardsCount)
+  const defaultMax = useAppSelector(cardsMaxCardsCount)
   const status = useAppSelector(appStatus)
-  const onChangeSearchHandler = useCallback((searchValue: string) => {
-    if (searchValue !== '') {
-      dispatch(GetCardsTC({ cardsPack_id: props.cardsPack_id, cardQuestion: searchValue }))
-      props.searchCardPanelParams({
-        cardsPack_id: props.cardsPack_id.toString(),
-        cardQuestion: searchValue.toString(),
-      })
-    }
-  }, [])
+  const search = useAppSelector(searchQuestion)
+
+  const searchHandler = (search: string) => {
+    dispatch(cardQuestionAC(search))
+    dispatch(pageCardsAC(1))
+  }
 
   return (
     <Box width={'100%'} display={'flex'} justifyContent={'space-between'} gap={'50px'} alignItems={'end'}>
@@ -42,8 +38,8 @@ export const SearchCardPanel = (props: PropsType) => {
         </label>
         <SearchInput
           disabled={status === 'loading'}
-          onChangeText={onChangeSearchHandler}
-          searchValue={params.cardQuestion || ''}
+          onChangeText={searchHandler}
+          searchValue={params.cardQuestion || search}
         />
       </Box>
     </Box>

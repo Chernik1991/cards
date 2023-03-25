@@ -1,11 +1,13 @@
+import * as React from 'react'
 import { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
-import { useSearchParams } from 'react-router-dom'
+import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
+import { isLoggedInAuth } from 'features/auth/selectorAuth'
 import { SearchPackPanel } from 'features/packs/components/sortPacksMyAll/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { AddNewPack } from 'features/packs/modals/AddNewPackModal/AddNewPack'
@@ -36,15 +38,16 @@ import {
   packPageCount,
   packSearch,
   packSort,
-  searchParamsURL,
 } from 'features/packs/selectorPack'
+import { userIdProfile } from 'features/profile/selectorProfile'
+import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
   console.log('Packs')
   const dispatch = useAppDispatch()
   const cardPacks = useAppSelector(packCardPacks)
-  const pagePacks = useAppSelector(packPage)
+  const page = useAppSelector(packPage)
   const pageCount = useAppSelector(packPageCount)
   const search = useAppSelector(packSearch)
   const sort = useAppSelector(packSort)
@@ -52,6 +55,7 @@ export const Packs = () => {
   const maxCardsCount = useAppSelector(packMaxCardsCount)
   const min = useAppSelector(packMin)
   const max = useAppSelector(packMax)
+  const user_id = useAppSelector(userIdProfile)
   const isMyPacks = useAppSelector(packIsMyPacks)
   const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
   const packsAdditionalSettings = useAppSelector(packAdditionalSettings)
@@ -63,23 +67,29 @@ export const Packs = () => {
   const params = Object.fromEntries(searchParams)
   const isNotEmptyPack = !!cardPacks.length
   const paginationLabel = 'Packs per Page'
-  const searchParamsPacks = useAppSelector(searchParamsURL)
+  const isLoggedIn = useAppSelector(isLoggedInAuth)
+
+  if (!isLoggedIn) {
+    console.log('Profile !isLoggedIn')
+
+    return <Navigate to={PATH.LOGIN} replace />
+  }
 
   useEffect(() => {
-    const { user_id, page, pageCount, sortPacks, packName, max, min } = searchParamsPacks
+    dispatch(getPacksTC())
     let param = {}
 
-    if (pagePacks !== 1) {
+    if (page !== 1) {
       param = { ...param, page: page.toString() }
     }
     if (pageCount !== 4) {
       param = { ...param, pageCount: pageCount.toString() }
     }
-    if (sortPacks !== '0updated') {
-      param = { ...param, sortPacks: sortPacks }
+    if (sort !== '0updated') {
+      param = { ...param, sortPacks: sort }
     }
-    if (packName !== '') {
-      param = { ...param, packName: packName }
+    if (search !== '') {
+      param = { ...param, packName: search }
     }
     if (max !== maxCardsCount) {
       param = { ...param, max: max.toString() }
@@ -91,10 +101,7 @@ export const Packs = () => {
       param = { ...param, user_id: user_id.toString() }
     }
     setSearchParams({ ...param })
-  }, [searchParamsPacks])
-  useEffect(() => {
-    dispatch(getPacksTC())
-  }, [search, pageCount, pagePacks, sort, isMyPacks, max, min])
+  }, [search, pageCount, page, sort, isMyPacks, max, min])
   const handleOpen = (value: string) => setOpen(value)
   const handleClose = () => {
     dispatch(clearUserStateTypeAC())
@@ -143,6 +150,7 @@ export const Packs = () => {
     }
   }
   const deletePack = () => {
+    console.log('2121212121212121212121211')
     //!add user_id for soring adter adding NewPack
     if (packsAdditionalSettings._id) {
       dispatch(deletePackTC(packsAdditionalSettings._id))
@@ -189,7 +197,7 @@ export const Packs = () => {
         {isNotEmptyPack ? (
           <PaginationComponent
             totalCount={cardPacksTotalCount}
-            currentPage={+params.page || pagePacks}
+            currentPage={+params.page || page}
             pageSize={+params.pageCount || pageCount}
             onPageChanged={onChangePageHandler}
             labelRowsPerPage={paginationLabel}

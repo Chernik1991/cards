@@ -2,11 +2,11 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { setPackIdAC } from 'features/cards/card/card-reducer'
+import { setCardsPackIdAC } from 'features/cards/card/card-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
 import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'
-import { useAppDispatch, useAppSelector } from 'store/store'
+import { useAppDispatch } from 'store/store'
 
 type TableRowType = {
   row: ExtendedType
@@ -35,14 +35,14 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
   const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
   const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
   const crudAccessValue = row.packOwnerID === userID
-  const cardsPack_id = useAppSelector(state => (state.cards.setPackId ? state.cards.setPackId : ''))
 
   const handleStudying = () => {
     dispatch(updateUserPackIDAC(row.id))
 
-    return <Navigate to={PATH.LEARN} replace />
+    return <Navigate to={PATH.LEARN} />
   }
   const handleDeletePack = () => {
+    console.log('handleDeletePack')
     dispatch(addNewUserPackAC(row.name))
     dispatch(updateUserPackIDAC(row.id))
     modalHandler('delete-pack')
@@ -56,13 +56,13 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
     // dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, userID))
   }
   const cardsListHandler = (cardsPack_id: string) => {
-    dispatch(setPackIdAC(cardsPack_id))
+    dispatch(setCardsPackIdAC(cardsPack_id))
   }
 
   return (
     <TableRow hover role="checkbox" tabIndex={-1} key={crypto.randomUUID()}>
       <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
-        <NavLink to={PATH.CARD} onClick={event => cardsListHandler(row.id)}>
+        <NavLink to={PATH.CARD} onClick={() => cardsListHandler(row.id)}>
           {row.name}
         </NavLink>
       </TableCell>

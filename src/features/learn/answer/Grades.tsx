@@ -5,8 +5,9 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 
-import { useAppDispatch } from '../../../store/store'
 import { setGradeAC } from '../learnReducer'
+
+import { useAppDispatch } from 'store/store'
 
 export const Grades = () => {
   const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer']
@@ -18,6 +19,7 @@ export const Grades = () => {
 
   const onChangeGrade = (index: number) => {
     dispatch(setGradeAC(index + 1))
+    console.log(index, 'index11111111111111111')
   }
 
   return (

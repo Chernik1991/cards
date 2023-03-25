@@ -27,7 +27,7 @@ export const Learn = () => {
 
   const params = Object.fromEntries(searchParams)
 
-  const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
+  // const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
 
   /*useEffect(() => {
     dispatch(GetCardsTC({ ...search, pageCount: cards.length }))
@@ -35,11 +35,10 @@ export const Learn = () => {
   }, [search])*/
 
   useEffect(() => {
-    setSearchParams({ ...search })
-    if (first) {
-      dispatch(GetCardsTC({ ...search, pageCount: cards.length }))
-      setFirst(false)
-    }
+    // setSearchParams({ ...search })
+    dispatch(GetCardsTC())
+    // dispatch(GetCardsTC({ pageCount: cards.length, cardsPack_id: cardsPack_id }))
+    setFirst(false)
     if (cards.length > 0) {
       console.log(cards)
       dispatch(setCurrentCardAC(randomCard(cards)))
@@ -49,7 +48,7 @@ export const Learn = () => {
     return () => {
       console.log('LearnContainer useEffect off')
     }
-  }, [dispatch, cards, cardsPack_id, first, search])
+  }, [cardsPack_id])
 
   return (
     <div>

@@ -31,17 +31,17 @@ export type ResponsePacksType = {
   max: number
   min: number
   filterOff: boolean
-  searchParamsPacks: searchParamsPacksType
+  // searchParamsPacks: searchParamsPacksType
 }
-export type searchParamsPacksType = {
-  user_id: string
-  page: number
-  pageCount: number
-  sortPacks: string
-  packName: string
-  max: number
-  min: number
-}
+// export type searchParamsPacksType = {
+//   user_id: string
+//   page: number
+//   pageCount: number
+//   sortPacks: string
+//   packName: string
+//   max: number
+//   min: number
+// }
 
 export type CardPacksType = {
   cardsCount: number

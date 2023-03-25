@@ -14,7 +14,7 @@ import { packMaxCardsCount, packMinCardsCount, packSearch } from 'features/packs
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
-  // console.log('SearchPackPanel')
+  console.log('SearchPackPanel')
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)

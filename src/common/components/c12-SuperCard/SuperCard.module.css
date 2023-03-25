@@ -1,11 +1,15 @@
 .option {
+  cursor: pointer;
+
   width: 100%;
   min-height: 35px;
-  cursor: pointer;
 }
+
 .option:hover {
-  width: 100%;
   transform: translateX(2px);
+
+  width: 100%;
+
   transition: all 0.2s ease-in;
   /* background: #c0c9cf; */
 }
@@ -18,9 +22,10 @@
 
 .fixedDesctiprion {
   display: flex;
-  width: 60%;
   align-items: center;
   justify-content: flex-start;
-  font-size: 1.2=1rem;
-}
 
+  width: 60%;
+
+  font-size: 1rem;
+}

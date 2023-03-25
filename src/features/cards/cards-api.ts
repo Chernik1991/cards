@@ -3,9 +3,9 @@ import { AxiosResponse } from 'axios'
 import { instance } from 'features/auth/auth-api'
 
 export const cardsAPI = {
-  getCards(data: GetCardsParamsType) {
+  getCards(params: GetCardsParamsType) {
     return instance.get<GetCardsParamsType, AxiosResponse<ResponseGetCardsType>>('/cards/card', {
-      params: { ...data },
+      params,
     })
   },
   setCards(data: SetCardType) {
@@ -25,7 +25,7 @@ export const cardsAPI = {
 
 export type GetCardsParamsType = {
   cardAnswer?: string
-  cardQuestion?: string
+  cardQuestion: string
   cardsPack_id: string
   min?: number
   max?: number
@@ -100,7 +100,9 @@ export type ResponseGetCardsType = {
   maxGrade: number
   token: string
   tokenDeathTime: number
-  setPackId?: string
+  cardsPack_id: string
+  cardQuestion: string
+  sortCards: string
 }
 export type ResponseSetCardType = {
   newCard: CardsType

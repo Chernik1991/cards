@@ -16,13 +16,13 @@ import { packCardPacks, packSort } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
-export type HeadCell = {
+type HeadCell = {
   disablePadding: boolean
   id: string
   label: string
   numeric: boolean
 }
-export const headCells: HeadCell[] = [
+const headCells: HeadCell[] = [
   {
     id: 'name',
     numeric: true,
@@ -85,8 +85,8 @@ export const PacksTable = (props: PacksTableType) => {
   }
 
   useEffect(() => {
-    setOrderBy(params.sortPacks ? params.sortPacks : sort)
-    dispatch(sortPacksAC(params.sortPacks ? params.sortPacks : sort))
+    setOrderBy(params.sortPacks || sort)
+    dispatch(sortPacksAC(params.sortPacks || sort))
   }, [params.sortPacks])
 
   return (

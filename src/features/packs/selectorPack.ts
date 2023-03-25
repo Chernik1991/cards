@@ -15,4 +15,3 @@ export const packIsMyPacks = (state: AppStateType) => state.packs.isMyPacks
 export const packMin = (state: AppStateType) => state.packs.min
 export const packMax = (state: AppStateType) => state.packs.max
 export const packFilterOff = (state: AppStateType) => state.packs.filterOff
-export const searchParamsURL = (state: AppStateType) => state.packs.searchParamsPacks

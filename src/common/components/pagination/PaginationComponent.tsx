@@ -5,7 +5,7 @@ import TablePagination from '@mui/material/TablePagination'
 import { useThrottle } from 'common/hooks/useTrottle'
 
 type PaginationComponentPropsType = {
-  labelRowsPerPage?: string
+  labelRowsPerPage: string
   totalCount: number
   currentPage: number
   pageSize: number

@@ -6,13 +6,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 
-import { HeadCell } from 'features/packs/components/table/PacksTable'
-
 type TableHeadComponentProps = {
   onRequestSort: (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => void
   orderBy: string
   rowCount: number
-  headCells: HeadCell[]
+  headCells: any[]
 }
 
 export const TableHeadComponent = (props: TableHeadComponentProps) => {
@@ -41,7 +39,7 @@ export const TableHeadComponent = (props: TableHeadComponentProps) => {
           >
             <TableSortLabel
               active={orderBy.slice(1) === headCell.id}
-              direction={sort ? 'asc' : 'desc'}
+              direction={sort ? 'desc' : 'asc'}
               onClick={createSortHandler(headCell.id)}
               IconComponent={ArrowDropDown}
               sx={{ fontWeight: '600' }}
