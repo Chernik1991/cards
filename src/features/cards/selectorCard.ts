@@ -3,7 +3,7 @@ import { AppStateType } from 'store/store'
 export const pageCard = (state: AppStateType) => state.cards.page
 export const cards = (state: AppStateType) => state.cards.cards
 export const packUserId = (state: AppStateType) => state.cards.packUserId
-export const packId = (state: AppStateType) => state.cards.setPackId
+export const packId = (state: AppStateType) => state.cards.cardsPack_id
 export const packUserName = (state: AppStateType) => state.cards.packName
 export const packUserPrivate = (state: AppStateType) => state.cards.packPrivate
 export const cardsTotalCount = (state: AppStateType) => state.cards.cardsTotalCount

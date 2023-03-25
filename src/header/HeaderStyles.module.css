@@ -40,10 +40,11 @@
   left: 220px;
   top: 77px;
   z-index: 1;
-  font-size: 14px;
 }
 
 .headerArrow {
   position: relative;
-  top: -90px;
+  top: -100px !important;
+  left: 20px !important;
+  z-index: 10;
 }

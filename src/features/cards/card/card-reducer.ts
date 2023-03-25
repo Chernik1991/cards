@@ -117,6 +117,7 @@ export type ActionsType =
   | pageCountCards
   | cardQuestion
   | sortCards
+  | setPackName
 
 export type setCardsData = ReturnType<typeof setCardsDataAC>
 export type clearCardData = ReturnType<typeof clearCardDataAC>
@@ -126,6 +127,7 @@ export type pageCards = ReturnType<typeof pageCardsAC>
 export type pageCountCards = ReturnType<typeof pageCountCardsAC>
 export type cardQuestion = ReturnType<typeof cardQuestionAC>
 export type sortCards = ReturnType<typeof sortCardsAC>
+export type setPackName = ReturnType<typeof setPackNameAC>
 
 //thunks
 export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {

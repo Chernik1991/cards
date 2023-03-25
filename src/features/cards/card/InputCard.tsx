@@ -1,6 +1,5 @@
+import SuperEditableSpanCard from 'common/components/del/SuperEditableSpanCard'
 import { useState } from 'react'
-
-import SuperEditableSpanCard from 'features/cards/card/SuperEditableSpanCard'
 
 type InputCardPropsType = {
   id: string

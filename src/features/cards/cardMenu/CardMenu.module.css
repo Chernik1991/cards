@@ -26,9 +26,10 @@
 .menuContainer {
   position: relative;
   left: -90px;
-  width: 115px;
+  width: 125px;
   border: 1.5px solid #e1e1e1;
   border-radius: 0px;
+  z-index: 10;
 }
 
 .packInfo {

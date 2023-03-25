@@ -37,7 +37,7 @@ export const Header = () => {
         cardStyle={o.menuContainer}
         menuData={menuHeaderDataInfo}
         menuCardHandler={handleOpen}
-        maxHeight={'85px'}
+        maxHeight={'95px'}
       />
       <div className={o.arrowUp + ' ' + s.headerArrow} />
     </div>

@@ -89,7 +89,7 @@ export const CardMenu = () => {
     }
   }
   const deletePack = () => {
-    dispatch(deletePackTC({ id: packsAdditionalSettings._id }))
+    dispatch(deletePackTC(packsAdditionalSettings._id))
     handleClose()
   }
 
