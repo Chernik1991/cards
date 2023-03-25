@@ -21,17 +21,11 @@ export const PacksActions = ({
   handleUpdatePackNameUp,
   handleDeletePackUp,
 }: PacksActionsType) => {
-  const EditPackJSX = (
-    <a href={'#'} onClick={handleUpdatePackNameUp}>
-      {menuDataInfo[0].icon}
-    </a>
-  )
+  const EditPackJSX = <a onClick={handleUpdatePackNameUp}>{menuDataInfo[0].icon}</a>
   const crudPanel = (
     <>
       {EditPackJSX}
-      <a href={'#'} onClick={handleDeletePackUp}>
-        {menuDataInfo[1].icon}
-      </a>
+      <a onClick={handleDeletePackUp}>{menuDataInfo[1].icon}</a>
     </>
   )
 

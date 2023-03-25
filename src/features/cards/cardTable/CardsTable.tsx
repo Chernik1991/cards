@@ -16,7 +16,7 @@ import { addNewUseCardAnswerAC, addNewUseCardQuestionAC, updateUserCardIDAC } fr
 import { sortCardsAC } from 'features/cards/card/card-reducer'
 import { CardsType } from 'features/cards/cards-api'
 import { CardActions } from 'features/cards/cardTable/CardActions'
-import { cards, cardsSort } from 'features/cards/selectorCard'
+import { cards, sortCards } from 'features/cards/selectorCard'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { sortPacksAC } from 'features/packs/packsReducer'
 import { userIdProfile } from 'features/profile/selectorProfile'
@@ -70,7 +70,7 @@ export const CardsTable = (props: Props) => {
   const dispatch = useAppDispatch()
   const dataCards = useAppSelector(cards)
   const userID = useAppSelector(userIdProfile)
-  const sort = useAppSelector(cardsSort)
+  const sort = useAppSelector(sortCards)
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const rows = dataCards.map((el: CardsType) => ({

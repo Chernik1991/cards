@@ -129,9 +129,6 @@ export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {
       page: page,
       pageCount: pageCount,
       sortCards: sortCards,
-      // cardAnswer: '',
-      // min: 0,
-      // max: 100,
     })
 
     dispatch(setCardsDataAC(res.data))

@@ -1,4 +1,4 @@
-import { CardsType } from '../cards/cards-api'
+import { CardsType } from 'features/cards/cards-api'
 
 export const randomCard = (cards: CardsType[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0)

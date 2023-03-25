@@ -20,7 +20,6 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
 
   dispatch(setAppStatusAC('loading'))
   try {
-    // const data: setGradeCardDataType = { card_id, grade }
     const res = await learnAPI.setGradeCard({ card_id, grade: grade })
 
     dispatch(
@@ -59,7 +58,7 @@ export const learnReducer = (state: learnStateType = initialState, action: Actio
 
 export const setShowAnswerAC = (isShowAnswer: boolean) => ({ type: 'SET-SHOW-ANSWER', isShowAnswer } as const)
 export const setGradeAC = (grade: number) => ({ type: 'SET-GRADE', grade } as const)
-export const setCurrentCardAC = (currentCard: any) => ({ type: 'SET-CURRENT-CARD', currentCard } as const)
+export const setCurrentCardAC = (currentCard: CardsType) => ({ type: 'SET-CURRENT-CARD', currentCard } as const)
 
 export type learnStateType = {
   isShowAnswer: boolean

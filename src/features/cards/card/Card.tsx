@@ -10,7 +10,6 @@ import { clearUserStateCardAC } from '../cardModals/cardModalsReducer'
 import { DeleteCard } from '../cardModals/DeleteCard/DeleteCard'
 import { EditCard } from '../cardModals/EditCard/EditCard'
 
-import { appStatus } from 'app/selectorApp'
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
@@ -28,38 +27,31 @@ import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { CardsTable } from 'features/cards/cardTable/CardsTable'
+import * as cardsSelectors from 'features/cards/selectorCard'
 import {
-  cards,
   cardsAdditionalSettingsAnswer,
   cardsAdditionalSettingsID,
   cardsAdditionalSettingsQuestion,
-  cardsPageCount,
-  cardsSort,
-  cardsTotalCount,
   packUserId,
-  packUserName,
-  pageCard,
-  searchQuestion,
 } from 'features/cards/selectorCard'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Card = () => {
   const dispatch = useAppDispatch()
-  const page = useAppSelector(pageCard)
-  const pageCount = useAppSelector(cardsPageCount)
-  const totalCount = useAppSelector(cardsTotalCount)
-  const sort = useAppSelector(cardsSort)
-  const rows = useAppSelector<Array<CardsType>>(cards)
+  const page = useAppSelector(cardsSelectors.page)
+  const pageCount = useAppSelector(cardsSelectors.pageCount)
+  const totalCount = useAppSelector(cardsSelectors.cardsTotalCount)
+  const sort = useAppSelector(cardsSelectors.sortCards)
+  const rows = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
   const user_id = useAppSelector(packUserId)
-  const packName = useAppSelector(packUserName)
+  const packName = useAppSelector(cardsSelectors.packName)
   const cardsQuestion = useAppSelector(cardsAdditionalSettingsQuestion)
-  const search = useAppSelector(searchQuestion)
+  const search = useAppSelector(cardsSelectors.cardQuestion)
   const cardsAnswer = useAppSelector(cardsAdditionalSettingsAnswer)
   const cardID = useAppSelector(cardsAdditionalSettingsID)
   const my_id = useAppSelector(state => state.profile._id)
   const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-  //временно
   const paginationLabel = 'Cards per Page'
   const isNotEmptyCard = !!rows.length
   const [searchParams, setSearchParams] = useSearchParams()
@@ -68,7 +60,6 @@ export const Card = () => {
   const [errorQuestion, SetErrorQuestion] = useState(false)
   const [errorAnswer, SetErrorAnswer] = useState(false)
   const isLoggedIn = useAppSelector(isLoggedInAuth)
-  const status = useAppSelector(appStatus)
 
   if (!isLoggedIn) {
     console.log('Profile !isLoggedIn')
@@ -92,15 +83,6 @@ export const Card = () => {
     if (search !== '') {
       param = { ...param, cardQuestion: search }
     }
-    // if (search !== '') {
-    //   param = { ...param, cardAnswer: search }
-    // }
-    // if (max !== maxCardsCount) {
-    //   param = { ...param, max: max.toString() }
-    // }
-    // if (min !== minCardsCount) {
-    //   param = { ...param, min: min.toString() }
-    // }
     param = { ...param, cardsPack_id: cardsPack_id }
     setSearchParams({ ...param })
   }, [pageCount, page, search, sort])
