@@ -35,6 +35,11 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
   switch (action.type) {
     case 'CARDS/SET-CARDS-DATA':
       return { ...state, ...action.payload.data }
+    case 'CARDS/SET-PACK-NAME':
+      return {
+        ...state,
+        packName: action.payload.data,
+      }
     case 'CARDS/SET-CARDS-DATA-LEARN':
       return { ...state, ...action.payload.data }
     case 'CLEAR-DATA':
@@ -65,6 +70,11 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
 export const setCardsDataAC = (data: ResponseGetCardsType) =>
   ({
     type: 'CARDS/SET-CARDS-DATA',
+    payload: { data },
+  } as const)
+export const setPackNameAC = (data: string) =>
+  ({
+    type: 'CARDS/SET-PACK-NAME',
     payload: { data },
   } as const)
 
@@ -191,3 +201,10 @@ export const UpdateCardsTC =
       dispatch(setAppStatusAC('failed'))
     }
   }
+//types
+// export type ActionsType = setCardsData | clearCardData | setPackId | setCardLearn
+
+// export type setCardsData = ReturnType<typeof setCardsDataAC>
+// export type clearCardData = ReturnType<typeof clearCardDataAC>
+// export type setPackId = ReturnType<typeof setPackIdAC>
+// export type setCardLearn = ReturnType<typeof setCardLearnAC>

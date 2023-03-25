@@ -38,9 +38,11 @@ import {
   cardsTotalCount,
   packUserId,
   packUserName,
+  packUserPrivate,
   pageCard,
   searchQuestion,
 } from 'features/cards/selectorCard'
+import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -182,8 +184,8 @@ export const Card = () => {
   }
 
   if (rows.length === 0 && my_id === user_id) {
-    console.log(rows.length === 0, 'rows.length === 0')
-    console.log(my_id === user_id, 'my_id === user_id')
+    // console.log(rows.length === 0, 'rows.length === 0')
+    // console.log(my_id === user_id, 'my_id === user_id')
 
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
