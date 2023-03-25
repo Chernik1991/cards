@@ -181,6 +181,7 @@ export const UpdateCardsTC =
       const res = await cardsAPI.updateCards({
         _id: data.id,
         question: data.question,
+        answer: data.answer,
       })
 
       dispatch(GetCardsTC())
