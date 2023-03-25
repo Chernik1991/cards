@@ -2,12 +2,12 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
-import { Navigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
+import { appStatus } from 'app/selectorApp'
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
-import { isLoggedInAuth } from 'features/auth/selectorAuth'
 import { SearchPackPanel } from 'features/packs/components/sortPacksMyAll/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import { AddNewPack } from 'features/packs/modals/AddNewPackModal/AddNewPack'
@@ -40,7 +40,6 @@ import {
   packSort,
 } from 'features/packs/selectorPack'
 import { userIdProfile } from 'features/profile/selectorProfile'
-import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
@@ -67,13 +66,7 @@ export const Packs = () => {
   const params = Object.fromEntries(searchParams)
   const isNotEmptyPack = !!cardPacks.length
   const paginationLabel = 'Packs per Page'
-  const isLoggedIn = useAppSelector(isLoggedInAuth)
-
-  if (!isLoggedIn) {
-    console.log('Profile !isLoggedIn')
-
-    return <Navigate to={PATH.LOGIN} replace />
-  }
+  const status = useAppSelector(appStatus)
 
   useEffect(() => {
     dispatch(getPacksTC())

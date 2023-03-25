@@ -9,7 +9,7 @@ import { appStatus } from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
 import { PacksSlider } from 'features/packs/components/slider/PacksSlider'
 import { FilterAllOff } from 'features/packs/FilterAllOff'
-import { maxAC, minAC, pagePacksAC, searchPacksAC } from 'features/packs/packsReducer'
+import { maxAC, minAC, searchPacksAC } from 'features/packs/packsReducer'
 import { packMaxCardsCount, packMinCardsCount, packSearch } from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -25,7 +25,6 @@ export const SearchPackPanel = () => {
 
   const searchHandler = (search: string) => {
     dispatch(searchPacksAC(search))
-    dispatch(pagePacksAC(1))
   }
   const onChangeValuesHandler = (values: number[]) => {
     dispatch(minAC(values[0]))
@@ -63,8 +62,6 @@ export const SearchPackPanel = () => {
           maxValue={+params.max || defaultMax}
           defaultMax={defaultMax}
           defaultMin={defaultMin}
-          sliderWidth={155}
-          disabled={status == 'loading'}
           onChangeValues={onChangeValuesHandler}
         />
       </Box>

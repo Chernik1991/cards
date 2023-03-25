@@ -11,12 +11,11 @@ type InputSliderPropsType = {
   defaultMax: number
   defaultMin: number
   maxValue: number
-  sliderWidth?: number
   onChangeValues: (value: number[]) => void
   disabled?: boolean
 }
 export const PacksSlider = memo(
-  ({ minValue, maxValue, onChangeValues, disabled, defaultMax, defaultMin }: InputSliderPropsType) => {
+  ({ minValue, maxValue, onChangeValues, defaultMax, defaultMin }: InputSliderPropsType) => {
     useEffect(() => {
       setValue([minValue, maxValue])
     }, [minValue, maxValue])
@@ -46,8 +45,8 @@ export const PacksSlider = memo(
     )
 
     useEffect(() => {
-      onChangeValues([defaultMin, defaultMax])
-    }, [defaultMin, defaultMax])
+      onChangeValues([minValue, maxValue])
+    }, [defaultMin, defaultMax, minValue, maxValue])
 
     return (
       <div>
@@ -59,7 +58,6 @@ export const PacksSlider = memo(
             value={value[0]}
             onChange={onChangeMinHandler}
             className={`${s.input} ${s.value1}`}
-            disabled={disabled}
           />
           <Slider
             value={value}
@@ -68,7 +66,6 @@ export const PacksSlider = memo(
             onChange={handleChange}
             onChangeCommitted={onChangeCommittedHandler}
             valueLabelDisplay="auto"
-            disabled={disabled}
           />
           <TextField
             sx={{ ml: '8px', paddingLeft: 1 }}
@@ -77,7 +74,6 @@ export const PacksSlider = memo(
             value={value[1]}
             onChange={onChangeMaxHandler}
             className={`${s.input} ${s.value2}`}
-            disabled={disabled}
           />
         </div>
       </div>

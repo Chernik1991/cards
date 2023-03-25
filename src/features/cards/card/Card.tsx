@@ -10,6 +10,7 @@ import { clearUserStateCardAC } from '../cardModals/cardModalsReducer'
 import { DeleteCard } from '../cardModals/DeleteCard/DeleteCard'
 import { EditCard } from '../cardModals/EditCard/EditCard'
 
+import { appStatus } from 'app/selectorApp'
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
@@ -67,6 +68,7 @@ export const Card = () => {
   const [errorQuestion, SetErrorQuestion] = useState(false)
   const [errorAnswer, SetErrorAnswer] = useState(false)
   const isLoggedIn = useAppSelector(isLoggedInAuth)
+  const status = useAppSelector(appStatus)
 
   if (!isLoggedIn) {
     console.log('Profile !isLoggedIn')
