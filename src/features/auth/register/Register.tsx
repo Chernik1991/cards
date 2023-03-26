@@ -20,7 +20,7 @@ import { registerTC } from './register-reducer'
 import s from './RegisterStyle.module.css'
 
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
-import { isLoggedInAuth, isRegisterAuth } from 'features/auth/selectorAuth'
+import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -31,10 +31,10 @@ type FormikErrorType = {
 }
 
 export const Register = () => {
-  console.log('Register')
+  // console.log('Register')
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(isLoggedInAuth)
-  const isRegister = useAppSelector(isRegisterAuth)
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
+  const isRegister = useAppSelector(authSelectors.isRegister)
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -82,13 +82,9 @@ export const Register = () => {
   })
 
   if (isRegister) {
-    console.log('Register navigate to Login')
-
     return <Navigate to={PATH.LOGIN} />
   }
   if (isLoggedIn) {
-    console.log('Register navigate to Profile')
-
     return <Navigate to={PATH.PROFILE} />
   }
 

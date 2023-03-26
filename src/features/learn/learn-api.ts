@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios'
 
 import { instance } from 'features/auth/auth-api'
 
-export const learnAPI = {
+export const learnApi = {
   setGradeCard(data: setGradeCardDataType) {
     return instance.put<setGradeCardDataType, AxiosResponse<setGradeCardResponseType>>('/cards/grade', data)
   },

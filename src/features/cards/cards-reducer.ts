@@ -36,10 +36,7 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
     case 'CARDS/SET-CARDS-DATA':
       return { ...state, ...action.payload.data }
     case 'CARDS/SET-PACK-NAME':
-      return {
-        ...state,
-        packName: action.payload.data,
-      }
+      return { ...state, packName: action.payload.data }
     case 'CARDS/SET-CARDS-DATA-LEARN':
       return { ...state, ...action.payload.data }
     case 'CLEAR-DATA':
@@ -77,7 +74,6 @@ export const setPackNameAC = (data: string) =>
     type: 'CARDS/SET-PACK-NAME',
     payload: { data },
   } as const)
-
 export const setCardLearnAC = (data: CardsType[]) =>
   ({
     type: 'CARDS/SET-CARDS-DATA-LEARN',
@@ -141,9 +137,6 @@ export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {
       page: page,
       pageCount: pageCount,
       sortCards: sortCards,
-      // cardAnswer: '',
-      // min: 0,
-      // max: 100,
     })
 
     dispatch(setCardsDataAC(res.data))
@@ -203,10 +196,3 @@ export const UpdateCardsTC =
       dispatch(setAppStatusAC('failed'))
     }
   }
-//types
-// export type ActionsType = setCardsData | clearCardData | setPackId | setCardLearn
-
-// export type setCardsData = ReturnType<typeof setCardsDataAC>
-// export type clearCardData = ReturnType<typeof clearCardDataAC>
-// export type setPackId = ReturnType<typeof setPackIdAC>
-// export type setCardLearn = ReturnType<typeof setCardLearnAC>

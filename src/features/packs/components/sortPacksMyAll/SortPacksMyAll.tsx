@@ -5,13 +5,13 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 import { isMyPacksAC } from 'features/packs/packsReducer'
-import { packIsMyPacks } from 'features/packs/selectorPack'
+import * as packsSelectors from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SortPacksMyAll = () => {
   // console.log('SortPacksMyAll')
   const dispatch = useAppDispatch()
-  const isMyPacks = useAppSelector(packIsMyPacks)
+  const isMyPacks = useAppSelector(packsSelectors.isMyPacks)
   const [alignment, setAlignment] = useState('all')
   const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
     if (newAlignment !== null) {

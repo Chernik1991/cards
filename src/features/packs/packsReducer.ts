@@ -169,6 +169,7 @@ export const updatePackTC =
     try {
       const res = await packsAPI.updatePack(data)
 
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)
@@ -182,6 +183,7 @@ export const deletePackTC =
     try {
       const res = await packsAPI.deletePack(data)
 
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)

@@ -14,7 +14,7 @@ import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
 import { setForgotTC } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
-import { forgotPasswordAuth } from 'features/auth/selectorAuth'
+import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -26,9 +26,12 @@ type FormikErrorType = {
   message?: string
 }
 export const ForgotPassword = () => {
-  console.log('ForgotPassword')
+  //TODO
+  //поменять письмо на почту
+
+  // console.log('ForgotPassword')
   const dispatch = useAppDispatch()
-  const forgotPassword = useAppSelector(forgotPasswordAuth)
+  const forgotPassword = useAppSelector(authSelectors.forgotPassword)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}

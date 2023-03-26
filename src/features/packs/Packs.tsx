@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 
-import { appStatus } from 'app/selectorApp'
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
@@ -23,40 +22,30 @@ import {
   pagePacksAC,
   updatePackTC,
 } from 'features/packs/packsReducer'
+import * as packsSelectors from 'features/packs/selectorPack'
 import {
   packAdditionalSettings,
   packAdditionalSettingsName,
   packAdditionalSettingsPrivate,
-  packCardPacks,
-  packCardPacksTotalCount,
-  packIsMyPacks,
-  packMax,
-  packMaxCardsCount,
-  packMin,
-  packMinCardsCount,
-  packPage,
-  packPageCount,
-  packSearch,
-  packSort,
 } from 'features/packs/selectorPack'
-import { userIdProfile } from 'features/profile/selectorProfile'
+import * as profileSelectors from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
   console.log('Packs')
   const dispatch = useAppDispatch()
-  const cardPacks = useAppSelector(packCardPacks)
-  const page = useAppSelector(packPage)
-  const pageCount = useAppSelector(packPageCount)
-  const search = useAppSelector(packSearch)
-  const sort = useAppSelector(packSort)
-  const minCardsCount = useAppSelector(packMinCardsCount)
-  const maxCardsCount = useAppSelector(packMaxCardsCount)
-  const min = useAppSelector(packMin)
-  const max = useAppSelector(packMax)
-  const user_id = useAppSelector(userIdProfile)
-  const isMyPacks = useAppSelector(packIsMyPacks)
-  const cardPacksTotalCount = useAppSelector(packCardPacksTotalCount)
+  const cardPacks = useAppSelector(packsSelectors.cardPacks)
+  const page = useAppSelector(packsSelectors.page)
+  const pageCount = useAppSelector(packsSelectors.pageCount)
+  const search = useAppSelector(packsSelectors.search)
+  const sort = useAppSelector(packsSelectors.sort)
+  const minCardsCount = useAppSelector(packsSelectors.minCardsCount)
+  const maxCardsCount = useAppSelector(packsSelectors.maxCardsCount)
+  const min = useAppSelector(packsSelectors.min)
+  const max = useAppSelector(packsSelectors.max)
+  const isMyPacks = useAppSelector(packsSelectors.isMyPacks)
+  const user_id = useAppSelector(profileSelectors._id)
+  const cardPacksTotalCount = useAppSelector(packsSelectors.cardPacksTotalCount)
   const packsAdditionalSettings = useAppSelector(packAdditionalSettings)
   const packsAdditionalSettingsName = useAppSelector(packAdditionalSettingsName)
   const packsAdditionalSettingsPrivate = useAppSelector(packAdditionalSettingsPrivate)
@@ -66,7 +55,7 @@ export const Packs = () => {
   const params = Object.fromEntries(searchParams)
   const isNotEmptyPack = !!cardPacks.length
   const paginationLabel = 'Packs per Page'
-  const status = useAppSelector(appStatus)
+  const badResponse = 'No data available. Change your search options'
 
   useEffect(() => {
     dispatch(getPacksTC())
@@ -143,7 +132,6 @@ export const Packs = () => {
     }
   }
   const deletePack = () => {
-    console.log('2121212121212121212121211')
     //!add user_id for soring adter adding NewPack
     if (packsAdditionalSettings._id) {
       dispatch(deletePackTC(packsAdditionalSettings._id))
@@ -184,7 +172,7 @@ export const Packs = () => {
               paddingTop: 25,
             }}
           >
-            <div>{'No data available. Change your search options'}</div>
+            <div>{badResponse}</div>
           </Box>
         )}
         {isNotEmptyPack ? (

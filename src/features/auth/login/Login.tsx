@@ -18,7 +18,7 @@ import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
 import { loginTC } from 'features/auth/login/auth-reducer'
-import { isLoggedInAuth } from 'features/auth/selectorAuth'
+import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -30,9 +30,9 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 export const Login = () => {
-  console.log('Login')
+  // console.log('Login')
   const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(isLoggedInAuth)
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const formik = useFormik({
     validate: (values: FormikErrorType) => {
       const errors: FormikErrorType = {}

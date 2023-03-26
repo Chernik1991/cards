@@ -5,12 +5,12 @@ import { useSearchParams } from 'react-router-dom'
 
 import { SortPacksMyAll } from './SortPacksMyAll'
 
-import { appStatus } from 'app/selectorApp'
+import * as appSelectors from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
 import { PacksSlider } from 'features/packs/components/slider/PacksSlider'
 import { FilterAllOff } from 'features/packs/FilterAllOff'
 import { maxAC, minAC, searchPacksAC } from 'features/packs/packsReducer'
-import { packMaxCardsCount, packMinCardsCount, packSearch } from 'features/packs/selectorPack'
+import * as packsSelectors from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
@@ -18,10 +18,10 @@ export const SearchPackPanel = () => {
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
-  const defaultMin = useAppSelector(packMinCardsCount)
-  const defaultMax = useAppSelector(packMaxCardsCount)
-  const status = useAppSelector(appStatus)
-  const search = useAppSelector(packSearch)
+  const defaultMin = useAppSelector(packsSelectors.minCardsCount)
+  const defaultMax = useAppSelector(packsSelectors.maxCardsCount)
+  const status = useAppSelector(appSelectors.status)
+  const search = useAppSelector(packsSelectors.search)
 
   const searchHandler = (search: string) => {
     dispatch(searchPacksAC(search))

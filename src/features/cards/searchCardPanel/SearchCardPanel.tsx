@@ -3,21 +3,19 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
-import { appStatus } from 'app/selectorApp'
+import * as appSelectors from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
-import { cardQuestionAC, pageCardsAC } from 'features/cards/card/card-reducer'
-import { cardsMaxCardsCount, cardsMinCardsCount, searchQuestion } from 'features/cards/selectorCard'
+import { cardQuestionAC, pageCardsAC } from 'features/cards/cards-reducer'
+import * as cardsSelectors from 'features/cards/selectorCard'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchCardPanel = () => {
   console.log('SearchCardPanel')
-  const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
-  const defaultMin = useAppSelector(cardsMinCardsCount)
-  const defaultMax = useAppSelector(cardsMaxCardsCount)
-  const status = useAppSelector(appStatus)
-  const search = useAppSelector(searchQuestion)
+  const dispatch = useAppDispatch()
+  const status = useAppSelector(appSelectors.status)
+  const search = useAppSelector(cardsSelectors.cardQuestion)
 
   const searchHandler = (search: string) => {
     dispatch(cardQuestionAC(search))

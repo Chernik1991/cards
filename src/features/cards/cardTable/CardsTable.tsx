@@ -11,15 +11,18 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { useSearchParams } from 'react-router-dom'
 
-import { addNewUseCardAnswerAC, addNewUseCardQuestionAC, updateUserCardIDAC } from '../cardModals/cardModalsReducer'
-
-import { sortCardsAC } from 'features/cards/card/card-reducer'
+import {
+  addNewUseCardAnswerAC,
+  addNewUseCardQuestionAC,
+  updateUserCardIDAC,
+} from 'features/cards/cardModals/cardModalsReducer'
 import { CardsType } from 'features/cards/cards-api'
+import { sortCardsAC } from 'features/cards/cards-reducer'
 import { CardActions } from 'features/cards/cardTable/CardActions'
-import { cards, cardsSort } from 'features/cards/selectorCard'
+import * as cardsSelectors from 'features/cards/selectorCard'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { sortPacksAC } from 'features/packs/packsReducer'
-import { userIdProfile } from 'features/profile/selectorProfile'
+import * as profileSelectors from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 type HeadCell = {
@@ -68,29 +71,23 @@ type Props = {
 export const CardsTable = (props: Props) => {
   // console.log('CardsTable')
   const dispatch = useAppDispatch()
-  const dataCards = useAppSelector(cards)
-  const userID = useAppSelector(userIdProfile)
-  const sort = useAppSelector(cardsSort)
+  const cards = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
+  const userId = useAppSelector(profileSelectors._id)
+  const sort = useAppSelector(cardsSelectors.sortCards)
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
-  const rows = dataCards.map((el: CardsType) => ({
-    id: el._id,
-    actions: '',
+  const rows = cards.map((el: CardsType) => ({
+    card_id: el._id,
     cardsPack_id: el.cardsPack_id,
     user_id: el.user_id,
     question: el.question,
     answer: el.answer,
     grade: el.grade,
     shots: el.shots,
-    comments: el.comments,
-    type: el.type,
-    rating: el.rating,
-    more_id: el.more_id,
     created: el.created,
     last_updated: new Date(el.updated).toLocaleString(),
-    __v: el.__v,
   }))
-  const [orderBy, setOrderBy] = useState<string>(sort)
+  const [orderBy, setOrderBy] = useState(sort)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortCards: string) => {
     setOrderBy(property)
@@ -118,19 +115,17 @@ export const CardsTable = (props: Props) => {
                 const labelId = `enhanced-table-checkbox-${index}`
                 const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
                 const handleDeleteCard = () => {
-                  console.log(row.id, 'handleDeleteCard')
-                  // dispatch(DeleteCardsTC({ id: row.id, cardsPack_id: row.cardsPack_id }))
+                  console.log(row.card_id, 'handleDeleteCard')
                   dispatch(addNewUseCardQuestionAC(row.question))
-                  dispatch(updateUserCardIDAC(row.id))
-                  props.modalHandler('delete-card')
+                  dispatch(updateUserCardIDAC(row.card_id))
+                  props.modalHandler('delete-searchCardPanel')
                 }
                 const handleUpdateCardName = () => {
                   console.log(row.cardsPack_id, 'handleUpdateCardName')
-                  // dispatch(UpdateCardsTC({ question: 'update question', id: row.id, cardsPack_id: row.cardsPack_id }))
                   dispatch(addNewUseCardQuestionAC(row.question))
                   dispatch(addNewUseCardAnswerAC(row.answer))
-                  dispatch(updateUserCardIDAC(row.id))
-                  props.modalHandler('edit-card')
+                  dispatch(updateUserCardIDAC(row.card_id))
+                  props.modalHandler('edit-searchCardPanel')
                 }
 
                 return (
@@ -155,7 +150,7 @@ export const CardsTable = (props: Props) => {
                     <TableCell align="left">
                       <Rating name="read-only" value={row.grade} readOnly precision={0.1} />
                     </TableCell>
-                    {userID === row.user_id ? (
+                    {userId === row.user_id ? (
                       <CardActions
                         align="left"
                         sx={{ ...paddingStyle, minWidth: 'none' }}

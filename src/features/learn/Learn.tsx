@@ -1,52 +1,33 @@
 import { useEffect, useState } from 'react'
 
 import { Paper } from '@mui/material'
-import { NavLink, useSearchParams } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-import { GetCardsTC } from '../cards/card/card-reducer'
-
-import { setCurrentCardAC } from './learnReducer'
-import { randomCard } from './randomCard'
-
+import { GetCardsTC } from 'features/cards/cards-reducer'
+import * as cardsSelectors from 'features/cards/selectorCard'
 import { Answer } from 'features/learn/answer/Answer'
 import s from 'features/learn/Learn.module.css'
+import { setCurrentCardAC } from 'features/learn/learnReducer'
 import { Question } from 'features/learn/question/Question'
+import { randomCard } from 'features/learn/randomCard'
+import * as learnSelectors from 'features/learn/selectorLearn'
 import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Learn = () => {
-  const cards = useAppSelector(state => state.cards.cards)
-  const packName = useAppSelector(state => state.cards.packName)
-  const isShowAnswer = useAppSelector(state => state.learn.isShowAnswer)
-  const cardsPack_id = useAppSelector(state => state.packsAdditionalSettings.cardsPack._id)
+  const cards = useAppSelector(cardsSelectors.cards)
+  const packName = useAppSelector(cardsSelectors.packName)
+  const isShowAnswer = useAppSelector(learnSelectors.isShowAnswer)
+  const cardsPack_id = useAppSelector(learnSelectors.cardsPack_id)
   const [first, setFirst] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
-  const [searchParams, setSearchParams] = useSearchParams()
-
-  const params = Object.fromEntries(searchParams)
-
-  // const [search, setSearch] = useState<any>({ cardsPack_id: cardsPack_id.toString() })
-
-  /*useEffect(() => {
-    dispatch(GetCardsTC({ ...search, pageCount: cards.length }))
-    setSearchParams({ ...search })
-  }, [search])*/
-
   useEffect(() => {
-    // setSearchParams({ ...search })
     dispatch(GetCardsTC())
-    // dispatch(GetCardsTC({ pageCount: cards.length, cardsPack_id: cardsPack_id }))
     setFirst(false)
     if (cards.length > 0) {
-      console.log(cards)
       dispatch(setCurrentCardAC(randomCard(cards)))
-      console.log(cards)
-    }
-
-    return () => {
-      console.log('LearnContainer useEffect off')
     }
   }, [cardsPack_id])
 
@@ -60,10 +41,14 @@ export const Learn = () => {
       </NavLink>
       <div className={s.learnContainer}>
         <span className={s.title}> {'Learn ' + `"${packName}"`}</span>
-        <Paper>
-          <Question />
-          {isShowAnswer && <Answer />}
-        </Paper>
+        {cards.length > 0 ? (
+          <Paper>
+            <Question />
+            {isShowAnswer && <Answer />}
+          </Paper>
+        ) : (
+          'No Question'
+        )}
       </div>
     </div>
   )

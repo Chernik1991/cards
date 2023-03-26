@@ -1,16 +1,15 @@
 import { useState } from 'react'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { Navigate, NavLink } from 'react-router-dom'
-
-import { setPackNameAC } from '../card/card-reducer'
-import { packId, packUserName, packUserPrivate } from '../selectorCard'
+import { Navigate } from 'react-router-dom'
 
 import { menuDataInfo } from './CardData'
 import s from './CardMenu.module.css'
 
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
+import { setPackNameAC } from 'features/cards/cards-reducer'
+import * as cardsSelectors from 'features/cards/selectorCard'
 import { DeletePack } from 'features/packs/modals/DeletePack/DeletePack'
 import { EditPack } from 'features/packs/modals/EditPack/EditPack'
 import {
@@ -32,21 +31,14 @@ export const CardMenu = () => {
   const packsAdditionalSettings = useAppSelector(packAdditionalSettings)
   const packsAdditionalSettingsName = useAppSelector(packAdditionalSettingsName)
   const packsAdditionalSettingsPrivate = useAppSelector(packAdditionalSettingsPrivate)
-  const packName = useAppSelector(packUserName)
-  const packPrivate = useAppSelector(packUserPrivate)
-  const packID = useAppSelector(packId)
+  const packName = useAppSelector(cardsSelectors.packName)
+  const packPrivate = useAppSelector(cardsSelectors.packUserPrivate)
+  const packUserId = useAppSelector(cardsSelectors.packUserId)
   const dispatch = useAppDispatch()
   const [activeMenu, setActiveMenu] = useState(false)
   const [open, setOpen] = useState('false')
   const [error, setError] = useState(false)
   const randomID = crypto.randomUUID()
-  // const onBlurCallback = (e: React.FocusEvent<HTMLInputElement>) => {
-  //   console.log(1)
-
-  //   if (e.relatedTarget?.id === randomID) {
-  //     setActiveMenu(!activeMenu)
-  //   }
-  // }
 
   const menuActiveHandler = () => {
     setActiveMenu(!activeMenu)
@@ -56,13 +48,13 @@ export const CardMenu = () => {
     if (value === 'Edit') {
       dispatch(addNewUserPackAC(packName))
       dispatch(updateUserPackPrivateAC(packPrivate))
-      dispatch(updateUserPackIDAC(packID || ''))
+      dispatch(updateUserPackIDAC(packUserId || ''))
     }
     if (value === 'Delete') {
       dispatch(addNewUserPackAC(packName))
     }
     if (value === 'Learn') {
-      dispatch(updateUserPackIDAC(packID || ''))
+      dispatch(updateUserPackIDAC(packUserId || ''))
 
       return <Navigate to={PATH.LEARN} replace />
     }
@@ -75,13 +67,12 @@ export const CardMenu = () => {
     if (packsAdditionalSettings.name) {
       dispatch(
         updatePackTC({
-          _id: packID,
+          _id: packUserId,
           name: packsAdditionalSettings.name,
           private: packsAdditionalSettings.private,
         })
       )
       dispatch(setPackNameAC(packsAdditionalSettings.name))
-      // dispatch(clearUserStateTypeAC())
       handleClose()
     } else {
       setError(true)

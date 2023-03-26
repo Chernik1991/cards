@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { Button } from '@mui/material'
 import { NavLink } from 'react-router-dom'
@@ -9,18 +9,19 @@ import itINC from 'assets/img/icons/itINC.svg'
 import defaultPic from 'assets/img/profile/Alex.jpg'
 import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
-import { ResponseLoginType } from 'features/auth/auth-api' //
 import { logoutTC } from 'features/auth/login/auth-reducer'
+import * as authSelectors from 'features/auth/selectorAuth'
 import o from 'features/cards/cardMenu/CardMenu.module.css'
+import * as profileSelectors from 'features/profile/selectorProfile'
 import s from 'header/HeaderStyles.module.css'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Header = () => {
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
+  const name = useAppSelector(profileSelectors.name)
   const [activeMenu, setActiveMenu] = useState(false)
   const dispatch = useAppDispatch()
-  const auth = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const profileData = useAppSelector<ResponseLoginType>(state => state.profile)
   // const userPhoto = profileData.avatar ? profileData.avatar : defaultPic
   const handleOpenMenu = () => {
     setActiveMenu(!activeMenu)
@@ -37,7 +38,7 @@ export const Header = () => {
         cardStyle={o.menuContainer}
         menuData={menuHeaderDataInfo}
         menuCardHandler={handleOpen}
-        maxHeight={'95px'}
+        maxHeight={'85px'}
       />
       <div className={o.arrowUp + ' ' + s.headerArrow} />
     </div>
@@ -46,7 +47,7 @@ export const Header = () => {
   const userJSX = (
     <div className={s.userDataContainer} onClick={handleOpenMenu}>
       {activeMenu ? <div>{active}</div> : ''}
-      <span className={s.userName}>{profileData.name}</span>
+      <span className={s.userName}>{name}</span>
       <img className={s.userPhoto} src={defaultPic} alt="userPhoto" />
     </div>
   )
@@ -71,7 +72,7 @@ export const Header = () => {
       {routes}
       <div className={s.headerBlock}>
         <img alt={'IMG'} src={itINC} />
-        {auth ? (
+        {isLoggedIn ? (
           userJSX
         ) : (
           <NavLink to={PATH.LOGIN} replace>
@@ -87,9 +88,7 @@ export const Header = () => {
                 textTransform: 'none',
               }}
             >
-              {/*<a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>*/}
               Sign In
-              {/*</a>*/}
             </Button>
           </NavLink>
         )}

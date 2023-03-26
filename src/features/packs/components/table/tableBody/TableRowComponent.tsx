@@ -2,7 +2,7 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { setCardsPackIdAC } from 'features/cards/card/card-reducer'
+import { setCardsPackIdAC } from 'features/cards/cards-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
 import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'
@@ -37,7 +37,7 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
   const crudAccessValue = row.packOwnerID === userID
 
   const handleStudying = () => {
-    dispatch(updateUserPackIDAC(row.id))
+    dispatch(setCardsPackIdAC(row.id))
 
     return <Navigate to={PATH.LEARN} />
   }
@@ -45,13 +45,14 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
     console.log('handleDeletePack')
     dispatch(addNewUserPackAC(row.name))
     dispatch(updateUserPackIDAC(row.id))
+    //TODO переход на 1 страницу
     modalHandler('delete-pack')
-    // dispatch(deletePackTC({ id: row.id }, userID))
   }
   const handleUpdatePackName = () => {
     dispatch(addNewUserPackAC(row.name))
     dispatch(updateUserPackPrivateAC(row.private))
     dispatch(updateUserPackIDAC(row.id))
+    //TODO переход на 1 страницу и разобраться с редюсером
     modalHandler('edit-pack')
     // dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, userID))
   }
