@@ -12,8 +12,8 @@ import { TableRowComponent } from 'features/packs/components/table/tableBody/Tab
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { CardPacksType } from 'features/packs/packs-api'
 import { sortPacksAC } from 'features/packs/packsReducer'
-import { packCardPacks, packSort } from 'features/packs/selectorPack'
-import { userIdProfile } from 'features/profile/selectorProfile'
+import * as packsSelectors from 'features/packs/selectorPack'
+import { _id } from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 type HeadCell = {
@@ -61,12 +61,12 @@ type PacksTableType = {
 
 export const PacksTable = (props: PacksTableType) => {
   // console.log('PacksTable')
-  const cardPacks = useAppSelector(packCardPacks)
-  const userID = useAppSelector(userIdProfile)
+  const cardPacks = useAppSelector(packsSelectors.cardPacks)
+  const userID = useAppSelector(_id)
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
-  const sort = useAppSelector(packSort)
+  const sort = useAppSelector(packsSelectors.sort)
   const rows = cardPacks.map((el: CardPacksType) => ({
     name: el.name,
     actions: '',

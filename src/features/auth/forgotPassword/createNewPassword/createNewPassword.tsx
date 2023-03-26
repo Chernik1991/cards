@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { setNewPasswordTC } from 'features/auth/forgotPassword/createNewPassword/newPassword-reducer'
-import { isSetNewPasswordAuth } from 'features/auth/selectorAuth'
+import { setNewPasswordTC } from 'features/auth/forgotPassword/createNewPassword/createNewPassword-reducer'
+import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -25,9 +25,9 @@ type FormikErrorType = {
   resetPasswordToken?: string
 }
 export const CreateNewPassword = () => {
-  console.log('CreateNewPassword')
+  // console.log('CreateNewPassword')
   const { token } = useParams<{ token: string }>()
-  const isSetNewPassword = useAppSelector(isSetNewPasswordAuth)
+  const isSetNewPassword = useAppSelector(authSelectors.isSetNewPassword)
   const dispatch = useAppDispatch()
   const formik = useFormik({
     validate: (values: FormikErrorType) => {

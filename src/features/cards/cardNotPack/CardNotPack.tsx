@@ -6,32 +6,31 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { CreateCardsTC } from 'features/cards/card/card-reducer'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
-import { cardsLengthCards, packUserId } from 'features/cards/selectorCard'
+import { CreateCardsTC } from 'features/cards/cards-reducer'
+import * as cardsSelectors from 'features/cards/selectorCard'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const CardNotPack = () => {
   const dispatch = useAppDispatch()
-  const getIdPack = useAppSelector(state => state.cards.cardsPack_id)
-  const namePack = useAppSelector(state => state.packs.cardPacks.map(el => (el._id === getIdPack ? el.name : '')))
-  const lengthCards = useAppSelector(cardsLengthCards)
-  const user_id = useAppSelector(packUserId)
-
+  const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
+  const packName = useAppSelector(cardsSelectors.packName)
+  const cardsLength = useAppSelector(cardsSelectors.cardsLength)
+  const NoCards = `This pack is empty. Click add new card to fill this pack `
+  //TODO
+  //сделать модалку на дабавление карточки
   const postCardHandler = () => {
     dispatch(
       CreateCardsTC({
         answer: 'CreateCardsTC',
         question: 'CardNotPack',
-        cardsPack_id: getIdPack,
+        cardsPack_id: cardsPack_id,
       })
     )
   }
 
-  if (lengthCards > 0) {
-    console.log(lengthCards, 'lengthCards')
-
+  if (cardsLength > 0) {
     return <Navigate to={PATH.CARD} />
   }
 
@@ -54,7 +53,7 @@ export const CardNotPack = () => {
         alignItems={'start'}
         marginLeft={'120px'}
       >
-        {namePack}
+        {packName}
       </Typography>
 
       <Box
@@ -67,7 +66,7 @@ export const CardNotPack = () => {
       >
         <Box sx={{ m: 1, width: '50ch', marginTop: 8 }}>
           <Grid container flexDirection={'column'} alignItems={'center'} marginBottom={'49px'}>
-            <Grid item>{`This pack is empty. Click add new card to fill this pack `}</Grid>
+            <Grid item>{NoCards}</Grid>
           </Grid>
           <Grid container flexDirection={'column'} alignItems={'center'} marginBottom={'49px'}>
             <NavLink className={s.newPackButton} to={PATH.HASH + PATH.CARD} onClick={postCardHandler}>

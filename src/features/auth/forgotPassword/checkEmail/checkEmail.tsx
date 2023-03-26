@@ -9,7 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 import checkEmail from 'assets/img/icons/checkEmail.svg'
-import { emailAuth } from 'features/auth/selectorAuth'
+import * as authSelectors from 'features/auth/selectorAuth'
 import s from 'header/HeaderStyles.module.css'
 import { PATH } from 'routes/pages'
 import { useAppSelector } from 'store/store'
@@ -17,8 +17,8 @@ import { useAppSelector } from 'store/store'
 const theme = createTheme()
 
 export const CheckEmail = () => {
-  console.log('CheckEmail')
-  const email = useAppSelector(emailAuth)
+  // console.log('CheckEmail')
+  const email = useAppSelector(authSelectors.email)
 
   return (
     <ThemeProvider theme={theme}>

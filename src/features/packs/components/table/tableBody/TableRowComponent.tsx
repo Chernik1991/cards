@@ -2,7 +2,7 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { setCardsPackIdAC } from 'features/cards/card/card-reducer'
+import { setCardsPackIdAC } from 'features/cards/cards-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
 import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'

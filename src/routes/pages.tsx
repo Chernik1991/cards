@@ -7,8 +7,8 @@ import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPasswor
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
-import { Card } from 'features/cards/card/Card'
 import { CardNotPack } from 'features/cards/cardNotPack/CardNotPack'
+import { Cards } from 'features/cards/Cards'
 import { Learn } from 'features/learn/Learn'
 import { Packs } from 'features/packs/Packs'
 import { Profile } from 'features/profile/Profile'
@@ -24,15 +24,16 @@ export const PATH = {
   FORGOT_YOUR_PASSWORD: '/forgot-your-password',
   CHECK_EMAIL: '/check-email',
   CREATE_NEW_PASSWORD: `/create-new-password/:token`,
-  CARD: '/cards/card',
+  CARD: '/cards/searchCardPanel',
   PACKS: `/packs`,
   CARD_NOT_PACK: `/card-not-pack`,
   LEARN: `/learn`,
   TEST: '/test',
-}
-
+} as const
+//TODO
+//разобраться с #
 export const Pages = () => {
-  console.log('Pages')
+  // console.log('Pages')
 
   return (
     <div>
@@ -45,7 +46,7 @@ export const Pages = () => {
           <Route path={PATH.FORGOT_YOUR_PASSWORD} element={<ForgotPassword />} />
           <Route path={PATH.CHECK_EMAIL} element={<CheckEmail />} />
           <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
-          <Route path={PATH.CARD} element={<Card />} />
+          <Route path={PATH.CARD} element={<Cards />} />
           <Route path={PATH.PACKS} element={<Packs />} />
           <Route path={PATH.LEARN} element={<Learn />} />
           <Route path={PATH.CARD_NOT_PACK} element={<CardNotPack />} />

@@ -6,19 +6,20 @@ import { NavLink } from 'react-router-dom'
 import itINC from 'assets/img/icons/itINC.svg'
 import defaultPic from 'assets/img/profile/Alex.jpg'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
-import { ResponseLoginType } from 'features/auth/auth-api' //
+import * as authSelectors from 'features/auth/selectorAuth'
+import * as profileSelectors from 'features/profile/selectorProfile'
 import s from 'header/HeaderStyles.module.css'
 import { PATH } from 'routes/pages'
 import { useAppSelector } from 'store/store'
 
 export const Header = () => {
-  const auth = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-  const profileData = useAppSelector<ResponseLoginType>(state => state.profile)
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
+  const name = useAppSelector(profileSelectors.name)
   // const userPhoto = profileData.avatar ? profileData.avatar : defaultPic
 
   const userJSX = (
     <div className={s.userDataContainer}>
-      <span className={s.userName}>{profileData.name}</span>
+      <span className={s.userName}>{name}</span>
       <img className={s.userPhoto} src={defaultPic} alt="userPhoto" />
     </div>
   )
@@ -38,7 +39,7 @@ export const Header = () => {
       <NavLink to={'*'}>[Error404]</NavLink>
       <div className={s.headerBlock}>
         <img alt={'IMG'} src={itINC} />
-        {auth ? (
+        {isLoggedIn ? (
           userJSX
         ) : (
           <NavLink to={PATH.LOGIN} replace>
@@ -54,9 +55,7 @@ export const Header = () => {
                 textTransform: 'none',
               }}
             >
-              {/*<a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>*/}
               Sign In
-              {/*</a>*/}
             </Button>
           </NavLink>
         )}

@@ -1,10 +1,9 @@
-import { setCardLearnAC } from '../cards/card/card-reducer'
 import { CardsType } from '../cards/cards-api'
-
-import { learnAPI } from './learnAPI'
 
 import { setAppStatusAC } from 'app/app-reducer'
 import { errorUtils } from 'common/utils/error-utils'
+import { setCardLearnAC } from 'features/cards/cards-reducer'
+import { learnApi } from 'features/learn/learn-api'
 import { AppThunkType } from 'store/store'
 
 const initialState: learnStateType = {
@@ -20,7 +19,7 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
 
   dispatch(setAppStatusAC('loading'))
   try {
-    const res = await learnAPI.setGradeCard({ card_id, grade: grade })
+    const res = await learnApi.setGradeCard({ card_id, grade: grade })
 
     dispatch(
       setCardLearnAC(

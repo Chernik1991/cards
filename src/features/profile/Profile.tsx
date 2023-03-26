@@ -8,27 +8,21 @@ import userPic1 from 'assets/img/profile/Alex.jpg'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEditableSpan'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
-import { isLoggedInAuth } from 'features/auth/selectorAuth'
+import * as authSelectors from 'features/auth/selectorAuth'
 import y from 'features/profile/Profile.module.css'
-import {
-  currentNameProfile,
-  editedModeProfile,
-  emailProfile,
-  nameProfile,
-  userIdProfile,
-} from 'features/profile/selectorProfile'
+import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Profile = () => {
-  console.log('Profile')
+  // console.log('Profile')
   const dispatch = useAppDispatch()
-  const currentName = useAppSelector(currentNameProfile)
-  const isLoggedIn = useAppSelector(isLoggedInAuth)
-  const userId = useAppSelector(userIdProfile)
-  const editedMode = useAppSelector(editedModeProfile)
-  const name = useAppSelector(nameProfile)
-  const email = useAppSelector(emailProfile)
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
+  const currentName = useAppSelector(profileSelectors.currentName)
+  const userId = useAppSelector(profileSelectors._id)
+  const editedMode = useAppSelector(profileSelectors.editedMode)
+  const name = useAppSelector(profileSelectors.name)
+  const email = useAppSelector(profileSelectors.email)
 
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
   if (!userId) {

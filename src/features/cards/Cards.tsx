@@ -4,16 +4,17 @@ import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
-import { CardMenu } from '../cardMenu/CardMenu'
-import { AddNewCard } from '../cardModals/AddCard/AddCard'
-import { clearUserStateCardAC } from '../cardModals/cardModalsReducer'
-import { DeleteCard } from '../cardModals/DeleteCard/DeleteCard'
-import { EditCard } from '../cardModals/EditCard/EditCard'
-
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
-import { isLoggedInAuth } from 'features/auth/selectorAuth'
+import * as authSelectors from 'features/auth/selectorAuth'
+import { CardMenu } from 'features/cards/cardMenu/CardMenu'
+import { AddNewCard } from 'features/cards/cardModals/AddCard/AddCard'
+import { clearUserStateCardAC } from 'features/cards/cardModals/cardModalsReducer'
+import { DeleteCard } from 'features/cards/cardModals/DeleteCard/DeleteCard'
+import { EditCard } from 'features/cards/cardModals/EditCard/EditCard'
+import s from 'features/cards/cardNotPack/CardNotPack.module.css'
+import { CardsType } from 'features/cards/cards-api'
 import {
   clearCardDataAC,
   CreateCardsTC,
@@ -22,44 +23,43 @@ import {
   pageCardsAC,
   pageCountCardsAC,
   UpdateCardsTC,
-} from 'features/cards/card/card-reducer'
-import { SearchCardPanel } from 'features/cards/card/SearchCardPanel'
-import s from 'features/cards/cardNotPack/CardNotPack.module.css'
-import { CardsType } from 'features/cards/cards-api'
+} from 'features/cards/cards-reducer'
 import { CardsTable } from 'features/cards/cardTable/CardsTable'
+import { SearchCardPanel } from 'features/cards/searchCardPanel/SearchCardPanel'
 import * as cardsSelectors from 'features/cards/selectorCard'
 import {
   cardsAdditionalSettingsAnswer,
   cardsAdditionalSettingsID,
   cardsAdditionalSettingsQuestion,
-  packUserId,
 } from 'features/cards/selectorCard'
+import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
-export const Card = () => {
+export const Cards = () => {
+  // console.log('Cards')
   const dispatch = useAppDispatch()
   const page = useAppSelector(cardsSelectors.page)
   const pageCount = useAppSelector(cardsSelectors.pageCount)
   const totalCount = useAppSelector(cardsSelectors.cardsTotalCount)
   const sort = useAppSelector(cardsSelectors.sortCards)
   const rows = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
-  const user_id = useAppSelector(packUserId)
-  const packName = useAppSelector(cardsSelectors.packName)
-  const cardsQuestion = useAppSelector(cardsAdditionalSettingsQuestion)
+  const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
   const search = useAppSelector(cardsSelectors.cardQuestion)
+  const packName = useAppSelector(cardsSelectors.packName)
+  const packUserId = useAppSelector(cardsSelectors.packUserId)
+  const cardsQuestion = useAppSelector(cardsAdditionalSettingsQuestion)
   const cardsAnswer = useAppSelector(cardsAdditionalSettingsAnswer)
   const cardID = useAppSelector(cardsAdditionalSettingsID)
-  const my_id = useAppSelector(state => state.profile._id)
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
+  const my_id = useAppSelector(profileSelectors._id)
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const paginationLabel = 'Cards per Page'
   const isNotEmptyCard = !!rows.length
-  const [searchParams, setSearchParams] = useSearchParams()
-  const params = Object.fromEntries(searchParams)
   const [open, setOpen] = useState('false')
   const [errorQuestion, SetErrorQuestion] = useState(false)
   const [errorAnswer, SetErrorAnswer] = useState(false)
-  const isLoggedIn = useAppSelector(isLoggedInAuth)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const params = Object.fromEntries(searchParams)
 
   if (!isLoggedIn) {
     console.log('Profile !isLoggedIn')
@@ -163,9 +163,9 @@ export const Card = () => {
     dispatch(pageCountCardsAC(totalCount))
   }
 
-  if (rows.length === 0 && my_id === user_id) {
+  if (rows.length === 0 && my_id === packUserId) {
     console.log(rows.length === 0, 'rows.length === 0')
-    console.log(my_id === user_id, 'my_id === user_id')
+    console.log(my_id === packUserId, 'my_id === user_id')
 
     return <Navigate to={PATH.CARD_NOT_PACK} replace />
   }
@@ -195,10 +195,10 @@ export const Card = () => {
         >
           <div className={s.PackNameContainer}>
             <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>{packName}</span>
-            {my_id === user_id ? <CardMenu /> : ''}
+            {my_id === packUserId ? <CardMenu /> : ''}
           </div>
-          {my_id === user_id ? (
-            <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-card')}>
+          {my_id === packUserId ? (
+            <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-searchCardPanel')}>
               Add new card
             </SuperButton>
           ) : (
@@ -277,18 +277,18 @@ export const Card = () => {
           )}
         </Box>
         <ModalBasic
-          modalName={'Add new card'}
+          modalName={'Add new searchCardPanel'}
           deleteSave={false}
-          handleState={open === 'add-card'}
+          handleState={open === 'add-searchCardPanel'}
           handleClose={handleClose}
           handleModalFn={addNewCardHandler}
         >
           <AddNewCard errorQuestion={errorQuestion} errorAnswer={errorAnswer} />
         </ModalBasic>
         <ModalBasic
-          modalName={'Edit card'}
+          modalName={'Edit searchCardPanel'}
           deleteSave={false}
-          handleState={open === 'edit-card'}
+          handleState={open === 'edit-searchCardPanel'}
           handleClose={handleClose}
           handleModalFn={editCardHandler}
         >
@@ -300,9 +300,9 @@ export const Card = () => {
           />
         </ModalBasic>
         <ModalBasic
-          modalName={'Delete card'}
+          modalName={'Delete searchCardPanel'}
           deleteSave={true}
-          handleState={open === 'delete-card'}
+          handleState={open === 'delete-searchCardPanel'}
           handleClose={handleClose}
           handleModalFn={deleteCardHandler}
         >

@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react'
 import { Paper } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import { GetCardsTC } from 'features/cards/card/card-reducer'
+import { GetCardsTC } from 'features/cards/cards-reducer'
 import * as cardsSelectors from 'features/cards/selectorCard'
 import { Answer } from 'features/learn/answer/Answer'
 import s from 'features/learn/Learn.module.css'
 import { setCurrentCardAC } from 'features/learn/learnReducer'
 import { Question } from 'features/learn/question/Question'
 import { randomCard } from 'features/learn/randomCard'
+import * as learnSelectors from 'features/learn/selectorLearn'
 import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -17,8 +18,8 @@ import { useAppDispatch, useAppSelector } from 'store/store'
 export const Learn = () => {
   const cards = useAppSelector(cardsSelectors.cards)
   const packName = useAppSelector(cardsSelectors.packName)
-  const isShowAnswer = useAppSelector(state => state.learn.isShowAnswer)
-  const cardsPack_id = useAppSelector(state => state.packsAdditionalSettings.cardsPack._id)
+  const isShowAnswer = useAppSelector(learnSelectors.isShowAnswer)
+  const cardsPack_id = useAppSelector(learnSelectors.cardsPack_id)
   const [first, setFirst] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
@@ -26,13 +27,7 @@ export const Learn = () => {
     dispatch(GetCardsTC())
     setFirst(false)
     if (cards.length > 0) {
-      console.log(cards)
       dispatch(setCurrentCardAC(randomCard(cards)))
-      console.log(cards)
-    }
-
-    return () => {
-      console.log('LearnContainer useEffect off')
     }
   }, [cardsPack_id])
 
