@@ -18,5 +18,3 @@ root.render(
     </Provider>
   </HashRouter>
 )
-
-//TableHeadComponent вынести в общие common components
