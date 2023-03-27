@@ -11,13 +11,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { useSearchParams } from 'react-router-dom'
 
-import {
-  addNewUseCardAnswerAC,
-  addNewUseCardQuestionAC,
-  updateUserCardIDAC,
-} from 'features/cards/cardModals/cardModalsReducer'
 import { CardsType } from 'features/cards/cards-api'
-import { sortCardsAC } from 'features/cards/cards-reducer'
+import { cardAnswerAC, cardQuestionAC, setCardIdAC, setCardsPackIdAC, sortCardsAC } from 'features/cards/cards-reducer'
 import { CardActions } from 'features/cards/cardTable/CardActions'
 import * as cardsSelectors from 'features/cards/selectorCard'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
@@ -114,18 +109,19 @@ export const CardsTable = (props: Props) => {
               {rows.map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`
                 const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
+
                 const handleDeleteCard = () => {
-                  console.log(row.card_id, 'handleDeleteCard')
-                  dispatch(addNewUseCardQuestionAC(row.question))
-                  dispatch(updateUserCardIDAC(row.card_id))
-                  props.modalHandler('delete-searchCardPanel')
+                  dispatch(setCardIdAC(row.card_id))
+                  dispatch(setCardsPackIdAC(row.cardsPack_id))
+                  props.modalHandler('delete-card')
                 }
                 const handleUpdateCardName = () => {
                   console.log(row.cardsPack_id, 'handleUpdateCardName')
-                  dispatch(addNewUseCardQuestionAC(row.question))
-                  dispatch(addNewUseCardAnswerAC(row.answer))
-                  dispatch(updateUserCardIDAC(row.card_id))
-                  props.modalHandler('edit-searchCardPanel')
+                  dispatch(cardQuestionAC(row.question))
+                  dispatch(cardAnswerAC(row.answer))
+                  dispatch(setCardIdAC(row.card_id))
+                  dispatch(setCardsPackIdAC(row.cardsPack_id))
+                  props.modalHandler('edit-card')
                 }
 
                 return (

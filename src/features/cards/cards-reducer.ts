@@ -28,7 +28,9 @@ const initialState: ResponseGetCardsType = {
   minCardsCount: 0,
   cardsPack_id: '',
   cardQuestion: '',
+  cardAnswer: '',
   sortCards: '0updated',
+  card_id: '',
 }
 
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
@@ -55,9 +57,23 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
     case 'CARDS/CARD-QUESTION': {
       return { ...state, cardQuestion: action.payload.cardQuestion }
     }
+    case 'CARDS/CARD-ANSWER': {
+      return { ...state, cardAnswer: action.payload.cardAnswer }
+    }
     case 'CARDS/SORT-CARDS': {
       return { ...state, sortCards: action.payload.sortCards }
     }
+    case 'CARDS/SET-PRIVATE-PACK': {
+      return {
+        ...state,
+        packPrivate: action.payload.private,
+      }
+    }
+    case 'CARDS/SET-CARDS-ID':
+      return {
+        ...state,
+        card_id: action.payload.card_id,
+      }
     default:
       return state
   }
@@ -85,6 +101,11 @@ export const setCardsPackIdAC = (cardsPack_id: string) =>
     type: 'CARDS/SET-CARDS-PACK-ID',
     payload: { cardsPack_id },
   } as const)
+export const setCardIdAC = (card_id: string) =>
+  ({
+    type: 'CARDS/SET-CARDS-ID',
+    payload: { card_id },
+  } as const)
 
 export const clearCardDataAC = () => ({ type: 'CLEAR-DATA' } as const)
 export const pageCardsAC = (page: number) => ({ type: 'CARDS/PAGE', payload: { page } } as const)
@@ -98,32 +119,48 @@ export const cardQuestionAC = (cardQuestion: string) =>
     type: 'CARDS/CARD-QUESTION',
     payload: { cardQuestion },
   } as const)
+export const cardAnswerAC = (cardAnswer: string) =>
+  ({
+    type: 'CARDS/CARD-ANSWER',
+    payload: { cardAnswer },
+  } as const)
 export const sortCardsAC = (sortCards: string) =>
   ({
     type: 'CARDS/SORT-CARDS',
     payload: { sortCards },
   } as const)
+export const setPrivatePackAC = (private_: boolean) =>
+  ({
+    type: 'CARDS/SET-PRIVATE-PACK',
+    payload: { private: private_ },
+  } as const)
 //types
 export type ActionsType =
   | setCardsData
   | clearCardData
-  | setPackId
+  | setCardsPackId
   | setCardLearn
   | pageCards
   | pageCountCards
   | cardQuestion
   | sortCards
   | setPackName
+  | setPrivatePackType
+  | setCardIdType
+  | cardAnswerType
 
 export type setCardsData = ReturnType<typeof setCardsDataAC>
 export type clearCardData = ReturnType<typeof clearCardDataAC>
-export type setPackId = ReturnType<typeof setCardsPackIdAC>
+export type setCardsPackId = ReturnType<typeof setCardsPackIdAC>
 export type setCardLearn = ReturnType<typeof setCardLearnAC>
 export type pageCards = ReturnType<typeof pageCardsAC>
 export type pageCountCards = ReturnType<typeof pageCountCardsAC>
 export type cardQuestion = ReturnType<typeof cardQuestionAC>
 export type sortCards = ReturnType<typeof sortCardsAC>
 export type setPackName = ReturnType<typeof setPackNameAC>
+export type setPrivatePackType = ReturnType<typeof setPrivatePackAC>
+export type setCardIdType = ReturnType<typeof setCardIdAC>
+export type cardAnswerType = ReturnType<typeof cardAnswerAC>
 
 //thunks
 export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {

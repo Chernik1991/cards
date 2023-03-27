@@ -4,34 +4,17 @@ import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
-import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { CardMenu } from 'features/cards/cardMenu/CardMenu'
-import { AddNewCard } from 'features/cards/cardModals/AddCard/AddCard'
-import { clearUserStateCardAC } from 'features/cards/cardModals/cardModalsReducer'
-import { DeleteCard } from 'features/cards/cardModals/DeleteCard/DeleteCard'
-import { EditCard } from 'features/cards/cardModals/EditCard/EditCard'
 import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
-import {
-  clearCardDataAC,
-  CreateCardsTC,
-  DeleteCardsTC,
-  GetCardsTC,
-  pageCardsAC,
-  pageCountCardsAC,
-  UpdateCardsTC,
-} from 'features/cards/cards-reducer'
+import { clearCardDataAC, GetCardsTC, pageCardsAC, pageCountCardsAC } from 'features/cards/cards-reducer'
 import { CardsTable } from 'features/cards/cardTable/CardsTable'
 import { SearchCardPanel } from 'features/cards/searchCardPanel/SearchCardPanel'
 import * as cardsSelectors from 'features/cards/selectorCard'
-import {
-  cardsAdditionalSettingsAnswer,
-  cardsAdditionalSettingsID,
-  cardsAdditionalSettingsQuestion,
-} from 'features/cards/selectorCard'
+import { Modals } from 'features/packs/modals/modals'
 import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -48,27 +31,19 @@ export const Cards = () => {
   const search = useAppSelector(cardsSelectors.cardQuestion)
   const packName = useAppSelector(cardsSelectors.packName)
   const packUserId = useAppSelector(cardsSelectors.packUserId)
-  const cardsQuestion = useAppSelector(cardsAdditionalSettingsQuestion)
-  const cardsAnswer = useAppSelector(cardsAdditionalSettingsAnswer)
-  const cardID = useAppSelector(cardsAdditionalSettingsID)
   const my_id = useAppSelector(profileSelectors._id)
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const paginationLabel = 'Cards per Page'
   const badResponse = 'No data available. Change your search options'
   const isNotEmptyCard = !!rows.length
   const [open, setOpen] = useState('false')
-  const [errorQuestion, SetErrorQuestion] = useState(false)
-  const [errorAnswer, SetErrorAnswer] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
 
   if (!isLoggedIn) {
-    console.log('Profile !isLoggedIn')
-
     return <Navigate to={PATH.LOGIN} replace />
   }
   useEffect(() => {
-    console.log('useEffect search')
     dispatch(GetCardsTC())
     let param = {}
 
@@ -88,77 +63,16 @@ export const Cards = () => {
     setSearchParams({ ...param })
   }, [pageCount, page, search, sort])
 
-  const cardsListHandler = () => {
-    dispatch(clearCardDataAC())
-  }
-  const handleOpen = (value: string) => setOpen(value)
-  const handleClose = () => {
-    // dispatch(clearUserStateTypeAC())
-    dispatch(clearUserStateCardAC())
-    setOpen('false')
-  }
-
-  const modalOpenHandler = (value: string) => {
-    handleOpen(value)
-  }
-
-  const addNewCardHandler = () => {
-    if (cardsAnswer === '') {
-      SetErrorAnswer(true)
-      setTimeout(() => SetErrorAnswer(false), 3000)
-    }
-    if (cardsQuestion === '') {
-      SetErrorQuestion(true)
-      setTimeout(() => SetErrorQuestion(false), 3000)
-    }
-    if (cardsAnswer && cardsQuestion) {
-      dispatch(
-        CreateCardsTC({
-          answer: cardsAnswer || '',
-          question: cardsQuestion || '',
-          cardsPack_id,
-        })
-      )
-      dispatch(clearUserStateCardAC())
-      handleClose()
-    }
-  }
-  const editCardHandler = () => {
-    if (cardsAnswer === '') {
-      SetErrorAnswer(true)
-      setTimeout(() => SetErrorAnswer(false), 3000)
-    }
-    if (cardsQuestion === '') {
-      SetErrorQuestion(true)
-      setTimeout(() => SetErrorQuestion(false), 3000)
-    }
-    if (cardsAnswer && cardsQuestion) {
-      dispatch(
-        UpdateCardsTC({
-          answer: cardsAnswer || '',
-          question: cardsQuestion || '',
-          id: cardID,
-          cardsPack_id,
-        })
-      )
-      dispatch(clearUserStateCardAC())
-      handleClose()
-    }
-  }
-  const deleteCardHandler = () => {
-    dispatch(
-      DeleteCardsTC({
-        id: cardID,
-        cardsPack_id,
-      })
-    )
-    dispatch(clearUserStateCardAC())
-    handleClose()
-  }
   const onChangePageHandler = (page: number, pageCount: number) => {
     dispatch(pageCardsAC(page))
     dispatch(pageCountCardsAC(pageCount))
     console.log(page, pageCount, 'page, pageCount')
+  }
+  const cardsListHandler = () => {
+    dispatch(clearCardDataAC())
+  }
+  const modalOpenHandler = (value: string) => {
+    setOpen(value)
   }
   const learnHandler = () => {
     dispatch(pageCountCardsAC(totalCount))
@@ -274,38 +188,7 @@ export const Cards = () => {
             ''
           )}
         </Box>
-        <ModalBasic
-          modalName={'Add new card'}
-          deleteSave={false}
-          handleState={open === 'add-card'}
-          handleClose={handleClose}
-          handleModalFn={addNewCardHandler}
-        >
-          <AddNewCard errorQuestion={errorQuestion} errorAnswer={errorAnswer} />
-        </ModalBasic>
-        <ModalBasic
-          modalName={'Edit card'}
-          deleteSave={false}
-          handleState={open === 'edit-card'}
-          handleClose={handleClose}
-          handleModalFn={editCardHandler}
-        >
-          <EditCard
-            errorQuestion={errorQuestion}
-            errorAnswer={errorAnswer}
-            valueAnswer={cardsAnswer}
-            valueQuestion={cardsQuestion}
-          />
-        </ModalBasic>
-        <ModalBasic
-          modalName={'Delete card'}
-          deleteSave={true}
-          handleState={open === 'delete-card'}
-          handleClose={handleClose}
-          handleModalFn={deleteCardHandler}
-        >
-          <DeleteCard cardName={cardsQuestion} />
-        </ModalBasic>
+        <Modals open={open} setOpen={setOpen} />
       </div>
     </>
   )

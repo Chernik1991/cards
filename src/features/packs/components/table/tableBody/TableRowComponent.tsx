@@ -2,9 +2,8 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { setCardsPackIdAC } from 'features/cards/cards-reducer'
+import { setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
-import { addNewUserPackAC, updateUserPackIDAC, updateUserPackPrivateAC } from 'features/packs/modals/modalsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
@@ -22,19 +21,16 @@ type ExtendedType = {
   updated: string
   cardsCount: number
   id: string
-  packOwnerID: string
+  user_id: string
   private: boolean
 }
 
 export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRowType) => {
   const dispatch = useAppDispatch()
   const labelId = `enhanced-table-checkbox-${index}`
-  const data = new Date(row.updated)
-  const monthCorrection = data.getMonth() + 1
-  const getMonth = monthCorrection < 10 ? '0' + monthCorrection : monthCorrection
-  const finalDate = data.getDate() + '.' + getMonth + '.' + data.getFullYear()
+  const finalDate = new Date(row.updated).toLocaleString()
   const paddingStyle = { padding: '15px 30px', minWidth: '240px' }
-  const crudAccessValue = row.packOwnerID === userID
+  const crudAccessValue = row.user_id === userID
 
   const handleStudying = () => {
     dispatch(setCardsPackIdAC(row.id))
@@ -42,16 +38,15 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
     return <Navigate to={PATH.LEARN} />
   }
   const handleDeletePack = () => {
-    console.log('handleDeletePack')
-    dispatch(addNewUserPackAC(row.name))
-    dispatch(updateUserPackIDAC(row.id))
-    //TODO переход на 1 страницу
+    dispatch(setCardsPackIdAC(row.id))
     modalHandler('delete-pack')
   }
   const handleUpdatePackName = () => {
-    dispatch(addNewUserPackAC(row.name))
-    dispatch(updateUserPackPrivateAC(row.private))
-    dispatch(updateUserPackIDAC(row.id))
+    dispatch(setPackNameAC(row.name))
+    dispatch(setCardsPackIdAC(row.id))
+    // dispatch(addNewUserPackAC(row.name))
+    dispatch(setPrivatePackAC(row.private))
+    // dispatch(setCardsPackIdAC(row.id))
     //TODO переход на 1 страницу и разобраться с редюсером
     modalHandler('edit-pack')
     // dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, userID))

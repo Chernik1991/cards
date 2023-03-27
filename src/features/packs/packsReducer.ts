@@ -1,10 +1,10 @@
 import { setAppStatusAC } from 'app/app-reducer'
 import { errorUtils } from 'common/utils/error-utils'
-import { packsAPI, ResponsePacksType, SetNewPackType, UpdatePackType } from 'features/packs/packs-api'
+import { CardPacksType, packsAPI, ResponsePacksType, SetNewPackType, UpdatePackType } from 'features/packs/packs-api'
 import { AppThunkType } from 'store/store'
 
 const initialState: ResponsePacksType = {
-  cardPacks: [],
+  cardPacks: [] as CardPacksType[],
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
@@ -155,6 +155,7 @@ export const addPackTC =
     try {
       const res = await packsAPI.setPack(data)
 
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
     } catch (e: any) {
       errorUtils(e, dispatch)

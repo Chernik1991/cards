@@ -103,7 +103,9 @@ export type ResponseGetCardsType = {
   tokenDeathTime: number
   cardsPack_id: string
   cardQuestion: string
+  cardAnswer: string
   sortCards: string
+  card_id: string
 }
 export type ResponseSetCardType = {
   newCard: CardsType
