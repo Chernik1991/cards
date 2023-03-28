@@ -58,25 +58,9 @@ export const Header = () => {
       <img className={s.userPhoto} src={defaultPic} alt="userPhoto" />
     </div>
   )
-  const routes = (
-    <>
-      <NavLink to={PATH.LOGIN}>[Login] </NavLink>
-      <NavLink to={PATH.REGISTER}>[Register] </NavLink>
-      <NavLink to={PATH.PROFILE}>[Profile] </NavLink>
-      <NavLink to={PATH.FORGOT_YOUR_PASSWORD}>[ForgotPassword]</NavLink>
-      <NavLink to={PATH.CHECK_EMAIL}> [CheckEmail] </NavLink>
-      <NavLink to={PATH.CREATE_NEW_PASSWORD}>[CreateNewPassword]</NavLink>
-      <NavLink to={PATH.CARD}>[Card]</NavLink>
-      <NavLink to={PATH.PACKS}>[Pack]</NavLink>
-      <NavLink to={PATH.CARD_NOT_PACK}>[CardNotPack]</NavLink>
-      <NavLink to={PATH.TEST}>[Test]</NavLink>
-      <NavLink to={'*'}>[Error404]</NavLink>
-    </>
-  )
 
   return (
     <div>
-      {routes}
       <div className={s.headerBlock}>
         <img alt={'IMG'} src={itINC} />
         {isLoggedIn ? (

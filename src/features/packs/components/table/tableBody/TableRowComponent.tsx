@@ -36,7 +36,7 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
   const handleStudying = () => {
     dispatch(setCardsPackIdAC(row.id))
 
-    return <Navigate to={PATH.LEARN} />
+    return <Navigate to={PATH.LEARN} replace />
   }
   const handleDeletePack = () => {
     dispatch(setCardsPackIdAC(row.id))

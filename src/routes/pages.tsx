@@ -11,7 +11,6 @@ import { Cards } from 'features/cards/Cards'
 import { Learn } from 'features/learn/Learn'
 import { Packs } from 'features/packs/Packs'
 import { Profile } from 'features/profile/Profile'
-import { Test } from 'features/test/test'
 import { Layout } from 'routes/layout/Layout'
 import { Error404 } from 'routes/pages/Error404'
 
@@ -48,7 +47,6 @@ export const Pages = () => {
           <Route path={PATH.CARD} element={<Cards />} />
           <Route path={PATH.PACKS} element={<Packs />} />
           <Route path={PATH.LEARN} element={<Learn />} />
-          <Route path={PATH.TEST} element={<Test />} />
           <Route path={'*'} element={<Error404 />} />
         </Route>
       </Routes>
