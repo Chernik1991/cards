@@ -8,13 +8,13 @@ import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { CardMenu } from 'features/cards/cardMenu/CardMenu'
-import s from 'features/cards/cardNotPack/CardNotPack.module.css'
 import { CardsType } from 'features/cards/cards-api'
 import { clearCardDataAC, GetCardsTC, pageCardsAC, pageCountCardsAC } from 'features/cards/cards-reducer'
+import s from 'features/cards/Cards.module.css'
 import { CardsTable } from 'features/cards/cardTable/CardsTable'
 import { SearchCardPanel } from 'features/cards/searchCardPanel/SearchCardPanel'
 import * as cardsSelectors from 'features/cards/selectorCard'
-import { Modals } from 'features/packs/modals/modals'
+import { Modals } from 'features/modals/Modals'
 import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -28,7 +28,7 @@ export const Cards = () => {
   const sort = useAppSelector(cardsSelectors.sortCards)
   const rows = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
   const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
-  const search = useAppSelector(cardsSelectors.cardQuestion)
+  const search = useAppSelector(cardsSelectors.search)
   const packName = useAppSelector(cardsSelectors.packName)
   const packUserId = useAppSelector(cardsSelectors.packUserId)
   const my_id = useAppSelector(profileSelectors._id)
@@ -57,7 +57,7 @@ export const Cards = () => {
       param = { ...param, sortCards: sort }
     }
     if (search !== '') {
-      param = { ...param, cardQuestion: search }
+      param = { ...param, search: search }
     }
     param = { ...param, cardsPack_id: cardsPack_id }
     setSearchParams({ ...param })
@@ -77,10 +77,7 @@ export const Cards = () => {
   const learnHandler = () => {
     dispatch(pageCountCardsAC(totalCount))
   }
-
-  if (rows.length === 0 && my_id === packUserId) {
-    return <Navigate to={PATH.CARD_NOT_PACK} replace />
-  }
+  const NoCards = `This pack is empty. Click add new card to fill this pack `
 
   return (
     <>
@@ -110,7 +107,7 @@ export const Cards = () => {
             {my_id === packUserId ? <CardMenu /> : ''}
           </div>
           {my_id === packUserId ? (
-            <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-searchCardPanel')}>
+            <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-card')}>
               Add new card
             </SuperButton>
           ) : (
@@ -161,7 +158,7 @@ export const Cards = () => {
                 paddingTop: 25,
               }}
             >
-              <div>{badResponse}</div>
+              {my_id === packUserId ? <div>{NoCards}</div> : <div>{badResponse}</div>}
             </Box>
           )}
         </Box>

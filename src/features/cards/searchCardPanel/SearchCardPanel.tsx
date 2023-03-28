@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import * as appSelectors from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
-import { cardQuestionAC, pageCardsAC } from 'features/cards/cards-reducer'
+import { pageCardsAC, searchAC } from 'features/cards/cards-reducer'
 import * as cardsSelectors from 'features/cards/selectorCard'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -15,10 +15,10 @@ export const SearchCardPanel = () => {
   const params = Object.fromEntries(searchParams)
   const dispatch = useAppDispatch()
   const status = useAppSelector(appSelectors.status)
-  const search = useAppSelector(cardsSelectors.cardQuestion)
+  const search = useAppSelector(cardsSelectors.search)
 
   const searchHandler = (search: string) => {
-    dispatch(cardQuestionAC(search))
+    dispatch(searchAC(search))
     dispatch(pageCardsAC(1))
   }
 
@@ -37,7 +37,7 @@ export const SearchCardPanel = () => {
         <SearchInput
           disabled={status === 'loading'}
           onChangeText={searchHandler}
-          searchValue={params.cardQuestion || search}
+          searchValue={params.search || search}
         />
       </Box>
     </Box>

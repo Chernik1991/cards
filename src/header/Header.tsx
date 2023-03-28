@@ -46,7 +46,14 @@ export const Header = () => {
 
   const userJSX = (
     <div className={s.userDataContainer} onClick={handleOpenMenu}>
-      {activeMenu ? <div>{active}</div> : ''}
+      {activeMenu ? (
+        <div>
+          <div className={s.closingContainer} />
+          {active}
+        </div>
+      ) : (
+        ''
+      )}
       <span className={s.userName}>{name}</span>
       <img className={s.userPhoto} src={defaultPic} alt="userPhoto" />
     </div>

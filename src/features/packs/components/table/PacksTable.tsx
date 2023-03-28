@@ -77,7 +77,7 @@ export const PacksTable = (props: PacksTableType) => {
     user_id: el.user_id,
     private: el.private,
   }))
-  const [orderBy, setOrderBy] = useState<string>(sort)
+  const [orderBy, setOrderBy] = useState(sort)
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string, sortPacks: string) => {
     setOrderBy(property)

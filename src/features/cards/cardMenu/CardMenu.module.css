@@ -1,17 +1,22 @@
 .menu {
   position: relative;
   top: 20px;
+
+  min-height: 70px;
   /* border: 1px solid blue; */
   max-height: 70px;
-  min-height: 70px;
 }
+
 .arrowUp {
   position: relative;
+  z-index: 4;
+  top: -125px;
   left: 15px;
+  transform: rotate(45deg);
+
   width: 5px;
   height: 5px;
-  top: -125px;
-  transform: rotate(45deg);
+
   background-color: #fff;
   border-top: 1.5px solid #e1e1e1;
   border-left: 1.5px solid #e1e1e1;
@@ -19,26 +24,44 @@
 
 .labelStyle {
   position: relative;
-  left: 5px;
   top: 3px;
+  left: 5px;
 }
 
 .menuContainer {
   position: relative;
+  z-index: 3;
   left: -90px;
+
   width: 125px;
+
   border: 1.5px solid #e1e1e1;
-  border-radius: 0px;
-  z-index: 10;
+  border-radius: 0;
 }
 
 .packInfo {
+  cursor: pointer;
+
   transform: scale(0.8);
+
   border: 2px solid black;
   border-radius: 50%;
-  cursor: pointer;
+
   fill: black;
 }
+
 .profileInfoStyle {
   width: 100%;
+}
+
+.menuClosing {
+  position: absolute;
+  z-index: 1;
+  top: -200px;
+  left: -370px;
+
+  width: 105vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }

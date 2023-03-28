@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
-import { AddNewCard } from 'features/cards/cardModals/AddCard/AddCard'
-import { clearUserStateCardAC } from 'features/cards/cardModals/cardModalsReducer'
-import { EditCard } from 'features/cards/cardModals/EditCard/EditCard'
-import { CreateCardsTC, DeleteCardsTC, UpdateCardsTC } from 'features/cards/cards-reducer'
+import {
+  cardAnswerAC,
+  cardQuestionAC,
+  CreateCardsTC,
+  DeleteCardsTC,
+  setPackNameAC,
+  setPrivatePackAC,
+  UpdateCardsTC,
+} from 'features/cards/cards-reducer'
 import * as cardsSelectors from 'features/cards/selectorCard'
-import { cardsAdditionalSettingsAnswer } from 'features/cards/selectorCard'
-import { DeleteModal } from 'features/packs/modals/DeleteModal/DeleteModal'
-import { EditPack } from 'features/packs/modals/EditPack/EditPack'
-import { clearUserStateTypeAC } from 'features/packs/modals/modalsReducer'
+import { DeleteModal } from 'features/modals/DeleteModal/DeleteModal'
+import { EditCard } from 'features/modals/EditCard/EditCard'
+import { EditPack } from 'features/modals/EditPack/EditPack'
 import { addPackTC, deletePackTC, updatePackTC } from 'features/packs/packsReducer'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -18,42 +22,54 @@ type Props = {
   setOpen: (value: string) => void
 }
 
-export const Modals = ({ open, setOpen }: Props) => {
+export const ModalPack = ({ open, setOpen }: Props) => {
   const dispatch = useAppDispatch()
   const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
   const packName = useAppSelector(cardsSelectors.packName)
   const packPrivate = useAppSelector(cardsSelectors.packPrivate)
   const cardsQuestion = useAppSelector(cardsSelectors.cardQuestion)
-  const cardsAnswer = useAppSelector(cardsAdditionalSettingsAnswer)
+  const cardsAnswer = useAppSelector(cardsSelectors.cardAnswer)
   const card_id = useAppSelector(cardsSelectors.card_id)
   const [error, setError] = useState(false)
   const [errorQuestion, SetErrorQuestion] = useState(false)
   const [errorAnswer, SetErrorAnswer] = useState(false)
   const handleClose = () => {
-    // dispatch(clearUserStateTypeAC())
     setOpen('false')
   }
 
   const addNewPack = () => {
-    dispatch(
-      addPackTC({
-        name: packName,
-        // deckCover: packsAdditionalSettings.deckCover,
-        private: packPrivate,
-      })
-    )
-    dispatch(clearUserStateTypeAC())
-    handleClose()
+    if (packName === '') {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+    }
+    if (packName) {
+      dispatch(
+        addPackTC({
+          name: packName,
+          // deckCover: packsAdditionalSettings.deckCover,
+          private: packPrivate,
+        })
+      )
+      dispatch(setPackNameAC(''))
+      dispatch(setPrivatePackAC(false))
+      handleClose()
+    }
   }
   const updatePack = () => {
-    dispatch(
-      updatePackTC({
-        _id: cardsPack_id,
-        name: packName,
-        private: packPrivate,
-      })
-    )
-    handleClose()
+    if (packName === '') {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+    }
+    if (packName) {
+      dispatch(
+        updatePackTC({
+          _id: cardsPack_id,
+          name: packName,
+          private: packPrivate,
+        })
+      )
+      handleClose()
+    }
   }
   const deletePack = () => {
     dispatch(deletePackTC(cardsPack_id))
@@ -71,12 +87,13 @@ export const Modals = ({ open, setOpen }: Props) => {
     if (cardsAnswer && cardsQuestion) {
       dispatch(
         CreateCardsTC({
-          answer: cardsAnswer || '',
-          question: cardsQuestion || '',
+          answer: cardsAnswer,
+          question: cardsQuestion,
           cardsPack_id,
         })
       )
-      // dispatch(clearUserStateCardAC())
+      dispatch(cardQuestionAC(''))
+      dispatch(cardAnswerAC(''))
       handleClose()
     }
   }
@@ -92,13 +109,11 @@ export const Modals = ({ open, setOpen }: Props) => {
     if (cardsAnswer && cardsQuestion) {
       dispatch(
         UpdateCardsTC({
-          answer: cardsAnswer || '',
-          question: cardsQuestion || '',
-          id: card_id,
-          cardsPack_id,
+          answer: cardsAnswer,
+          question: cardsQuestion,
+          _id: card_id,
         })
       )
-      // dispatch(clearUserStateCardAC())
       handleClose()
     }
   }
@@ -109,7 +124,6 @@ export const Modals = ({ open, setOpen }: Props) => {
         cardsPack_id,
       })
     )
-    dispatch(clearUserStateCardAC())
     handleClose()
   }
 
@@ -123,7 +137,9 @@ export const Modals = ({ open, setOpen }: Props) => {
         handleModalFn={addNewPack}
       >
         <EditPack
-          id={'add-pack'}
+          id={'edit-pack'}
+          packStatus={packPrivate}
+          packName={packName}
           error={
             error ? <span style={{ fontSize: '10px', position: 'relative', top: '60px' }}>Pack name required</span> : ''
           }
@@ -161,7 +177,24 @@ export const Modals = ({ open, setOpen }: Props) => {
         handleClose={handleClose}
         handleModalFn={addNewCardHandler}
       >
-        <AddNewCard errorQuestion={errorQuestion} errorAnswer={errorAnswer} />
+        <EditCard
+          valueAnswer={cardsAnswer}
+          valueQuestion={cardsQuestion}
+          errorQuestion={
+            errorQuestion ? (
+              <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Question required</span>
+            ) : (
+              ''
+            )
+          }
+          errorAnswer={
+            errorAnswer ? (
+              <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Answer required</span>
+            ) : (
+              ''
+            )
+          }
+        />
       </ModalBasic>
       <ModalBasic
         modalName={'Edit card'}
@@ -171,10 +204,22 @@ export const Modals = ({ open, setOpen }: Props) => {
         handleModalFn={editCardHandler}
       >
         <EditCard
-          errorQuestion={errorQuestion}
-          errorAnswer={errorAnswer}
           valueAnswer={cardsAnswer}
           valueQuestion={cardsQuestion}
+          errorQuestion={
+            errorQuestion ? (
+              <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Question required</span>
+            ) : (
+              ''
+            )
+          }
+          errorAnswer={
+            errorAnswer ? (
+              <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Answer required</span>
+            ) : (
+              ''
+            )
+          }
         />
       </ModalBasic>
       <ModalBasic

@@ -6,7 +6,7 @@ import {
   DeleteCardsType,
   ResponseGetCardsType,
   SetCardType,
-  UpdateCardType,
+  UpdateParamsType,
 } from 'features/cards/cards-api'
 import { AppThunkType } from 'store/store'
 
@@ -31,6 +31,7 @@ const initialState: ResponseGetCardsType = {
   cardAnswer: '',
   sortCards: '0updated',
   card_id: '',
+  search: '',
 }
 
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
@@ -59,6 +60,9 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
     }
     case 'CARDS/CARD-ANSWER': {
       return { ...state, cardAnswer: action.payload.cardAnswer }
+    }
+    case 'CARDS/SEARCH': {
+      return { ...state, search: action.payload.search }
     }
     case 'CARDS/SORT-CARDS': {
       return { ...state, sortCards: action.payload.sortCards }
@@ -124,6 +128,11 @@ export const cardAnswerAC = (cardAnswer: string) =>
     type: 'CARDS/CARD-ANSWER',
     payload: { cardAnswer },
   } as const)
+export const searchAC = (search: string) =>
+  ({
+    type: 'CARDS/SEARCH',
+    payload: { search },
+  } as const)
 export const sortCardsAC = (sortCards: string) =>
   ({
     type: 'CARDS/SORT-CARDS',
@@ -136,41 +145,43 @@ export const setPrivatePackAC = (private_: boolean) =>
   } as const)
 //types
 export type ActionsType =
-  | setCardsData
-  | clearCardData
-  | setCardsPackId
-  | setCardLearn
-  | pageCards
-  | pageCountCards
-  | cardQuestion
-  | sortCards
-  | setPackName
+  | setCardsDataType
+  | clearCardDataType
+  | setCardsPackIdType
+  | setCardLearnType
+  | pageCardsType
+  | pageCountCardsType
+  | cardQuestionType
+  | sortCardsType
+  | setPackNameType
   | setPrivatePackType
   | setCardIdType
   | cardAnswerType
+  | searchType
 
-export type setCardsData = ReturnType<typeof setCardsDataAC>
-export type clearCardData = ReturnType<typeof clearCardDataAC>
-export type setCardsPackId = ReturnType<typeof setCardsPackIdAC>
-export type setCardLearn = ReturnType<typeof setCardLearnAC>
-export type pageCards = ReturnType<typeof pageCardsAC>
-export type pageCountCards = ReturnType<typeof pageCountCardsAC>
-export type cardQuestion = ReturnType<typeof cardQuestionAC>
-export type sortCards = ReturnType<typeof sortCardsAC>
-export type setPackName = ReturnType<typeof setPackNameAC>
+export type setCardsDataType = ReturnType<typeof setCardsDataAC>
+export type clearCardDataType = ReturnType<typeof clearCardDataAC>
+export type setCardsPackIdType = ReturnType<typeof setCardsPackIdAC>
+export type setCardLearnType = ReturnType<typeof setCardLearnAC>
+export type pageCardsType = ReturnType<typeof pageCardsAC>
+export type pageCountCardsType = ReturnType<typeof pageCountCardsAC>
+export type cardQuestionType = ReturnType<typeof cardQuestionAC>
+export type sortCardsType = ReturnType<typeof sortCardsAC>
+export type setPackNameType = ReturnType<typeof setPackNameAC>
 export type setPrivatePackType = ReturnType<typeof setPrivatePackAC>
 export type setCardIdType = ReturnType<typeof setCardIdAC>
 export type cardAnswerType = ReturnType<typeof cardAnswerAC>
+export type searchType = ReturnType<typeof searchAC>
 
 //thunks
 export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {
   dispatch(setAppStatusAC('loading'))
-  const { sortCards, cardQuestion, cardsPack_id, page, pageCount } = getState().cards
+  const { sortCards, search, cardsPack_id, page, pageCount } = getState().cards
 
   try {
     const res = await cardsAPI.getCards({
       cardsPack_id: cardsPack_id,
-      cardQuestion: cardQuestion,
+      cardQuestion: search,
       page: page,
       pageCount: pageCount,
       sortCards: sortCards,
@@ -216,15 +227,11 @@ export const DeleteCardsTC =
     }
   }
 export const UpdateCardsTC =
-  (data: UpdateCardType): AppThunkType =>
+  (data: UpdateParamsType): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.updateCards({
-        _id: data.id,
-        question: data.question,
-        answer: data.answer,
-      })
+      const res = await cardsAPI.updateCards(data)
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))

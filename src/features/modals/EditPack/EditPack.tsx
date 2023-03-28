@@ -3,14 +3,14 @@ import { ReactNode } from 'react'
 import SuperInputText from 'common/components/c1-SuperInputText/SuperInputText'
 import SuperCheckbox from 'common/components/c3-SuperCheckbox/SuperCheckbox'
 import { setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
-import o from 'features/packs/modals/EditPack/EditPack.module.css'
+import o from 'features/modals/EditPack/EditPack.module.css'
 import { useAppDispatch } from 'store/store'
 
 type props = {
   id: string
-  error?: ReactNode
-  packStatus?: boolean
-  packName?: string
+  error: ReactNode
+  packStatus: boolean
+  packName: string
 }
 
 export const EditPack = ({ error, packStatus, packName, id }: props) => {

@@ -7,7 +7,6 @@ import { CreateNewPassword } from 'features/auth/forgotPassword/createNewPasswor
 import { ForgotPassword } from 'features/auth/forgotPassword/forgotPassword/forgotPassword'
 import { Login } from 'features/auth/login/Login'
 import { Register } from 'features/auth/register/Register'
-import { CardNotPack } from 'features/cards/cardNotPack/CardNotPack'
 import { Cards } from 'features/cards/Cards'
 import { Learn } from 'features/learn/Learn'
 import { Packs } from 'features/packs/Packs'
@@ -49,7 +48,6 @@ export const Pages = () => {
           <Route path={PATH.CARD} element={<Cards />} />
           <Route path={PATH.PACKS} element={<Packs />} />
           <Route path={PATH.LEARN} element={<Learn />} />
-          <Route path={PATH.CARD_NOT_PACK} element={<CardNotPack />} />
           <Route path={PATH.TEST} element={<Test />} />
           <Route path={'*'} element={<Error404 />} />
         </Route>

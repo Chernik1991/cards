@@ -1,4 +1,4 @@
-import o from 'features/packs/modals/DeleteModal/DeleteModal.module.css'
+import o from 'features/modals/DeleteModal/DeleteModal.module.css'
 
 type props = {
   name: string | undefined

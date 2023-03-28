@@ -8,94 +8,115 @@ a:visited {
 }
 
 .profileContainer {
-  background-color: #f9f9fa;
   display: inline-flex;
-  width: 100%;
   align-items: center;
   justify-content: center;
+
+  width: 100%;
+
+  background-color: #f9f9fa;
 }
 
 .backContainer {
-  text-shadow: 5px 5px 5px #aaa;
   display: flex;
   flex-wrap: wrap;
-  width: 40%;
-  border-radius: 12px;
   align-items: center;
   justify-content: center;
+
+  width: 40%;
+
   font-size: 0.9rem;
+  text-shadow: 5px 5px 5px #aaa;
+
+  border-radius: 12px;
 }
 
 .PackNameContainer {
   /* position: relative; */
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
-  width: 100%;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-c;
-  font-size: 0.9rem;
-  max-height: 70px;
+
+  width: 100%;
   min-height: 70px;
+  max-height: 70px;
+
+  font-size: 0.9rem;
 }
 
 .backContainer:hover {
   transform: scale(1.02);
-  transition: all 0.5s ease 0s;
+
   background-color: #eaeaea;
+
+  transition: all 0.5s ease 0s;
 }
 .backArrow {
-  padding: 15px 15px 15px 0px;
   width: 30px;
+  padding: 15px 15px 15px 0;
 }
 
 .userNickName {
   position: relative;
+  left: 10px;
+
+  padding: 0 20px;
+
   font-size: 1.2rem;
   font-weight: 400;
-  padding: 0px 20px;
-  left: 10px;
 }
 
 .userPhotoContainer {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: 20px 0px;
+
+  padding: 20px 0;
 }
 
 .userCameraContainer {
-  width: 25px;
-  height: 25px;
   position: absolute;
-  border-radius: 50%;
-  background-color: #808080;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: 25px;
+  height: 25px;
+
+  background-color: #808080;
+  border-radius: 50%;
 }
 
 .userCameraIcon {
   position: relative;
+
   width: 13px;
+
   fill: #fff;
 }
 
 .userPhoto {
-  max-width: 100px;
-  max-height: 100px;
-  display: flex;
   content: '';
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+
+  display: flex;
+
   min-width: 70px;
+  max-width: 100px;
   min-height: 70px;
+  max-height: 100px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   border-radius: 50%;
 }
 
 .userEmail {
   padding: 30px 0px;
+
   color: #b7b7b7;
 }
 
@@ -105,110 +126,132 @@ a:visited {
 }
 
 .logOut {
-  padding: 10px 10px 10px 5px;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 30%;
   min-width: 100px;
-  border-radius: 45px;
+  padding: 10px 10px 10px 5px;
+
   border: 1px solid #ebebec;
+  border-radius: 45px;
   box-shadow: 0 0 8px #c3c3c3;
 }
 
 .logOut:hover {
   transform: scale(1.02);
-  transition: all 0.5s ease 0s;
+
   background-color: #eaeaea;
+
+  transition: all 0.5s ease 0s;
 }
 .logOut:hover {
   transform: scale(1.02);
-  transition: all 0.5s ease 0s;
+
   background-color: #eaeaea;
+
+  transition: all 0.5s ease 0s;
 }
 .logOutIcon {
   width: 25px;
-  padding: 0px 10px 0px 0px;
+  padding: 0 10px 0 0;
 }
 
 .pfofileInput {
   display: flex;
-  border: 1px solid red;
-  padding-bottom: 10px;
-  background: none;
-  justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  justify-content: center;
+
   height: auto;
+  padding-bottom: 10px;
+
+  font-size: 1.2rem;
+
+  background: none;
   border: none;
 }
 
 .pfofileInput:focus {
   position: relative;
   left: 7.5%;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   width: 85%;
-  padding-bottom: 10px;
-  background: none;
-  font-size: 1.2rem;
   height: auto;
+  padding-bottom: 10px;
+
+  font-size: 1.2rem;
+
+  background: none;
   border: none;
   border-bottom: 1px solid #d3d3d3;
 }
 
 .saveButton {
-  opacity: 0;
   position: relative;
+  z-index: 700;
   top: 45px;
   left: 35%;
-  z-index: 700;
+
+  opacity: 0;
 }
 
 .inputLabelStyle {
-  opacity: 0;
-  color: #b7b7b7;
-  display: flex;
-  justify-content: flex-start;
-  align-items: cenetr;
   position: relative;
-  width: 85%;
   top: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 85%;
+
   font-size: 0.8rem;
+  color: #b7b7b7;
+
+  opacity: 0;
 }
 
 .inputContainer {
   position: relative;
-  display: flex;
   top: -25px;
-  height: 40px;
+
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   width: 100%;
+  height: 40px;
 }
 
 .newPackButton {
-  border-radius: 24px;
   display: flex;
-  background-color: #366eff;
-  justify-content: center;
   align-items: center;
-  height: 40px;
+  justify-content: center;
+
   min-width: 170px;
-  border: none;
-  color: #fff;
+  height: 40px;
 
   font-size: 1rem;
-  box-shadow: 0px 0px 12px #818181;
+  color: #fff;
+
+  background-color: #366eff !important;
+  border: none;
+  border-radius: 24px !important;
+  box-shadow: 0 0 12px #818181;
 }
 
 .newPackButton:hover {
   transform: translateY(-1px);
+
+  background-color: #2857ce !important;
+
   transition: 0.25s ease-in;
-  background-color: #2857ce;
 }
 
 .inputLabelStyle.activeEditmode {
@@ -232,13 +275,15 @@ a:visited {
 
 @media screen and (max-width: 780px) {
   .backContainer {
+    justify-content: flex-end;
+
     width: 100%;
     padding: 10px;
+
     font-size: 0.8rem;
-    justify-content: flex-end;
   }
   .userPhotoContainer {
-    padding: 10px 0px;
+    padding: 10px 0;
   }
   .defaultInfo {
     font-size: 1.2rem;
@@ -252,18 +297,20 @@ a:visited {
     font-weight: 500;
   }
   .userEmail {
-    font-size: 0.8rem;
     padding: 10px 0px;
+
+    font-size: 0.8rem;
   }
   .userNickName {
     width: 100%;
+
     font-size: 1rem;
   }
   .logOut {
     font-size: 0.8rem;
   }
   .saveButton {
-    transform: scale(0.7);
     top: 15px;
+    transform: scale(0.7);
   }
 }

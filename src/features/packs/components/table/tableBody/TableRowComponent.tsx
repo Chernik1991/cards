@@ -4,6 +4,7 @@ import { Navigate, NavLink } from 'react-router-dom'
 
 import { setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
+import { pagePacksAC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
@@ -39,17 +40,15 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
   }
   const handleDeletePack = () => {
     dispatch(setCardsPackIdAC(row.id))
+    dispatch(setPackNameAC(row.name))
     modalHandler('delete-pack')
   }
   const handleUpdatePackName = () => {
     dispatch(setPackNameAC(row.name))
     dispatch(setCardsPackIdAC(row.id))
-    // dispatch(addNewUserPackAC(row.name))
     dispatch(setPrivatePackAC(row.private))
-    // dispatch(setCardsPackIdAC(row.id))
-    //TODO переход на 1 страницу и разобраться с редюсером
+    dispatch(pagePacksAC(1))
     modalHandler('edit-pack')
-    // dispatch(updatePackTC({ cardsPack: { _id: row.id, name: 'updated name' } }, userID))
   }
   const cardsListHandler = (cardsPack_id: string) => {
     dispatch(setCardsPackIdAC(cardsPack_id))

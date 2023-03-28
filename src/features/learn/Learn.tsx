@@ -19,7 +19,7 @@ export const Learn = () => {
   const cards = useAppSelector(cardsSelectors.cards)
   const packName = useAppSelector(cardsSelectors.packName)
   const isShowAnswer = useAppSelector(learnSelectors.isShowAnswer)
-  const cardsPack_id = useAppSelector(learnSelectors.cardsPack_id)
+  const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
   const [first, setFirst] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 

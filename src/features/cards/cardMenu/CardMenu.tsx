@@ -3,25 +3,22 @@ import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { Navigate } from 'react-router-dom'
 
-import { menuDataInfo } from './CardData'
-import s from './CardMenu.module.css'
-
 import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
+import { menuDataInfo } from 'features/cards/cardMenu/CardData'
+import s from 'features/cards/cardMenu/CardMenu.module.css'
 import { setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
 import * as cardsSelectors from 'features/cards/selectorCard'
-import { Modals } from 'features/packs/modals/modals'
+import { Modals } from 'features/modals/Modals'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const CardMenu = () => {
-  const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
   const packName = useAppSelector(cardsSelectors.packName)
   const packUserId = useAppSelector(cardsSelectors.packUserId)
   const packPrivate = useAppSelector(cardsSelectors.packPrivate)
   const dispatch = useAppDispatch()
   const [activeMenu, setActiveMenu] = useState(false)
   const [open, setOpen] = useState('false')
-  const [error, setError] = useState(false)
   const randomID = crypto.randomUUID()
   //TODO
   const menuActiveHandler = () => {
@@ -38,7 +35,7 @@ export const CardMenu = () => {
       dispatch(setPackNameAC(packName))
     }
     if (value === 'Learn') {
-      dispatch(setCardsPackIdAC(packUserId || ''))
+      dispatch(setCardsPackIdAC(packUserId))
 
       return <Navigate to={PATH.LEARN} replace />
     }
@@ -46,13 +43,14 @@ export const CardMenu = () => {
 
   const active = (
     <div className={s.profileInfoStyle}>
+      <div className={s.menuClosing} />
       <SuperCard cardStyle={s.menuContainer} menuData={menuDataInfo} menuCardHandler={handleOpen} maxHeight={'120px'} />
       <div className={s.arrowUp} />
     </div>
   )
 
   return (
-    <div className={s.menu}>
+    <div className={s.menu} onClick={menuActiveHandler}>
       <input type="text" style={{ position: 'absolute', marginLeft: '-900px' }} id={randomID} />
       <label className={s.labelStyle} htmlFor="" onClick={menuActiveHandler} id={randomID}>
         <MoreVertIcon className={s.packInfo} id={randomID} />
