@@ -1,74 +1,94 @@
 .modalWrapper {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  flex-direction: column;
+
   width: 100%;
 }
 
 .modalInputWrapper {
   position: relative;
-  width: 100%;
   top: -10px;
+
+  width: 100%;
 }
 
 .modalInput {
   position: relative;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   width: 100%;
   padding-bottom: 10px;
-  background: none;
+
   font-size: 1.2rem;
+
+  background: none;
   border: none;
   border-bottom: 2px solid #b8b8b8;
 }
 
 .modalInput:focus {
   position: relative;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   width: 100%;
   padding-bottom: 10px;
-  background: none;
+
   font-size: 1.2rem;
+
+  background: none;
   border: none !important;
   border-bottom: 2px solid #b8b8b8 !important;
 }
 
 .selectLabel {
-  color: #b7b7b7;
-  display: flex;
-  justify-content: flex-start;
-  align-items: cenetr;
   position: relative;
-  width: 85%;
   top: 10px;
-  font-size: 0.8rem;
-}
-.selectQuestion {
-  color: #b7b7b7;
+
   display: flex;
-  justify-content: flex-start;
   align-items: cenetr;
-  position: relative;
+  justify-content: flex-start;
+
   width: 85%;
-  top: 20px;
+
   font-size: 0.8rem;
+  color: #b7b7b7;
+}
+
+.selectQuestion {
+  position: relative;
+  top: 20px;
+
+  display: flex;
+  align-items: cenetr;
+  justify-content: flex-start;
+
+  width: 85%;
+
+  font-size: 0.8rem;
+  color: #b7b7b7;
 }
 
 .selectStyle {
   position: relative;
   top: 15px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 100% !important;
-  background: none;
-  padding: 10px !important;
   height: 40px !important;
+  padding: 10px !important;
+
+  background: none;
   border: 1px solid #cccbcb !important;
 }
 
@@ -77,23 +97,27 @@ select {
   -webkit-appearance: none;
   appearance: none;
 }
+
 select :focus {
+  border: 1px solid #cccbcb !important;
+
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  border: 1px solid #cccbcb !important;
 }
 
 .selectStyle:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 100%;
-  background: none;
-  border-radius: none;
   /* padding: 15px; */
   height: 40px;
+
+  background: none;
   border: 1px solid #cccbcb !important;
+  border-radius: none;
 }
 
 .modalCheckboxContainer {
@@ -102,7 +126,7 @@ select :focus {
 
 .selectArrow {
   position: relative;
+  z-index: -1;
   top: -17px;
   left: 90%;
-  z-index: -1;
 }
