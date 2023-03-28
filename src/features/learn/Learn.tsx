@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { Paper } from '@mui/material'
 import { NavLink } from 'react-router-dom'
@@ -18,14 +18,13 @@ import { useAppDispatch, useAppSelector } from 'store/store'
 export const Learn = () => {
   const cards = useAppSelector(cardsSelectors.cards)
   const packName = useAppSelector(cardsSelectors.packName)
+  const cardsLength = useAppSelector(cardsSelectors.cardsLength)
   const isShowAnswer = useAppSelector(learnSelectors.isShowAnswer)
   const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
-  const [first, setFirst] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(GetCardsTC())
-    setFirst(false)
     if (cards.length > 0) {
       dispatch(setCurrentCardAC(randomCard(cards)))
     }
@@ -41,7 +40,7 @@ export const Learn = () => {
       </NavLink>
       <div className={s.learnContainer}>
         <span className={s.title}> {'Learn ' + `"${packName}"`}</span>
-        {cards.length > 0 ? (
+        {cardsLength > 0 ? (
           <Paper>
             <Question />
             {isShowAnswer && <Answer />}
