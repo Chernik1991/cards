@@ -15,6 +15,7 @@
   background-color: #fff;
   border-top: 1.5px solid #e1e1e1;
   border-left: 1.5px solid #e1e1e1;
+  z-index: 4;
 }
 
 .labelStyle {
@@ -29,7 +30,7 @@
   width: 125px;
   border: 1.5px solid #e1e1e1;
   border-radius: 0px;
-  z-index: 10;
+  z-index: 3;
 }
 
 .packInfo {
@@ -41,4 +42,16 @@
 }
 .profileInfoStyle {
   width: 100%;
+}
+
+.menuClosing {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: -370px;
+  top: -200px;
+  padding: 0px;
+  margin: 0px;
+  z-index: 1;
+  border: 1px solid red;
 }

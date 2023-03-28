@@ -14,14 +14,12 @@ import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const CardMenu = () => {
-  const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
   const packName = useAppSelector(cardsSelectors.packName)
   const packUserId = useAppSelector(cardsSelectors.packUserId)
   const packPrivate = useAppSelector(cardsSelectors.packPrivate)
   const dispatch = useAppDispatch()
   const [activeMenu, setActiveMenu] = useState(false)
   const [open, setOpen] = useState('false')
-  const [error, setError] = useState(false)
   const randomID = crypto.randomUUID()
   //TODO
   const menuActiveHandler = () => {
@@ -46,13 +44,14 @@ export const CardMenu = () => {
 
   const active = (
     <div className={s.profileInfoStyle}>
+      <div className={s.menuClosing} />
       <SuperCard cardStyle={s.menuContainer} menuData={menuDataInfo} menuCardHandler={handleOpen} maxHeight={'120px'} />
       <div className={s.arrowUp} />
     </div>
   )
 
   return (
-    <div className={s.menu}>
+    <div className={s.menu} onClick={menuActiveHandler}>
       <input type="text" style={{ position: 'absolute', marginLeft: '-900px' }} id={randomID} />
       <label className={s.labelStyle} htmlFor="" onClick={menuActiveHandler} id={randomID}>
         <MoreVertIcon className={s.packInfo} id={randomID} />

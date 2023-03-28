@@ -191,9 +191,9 @@ a:visited {
 }
 
 .newPackButton {
-  border-radius: 24px;
+  border-radius: 24px !important;
   display: flex;
-  background-color: #366eff;
+  background-color: #366eff !important;
   justify-content: center;
   align-items: center;
   height: 40px;
@@ -208,7 +208,7 @@ a:visited {
 .newPackButton:hover {
   transform: translateY(-1px);
   transition: 0.25s ease-in;
-  background-color: #2857ce;
+  background-color: #2857ce !important;
 }
 
 .inputLabelStyle.activeEditmode {
