@@ -30,7 +30,6 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 export const Login = () => {
-  // console.log('Login')
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const formik = useFormik({

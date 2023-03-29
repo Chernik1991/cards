@@ -52,7 +52,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
 export const logoutTC = (): AppThunkType => async dispatch => {
   dispatch(setAppStatusAC('loading'))
   try {
-    const res = await authAPI.logOut()
+    await authAPI.logOut()
 
     dispatch(setIsLoggedInAC(false))
     dispatch(setAppStatusAC('succeeded'))

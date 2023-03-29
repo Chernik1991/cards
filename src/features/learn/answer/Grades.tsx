@@ -19,7 +19,6 @@ export const Grades = () => {
 
   const onChangeGrade = (index: number) => {
     dispatch(setGradeAC(index + 1))
-    console.log(index, 'index11111111111111111')
   }
 
   return (

@@ -55,12 +55,11 @@ const headCells: HeadCell[] = [
   },
 ]
 
-type PacksTableType = {
+type Props = {
   modalHandler: (value: string) => void
 }
 
-export const PacksTable = (props: PacksTableType) => {
-  // console.log('PacksTable')
+export const PacksTable = (props: Props) => {
   const cardPacks = useAppSelector(packsSelectors.cardPacks)
   const userID = useAppSelector(_id)
   const dispatch = useAppDispatch()

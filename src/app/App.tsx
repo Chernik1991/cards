@@ -9,7 +9,6 @@ import { Pages } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const App = () => {
-  // console.log('App')
   const isInitialized = useAppSelector(appSelectors.appIsInitialized)
   const dispatch = useAppDispatch()
 

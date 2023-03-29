@@ -8,7 +8,7 @@ import { AppThunkType } from 'store/store'
 
 const initialState: learnStateType = {
   isShowAnswer: false,
-  grade: 5,
+  grade: 1,
   currentCard: {} as CardsType,
 }
 

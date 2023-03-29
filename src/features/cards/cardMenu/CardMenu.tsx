@@ -20,7 +20,6 @@ export const CardMenu = () => {
   const [activeMenu, setActiveMenu] = useState(false)
   const [open, setOpen] = useState('false')
   const randomID = crypto.randomUUID()
-  //TODO
   const menuActiveHandler = () => {
     setActiveMenu(!activeMenu)
   }

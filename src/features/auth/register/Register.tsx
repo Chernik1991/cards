@@ -31,7 +31,6 @@ type FormikErrorType = {
 }
 
 export const Register = () => {
-  // console.log('Register')
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const isRegister = useAppSelector(authSelectors.isRegister)

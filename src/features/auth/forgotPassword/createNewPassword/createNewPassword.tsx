@@ -25,7 +25,6 @@ type FormikErrorType = {
   resetPasswordToken?: string
 }
 export const CreateNewPassword = () => {
-  // console.log('CreateNewPassword')
   const { token } = useParams<{ token: string }>()
   const isSetNewPassword = useAppSelector(authSelectors.isSetNewPassword)
   const dispatch = useAppDispatch()

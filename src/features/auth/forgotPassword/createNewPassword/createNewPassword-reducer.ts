@@ -26,7 +26,7 @@ export const setNewPasswordTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await authAPI.setNewPassword(data)
+      await authAPI.setNewPassword(data)
 
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setIsSetNewPasswordAC(true))

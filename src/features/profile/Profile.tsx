@@ -15,7 +15,6 @@ import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Profile = () => {
-  // console.log('Profile')
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const currentName = useAppSelector(profileSelectors.currentName)
@@ -26,14 +25,11 @@ export const Profile = () => {
 
   // const userPhoto = userProfileData.avatar ? userProfileData.avatar : ''
   if (!userId) {
-    console.log('!userId')
     useEffect(() => {
       dispatch(initializeAppTC())
     }, [])
   }
   if (!isLoggedIn) {
-    console.log('Profile !isLoggedIn')
-
     return <Navigate to={PATH.LOGIN} replace />
   }
   const logOutHandler = () => {

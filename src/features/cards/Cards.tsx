@@ -20,7 +20,6 @@ import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Cards = () => {
-  // console.log('Cards')
   const dispatch = useAppDispatch()
   const page = useAppSelector(cardsSelectors.page)
   const pageCount = useAppSelector(cardsSelectors.pageCount)
@@ -66,7 +65,6 @@ export const Cards = () => {
   const onChangePageHandler = (page: number, pageCount: number) => {
     dispatch(pageCardsAC(page))
     dispatch(pageCountCardsAC(pageCount))
-    console.log(page, pageCount, 'page, pageCount')
   }
   const cardsListHandler = () => {
     dispatch(clearCardDataAC())

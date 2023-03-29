@@ -51,7 +51,7 @@ export const updateUserDataTC =
   (name: string, avatar?: string): AppThunkType =>
   async dispatch => {
     try {
-      const res = await authAPI.updateUser({ name, avatar })
+      await authAPI.updateUser({ name, avatar })
 
       dispatch(setAppStatusAC('loading'))
 

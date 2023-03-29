@@ -14,7 +14,6 @@ import * as packsSelectors from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
-  console.log('SearchPackPanel')
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
@@ -63,6 +62,7 @@ export const SearchPackPanel = () => {
           defaultMax={defaultMax}
           defaultMin={defaultMin}
           onChangeValues={onChangeValuesHandler}
+          disabled={status === 'loading'}
         />
       </Box>
       <Box

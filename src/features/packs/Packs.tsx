@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
+import * as appSelectors from 'app/selectorApp'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
 import * as authSelectors from 'features/auth/selectorAuth'
@@ -39,12 +40,15 @@ export const Packs = () => {
   const isNotEmptyPack = !!cardPacks.length
   const paginationLabel = 'Packs per Page'
   const badResponse = 'No data available. Change your search options'
+  const status = useAppSelector(appSelectors.status)
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
   }
   useEffect(() => {
-    dispatch(getPacksTC())
+    if (status !== 'loading') {
+      dispatch(getPacksTC())
+    }
     let param = {}
 
     if (page !== 1) {

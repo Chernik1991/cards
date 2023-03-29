@@ -23,6 +23,8 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
     case 'PACKS/GET': {
       return { ...state, ...action.payload.data, filterOff: false }
     }
+    case 'CLEAR-DATA':
+      return { ...state, cardPacks: [] }
     case 'PACKS/IS-MY-PACKS': {
       return { ...state, isMyPacks: action.payload.isMyPacks }
     }
@@ -65,6 +67,7 @@ export const isMyPacksAC = (isMyPacks: boolean) => ({ type: 'PACKS/IS-MY-PACKS',
 export const searchPacksAC = (search: string) => ({ type: 'PACKS/SEARCH', payload: { search } } as const)
 export const sortPacksAC = (sort: string) => ({ type: 'PACKS/SORT', payload: { sort } } as const)
 export const pagePacksAC = (page: number) => ({ type: 'PACKS/PAGE', payload: { page } } as const)
+export const clearPacksDataAC = () => ({ type: 'CLEAR-DATA' } as const)
 export const pageCountPacksAC = (pageCount: number) =>
   ({
     type: 'PACKS/PAGE-COUNT',
@@ -104,6 +107,7 @@ type ActionsType =
   | maxCardsCountPacksType
   | minCardsCountPacksType
   | filterAllOffPacksType
+  | clearPacksDataType
 
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
 export type setMyPacksType = ReturnType<typeof isMyPacksAC>
@@ -114,6 +118,7 @@ export type pageCountPacksType = ReturnType<typeof pageCountPacksAC>
 export type maxCardsCountPacksType = ReturnType<typeof maxAC>
 export type minCardsCountPacksType = ReturnType<typeof minAC>
 export type filterAllOffPacksType = ReturnType<typeof filterAllOffPacksAC>
+export type clearPacksDataType = ReturnType<typeof clearPacksDataAC>
 
 export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
   dispatch(setAppStatusAC('loading'))
@@ -153,7 +158,7 @@ export const addPackTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await packsAPI.setPack(data)
+      await packsAPI.setPack(data)
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
@@ -168,7 +173,7 @@ export const updatePackTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await packsAPI.updatePack(data)
+      await packsAPI.updatePack(data)
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
@@ -182,10 +187,11 @@ export const deletePackTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await packsAPI.deletePack(data)
+      await packsAPI.deletePack(data)
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
+      //TODO разобраться с catch
     } catch (e: any) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))

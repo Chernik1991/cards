@@ -9,7 +9,6 @@ import * as packsSelectors from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SortPacksMyAll = () => {
-  // console.log('SortPacksMyAll')
   const dispatch = useAppDispatch()
   const isMyPacks = useAppSelector(packsSelectors.isMyPacks)
   const [alignment, setAlignment] = useState('all')

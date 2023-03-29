@@ -12,10 +12,10 @@ type InputSliderPropsType = {
   defaultMin: number
   maxValue: number
   onChangeValues: (value: number[]) => void
-  disabled?: boolean
+  disabled: boolean
 }
 export const PacksSlider = memo(
-  ({ minValue, maxValue, onChangeValues, defaultMax, defaultMin }: InputSliderPropsType) => {
+  ({ minValue, maxValue, onChangeValues, defaultMax, defaultMin, disabled }: InputSliderPropsType) => {
     useEffect(() => {
       setValue([minValue, maxValue])
     }, [minValue, maxValue])
@@ -60,6 +60,7 @@ export const PacksSlider = memo(
             className={`${s.input} ${s.value1}`}
           />
           <Slider
+            disabled={disabled}
             value={value}
             max={defaultMax}
             min={defaultMin}

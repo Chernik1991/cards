@@ -64,7 +64,6 @@ type Props = {
   modalHandler: (value: string) => void
 }
 export const CardsTable = (props: Props) => {
-  // console.log('CardsTable')
   const dispatch = useAppDispatch()
   const cards = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
   const userId = useAppSelector(profileSelectors._id)

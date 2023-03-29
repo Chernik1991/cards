@@ -31,9 +31,7 @@ export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type SetAppIsInitializedActionType = ReturnType<typeof setAppIsInitializedAC>
 type ActionsType = SetAppStatusActionType | SetAppErrorActionType | SetAppIsInitializedActionType
 export type InitialStateType = {
-  // происходит ли сейчас взаимодействие с сервером
   status: RequestStatusType
-  // если ошибка какая-то глобальная произойдёт — мы запишем текст ошибки сюда
   error: string | null
   isInitialized: boolean
 }
