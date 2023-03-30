@@ -6,13 +6,13 @@ import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
+import { sxForgotPassword } from 'common/constans/constans'
 import { setForgotTC } from 'features/auth/forgotPassword/forgotPassword/forgotPassword-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
@@ -29,7 +29,6 @@ export const ForgotPassword = () => {
   //TODO
   //поменять письмо на почту
 
-  // console.log('ForgotPassword')
   const dispatch = useAppDispatch()
   const forgotPassword = useAppSelector(authSelectors.forgotPassword)
   const formik = useFormik({
@@ -66,14 +65,7 @@ link</a>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <Box sx={sxForgotPassword}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 80, height: 80, textAlign: 'center' }}>
             Friday cards
           </Avatar>
@@ -116,9 +108,9 @@ link</a>
             </Grid>
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>
-                <Link href={PATH.HASH + PATH.LOGIN} variant="body2">
+                <NavLink to={PATH.LOGIN} replace>
                   {'Try logging in'}
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

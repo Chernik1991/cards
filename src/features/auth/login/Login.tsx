@@ -10,12 +10,11 @@ import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { loginTC } from 'features/auth/login/auth-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
@@ -149,9 +148,9 @@ export const Login = () => {
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Link href={PATH.HASH + PATH.FORGOT_YOUR_PASSWORD} variant="body2">
+                <NavLink to={PATH.FORGOT_YOUR_PASSWORD} replace>
                   Forgot password?
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
@@ -162,9 +161,9 @@ export const Login = () => {
             </Grid>
             <Grid container flexDirection={'column'} alignItems={'center'}>
               <Grid item>
-                <Link href={PATH.HASH + PATH.REGISTER} variant="body2">
+                <NavLink to={PATH.REGISTER} replace>
                   {'Sign Up'}
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

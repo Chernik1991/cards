@@ -2,7 +2,7 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
+import { pageCountCardsAC, setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
 import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
 import { pagePacksAC } from 'features/packs/packsReducer'
 import { PATH } from 'routes/pages'
@@ -35,6 +35,7 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
 
   const handleStudying = () => {
     dispatch(setCardsPackIdAC(row.id))
+    dispatch(pageCountCardsAC(row.cardsCount))
 
     return <Navigate to={PATH.LEARN} replace />
   }

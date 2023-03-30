@@ -4,8 +4,20 @@ import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink, useSearchParams } from 'react-router-dom'
 
+import * as appSelectors from 'app/selectorApp'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
+import { BackToPacksButton } from 'common/constans/BackToPacksButton'
+import {
+  badResponse,
+  NoCards,
+  paginationLabel,
+  sxCardsBpxButton,
+  sxCardsCardsTable,
+  sxCardsPagination,
+  sxCardsResponse,
+  sxCardsSearchPanel,
+} from 'common/constans/constans'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { CardMenu } from 'features/cards/cardMenu/CardMenu'
 import { CardsType } from 'features/cards/cards-api'
@@ -32,18 +44,19 @@ export const Cards = () => {
   const packUserId = useAppSelector(cardsSelectors.packUserId)
   const my_id = useAppSelector(profileSelectors._id)
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
-  const paginationLabel = 'Cards per Page'
-  const badResponse = 'No data available. Change your search options'
   const isNotEmptyCard = !!rows.length
   const [open, setOpen] = useState('false')
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
+  const status = useAppSelector(appSelectors.status)
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
   }
   useEffect(() => {
-    dispatch(GetCardsTC())
+    if (status !== 'loading') {
+      dispatch(GetCardsTC())
+    }
     let param = {}
 
     if (page !== 1) {
@@ -75,31 +88,16 @@ export const Cards = () => {
   const learnHandler = () => {
     dispatch(pageCountCardsAC(totalCount))
   }
-  const NoCards = `This pack is empty. Click add new card to fill this pack `
 
   return (
     <>
       <div className={s.packsContainer}>
         <Box sx={{ m: 1, width: '50ch', marginLeft: 17 }}>
           <NavLink className={s.backContainer} to={PATH.PACKS} onClick={cardsListHandler}>
-            <svg className={s.backArrow} viewBox="0 0 512 512">
-              <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z" />
-            </svg>
-            <span> Back to Packs List</span>
+            <BackToPacksButton />
           </NavLink>
         </Box>
-        <Box
-          sx={{
-            gridArea: 'left',
-            width: '80%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingTop: 4,
-            marginLeft: 18,
-            marginRight: 10,
-          }}
-        >
+        <Box sx={sxCardsBpxButton}>
           <div className={s.PackNameContainer}>
             <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>{packName}</span>
             {my_id === packUserId ? <CardMenu /> : ''}
@@ -116,61 +114,17 @@ export const Cards = () => {
             </NavLink>
           )}
         </Box>
-        <Box
-          sx={{
-            gridArea: 'left',
-            width: '80%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingTop: 2,
-            marginLeft: 18,
-            marginRight: 10,
-          }}
-        >
+        <Box sx={sxCardsSearchPanel}>
           <SearchCardPanel />
         </Box>
-        <Box
-          sx={{
-            gridArea: 'left',
-            width: '84%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingTop: 4,
-            marginLeft: 14,
-            marginRight: 10,
-          }}
-        >
+        <Box sx={sxCardsCardsTable}>
           {isNotEmptyCard ? (
             <CardsTable modalHandler={modalOpenHandler} />
           ) : (
-            <Box
-              sx={{
-                gridArea: 'center',
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingLeft: 50,
-                paddingTop: 25,
-              }}
-            >
-              {my_id === packUserId ? <div>{NoCards}</div> : <div>{badResponse}</div>}
-            </Box>
+            <Box sx={sxCardsResponse}>{my_id === packUserId ? <div>{NoCards}</div> : <div>{badResponse}</div>}</Box>
           )}
         </Box>
-        <Box
-          sx={{
-            gridArea: 'left',
-            width: '84%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 14,
-            marginRight: 10,
-          }}
-        >
+        <Box sx={sxCardsPagination}>
           {isNotEmptyCard ? (
             <PaginationComponent
               totalCount={totalCount}

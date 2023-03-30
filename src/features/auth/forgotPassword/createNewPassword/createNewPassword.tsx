@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
 import { Navigate, useParams } from 'react-router-dom'
 
+import { sxForgotPassword } from 'common/constans/constans'
 import { setNewPasswordTC } from 'features/auth/forgotPassword/createNewPassword/createNewPassword-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
@@ -65,14 +66,7 @@ export const CreateNewPassword = () => {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <Box sx={sxForgotPassword}>
           <Typography component="h1" variant="h5" fontWeight={'bold'}>
             Create new password
           </Typography>

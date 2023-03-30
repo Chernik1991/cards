@@ -2,6 +2,7 @@ a {
   color: black;
   text-decoration: none;
 }
+
 a:visited {
   color: black;
   text-decoration: none;
@@ -23,7 +24,7 @@ a:visited {
   align-items: center;
   justify-content: center;
 
-  width: 40%;
+  width: 100%;
 
   font-size: 0.9rem;
   text-shadow: 5px 5px 5px #aaa;
@@ -53,6 +54,7 @@ a:visited {
 
   transition: all 0.5s ease 0s;
 }
+
 .backArrow {
   width: 30px;
   padding: 15px 15px 15px 0;
@@ -115,7 +117,7 @@ a:visited {
 }
 
 .userEmail {
-  padding: 30px 0px;
+  padding: 30px 0;
 
   color: #b7b7b7;
 }
@@ -146,6 +148,7 @@ a:visited {
 
   transition: all 0.5s ease 0s;
 }
+
 .logOut:hover {
   transform: scale(1.02);
 
@@ -153,6 +156,7 @@ a:visited {
 
   transition: all 0.5s ease 0s;
 }
+
 .logOutIcon {
   width: 25px;
   padding: 0 10px 0 0;
@@ -230,10 +234,7 @@ a:visited {
 }
 
 .newPackButton {
-
   display: flex;
-
-
   align-items: center;
   justify-content: center;
 
@@ -260,6 +261,7 @@ a:visited {
 .inputLabelStyle.activeEditmode {
   opacity: 1;
 }
+
 .saveButton.activeEditmode {
   opacity: 1;
 }
@@ -285,9 +287,11 @@ a:visited {
 
     font-size: 0.8rem;
   }
+
   .userPhotoContainer {
     padding: 10px 0;
   }
+
   .defaultInfo {
     font-size: 1.2rem;
     font-weight: 500;
@@ -299,19 +303,23 @@ a:visited {
     font-size: 1rem;
     font-weight: 500;
   }
+
   .userEmail {
-    padding: 10px 0px;
+    padding: 10px 0;
 
     font-size: 0.8rem;
   }
+
   .userNickName {
     width: 100%;
 
     font-size: 1rem;
   }
+
   .logOut {
     font-size: 0.8rem;
   }
+
   .saveButton {
     top: 15px;
     transform: scale(0.7);

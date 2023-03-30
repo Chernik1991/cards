@@ -7,6 +7,7 @@ import { Navigate, useSearchParams } from 'react-router-dom'
 import * as appSelectors from 'app/selectorApp'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import { PaginationComponent } from 'common/components/pagination/PaginationComponent'
+import { sxPacksBoxButton, sxPacksBoxResponse } from 'common/constans/constans'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { Modals } from 'features/modals/Modals'
 import { SearchPackPanel } from 'features/packs/components/sortPacksMyAll/SearchPackPanel'
@@ -19,7 +20,6 @@ import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const Packs = () => {
-  // console.log('Packs')
   const dispatch = useAppDispatch()
   const cardPacks = useAppSelector(packsSelectors.cardPacks)
   const page = useAppSelector(packsSelectors.page)
@@ -86,16 +86,7 @@ export const Packs = () => {
   return (
     <div className={e.packsContainer}>
       <div className={e.packsBoxContainer}>
-        <Box
-          sx={{
-            gridArea: 'center',
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingTop: 4,
-          }}
-        >
+        <Box sx={sxPacksBoxButton}>
           <h2>Packs list</h2>
           <SuperButton className={e.newPackButton} onClick={() => modalOpenHandler('add-pack')}>
             Add new pack
@@ -105,17 +96,7 @@ export const Packs = () => {
         {isNotEmptyPack ? (
           <PacksTable modalHandler={modalOpenHandler} />
         ) : (
-          <Box
-            sx={{
-              gridArea: 'center',
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              paddingLeft: 50,
-              paddingTop: 25,
-            }}
-          >
+          <Box sx={sxPacksBoxResponse}>
             <div>{badResponse}</div>
           </Box>
         )}

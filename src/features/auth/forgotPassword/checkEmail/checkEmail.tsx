@@ -7,8 +7,10 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Grid from '@mui/material/Grid'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import { NavLink } from 'react-router-dom'
 
 import checkEmail from 'assets/img/icons/checkEmail.svg'
+import { sxCheckEmail } from 'common/constans/constans'
 import * as authSelectors from 'features/auth/selectorAuth'
 import s from 'header/HeaderStyles.module.css'
 import { PATH } from 'routes/pages'
@@ -23,14 +25,7 @@ export const CheckEmail = () => {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <Box sx={sxCheckEmail}>
           <Typography component="h1" variant="h5" fontWeight={'bold'} padding={'29px'}>
             Check Email
           </Typography>
@@ -40,9 +35,9 @@ export const CheckEmail = () => {
               <Grid item>{`We’ve sent an Email with instructions to ${email}`}</Grid>
             </Grid>
             <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2, borderRadius: '20px' }}>
-              <a className={s.headerA} href={PATH.HASH + PATH.LOGIN}>
+              <NavLink className={s.headerA} to={PATH.LOGIN}>
                 Back to login
-              </a>
+              </NavLink>
             </Button>
           </Box>
         </Box>

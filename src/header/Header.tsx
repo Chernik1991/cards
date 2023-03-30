@@ -8,6 +8,7 @@ import { menuHeaderDataInfo } from './headerData'
 import itINC from 'assets/img/icons/itINC.svg'
 import defaultPic from 'assets/img/profile/Alex.jpg'
 import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
+import { sxHeader } from 'common/constans/constans'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 import { logoutTC } from 'features/auth/login/auth-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
@@ -67,18 +68,7 @@ export const Header = () => {
           userJSX
         ) : (
           <NavLink to={PATH.LOGIN} replace>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: '20px',
-                minWidth: '115px',
-                fontSize: '16px',
-                lineHeight: '20px',
-                fontFamily: 'Montserrat, sans-serif',
-                fontStyle: 'Medium',
-                textTransform: 'none',
-              }}
-            >
+            <Button variant="contained" sx={sxHeader}>
               Sign In
             </Button>
           </NavLink>

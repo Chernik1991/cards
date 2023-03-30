@@ -14,11 +14,17 @@ import {
 } from '@mui/material'
 import Input from '@mui/material/Input'
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { registerTC } from './register-reducer'
 import s from './RegisterStyle.module.css'
 
+import {
+  sxRegisterBox,
+  sxRegisterBoxSignIn,
+  sxRegisterButtonSingUp,
+  sxRegisterFormLabel,
+} from 'common/constans/constans'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { PATH } from 'routes/pages'
@@ -81,25 +87,17 @@ export const Register = () => {
   })
 
   if (isRegister) {
-    return <Navigate to={PATH.LOGIN} />
+    return <Navigate to={PATH.LOGIN} replace />
   }
   if (isLoggedIn) {
-    return <Navigate to={PATH.PROFILE} />
+    return <Navigate to={PATH.PROFILE} replace />
   }
 
   return (
     <div>
       <Grid className={s.RegContainer} container justifyContent={'center'}>
         <Grid className={s.RegFormBox} item justifyContent={'center'}>
-          <FormLabel
-            sx={{
-              textAlign: 'center',
-              fontSize: '26px',
-              color: '#000000',
-              fontWeight: '600',
-              fontFamily: 'SemiBold',
-            }}
-          >
+          <FormLabel sx={sxRegisterFormLabel}>
             <div>Sign up</div>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
@@ -161,46 +159,16 @@ export const Register = () => {
                 <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
               ) : null}
 
-              <Button
-                type={'submit'}
-                variant={'contained'}
-                sx={{
-                  borderRadius: '20px',
-                  fontSize: '16px',
-                  lineHeight: '20px',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontStyle: 'Medium',
-                  textTransform: 'none',
-                  marginTop: '50px',
-                }}
-              >
+              <Button type={'submit'} variant={'contained'} sx={sxRegisterButtonSingUp}>
                 Sign up
               </Button>
-              <Box
-                sx={{
-                  textAlign: 'center',
-                  fontSize: '14px',
-                  fontStyle: 'SemiBold',
-                  fontWeight: '600',
-                  marginTop: '30px',
-                  lineHeight: '24px',
-                  opacity: '50%',
-                }}
-              >
+              <Box sx={sxRegisterBox}>
                 <div>Already have an account?</div>
               </Box>
-              <Box
-                sx={{
-                  textAlign: 'center',
-                  fontSize: '16px',
-                  fontStyle: 'SemiBold',
-                  fontWeight: '600',
-                  marginTop: '10px',
-                  lineHeight: '24px',
-                  color: '#366EFF',
-                }}
-              >
-                <a href={PATH.HASH + PATH.LOGIN}>Sign In</a>
+              <Box sx={sxRegisterBoxSignIn}>
+                <NavLink to={PATH.LOGIN} replace>
+                  Sign In
+                </NavLink>
               </Box>
             </FormGroup>
           </form>
