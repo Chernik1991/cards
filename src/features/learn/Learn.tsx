@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Paper } from '@mui/material'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { BackToPacksButton } from 'common/constans/BackToPacksButton'
+import { BackToCardsButton } from 'common/constans/BackToCardsButton'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { GetCardsTC } from 'features/cards/cards-reducer'
 import * as cardsSelectors from 'features/cards/selectorCard'
@@ -49,8 +49,8 @@ export const Learn = () => {
 
   return (
     <div>
-      <NavLink className={y.backContainer} to={PATH.PACKS} onClick={packsListHandler}>
-        <BackToPacksButton />
+      <NavLink className={y.backContainer} to={PATH.CARD} onClick={packsListHandler}>
+        <BackToCardsButton />
       </NavLink>
       <div className={s.learnContainer}>
         <span className={s.title}> {'Learn ' + `"${packName}"`}</span>

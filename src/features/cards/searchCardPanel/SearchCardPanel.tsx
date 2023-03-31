@@ -10,8 +10,7 @@ import * as cardsSelectors from 'features/cards/selectorCard'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchCardPanel = () => {
-  console.log('SearchCardPanel')
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const dispatch = useAppDispatch()
   const status = useAppSelector(appSelectors.status)

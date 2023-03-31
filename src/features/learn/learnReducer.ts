@@ -21,15 +21,17 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
   try {
     const res = await learnApi.setGradeCard({ card_id, grade: grade })
 
+    console.log(res)
     dispatch(
       setCardLearnAC(
         cards.map(el =>
-          el._id === res.data.updatedGrade._id
+          el._id === res.data.updatedGrade.card_id
             ? { ...el, grade: res.data.updatedGrade.grade, shots: res.data.updatedGrade.shots }
             : el
         )
       )
     )
+    console.log(cards, 'cards')
     dispatch(setShowAnswerAC(false))
     dispatch(setAppStatusAC('succeeded'))
   } catch (e: any) {
@@ -62,7 +64,7 @@ export const setCurrentCardAC = (currentCard: CardsType) => ({ type: 'SET-CURREN
 export type learnStateType = {
   isShowAnswer: boolean
   grade: number
-  currentCard: any
+  currentCard: CardsType
 }
 
 type ActionsType = setShowAnswerType | setGradeType | setCurrentCardType

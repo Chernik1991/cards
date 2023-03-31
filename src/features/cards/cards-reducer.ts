@@ -41,7 +41,7 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
     case 'CARDS/SET-PACK-NAME':
       return { ...state, packName: action.payload.data }
     case 'CARDS/SET-CARDS-DATA-LEARN':
-      return { ...state, ...action.payload.data }
+      return { ...state, cards: action.payload.data }
     case 'CLEAR-DATA':
       return { ...state, cards: [] }
     case 'CARDS/SET-CARDS-PACK-ID':
@@ -201,9 +201,7 @@ export const CreateCardsTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      console.log(data)
-
-      const res = await cardsAPI.setCards(data)
+      await cardsAPI.setCards(data)
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))
@@ -217,7 +215,7 @@ export const DeleteCardsTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.delCards(data.id)
+      await cardsAPI.delCards(data.id)
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))
@@ -231,7 +229,7 @@ export const UpdateCardsTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.updateCards(data)
+      await cardsAPI.updateCards(data)
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))
