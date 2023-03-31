@@ -42,7 +42,7 @@ const headCells: HeadCell[] = [
     label: 'Last Updated',
   },
   {
-    id: 'created_by',
+    id: 'created',
     numeric: true,
     disablePadding: false,
     label: 'Created by',
@@ -63,7 +63,7 @@ export const PacksTable = (props: Props) => {
   const cardPacks = useAppSelector(packsSelectors.cardPacks)
   const userID = useAppSelector(_id)
   const dispatch = useAppDispatch()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const sort = useAppSelector(packsSelectors.sort)
   const rows = cardPacks.map((el: CardPacksType) => ({

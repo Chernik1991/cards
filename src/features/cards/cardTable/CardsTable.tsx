@@ -12,11 +12,21 @@ import TableRow from '@mui/material/TableRow'
 import { useSearchParams } from 'react-router-dom'
 
 import { CardsType } from 'features/cards/cards-api'
-import { cardAnswerAC, cardQuestionAC, setCardIdAC, setCardsPackIdAC, sortCardsAC } from 'features/cards/cards-reducer'
+import {
+  cardAnswerAC,
+  cardAnswerImgAC,
+  cardQuestionAC,
+  cardQuestionImgAC,
+  setCardIdAC,
+  setCardsPackIdAC,
+  sortCardsAC,
+} from 'features/cards/cards-reducer'
 import { CardActions } from 'features/cards/cardTable/CardActions'
 import * as cardsSelectors from 'features/cards/selectorCard'
+import o from 'features/modals/EditCard/EditCardModal.module.css'
 import { TableHeadComponent } from 'features/packs/components/table/tableHead/TableHeadComponent'
 import { sortPacksAC } from 'features/packs/packsReducer'
+import y from 'features/profile/Profile.module.css'
 import * as profileSelectors from 'features/profile/selectorProfile'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
@@ -68,7 +78,7 @@ export const CardsTable = (props: Props) => {
   const cards = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
   const userId = useAppSelector(profileSelectors._id)
   const sort = useAppSelector(cardsSelectors.sortCards)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const rows = cards.map((el: CardsType) => ({
     card_id: el._id,
@@ -79,6 +89,8 @@ export const CardsTable = (props: Props) => {
     grade: el.grade,
     shots: el.shots,
     created: el.created,
+    questionImg: el.questionImg,
+    answerImg: el.answerImg,
     last_updated: new Date(el.updated).toLocaleString(),
   }))
   const [orderBy, setOrderBy] = useState(sort)
@@ -120,26 +132,30 @@ export const CardsTable = (props: Props) => {
                   dispatch(cardAnswerAC(row.answer))
                   dispatch(setCardIdAC(row.card_id))
                   dispatch(setCardsPackIdAC(row.cardsPack_id))
+                  dispatch(cardQuestionImgAC(row.questionImg))
+                  dispatch(cardAnswerImgAC(row.answerImg))
                   props.modalHandler('edit-card')
                 }
 
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={crypto.randomUUID()}>
-                    <TableCell
-                      style={{ minWidth: '200px', cursor: 'pointer' }}
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      onClick={handleUpdateCardName}
-                    >
-                      {row.question}
+                    <TableCell style={{ minWidth: '200px', cursor: 'pointer' }} component="th" id={labelId} scope="row">
+                      {row.questionImg ? (
+                        <div className={o.selectQuestionCover}>
+                          <img src={row.questionImg} className={y.userPhoto} alt="ava" />
+                        </div>
+                      ) : (
+                        row.question
+                      )}
                     </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ minWidth: '200px', cursor: 'pointer' }}
-                      onClick={handleUpdateCardName}
-                    >
-                      {row.answer}
+                    <TableCell align="left" style={{ minWidth: '200px', cursor: 'pointer' }}>
+                      {row.answerImg ? (
+                        <div className={o.selectQuestionCover}>
+                          <img src={row.answerImg} className={y.userPhoto} alt="ava" />
+                        </div>
+                      ) : (
+                        row.answer
+                      )}
                     </TableCell>
                     <TableCell align="left">{row.last_updated}</TableCell>
                     <TableCell align="left">

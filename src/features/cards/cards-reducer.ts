@@ -32,6 +32,8 @@ const initialState: ResponseGetCardsType = {
   sortCards: '0updated',
   card_id: '',
   search: '',
+  cardQuestionImg: 'No Image',
+  cardAnswerImg: 'No Image',
 }
 
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
@@ -77,6 +79,16 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
       return {
         ...state,
         card_id: action.payload.card_id,
+      }
+    case 'CARDS/CARD-QUESTION-IMG':
+      return {
+        ...state,
+        cardQuestionImg: action.payload.questionImg,
+      }
+    case 'CARDS/CARD-ANSWER-IMG':
+      return {
+        ...state,
+        cardAnswerImg: action.payload.answerImg,
       }
     default:
       return state
@@ -143,6 +155,16 @@ export const setPrivatePackAC = (private_: boolean) =>
     type: 'CARDS/SET-PRIVATE-PACK',
     payload: { private: private_ },
   } as const)
+export const cardQuestionImgAC = (image: string) =>
+  ({
+    type: 'CARDS/CARD-QUESTION-IMG',
+    payload: { questionImg: image },
+  } as const)
+export const cardAnswerImgAC = (image: string) =>
+  ({
+    type: 'CARDS/CARD-ANSWER-IMG',
+    payload: { answerImg: image },
+  } as const)
 //types
 export type ActionsType =
   | setCardsDataType
@@ -158,6 +180,8 @@ export type ActionsType =
   | setCardIdType
   | cardAnswerType
   | searchType
+  | cardQuestionImgType
+  | cardAnswerImgType
 
 export type setCardsDataType = ReturnType<typeof setCardsDataAC>
 export type clearCardDataType = ReturnType<typeof clearCardDataAC>
@@ -172,6 +196,8 @@ export type setPrivatePackType = ReturnType<typeof setPrivatePackAC>
 export type setCardIdType = ReturnType<typeof setCardIdAC>
 export type cardAnswerType = ReturnType<typeof cardAnswerAC>
 export type searchType = ReturnType<typeof searchAC>
+export type cardQuestionImgType = ReturnType<typeof cardQuestionImgAC>
+export type cardAnswerImgType = ReturnType<typeof cardAnswerImgAC>
 
 //thunks
 export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {

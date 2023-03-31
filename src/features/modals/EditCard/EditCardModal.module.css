@@ -53,7 +53,7 @@
   top: 10px;
 
   display: flex;
-  align-items: cenetr;
+  align-items: center;
   justify-content: flex-start;
 
   width: 85%;
@@ -67,13 +67,26 @@
   top: 20px;
 
   display: flex;
-  align-items: cenetr;
+  align-items: center;
   justify-content: flex-start;
 
   width: 85%;
 
   font-size: 0.8rem;
   color: #b7b7b7;
+}
+
+.selectQuestionCover {
+  position: relative;
+  top: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  font-size: 0.8rem;
 }
 
 .selectStyle {
@@ -117,11 +130,11 @@ select :focus {
 
   background: none;
   border: 1px solid #cccbcb !important;
-  border-radius: none;
+  /*border-radius: none;*/
 }
 
 .modalCheckboxContainer {
-  padding: 30px 0px 0px 0px;
+  padding: 30px 0 0 0;
 }
 
 .selectArrow {

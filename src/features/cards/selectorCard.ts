@@ -9,6 +9,8 @@ export const packPrivate = (state: AppStateType) => state.cards.packPrivate
 export const cardsTotalCount = (state: AppStateType) => state.cards.cardsTotalCount
 export const cardQuestion = (state: AppStateType) => state.cards.cardQuestion
 export const cardAnswer = (state: AppStateType) => state.cards.cardAnswer
+export const cardQuestionImg = (state: AppStateType) => state.cards.cardQuestionImg
+export const cardAnswerImg = (state: AppStateType) => state.cards.cardAnswerImg
 export const pageCount = (state: AppStateType) => state.cards.pageCount
 export const sortCards = (state: AppStateType) => state.cards.sortCards
 export const minCardsCount = (state: AppStateType) => state.cards.minCardsCount

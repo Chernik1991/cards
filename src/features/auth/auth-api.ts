@@ -16,7 +16,7 @@ export const authAPI = {
   me() {
     return instance.post<{}, AxiosResponse<ResponseLoginType>>('auth/me', {})
   },
-  updateUser(data: ProfileParamsType) {
+  updateUser(data: ProfileType) {
     return instance.put<ProfileType, AxiosResponse<ResponseUpdatedUserType>>('/auth/me', data)
   },
   logOut() {
@@ -33,15 +33,11 @@ export const authAPI = {
 export type LoginParamsType = {
   email: string
   password: string
-  rememberMe?: boolean
+  rememberMe: boolean
 }
 export type RegisterParamsType = {
   email: string
   password: string
-}
-export type ProfileParamsType = {
-  name: string
-  avatar?: string
 }
 export type ForgotParamsType = {
   email: string
@@ -86,5 +82,5 @@ export type ResponseInfoType = {
 }
 export type ProfileType = {
   name: string
-  avatar?: string
+  avatar: string
 }

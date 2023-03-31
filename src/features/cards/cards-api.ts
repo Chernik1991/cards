@@ -61,13 +61,15 @@ export type UpdateParamsType = {
   _id: string
   question: string
   answer: string
+  answerImg: string
+  questionImg: string
 }
 export type CardsType = {
   _id: string
   cardsPack_id: string
   user_id: string
-  question: string
   answer: string
+  question: string
   grade: number
   shots: number
   comments: string
@@ -77,6 +79,8 @@ export type CardsType = {
   created: string
   updated: string
   __v: number
+  answerImg: string
+  questionImg: string
 }
 
 export type ResponseGetCardsType = {
@@ -98,6 +102,8 @@ export type ResponseGetCardsType = {
   cardsPack_id: string
   cardQuestion: string
   cardAnswer: string
+  cardQuestionImg: string
+  cardAnswerImg: string
   sortCards: string
   card_id: string
   search: string

@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { ModalBasic } from 'common/components/c11-SuperModal/ModalBasic'
 import {
   cardAnswerAC,
+  cardAnswerImgAC,
   cardQuestionAC,
+  cardQuestionImgAC,
   CreateCardsTC,
   DeleteCardsTC,
   setPackNameAC,
@@ -29,6 +31,8 @@ export const Modals = ({ open, setOpen }: Props) => {
   const packPrivate = useAppSelector(cardsSelectors.packPrivate)
   const cardsQuestion = useAppSelector(cardsSelectors.cardQuestion)
   const cardsAnswer = useAppSelector(cardsSelectors.cardAnswer)
+  const cardsQuestionImg = useAppSelector(cardsSelectors.cardQuestionImg)
+  const cardsAnswerImg = useAppSelector(cardsSelectors.cardAnswerImg)
   const card_id = useAppSelector(cardsSelectors.card_id)
   const [error, setError] = useState(false)
   const [errorQuestion, SetErrorQuestion] = useState(false)
@@ -76,46 +80,52 @@ export const Modals = ({ open, setOpen }: Props) => {
     handleClose()
   }
   const addNewCardHandler = () => {
-    if (cardsAnswer === '') {
-      SetErrorAnswer(true)
-      setTimeout(() => SetErrorAnswer(false), 3000)
-    }
-    if (cardsQuestion === '') {
-      SetErrorQuestion(true)
-      setTimeout(() => SetErrorQuestion(false), 3000)
-    }
-    if (cardsAnswer && cardsQuestion) {
-      dispatch(
-        CreateCardsTC({
-          answer: cardsAnswer,
-          question: cardsQuestion,
-          cardsPack_id,
-        })
-      )
-      dispatch(cardQuestionAC(''))
-      dispatch(cardAnswerAC(''))
-      handleClose()
-    }
+    // if (cardsAnswer === '' || cardsAnswerImg === '') {
+    //   SetErrorAnswer(true)
+    //   setTimeout(() => SetErrorAnswer(false), 3000)
+    // }
+    // if (cardsQuestion === '' || cardsQuestionImg === '') {
+    //   SetErrorQuestion(true)
+    //   setTimeout(() => SetErrorQuestion(false), 3000)
+    // }
+    // if ((cardsAnswer && cardsQuestion) || (cardsAnswerImg && cardsQuestionImg)) {
+    dispatch(
+      CreateCardsTC({
+        answer: cardsAnswer,
+        question: cardsQuestion,
+        cardsPack_id,
+        answerImg: cardsAnswerImg,
+        questionImg: cardsQuestionImg,
+      })
+    )
+    dispatch(cardQuestionAC(''))
+    dispatch(cardAnswerAC(''))
+    dispatch(cardQuestionImgAC(''))
+    dispatch(cardAnswerImgAC(''))
+    handleClose()
+    // }
   }
   const editCardHandler = () => {
-    if (cardsAnswer === '') {
-      SetErrorAnswer(true)
-      setTimeout(() => SetErrorAnswer(false), 3000)
-    }
-    if (cardsQuestion === '') {
-      SetErrorQuestion(true)
-      setTimeout(() => SetErrorQuestion(false), 3000)
-    }
-    if (cardsAnswer && cardsQuestion) {
-      dispatch(
-        UpdateCardsTC({
-          answer: cardsAnswer,
-          question: cardsQuestion,
-          _id: card_id,
-        })
-      )
-      handleClose()
-    }
+    // if (cardsAnswer === '' || cardsAnswerImg === '') {
+    //   SetErrorAnswer(true)
+    //   setTimeout(() => SetErrorAnswer(false), 3000)
+    // }
+    // if (cardsQuestion === '' || cardsQuestionImg === '') {
+    //   SetErrorQuestion(true)
+    //   setTimeout(() => SetErrorQuestion(false), 3000)
+    // }
+    // if ((cardsAnswer && cardsQuestion) || (cardsAnswerImg && cardsQuestionImg)) {
+    dispatch(
+      UpdateCardsTC({
+        answer: cardsAnswer,
+        question: cardsQuestion,
+        _id: card_id,
+        answerImg: cardsAnswerImg,
+        questionImg: cardsQuestionImg,
+      })
+    )
+    handleClose()
+    // }
   }
   const deleteCardHandler = () => {
     dispatch(
@@ -125,6 +135,12 @@ export const Modals = ({ open, setOpen }: Props) => {
       })
     )
     handleClose()
+  }
+  const setQuestionImage = (image: string) => {
+    cardQuestionImgAC(image)
+  }
+  const setAnswerImage = (image: string) => {
+    cardAnswerImgAC(image)
   }
 
   return (
@@ -180,6 +196,10 @@ export const Modals = ({ open, setOpen }: Props) => {
         <EditCard
           valueAnswer={cardsAnswer}
           valueQuestion={cardsQuestion}
+          valueQuestionImg={cardsQuestionImg}
+          valueAnswerImg={cardsAnswerImg}
+          setQuestionImage={setQuestionImage}
+          setAnswerImage={setAnswerImage}
           errorQuestion={
             errorQuestion ? (
               <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Question required</span>
@@ -206,6 +226,10 @@ export const Modals = ({ open, setOpen }: Props) => {
         <EditCard
           valueAnswer={cardsAnswer}
           valueQuestion={cardsQuestion}
+          valueQuestionImg={cardsQuestionImg}
+          valueAnswerImg={cardsAnswerImg}
+          setQuestionImage={setQuestionImage}
+          setAnswerImage={setAnswerImage}
           errorQuestion={
             errorQuestion ? (
               <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Question required</span>
