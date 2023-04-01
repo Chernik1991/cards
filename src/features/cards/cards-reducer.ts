@@ -46,7 +46,33 @@ export const cardsReducer = (state: ResponseGetCardsType = initialState, action:
     case 'CARDS/SET-CARDS-DATA-LEARN':
       return { ...state, cards: action.payload.data }
     case 'CLEAR-DATA':
-      return { ...state, cards: [] }
+      return {
+        ...state,
+        cards: [],
+        cardsTotalCount: 0,
+        token: '',
+        tokenDeathTime: 0,
+        maxGrade: 0,
+        minGrade: 0,
+        packCreated: '',
+        packName: '',
+        packPrivate: false,
+        packUpdated: '',
+        page: 1,
+        packUserId: '',
+        pageCount: 4,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        cardsPack_id: '',
+        cardQuestion: '',
+        cardAnswer: '',
+        sortCards: '0updated',
+        card_id: '',
+        search: '',
+        cardQuestionImg: '',
+        cardAnswerImg: '',
+        packDeckCover: '',
+      }
     case 'CARDS/SET-CARDS-PACK-ID':
       return {
         ...state,
