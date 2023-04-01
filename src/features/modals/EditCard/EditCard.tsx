@@ -73,7 +73,12 @@ export const EditCard = ({
           <div className={o.selectQuestionCover}>
             <img src={valueQuestionImg} className={y.userPhoto} alt="ava" />
             <span>{'File must be less than 100 kb'}</span>
-            <InputTypeFileIcon icon={false} setImage={setQuestionImage} defaultImage={defaultCover} />
+            <InputTypeFileIcon
+              icon={false}
+              setImage={setQuestionImage}
+              defaultImage={defaultCover}
+              image={valueQuestionImg}
+            />
           </div>
         )}
         <span className={o.selectQuestion}>Answer</span>
@@ -88,7 +93,12 @@ export const EditCard = ({
           <div className={o.selectQuestionCover}>
             <img src={valueAnswerImg} className={y.userPhoto} alt="ava" />
             <span>{'File must be less than 100 kb'}</span>
-            <InputTypeFileIcon icon={false} setImage={setAnswerImage} defaultImage={defaultCover} />
+            <InputTypeFileIcon
+              icon={false}
+              setImage={setAnswerImage}
+              defaultImage={defaultCover}
+              image={valueAnswerImg}
+            />
           </div>
         )}
       </div>

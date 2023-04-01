@@ -9,9 +9,10 @@ type Props = {
   icon: boolean
   setImage: (image: string) => void
   defaultImage: string
+  image: string
 }
-export const InputTypeFileIcon = ({ icon, setImage, defaultImage }: Props) => {
-  const [ava, setAva] = useState(defaultImage)
+export const InputTypeFileIcon = ({ icon, setImage, defaultImage, image }: Props) => {
+  const [ava, setAva] = useState(image)
   const [isAvaBroken, setIsAvaBroken] = useState(false)
   const [isTrue] = useState(false)
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +22,6 @@ export const InputTypeFileIcon = ({ icon, setImage, defaultImage }: Props) => {
       if (file.size < 100000) {
         convertFileToBase64(file, (file64: string) => {
           setAva(file64)
-          if (isAvaBroken) {
-            setImage(file64)
-          }
         })
       } else {
         console.error('Error: ', 'Файл слишком большого размера')
@@ -33,6 +31,13 @@ export const InputTypeFileIcon = ({ icon, setImage, defaultImage }: Props) => {
   const errorHandler = () => {
     setIsAvaBroken(true)
     alert('Кривая картинка')
+    setTimeout(() => setIsAvaBroken(false), 3000)
+  }
+
+  if (!isAvaBroken) {
+    setImage(ava)
+  } else {
+    setImage(defaultImage)
   }
 
   return (
@@ -44,7 +49,9 @@ export const InputTypeFileIcon = ({ icon, setImage, defaultImage }: Props) => {
           Change cover
         </Button>
       )}
-      {isTrue ? <img src={isAvaBroken ? defaultImage : ava} onError={errorHandler} alt="ava" /> : ''}
+      <div style={{ display: 'none' }}>
+        {!isTrue ? <img src={isAvaBroken ? defaultImage : ava} onError={errorHandler} alt="ava" /> : ''}
+      </div>
       <input
         type="file"
         onChange={uploadHandler}

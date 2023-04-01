@@ -71,7 +71,7 @@ export const Profile = () => {
               <div className={y.userPhotoContainer}>
                 <img src={avatar} className={y.userPhoto} alt="ava" />
                 <div className={y.userCameraContainer}>
-                  <InputTypeFileIcon icon={true} setImage={setImage} defaultImage={defaultAva} />
+                  <InputTypeFileIcon icon={true} setImage={setImage} defaultImage={defaultAva} image={avatar} />
                 </div>
               </div>
               <div className={y.inputContainer}>

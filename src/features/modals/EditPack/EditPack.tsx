@@ -44,7 +44,7 @@ export const EditPack = ({ error, packStatus, packName, id, deskCover }: props) 
       <div className={o.selectQuestionCover}>
         <img src={deskCover} className={y.userPhoto} alt="ava" />
         <span>{'File must be less than 100 kb'}</span>
-        <InputTypeFileIcon icon={false} setImage={setDeckCover} defaultImage={defaultCover} />
+        <InputTypeFileIcon icon={false} setImage={setDeckCover} defaultImage={defaultCover} image={deskCover} />
       </div>
       <div className={o.modalCheckboxContainer}>
         <SuperCheckbox className={o.modalCheckbox} checked={packStatus} onChangeChecked={onChangeChecked}>

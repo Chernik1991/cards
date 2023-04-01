@@ -34,6 +34,8 @@ export const Modals = ({ open, setOpen }: Props) => {
   const cardsAnswer = useAppSelector(cardsSelectors.cardAnswer)
   const cardsQuestionImg = useAppSelector(cardsSelectors.cardQuestionImg)
   const deskCover = useAppSelector(packsSelectors.deskCover)
+
+  console.log(deskCover, 'deskCover')
   const cardsAnswerImg = useAppSelector(cardsSelectors.cardAnswerImg)
   const card_id = useAppSelector(cardsSelectors.card_id)
   const [error, setError] = useState(false)
