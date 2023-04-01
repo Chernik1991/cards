@@ -8,7 +8,7 @@ import { defaultCover } from 'common/constans/constans'
 import { pageCountCardsAC, setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
 import o from 'features/modals/EditCard/EditCardModal.module.css'
 import { ActionsPanel } from 'features/packs/components/actionsPanel/ActionsPanel'
-import { pagePacksAC } from 'features/packs/packsReducer'
+import { pagePacksAC, setDeskCoverAC } from 'features/packs/packsReducer'
 import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
@@ -54,8 +54,7 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
     dispatch(setPackNameAC(row.name))
     dispatch(setCardsPackIdAC(row.id))
     dispatch(setPrivatePackAC(row.private))
-    // dispatch(cardQuestionImgAC(row.questionImg))
-    // dispatch(cardAnswerImgAC(row.answerImg))
+    dispatch(setDeskCoverAC(row.deckCover))
     dispatch(pagePacksAC(1))
     modalHandler('edit-pack')
   }

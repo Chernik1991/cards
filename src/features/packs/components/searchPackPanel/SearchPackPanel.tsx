@@ -3,11 +3,10 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 
-import { SortPacksMyAll } from './SortPacksMyAll'
-
 import * as appSelectors from 'app/selectorApp'
 import { SearchInput } from 'common/components/inputSearch/InputSearch'
 import { PacksSlider } from 'features/packs/components/slider/PacksSlider'
+import { SortPacksMyAll } from 'features/packs/components/sortPacksMyAll/SortPacksMyAll'
 import { FilterAllOff } from 'features/packs/FilterAllOff'
 import { maxAC, minAC, searchPacksAC } from 'features/packs/packsReducer'
 import * as packsSelectors from 'features/packs/selectorPack'
@@ -15,7 +14,7 @@ import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const SearchPackPanel = () => {
   const dispatch = useAppDispatch()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const defaultMin = useAppSelector(packsSelectors.minCardsCount)
   const defaultMax = useAppSelector(packsSelectors.maxCardsCount)

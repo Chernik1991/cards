@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import SuperInputText from 'common/components/c1-SuperInputText/SuperInputText'
 import SuperSelect from 'common/components/c5-SuperSelect/SuperSelect'
 import { InputTypeFileIcon } from 'common/components/inputTypeFile/InputTypeFileIcon'
+import { defaultCover } from 'common/constans/constans'
 import { cardAnswerAC, cardAnswerImgAC, cardQuestionAC, cardQuestionImgAC } from 'features/cards/cards-reducer'
 import o from 'features/modals/EditCard/EditCardModal.module.css'
 import y from 'features/profile/Profile.module.css'
@@ -72,7 +73,7 @@ export const EditCard = ({
           <div className={o.selectQuestionCover}>
             <img src={valueQuestionImg} className={y.userPhoto} alt="ava" />
             <span>{'File must be less than 100 kb'}</span>
-            <InputTypeFileIcon icon={false} setImage={setQuestionImage} />
+            <InputTypeFileIcon icon={false} setImage={setQuestionImage} defaultImage={defaultCover} />
           </div>
         )}
         <span className={o.selectQuestion}>Answer</span>
@@ -87,7 +88,7 @@ export const EditCard = ({
           <div className={o.selectQuestionCover}>
             <img src={valueAnswerImg} className={y.userPhoto} alt="ava" />
             <span>{'File must be less than 100 kb'}</span>
-            <InputTypeFileIcon icon={false} setImage={setAnswerImage} />
+            <InputTypeFileIcon icon={false} setImage={setAnswerImage} defaultImage={defaultCover} />
           </div>
         )}
       </div>

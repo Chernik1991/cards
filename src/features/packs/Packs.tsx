@@ -10,7 +10,7 @@ import { PaginationComponent } from 'common/components/pagination/PaginationComp
 import { sxPacksBoxButton, sxPacksBoxResponse } from 'common/constans/constans'
 import * as authSelectors from 'features/auth/selectorAuth'
 import { Modals } from 'features/modals/Modals'
-import { SearchPackPanel } from 'features/packs/components/sortPacksMyAll/SearchPackPanel'
+import { SearchPackPanel } from 'features/packs/components/searchPackPanel/SearchPackPanel'
 import { PacksTable } from 'features/packs/components/table/PacksTable'
 import e from 'features/packs/Packs.module.css'
 import { getPacksTC, pageCountPacksAC, pagePacksAC } from 'features/packs/packsReducer'

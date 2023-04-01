@@ -12,3 +12,4 @@ export const isMyPacks = (state: AppStateType) => state.packs.isMyPacks
 export const min = (state: AppStateType) => state.packs.min
 export const max = (state: AppStateType) => state.packs.max
 export const filterOff = (state: AppStateType) => state.packs.filterOff
+export const deskCover = (state: AppStateType) => state.packs.deskCover

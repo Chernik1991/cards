@@ -8,7 +8,13 @@ import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEditableSpan'
 import { InputTypeFileIcon } from 'common/components/inputTypeFile/InputTypeFileIcon'
 import { BackToPacksButton } from 'common/constans/BackToPacksButton'
-import { sxProfileBeakTo, sxProfileBox, sxProfileBoxAll, sxProfilePersonalInfo } from 'common/constans/constans'
+import {
+  defaultAva,
+  sxProfileBeakTo,
+  sxProfileBox,
+  sxProfileBoxAll,
+  sxProfilePersonalInfo,
+} from 'common/constans/constans'
 import { LogOutButton } from 'common/constans/LogOutButton'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
@@ -65,7 +71,7 @@ export const Profile = () => {
               <div className={y.userPhotoContainer}>
                 <img src={avatar} className={y.userPhoto} alt="ava" />
                 <div className={y.userCameraContainer}>
-                  <InputTypeFileIcon icon={true} setImage={setImage} />
+                  <InputTypeFileIcon icon={true} setImage={setImage} defaultImage={defaultAva} />
                 </div>
               </div>
               <div className={y.inputContainer}>

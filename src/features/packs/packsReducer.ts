@@ -16,6 +16,7 @@ const initialState: ResponsePacksType = {
   sort: '0updated',
   search: '',
   filterOff: false,
+  deskCover: '',
 }
 
 export const packsReducer = (state: ResponsePacksType = initialState, action: ActionsType): ResponsePacksType => {
@@ -58,6 +59,9 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
         max: action.payload.max,
       }
     }
+    case 'PACKS/DESK-COVER': {
+      return { ...state, deskCover: action.payload.deskCover }
+    }
     default:
       return state
   }
@@ -96,6 +100,11 @@ export const filterAllOffPacksAC = (filterOff: boolean, minCardsCount: number, m
       max: maxCardsCount,
     },
   } as const)
+export const setDeskCoverAC = (image: string) =>
+  ({
+    type: 'PACKS/DESK-COVER',
+    payload: { deskCover: image },
+  } as const)
 
 type ActionsType =
   | getUserPacksType
@@ -108,6 +117,7 @@ type ActionsType =
   | minCardsCountPacksType
   | filterAllOffPacksType
   | clearPacksDataType
+  | setDeskCoverType
 
 export type getUserPacksType = ReturnType<typeof getUserPacksAC>
 export type setMyPacksType = ReturnType<typeof isMyPacksAC>
@@ -119,6 +129,7 @@ export type maxCardsCountPacksType = ReturnType<typeof maxAC>
 export type minCardsCountPacksType = ReturnType<typeof minAC>
 export type filterAllOffPacksType = ReturnType<typeof filterAllOffPacksAC>
 export type clearPacksDataType = ReturnType<typeof clearPacksDataAC>
+export type setDeskCoverType = ReturnType<typeof setDeskCoverAC>
 
 export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
   dispatch(setAppStatusAC('loading'))

@@ -18,3 +18,4 @@ export const maxCardsCount = (state: AppStateType) => state.cards.maxCardsCount
 export const cardsLength = (state: AppStateType) => state.cards.cards.length
 export const card_id = (state: AppStateType) => state.cards.card_id
 export const search = (state: AppStateType) => state.cards.search
+export const packDeckCover = (state: AppStateType) => state.cards.packDeckCover

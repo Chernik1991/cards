@@ -31,6 +31,7 @@ export type ResponsePacksType = {
   max: number
   min: number
   filterOff: boolean
+  deskCover: string
 }
 
 export type CardPacksType = {
@@ -67,8 +68,8 @@ export type SetNewPackType = {
   private: boolean
 }
 export type UpdatePackType = {
-  _id: string | undefined
+  _id: string
   name: string
   private?: boolean
-  deckCover: ''
+  deckCover: string
 }

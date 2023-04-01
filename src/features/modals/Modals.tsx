@@ -16,7 +16,8 @@ import * as cardsSelectors from 'features/cards/selectorCard'
 import { DeleteModal } from 'features/modals/DeleteModal/DeleteModal'
 import { EditCard } from 'features/modals/EditCard/EditCard'
 import { EditPack } from 'features/modals/EditPack/EditPack'
-import { addPackTC, deletePackTC, updatePackTC } from 'features/packs/packsReducer'
+import { addPackTC, deletePackTC, setDeskCoverAC, updatePackTC } from 'features/packs/packsReducer'
+import * as packsSelectors from 'features/packs/selectorPack'
 import { useAppDispatch, useAppSelector } from 'store/store'
 
 type Props = {
@@ -32,6 +33,7 @@ export const Modals = ({ open, setOpen }: Props) => {
   const cardsQuestion = useAppSelector(cardsSelectors.cardQuestion)
   const cardsAnswer = useAppSelector(cardsSelectors.cardAnswer)
   const cardsQuestionImg = useAppSelector(cardsSelectors.cardQuestionImg)
+  const deskCover = useAppSelector(packsSelectors.deskCover)
   const cardsAnswerImg = useAppSelector(cardsSelectors.cardAnswerImg)
   const card_id = useAppSelector(cardsSelectors.card_id)
   const [error, setError] = useState(false)
@@ -50,31 +52,33 @@ export const Modals = ({ open, setOpen }: Props) => {
       dispatch(
         addPackTC({
           name: packName,
-          deckCover: '',
+          deckCover: deskCover,
           private: packPrivate,
         })
       )
       dispatch(setPackNameAC(''))
       dispatch(setPrivatePackAC(false))
+      dispatch(setDeskCoverAC(''))
       handleClose()
     }
   }
   const updatePack = () => {
-    if (packName === '') {
-      setError(true)
-      setTimeout(() => setError(false), 3000)
-    }
-    if (packName) {
-      dispatch(
-        updatePackTC({
-          _id: cardsPack_id,
-          name: packName,
-          private: packPrivate,
-          deckCover: '',
-        })
-      )
-      handleClose()
-    }
+    // if (packName === '' || deskCover == '') {
+    //   setError(true)
+    //   setTimeout(() => setError(false), 3000)
+    // }
+    // if (packName || deskCover) {
+    console.log('22121212121221')
+    dispatch(
+      updatePackTC({
+        _id: cardsPack_id,
+        name: packName,
+        private: packPrivate,
+        deckCover: deskCover,
+      })
+    )
+    handleClose()
+    // }
   }
   const deletePack = () => {
     dispatch(deletePackTC(cardsPack_id))
@@ -151,6 +155,7 @@ export const Modals = ({ open, setOpen }: Props) => {
           id={'edit-pack'}
           packStatus={packPrivate}
           packName={packName}
+          deskCover={deskCover}
           error={
             error ? <span style={{ fontSize: '10px', position: 'relative', top: '60px' }}>Pack name required</span> : ''
           }
@@ -167,6 +172,7 @@ export const Modals = ({ open, setOpen }: Props) => {
           id={'edit-pack'}
           packStatus={packPrivate}
           packName={packName}
+          deskCover={deskCover}
           error={
             error ? <span style={{ fontSize: '10px', position: 'relative', top: '60px' }}>Pack name required</span> : ''
           }

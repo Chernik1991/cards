@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import { Button, IconButton } from '@mui/material'
 
@@ -8,20 +8,31 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 type Props = {
   icon: boolean
   setImage: (image: string) => void
+  defaultImage: string
 }
-export const InputTypeFileIcon = ({ icon, setImage }: Props) => {
+export const InputTypeFileIcon = ({ icon, setImage, defaultImage }: Props) => {
+  const [ava, setAva] = useState(defaultImage)
+  const [isAvaBroken, setIsAvaBroken] = useState(false)
+  const [isTrue] = useState(false)
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
 
       if (file.size < 100000) {
         convertFileToBase64(file, (file64: string) => {
-          setImage(file64)
+          setAva(file64)
+          if (isAvaBroken) {
+            setImage(file64)
+          }
         })
       } else {
         console.error('Error: ', 'Файл слишком большого размера')
       }
     }
+  }
+  const errorHandler = () => {
+    setIsAvaBroken(true)
+    alert('Кривая картинка')
   }
 
   return (
@@ -33,6 +44,7 @@ export const InputTypeFileIcon = ({ icon, setImage }: Props) => {
           Change cover
         </Button>
       )}
+      {isTrue ? <img src={isAvaBroken ? defaultImage : ava} onError={errorHandler} alt="ava" /> : ''}
       <input
         type="file"
         onChange={uploadHandler}

@@ -34,6 +34,7 @@ const initialState: ResponseGetCardsType = {
   search: '',
   cardQuestionImg: '',
   cardAnswerImg: '',
+  packDeckCover: '',
 }
 
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {

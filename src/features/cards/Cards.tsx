@@ -10,6 +10,7 @@ import { PaginationComponent } from 'common/components/pagination/PaginationComp
 import { BackToPacksButton } from 'common/constans/BackToPacksButton'
 import {
   badResponse,
+  defaultCover,
   NoCards,
   paginationLabel,
   sxCardsBpxButton,
@@ -26,7 +27,9 @@ import s from 'features/cards/Cards.module.css'
 import { CardsTable } from 'features/cards/cardTable/CardsTable'
 import { SearchCardPanel } from 'features/cards/searchCardPanel/SearchCardPanel'
 import * as cardsSelectors from 'features/cards/selectorCard'
+import o from 'features/modals/EditCard/EditCardModal.module.css'
 import { Modals } from 'features/modals/Modals'
+import y from 'features/profile/Profile.module.css'
 import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -41,6 +44,7 @@ export const Cards = () => {
   const cardsPack_id = useAppSelector(cardsSelectors.cardsPack_id)
   const search = useAppSelector(cardsSelectors.search)
   const packName = useAppSelector(cardsSelectors.packName)
+  const packDeckCover = useAppSelector(cardsSelectors.packDeckCover)
   const packUserId = useAppSelector(cardsSelectors.packUserId)
   const my_id = useAppSelector(profileSelectors._id)
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
@@ -49,6 +53,7 @@ export const Cards = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const status = useAppSelector(appSelectors.status)
+  const crudAccessValue = my_id === packUserId
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
@@ -100,9 +105,9 @@ export const Cards = () => {
         <Box sx={sxCardsBpxButton}>
           <div className={s.PackNameContainer}>
             <span style={{ fontSize: '1.5rem', fontWeight: '600' }}>{packName}</span>
-            {my_id === packUserId ? <CardMenu /> : ''}
+            {crudAccessValue ? <CardMenu /> : ''}
           </div>
-          {my_id === packUserId ? (
+          {crudAccessValue ? (
             <SuperButton className={s.newPackButton} onClick={() => modalOpenHandler('add-card')}>
               Add new card
             </SuperButton>
@@ -113,6 +118,11 @@ export const Cards = () => {
               </SuperButton>
             </NavLink>
           )}
+        </Box>
+        <Box sx={sxCardsBpxButton}>
+          <div className={o.selectCover}>
+            <img src={packDeckCover ? packDeckCover : defaultCover} className={y.deckCover} alt="ava" />
+          </div>
         </Box>
         <Box sx={sxCardsSearchPanel}>
           <SearchCardPanel />
