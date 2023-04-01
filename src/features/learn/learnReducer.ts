@@ -21,7 +21,6 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
   try {
     const res = await learnApi.setGradeCard({ card_id, grade: grade })
 
-    console.log(res)
     dispatch(
       setCardLearnAC(
         cards.map(el =>
@@ -31,7 +30,6 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
         )
       )
     )
-    console.log(cards, 'cards')
     dispatch(setShowAnswerAC(false))
     dispatch(setAppStatusAC('succeeded'))
   } catch (e) {

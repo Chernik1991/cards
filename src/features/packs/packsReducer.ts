@@ -28,17 +28,6 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
       return {
         ...state,
         cardPacks: [],
-        cardPacksTotalCount: 0,
-        maxCardsCount: 0,
-        minCardsCount: 0,
-        max: 0,
-        min: 0,
-        page: 1,
-        pageCount: 4,
-        isMyPacks: false,
-        sort: '0updated',
-        search: '',
-        filterOff: false,
         deskCover: '',
       }
     case 'PACKS/IS-MY-PACKS': {

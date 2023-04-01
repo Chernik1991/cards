@@ -34,8 +34,6 @@ export const Modals = ({ open, setOpen }: Props) => {
   const cardsAnswer = useAppSelector(cardsSelectors.cardAnswer)
   const cardsQuestionImg = useAppSelector(cardsSelectors.cardQuestionImg)
   const deskCover = useAppSelector(packsSelectors.deskCover)
-
-  console.log(deskCover, 'deskCover')
   const cardsAnswerImg = useAppSelector(cardsSelectors.cardAnswerImg)
   const card_id = useAppSelector(cardsSelectors.card_id)
   const [error, setError] = useState(false)
@@ -70,7 +68,6 @@ export const Modals = ({ open, setOpen }: Props) => {
     //   setTimeout(() => setError(false), 3000)
     // }
     // if (packName || deskCover) {
-    console.log('22121212121221')
     dispatch(
       updatePackTC({
         _id: cardsPack_id,
