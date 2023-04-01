@@ -30,7 +30,7 @@ export const setNewPasswordTC =
 
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setIsSetNewPasswordAC(true))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }

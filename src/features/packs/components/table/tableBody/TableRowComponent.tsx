@@ -67,7 +67,11 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
       <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
         <NavLink to={PATH.CARD} onClick={() => cardsListHandler(row.id)}>
           <div className={o.selectCover}>
-            <img src={row.deckCover ? row.deckCover : defaultCover} className={y.deckCover} alt="ava" />
+            {row.deckCover ? (
+              <img src={row.deckCover ? row.deckCover : defaultCover} className={y.deckCover} alt="ava" />
+            ) : (
+              ''
+            )}
             {row.name}
           </div>
         </NavLink>

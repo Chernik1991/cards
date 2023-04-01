@@ -34,7 +34,6 @@ export const Learn = () => {
   }
   useEffect(() => {
     if (first) {
-      //TODO сетать больше карт , столько сколько есть
       dispatch(GetCardsTC())
       setFirst(false)
     }

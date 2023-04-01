@@ -15,47 +15,53 @@
 }
 
 .userDataContainer {
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  cursor: pointer;
 }
 
 .userPhoto {
   display: flex;
+
   width: 50px;
+
   border-radius: 50%;
 }
 
 .userName {
   position: relative;
   left: -15px;
+
   font-size: 1.2rem;
+
   border: none;
   border-bottom: 1px dashed gray;
 }
 
 .headerContainer {
   position: relative;
-  left: 220px;
-  top: 77px;
   z-index: 5;
+  top: 77px;
+  left: 220px;
 }
 
 .headerArrow {
   position: relative;
+  z-index: 10;
   top: -90px !important;
   left: 20px !important;
-  z-index: 10;
 }
 
 .closingContainer {
-  z-index: 4;
-  padding: 0px;
-  margin: 0px;
-  left: 0px;
-  top: 0px;
   position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+
   width: 100vw;
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }

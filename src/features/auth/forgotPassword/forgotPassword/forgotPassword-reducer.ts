@@ -1,8 +1,6 @@
-import { AxiosError } from 'axios'
-
 import { setAppStatusAC } from 'app/app-reducer'
 import { errorUtils } from 'common/utils/error-utils'
-import { authAPI, ForgotParamsType } from 'features/auth/auth-api'
+import { ForgotParamsType } from 'features/auth/auth-api'
 import { AppThunkType } from 'store/store'
 
 const initialState: InitialStateType = {
@@ -27,19 +25,13 @@ export const setForgotEmailAC = (email: string) => ({ type: 'setForgotEmail', pa
 export const setForgotTC =
   (data: ForgotParamsType): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
-      const res = await authAPI.forgot(data)
-
-      console.log(res.data)
-      dispatch(setAppStatusAC('loading'))
       dispatch(setForgotEmailAC(data.email))
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setForgotAC(true))
     } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
-      errorUtils(err, dispatch)
-
+      errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
   }

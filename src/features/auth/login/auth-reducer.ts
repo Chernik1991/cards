@@ -30,7 +30,7 @@ export const loginTC =
       dispatch(setIsLoggedInAC(true))
       dispatch(setUserDataAC(res.data))
       dispatch(setAppStatusAC('succeeded'))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
@@ -56,7 +56,7 @@ export const logoutTC = (): AppThunkType => async dispatch => {
 
     dispatch(setIsLoggedInAC(false))
     dispatch(setAppStatusAC('succeeded'))
-  } catch (e: any) {
+  } catch (e) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
   }

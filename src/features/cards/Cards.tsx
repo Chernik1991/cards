@@ -29,6 +29,7 @@ import { SearchCardPanel } from 'features/cards/searchCardPanel/SearchCardPanel'
 import * as cardsSelectors from 'features/cards/selectorCard'
 import o from 'features/modals/EditCard/EditCardModal.module.css'
 import { Modals } from 'features/modals/Modals'
+import { clearPacksDataAC } from 'features/packs/packsReducer'
 import y from 'features/profile/Profile.module.css'
 import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
@@ -86,6 +87,7 @@ export const Cards = () => {
   }
   const cardsListHandler = () => {
     dispatch(clearCardDataAC())
+    dispatch(clearPacksDataAC())
   }
   const modalOpenHandler = (value: string) => {
     setOpen(value)

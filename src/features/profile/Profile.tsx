@@ -18,6 +18,7 @@ import {
 import { LogOutButton } from 'common/constans/LogOutButton'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
+import { clearPacksDataAC } from 'features/packs/packsReducer'
 import y from 'features/profile/Profile.module.css'
 import { setNewAvatarAC, updateUserDataTC } from 'features/profile/reducerProfile'
 import * as profileSelectors from 'features/profile/selectorProfile'
@@ -61,7 +62,13 @@ export const Profile = () => {
       <div className={y.profileContainer}>
         <Box sx={sxProfileBoxAll}>
           <Box sx={sxProfileBeakTo}>
-            <NavLink className={y.backContainer} to={PATH.PACKS}>
+            <NavLink
+              className={y.backContainer}
+              to={PATH.PACKS}
+              onClick={() => {
+                dispatch(clearPacksDataAC())
+              }}
+            >
               <BackToPacksButton />
             </NavLink>
           </Box>

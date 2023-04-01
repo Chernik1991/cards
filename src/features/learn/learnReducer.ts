@@ -34,7 +34,7 @@ export const changeGradeTC = (): AppThunkType => async (dispatch, getState) => {
     console.log(cards, 'cards')
     dispatch(setShowAnswerAC(false))
     dispatch(setAppStatusAC('succeeded'))
-  } catch (e: any) {
+  } catch (e) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
   }

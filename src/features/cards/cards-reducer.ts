@@ -242,7 +242,7 @@ export const GetCardsTC = (): AppThunkType => async (dispatch, getState) => {
 
     dispatch(setCardsDataAC(res.data))
     dispatch(setAppStatusAC('succeeded'))
-  } catch (e: any) {
+  } catch (e) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
   } finally {
@@ -258,7 +258,7 @@ export const CreateCardsTC =
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
@@ -272,7 +272,7 @@ export const DeleteCardsTC =
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
@@ -286,7 +286,7 @@ export const UpdateCardsTC =
 
       dispatch(GetCardsTC())
       dispatch(setAppStatusAC('succeeded'))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }

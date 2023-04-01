@@ -24,17 +24,19 @@
 
 .labelStyle {
   position: relative;
-  left: 5px;
   top: 3px;
+  left: 5px;
 }
 
 .menuContainer {
   position: relative;
-  left: -90px;
-  width: 125px;
-  border: 1.5px solid #e1e1e1;
-  border-radius: 0px;
   z-index: 3;
+  left: -90px;
+
+  width: 125px;
+
+  border: 2px solid #e1e1e1;
+  border-radius: 0;
 }
 
 .packInfo {

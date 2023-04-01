@@ -53,7 +53,7 @@ export const updateUserDataTC = (): AppThunkType => async (dispatch, getState) =
     await authAPI.updateUser({ name, avatar })
 
     dispatch(setAppStatusAC('succeeded'))
-  } catch (e: any) {
+  } catch (e) {
     dispatch(setAppStatusAC('failed'))
     errorUtils(e, dispatch)
   }

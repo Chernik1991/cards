@@ -25,7 +25,22 @@ export const packsReducer = (state: ResponsePacksType = initialState, action: Ac
       return { ...state, ...action.payload.data, filterOff: false }
     }
     case 'CLEAR-DATA':
-      return { ...state, cardPacks: [] }
+      return {
+        ...state,
+        cardPacks: [],
+        cardPacksTotalCount: 0,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        max: 0,
+        min: 0,
+        page: 1,
+        pageCount: 4,
+        isMyPacks: false,
+        sort: '0updated',
+        search: '',
+        filterOff: false,
+        deskCover: '',
+      }
     case 'PACKS/IS-MY-PACKS': {
       return { ...state, isMyPacks: action.payload.isMyPacks }
     }
@@ -158,7 +173,7 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
 
     dispatch(setAppStatusAC('succeeded'))
     dispatch(getUserPacksAC(res.data))
-  } catch (e: any) {
+  } catch (e) {
     errorUtils(e, dispatch)
     dispatch(setAppStatusAC('failed'))
   }
@@ -173,7 +188,7 @@ export const addPackTC =
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
@@ -188,7 +203,7 @@ export const updatePackTC =
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }
@@ -202,8 +217,7 @@ export const deletePackTC =
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeeded'))
-      //TODO разобраться с catch
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
       dispatch(setAppStatusAC('failed'))
     }

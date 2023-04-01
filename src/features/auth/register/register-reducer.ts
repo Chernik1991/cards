@@ -23,12 +23,12 @@ export const registerTC =
   async dispatch => {
     console.log('registerTC')
     try {
-      const res = await authAPI.register(data)
+      await authAPI.register(data)
 
       dispatch(setAppStatusAC('loading'))
       dispatch(setAppStatusAC('succeeded'))
       dispatch(setIsRegisterAC(true))
-    } catch (e: any) {
+    } catch (e) {
       errorUtils(e, dispatch)
 
       dispatch(setAppStatusAC('failed'))

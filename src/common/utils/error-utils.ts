@@ -3,7 +3,7 @@ import { Dispatch } from 'redux'
 
 import { setAppErrorAC, SetAppErrorActionType } from 'app/app-reducer'
 
-export const errorUtils = (e: Error | AxiosError<{ error: string }>, dispatch: Dispatch<SetAppErrorActionType>) => {
+export const errorUtils = (e: any, dispatch: Dispatch<SetAppErrorActionType>) => {
   const err = e as Error | AxiosError<{ error: string }>
 
   if (axios.isAxiosError(err)) {
