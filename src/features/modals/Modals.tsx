@@ -136,12 +136,6 @@ export const Modals = ({ open, setOpen }: Props) => {
     )
     handleClose()
   }
-  const setQuestionImage = (image: string) => {
-    cardQuestionImgAC(image)
-  }
-  const setAnswerImage = (image: string) => {
-    cardAnswerImgAC(image)
-  }
 
   return (
     <>
@@ -198,8 +192,6 @@ export const Modals = ({ open, setOpen }: Props) => {
           valueQuestion={cardsQuestion}
           valueQuestionImg={cardsQuestionImg}
           valueAnswerImg={cardsAnswerImg}
-          setQuestionImage={setQuestionImage}
-          setAnswerImage={setAnswerImage}
           errorQuestion={
             errorQuestion ? (
               <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Question required</span>
@@ -228,8 +220,6 @@ export const Modals = ({ open, setOpen }: Props) => {
           valueQuestion={cardsQuestion}
           valueQuestionImg={cardsQuestionImg}
           valueAnswerImg={cardsAnswerImg}
-          setQuestionImage={setQuestionImage}
-          setAnswerImage={setAnswerImage}
           errorQuestion={
             errorQuestion ? (
               <span style={{ fontSize: '10px', position: 'relative', top: '55px' }}>Question required</span>

@@ -32,8 +32,8 @@ const initialState: ResponseGetCardsType = {
   sortCards: '0updated',
   card_id: '',
   search: '',
-  cardQuestionImg: 'No Image',
-  cardAnswerImg: 'No Image',
+  cardQuestionImg: '',
+  cardAnswerImg: '',
 }
 
 export const cardsReducer = (state: ResponseGetCardsType = initialState, action: ActionsType): ResponseGetCardsType => {
