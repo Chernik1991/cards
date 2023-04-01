@@ -132,12 +132,7 @@ export const Modals = ({ open, setOpen }: Props) => {
     }
   }
   const deleteCardHandler = () => {
-    dispatch(
-      DeleteCardsTC({
-        id: card_id,
-        cardsPack_id,
-      })
-    )
+    dispatch(DeleteCardsTC({ id: card_id }))
     handleClose()
   }
 

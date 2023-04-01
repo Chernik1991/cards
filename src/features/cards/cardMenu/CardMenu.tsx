@@ -6,17 +6,10 @@ import { Navigate } from 'react-router-dom'
 import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
 import { menuDataInfo } from 'features/cards/cardMenu/CardData'
 import s from 'features/cards/cardMenu/CardMenu.module.css'
-import { setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
-import * as cardsSelectors from 'features/cards/selectorCard'
 import { Modals } from 'features/modals/Modals'
 import { PATH } from 'routes/pages'
-import { useAppDispatch, useAppSelector } from 'store/store'
 
 export const CardMenu = () => {
-  const packName = useAppSelector(cardsSelectors.packName)
-  const packUserId = useAppSelector(cardsSelectors.packUserId)
-  const packPrivate = useAppSelector(cardsSelectors.packPrivate)
-  const dispatch = useAppDispatch()
   const [activeMenu, setActiveMenu] = useState(false)
   const [open, setOpen] = useState('false')
   const randomID = crypto.randomUUID()
@@ -24,18 +17,15 @@ export const CardMenu = () => {
     setActiveMenu(!activeMenu)
   }
   const handleOpen = (value: string) => {
-    setOpen(value)
-    if (value === 'edit-pack') {
-      dispatch(setPackNameAC(packName))
-      dispatch(setPrivatePackAC(packPrivate))
-      dispatch(setCardsPackIdAC(packUserId))
+    if (value === 'Edit') {
+      setOpen('edit-pack')
     }
-    if (value === 'delete-pack') {
-      dispatch(setPackNameAC(packName))
+    if (value === 'Delete') {
+      setOpen('delete-pack')
+
+      return <Navigate to={PATH.PACKS} replace />
     }
     if (value === 'Learn') {
-      dispatch(setCardsPackIdAC(packUserId))
-
       return <Navigate to={PATH.LEARN} replace />
     }
   }

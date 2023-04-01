@@ -11,9 +11,9 @@ export const cardsAPI = {
   setCards(data: SetCardType) {
     return instance.post<SetCardParamsType, AxiosResponse<ResponseSetCardType>>('/cards/card', { card: { ...data } })
   },
-  delCards(params: string) {
-    return instance.delete<DeleteCardsParamsType, AxiosResponse<ResponseDeleteCardsType>>('/cards/card', {
-      params,
+  delCards(data: string) {
+    return instance.delete<string, AxiosResponse<ResponseDeleteCardsType>>('/cards/card', {
+      params: { id: data },
     })
   },
   updateCards(data: UpdateParamsType) {
@@ -47,12 +47,8 @@ export type SetCardType = {
   questionVideo?: string
   answerVideo?: string
 }
-export type DeleteCardsParamsType = {
-  id: string
-}
 export type DeleteCardsType = {
   id: string
-  cardsPack_id: string
 }
 export type UpdateCardParamsType = {
   card: UpdateParamsType
