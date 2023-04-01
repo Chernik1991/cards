@@ -50,7 +50,7 @@ export const Modals = ({ open, setOpen }: Props) => {
       dispatch(
         addPackTC({
           name: packName,
-          // deckCover: packsAdditionalSettings.deckCover,
+          deckCover: '',
           private: packPrivate,
         })
       )
@@ -70,6 +70,7 @@ export const Modals = ({ open, setOpen }: Props) => {
           _id: cardsPack_id,
           name: packName,
           private: packPrivate,
+          deckCover: '',
         })
       )
       handleClose()

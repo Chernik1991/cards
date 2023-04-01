@@ -75,6 +75,7 @@ export const PacksTable = (props: Props) => {
     id: el._id,
     user_id: el.user_id,
     private: el.private,
+    deckCover: el.deckCover,
   }))
   const [orderBy, setOrderBy] = useState(sort)
 

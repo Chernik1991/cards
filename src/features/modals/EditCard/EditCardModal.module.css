@@ -78,7 +78,18 @@
 
 .selectQuestionCover {
   position: relative;
-  top: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  font-size: 0.8rem;
+}
+
+.selectCover {
+  position: relative;
 
   display: flex;
   align-items: center;

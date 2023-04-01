@@ -1,10 +1,15 @@
+import * as React from 'react'
+
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { Navigate, NavLink } from 'react-router-dom'
 
+import { defaultCover } from 'common/constans/constans'
 import { pageCountCardsAC, setCardsPackIdAC, setPackNameAC, setPrivatePackAC } from 'features/cards/cards-reducer'
-import { PacksActions } from 'features/packs/components/table/tableActions/PacksActions'
+import o from 'features/modals/EditCard/EditCardModal.module.css'
+import { ActionsPanel } from 'features/packs/components/actionsPanel/ActionsPanel'
 import { pagePacksAC } from 'features/packs/packsReducer'
+import y from 'features/profile/Profile.module.css'
 import { PATH } from 'routes/pages'
 import { useAppDispatch } from 'store/store'
 
@@ -24,6 +29,7 @@ type ExtendedType = {
   id: string
   user_id: string
   private: boolean
+  deckCover: string
 }
 
 export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRowType) => {
@@ -48,6 +54,8 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
     dispatch(setPackNameAC(row.name))
     dispatch(setCardsPackIdAC(row.id))
     dispatch(setPrivatePackAC(row.private))
+    // dispatch(cardQuestionImgAC(row.questionImg))
+    // dispatch(cardAnswerImgAC(row.answerImg))
     dispatch(pagePacksAC(1))
     modalHandler('edit-pack')
   }
@@ -59,7 +67,10 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
     <TableRow hover role="checkbox" tabIndex={-1} key={crypto.randomUUID()}>
       <TableCell component="th" id={labelId} scope="row" sx={paddingStyle}>
         <NavLink to={PATH.CARD} onClick={() => cardsListHandler(row.id)}>
-          {row.name}
+          <div className={o.selectCover}>
+            <img src={row.deckCover ? row.deckCover : defaultCover} className={y.deckCover} alt="ava" />
+            {row.name}
+          </div>
         </NavLink>
       </TableCell>
       <TableCell align="left" sx={paddingStyle}>
@@ -71,14 +82,14 @@ export const TableRowComponent = ({ row, index, userID, modalHandler }: TableRow
       <TableCell align="left" sx={{ ...paddingStyle, minWidth: 'none' }}>
         {row.created_by}
       </TableCell>
-      <PacksActions
-        align="left"
-        crudAccess={crudAccessValue}
-        sx={{ ...paddingStyle, minWidth: 'none', display: 'flex', width: '150px' }}
-        handleStudyingUp={handleStudying}
-        handleUpdatePackNameUp={handleUpdatePackName}
-        handleDeletePackUp={handleDeletePack}
-      />
+      <TableCell align="left" sx={paddingStyle}>
+        <ActionsPanel
+          crudAccess={crudAccessValue}
+          handleStudyingUp={handleStudying}
+          handleUpdate={handleUpdatePackName}
+          handleDelete={handleDeletePack}
+        />
+      </TableCell>
     </TableRow>
   )
 }

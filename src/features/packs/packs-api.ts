@@ -52,22 +52,23 @@ export type CardPacksType = {
   _id: string
 }
 export type PacksParamsType = {
-  packName?: string
-  min?: number | null
-  max?: number | null
-  sortPacks?: string | null
-  page?: number | null
-  pageCount?: number | null
-  user_id?: string | null | undefined
+  packName: string
+  min: number
+  max: number
+  sortPacks: string
+  page: number
+  pageCount: number
+  user_id?: string
   block?: boolean
 }
 export type SetNewPackType = {
-  name?: string
-  deckCover?: string
-  private?: boolean
+  name: string
+  deckCover: string
+  private: boolean
 }
 export type UpdatePackType = {
   _id: string | undefined
   name: string
   private?: boolean
+  deckCover: ''
 }
