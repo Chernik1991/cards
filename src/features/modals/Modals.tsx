@@ -80,52 +80,52 @@ export const Modals = ({ open, setOpen }: Props) => {
     handleClose()
   }
   const addNewCardHandler = () => {
-    // if (cardsAnswer === '' || cardsAnswerImg === '') {
-    //   SetErrorAnswer(true)
-    //   setTimeout(() => SetErrorAnswer(false), 3000)
-    // }
-    // if (cardsQuestion === '' || cardsQuestionImg === '') {
-    //   SetErrorQuestion(true)
-    //   setTimeout(() => SetErrorQuestion(false), 3000)
-    // }
-    // if ((cardsAnswer && cardsQuestion) || (cardsAnswerImg && cardsQuestionImg)) {
-    dispatch(
-      CreateCardsTC({
-        answer: cardsAnswer,
-        question: cardsQuestion,
-        cardsPack_id,
-        answerImg: cardsAnswerImg,
-        questionImg: cardsQuestionImg,
-      })
-    )
-    dispatch(cardQuestionAC(''))
-    dispatch(cardAnswerAC(''))
-    dispatch(cardQuestionImgAC(''))
-    dispatch(cardAnswerImgAC(''))
-    handleClose()
-    // }
+    if (cardsAnswer === '' || cardsAnswerImg === '') {
+      SetErrorAnswer(true)
+      setTimeout(() => SetErrorAnswer(false), 3000)
+    }
+    if (cardsQuestion === '' || cardsQuestionImg === '') {
+      SetErrorQuestion(true)
+      setTimeout(() => SetErrorQuestion(false), 3000)
+    }
+    if ((cardsAnswer && cardsQuestion) || (cardsAnswerImg && cardsQuestionImg)) {
+      dispatch(
+        CreateCardsTC({
+          answer: cardsAnswer,
+          question: cardsQuestion,
+          cardsPack_id,
+          answerImg: cardsAnswerImg,
+          questionImg: cardsQuestionImg,
+        })
+      )
+      dispatch(cardQuestionAC(''))
+      dispatch(cardAnswerAC(''))
+      dispatch(cardQuestionImgAC(''))
+      dispatch(cardAnswerImgAC(''))
+      handleClose()
+    }
   }
   const editCardHandler = () => {
-    // if (cardsAnswer === '' || cardsAnswerImg === '') {
-    //   SetErrorAnswer(true)
-    //   setTimeout(() => SetErrorAnswer(false), 3000)
-    // }
-    // if (cardsQuestion === '' || cardsQuestionImg === '') {
-    //   SetErrorQuestion(true)
-    //   setTimeout(() => SetErrorQuestion(false), 3000)
-    // }
-    // if ((cardsAnswer && cardsQuestion) || (cardsAnswerImg && cardsQuestionImg)) {
-    dispatch(
-      UpdateCardsTC({
-        answer: cardsAnswer,
-        question: cardsQuestion,
-        _id: card_id,
-        answerImg: cardsAnswerImg,
-        questionImg: cardsQuestionImg,
-      })
-    )
-    handleClose()
-    // }
+    if (cardsAnswer === '' || cardsAnswerImg === '') {
+      SetErrorAnswer(true)
+      setTimeout(() => SetErrorAnswer(false), 3000)
+    }
+    if (cardsQuestion === '' || cardsQuestionImg === '') {
+      SetErrorQuestion(true)
+      setTimeout(() => SetErrorQuestion(false), 3000)
+    }
+    if ((cardsAnswer && cardsQuestion) || (cardsAnswerImg && cardsQuestionImg)) {
+      dispatch(
+        UpdateCardsTC({
+          answer: cardsAnswer,
+          question: cardsQuestion,
+          _id: card_id,
+          answerImg: cardsAnswerImg,
+          questionImg: cardsQuestionImg,
+        })
+      )
+      handleClose()
+    }
   }
   const deleteCardHandler = () => {
     dispatch(

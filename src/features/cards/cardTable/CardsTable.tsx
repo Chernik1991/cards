@@ -78,8 +78,6 @@ export const CardsTable = (props: Props) => {
   const cards = useAppSelector<Array<CardsType>>(cardsSelectors.cards)
   const userId = useAppSelector(profileSelectors._id)
   const sort = useAppSelector(cardsSelectors.sortCards)
-  const cardsQuestionImg = useAppSelector(cardsSelectors.cardQuestionImg)
-  const cardsAnswerImg = useAppSelector(cardsSelectors.cardAnswerImg)
   const [searchParams] = useSearchParams()
   const params = Object.fromEntries(searchParams)
   const rows = cards.map((el: CardsType) => ({

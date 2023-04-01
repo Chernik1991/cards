@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import userPic1 from 'assets/img/profile/Alex.jpg'
 import SuperButton from 'common/components/c2-SuperButton/SuperButton'
 import SuperEditableSpan from 'common/components/c4-SuperEditableSpan/SuperEditableSpan'
 import { InputTypeFileIcon } from 'common/components/inputTypeFile/InputTypeFileIcon'
@@ -14,7 +13,7 @@ import { LogOutButton } from 'common/constans/LogOutButton'
 import { initializeAppTC, logoutTC } from 'features/auth/login/auth-reducer'
 import * as authSelectors from 'features/auth/selectorAuth'
 import y from 'features/profile/Profile.module.css'
-import { setNewAvatarAC } from 'features/profile/reducerProfile'
+import { setNewAvatarAC, updateUserDataTC } from 'features/profile/reducerProfile'
 import * as profileSelectors from 'features/profile/selectorProfile'
 import { PATH } from 'routes/pages'
 import { useAppDispatch, useAppSelector } from 'store/store'
@@ -35,8 +34,12 @@ export const Profile = () => {
   if (!userId) {
     useEffect(() => {
       dispatch(initializeAppTC())
-    }, [])
+    })
   }
+  useEffect(() => {
+    dispatch(updateUserDataTC())
+  }, [avatar, name])
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} replace />
   }
@@ -60,7 +63,7 @@ export const Profile = () => {
             <Box sx={sxProfilePersonalInfo}>
               <span className={y.defaultInfo}>Personal Information</span>
               <div className={y.userPhotoContainer}>
-                <img src={avatar || userPic1} className={y.userPhoto} alt="ava" />
+                <img src={avatar} className={y.userPhoto} alt="ava" />
                 <div className={y.userCameraContainer}>
                   <InputTypeFileIcon icon={true} setImage={setImage} />
                 </div>

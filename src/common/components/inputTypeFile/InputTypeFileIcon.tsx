@@ -16,7 +16,6 @@ export const InputTypeFileIcon = ({ icon, setImage }: Props) => {
 
       if (file.size < 100000) {
         convertFileToBase64(file, (file64: string) => {
-          console.log('file64: ')
           setImage(file64)
         })
       } else {

@@ -15,7 +15,6 @@ import { Layout } from 'routes/layout/Layout'
 import { Error404 } from 'routes/pages/Error404'
 
 export const PATH = {
-  HASH: '#',
   LOGIN: '/login',
   REGISTER: '/register',
   PROFILE: '/profile',
@@ -28,8 +27,6 @@ export const PATH = {
   LEARN: `/learn`,
   TEST: '/test',
 } as const
-//TODO
-//разобраться с #
 export const Pages = () => {
   return (
     <div>

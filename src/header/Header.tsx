@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom'
 import { menuHeaderDataInfo } from './headerData'
 
 import itINC from 'assets/img/icons/itINC.svg'
-import defaultPic from 'assets/img/profile/Alex.jpg'
 import { SuperCard } from 'common/components/c12-SuperCard/SuperCard'
 import { sxHeader } from 'common/constans/constans'
 import { ErrorSnackbar } from 'common/utils/ErrorSnackbar'
@@ -23,7 +22,7 @@ export const Header = () => {
   const name = useAppSelector(profileSelectors.name)
   const [activeMenu, setActiveMenu] = useState(false)
   const dispatch = useAppDispatch()
-  // const userPhoto = profileData.avatar ? profileData.avatar : defaultPic
+  const avatar = useAppSelector(profileSelectors.avatar)
   const handleOpenMenu = () => {
     setActiveMenu(!activeMenu)
   }
@@ -56,7 +55,7 @@ export const Header = () => {
         ''
       )}
       <span className={s.userName}>{name}</span>
-      <img className={s.userPhoto} src={defaultPic} alt="userPhoto" />
+      <img className={s.userPhoto} src={avatar} alt="userPhoto" />
     </div>
   )
 
