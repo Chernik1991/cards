@@ -49,9 +49,7 @@ export const InputTypeFileIcon = ({ icon, setImage, defaultImage, image }: Props
           Change cover
         </Button>
       )}
-      <div style={{ display: 'none' }}>
-        {!isTrue ? <img src={isAvaBroken ? defaultImage : ava} onError={errorHandler} alt="ava" /> : ''}
-      </div>
+      <div style={{ display: 'none' }}>{!isTrue ? <img src={ava} onError={errorHandler} alt="ava" /> : ''}</div>
       <input
         type="file"
         onChange={uploadHandler}
